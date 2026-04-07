@@ -6,9 +6,9 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Unified API
   - Data Integration
   - Reverse ETL
+  - Unified API
 url: >-
   https://raw.githubusercontent.com/api-evangelist/polytomic/refs/heads/main/apis.yml
 created: '2026-03-27'
@@ -22,8 +22,8 @@ apis:
       between databases, data warehouses, and SaaS applications.
     humanURL: https://www.polytomic.com/
     tags:
-      - Unified API
       - Data Integration
+      - Unified API
     properties:
       - type: Documentation
         url: https://docs.polytomic.com/

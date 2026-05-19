@@ -1,0 +1,644 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: API Reference — subpackage_bulkSync
+  description: 'API Reference — subpackage_bulkSync. 11 operations. Lead operation: List Bulk Syncs. Self-contained Naftiko
+    capability covering one Polytomic business surface.'
+  tags:
+  - Polytomic
+  - subpackage_bulkSync
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POLYTOMIC_API_KEY: POLYTOMIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: polytomic-subpackage-bulksync
+    baseUri: https://app.polytomic.com
+    description: API Reference — subpackage_bulkSync business capability. Self-contained, no shared references.
+    resources:
+    - name: api-bulk-syncs
+      path: /api/bulk/syncs
+      operations:
+      - name: list
+        method: GET
+        description: List Bulk Syncs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: active
+          in: query
+          type: boolean
+          description: Filter to only active (true) or only paused (false) syncs. Omit to return both.
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+      - name: create
+        method: POST
+        description: Create Bulk Sync
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-bulk-syncs-id
+      path: /api/bulk/syncs/{id}
+      operations:
+      - name: get
+        method: GET
+        description: Get Bulk Sync
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: refresh_schemas
+          in: query
+          type: boolean
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+      - name: update
+        method: PUT
+        description: Update Bulk Sync
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the bulk sync to update.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: delete
+        method: DELETE
+        description: Delete Bulk Sync
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: refresh_schemas
+          in: query
+          type: boolean
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-bulk-syncs-id-activate
+      path: /api/bulk/syncs/{id}/activate
+      operations:
+      - name: activate
+        method: POST
+        description: Activate Bulk Sync
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-bulk-syncs-id-cancel
+      path: /api/bulk/syncs/{id}/cancel
+      operations:
+      - name: cancel
+        method: POST
+        description: Cancel Bulk Sync
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The active execution of this bulk sync ID will be cancelled.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-bulk-syncs-id-executions
+      path: /api/bulk/syncs/{id}/executions
+      operations:
+      - name: start
+        method: POST
+        description: Start Bulk Sync Execution
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the bulk sync.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-bulk-syncs-id-status
+      path: /api/bulk/syncs/{id}/status
+      operations:
+      - name: getstatus
+        method: GET
+        description: Get Bulk Sync Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the bulk sync.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-connections-id-bulksync-source
+      path: /api/connections/{id}/bulksync/source
+      operations:
+      - name: getsource
+        method: GET
+        description: Get Bulk Source
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the connection.
+          required: true
+        - name: include_fields
+          in: query
+          type: boolean
+          description: When true, include per-schema field lists in the response. Set to false for a smaller payload when
+            field details are not needed.
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-connections-id-bulksync-target
+      path: /api/connections/{id}/bulksync/target
+      operations:
+      - name: getdestination
+        method: GET
+        description: Get Bulk Destination
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.POLYTOMIC_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: polytomic-subpackage-bulksync-rest
+    port: 8080
+    description: REST adapter for API Reference — subpackage_bulkSync. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/bulk/syncs
+      name: api-bulk-syncs
+      description: REST surface for api-bulk-syncs.
+      operations:
+      - method: GET
+        name: list
+        description: List Bulk Syncs
+        call: polytomic-subpackage-bulksync.list
+        with:
+          active: rest.active
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: create
+        description: Create Bulk Sync
+        call: polytomic-subpackage-bulksync.create
+        with:
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/bulk/syncs/{id}
+      name: api-bulk-syncs-id
+      description: REST surface for api-bulk-syncs-id.
+      operations:
+      - method: GET
+        name: get
+        description: Get Bulk Sync
+        call: polytomic-subpackage-bulksync.get
+        with:
+          id: rest.id
+          refresh_schemas: rest.refresh_schemas
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: update
+        description: Update Bulk Sync
+        call: polytomic-subpackage-bulksync.update
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete
+        description: Delete Bulk Sync
+        call: polytomic-subpackage-bulksync.delete
+        with:
+          id: rest.id
+          refresh_schemas: rest.refresh_schemas
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/bulk/syncs/{id}/activate
+      name: api-bulk-syncs-id-activate
+      description: REST surface for api-bulk-syncs-id-activate.
+      operations:
+      - method: POST
+        name: activate
+        description: Activate Bulk Sync
+        call: polytomic-subpackage-bulksync.activate
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/bulk/syncs/{id}/cancel
+      name: api-bulk-syncs-id-cancel
+      description: REST surface for api-bulk-syncs-id-cancel.
+      operations:
+      - method: POST
+        name: cancel
+        description: Cancel Bulk Sync
+        call: polytomic-subpackage-bulksync.cancel
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/bulk/syncs/{id}/executions
+      name: api-bulk-syncs-id-executions
+      description: REST surface for api-bulk-syncs-id-executions.
+      operations:
+      - method: POST
+        name: start
+        description: Start Bulk Sync Execution
+        call: polytomic-subpackage-bulksync.start
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/bulk/syncs/{id}/status
+      name: api-bulk-syncs-id-status
+      description: REST surface for api-bulk-syncs-id-status.
+      operations:
+      - method: GET
+        name: getstatus
+        description: Get Bulk Sync Status
+        call: polytomic-subpackage-bulksync.getstatus
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/connections/{id}/bulksync/source
+      name: api-connections-id-bulksync-source
+      description: REST surface for api-connections-id-bulksync-source.
+      operations:
+      - method: GET
+        name: getsource
+        description: Get Bulk Source
+        call: polytomic-subpackage-bulksync.getsource
+        with:
+          id: rest.id
+          include_fields: rest.include_fields
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/connections/{id}/bulksync/target
+      name: api-connections-id-bulksync-target
+      description: REST surface for api-connections-id-bulksync-target.
+      operations:
+      - method: GET
+        name: getdestination
+        description: Get Bulk Destination
+        call: polytomic-subpackage-bulksync.getdestination
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: polytomic-subpackage-bulksync-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for API Reference — subpackage_bulkSync. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-bulk-syncs
+      description: List Bulk Syncs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-bulksync.list
+      with:
+        active: tools.active
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-bulk-sync
+      description: Create Bulk Sync
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-bulksync.create
+      with:
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-bulk-sync
+      description: Get Bulk Sync
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-bulksync.get
+      with:
+        id: tools.id
+        refresh_schemas: tools.refresh_schemas
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-bulk-sync
+      description: Update Bulk Sync
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-bulksync.update
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-bulk-sync
+      description: Delete Bulk Sync
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: polytomic-subpackage-bulksync.delete
+      with:
+        id: tools.id
+        refresh_schemas: tools.refresh_schemas
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: activate-bulk-sync
+      description: Activate Bulk Sync
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-bulksync.activate
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: cancel-bulk-sync
+      description: Cancel Bulk Sync
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-bulksync.cancel
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: start-bulk-sync-execution
+      description: Start Bulk Sync Execution
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-bulksync.start
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-bulk-sync-status
+      description: Get Bulk Sync Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-bulksync.getstatus
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-bulk-source
+      description: Get Bulk Source
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-bulksync.getsource
+      with:
+        id: tools.id
+        include_fields: tools.include_fields
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-bulk-destination
+      description: Get Bulk Destination
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-bulksync.getdestination
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.

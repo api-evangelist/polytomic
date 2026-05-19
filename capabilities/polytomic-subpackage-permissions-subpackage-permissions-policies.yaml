@@ -1,0 +1,285 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: API Reference — subpackage_permissions.subpackage_permissions/policies
+  description: 'API Reference — subpackage_permissions.subpackage_permissions/policies. 5 operations. Lead operation: List
+    Policies. Self-contained Naftiko capability covering one Polytomic business surface.'
+  tags:
+  - Polytomic
+  - subpackage_permissions.subpackage_permissions/policies
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POLYTOMIC_API_KEY: POLYTOMIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: polytomic-subpackage-permissions-subpackage-permissions-policies
+    baseUri: https://app.polytomic.com
+    description: API Reference — subpackage_permissions.subpackage_permissions/policies business capability. Self-contained,
+      no shared references.
+    resources:
+    - name: api-permissions-policies
+      path: /api/permissions/policies
+      operations:
+      - name: list
+        method: GET
+        description: List Policies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+      - name: create
+        method: POST
+        description: Create Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-permissions-policies-id
+      path: /api/permissions/policies/{id}
+      operations:
+      - name: get
+        method: GET
+        description: Get Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+      - name: update
+        method: PUT
+        description: Update Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: delete
+        method: DELETE
+        description: Delete Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.POLYTOMIC_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: polytomic-subpackage-permissions-subpackage-permissions-policies-rest
+    port: 8080
+    description: REST adapter for API Reference — subpackage_permissions.subpackage_permissions/policies. One Spectral-compliant
+      resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/permissions/policies
+      name: api-permissions-policies
+      description: REST surface for api-permissions-policies.
+      operations:
+      - method: GET
+        name: list
+        description: List Policies
+        call: polytomic-subpackage-permissions-subpackage-permissions-policies.list
+        with:
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: create
+        description: Create Policy
+        call: polytomic-subpackage-permissions-subpackage-permissions-policies.create
+        with:
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/permissions/policies/{id}
+      name: api-permissions-policies-id
+      description: REST surface for api-permissions-policies-id.
+      operations:
+      - method: GET
+        name: get
+        description: Get Policy
+        call: polytomic-subpackage-permissions-subpackage-permissions-policies.get
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: update
+        description: Update Policy
+        call: polytomic-subpackage-permissions-subpackage-permissions-policies.update
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete
+        description: Delete Policy
+        call: polytomic-subpackage-permissions-subpackage-permissions-policies.delete
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: polytomic-subpackage-permissions-subpackage-permissions-policies-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for API Reference — subpackage_permissions.subpackage_permissions/policies. One tool per consumed
+      operation, routed inline through this capability's consumes block.
+    tools:
+    - name: list-policies
+      description: List Policies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-permissions-subpackage-permissions-policies.list
+      with:
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-policy
+      description: Create Policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-permissions-subpackage-permissions-policies.create
+      with:
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-policy
+      description: Get Policy
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-permissions-subpackage-permissions-policies.get
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-policy
+      description: Update Policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-permissions-subpackage-permissions-policies.update
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-policy
+      description: Delete Policy
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: polytomic-subpackage-permissions-subpackage-permissions-policies.delete
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.

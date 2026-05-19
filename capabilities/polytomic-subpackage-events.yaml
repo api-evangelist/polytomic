@@ -1,0 +1,163 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: API Reference — subpackage_events
+  description: 'API Reference — subpackage_events. 2 operations. Lead operation: Get Events. Self-contained Naftiko capability
+    covering one Polytomic business surface.'
+  tags:
+  - Polytomic
+  - subpackage_events
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POLYTOMIC_API_KEY: POLYTOMIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: polytomic-subpackage-events
+    baseUri: https://app.polytomic.com
+    description: API Reference — subpackage_events business capability. Self-contained, no shared references.
+    resources:
+    - name: api-events
+      path: /api/events
+      operations:
+      - name: list
+        method: GET
+        description: Get Events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: query
+          type: string
+          description: Organization to list events for. Only used by system callers; normal and partner callers are always
+            scoped to their own organization.
+        - name: type
+          in: query
+          type: string
+          description: Filter to a single event type. Use GET /api/events_types to list valid values.
+        - name: starting_after
+          in: query
+          type: string
+          description: Return events created strictly after this timestamp.
+        - name: ending_before
+          in: query
+          type: string
+          description: Return events created strictly before this timestamp.
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of events to return. Default 10, maximum 100.
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-events_types
+      path: /api/events_types
+      operations:
+      - name: gettypes
+        method: GET
+        description: Get Event Types
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.POLYTOMIC_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: polytomic-subpackage-events-rest
+    port: 8080
+    description: REST adapter for API Reference — subpackage_events. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/events
+      name: api-events
+      description: REST surface for api-events.
+      operations:
+      - method: GET
+        name: list
+        description: Get Events
+        call: polytomic-subpackage-events.list
+        with:
+          organization_id: rest.organization_id
+          type: rest.type
+          starting_after: rest.starting_after
+          ending_before: rest.ending_before
+          limit: rest.limit
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/events-types
+      name: api-events-types
+      description: REST surface for api-events_types.
+      operations:
+      - method: GET
+        name: gettypes
+        description: Get Event Types
+        call: polytomic-subpackage-events.gettypes
+        with:
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: polytomic-subpackage-events-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for API Reference — subpackage_events. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-events
+      description: Get Events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-events.list
+      with:
+        organization_id: tools.organization_id
+        type: tools.type
+        starting_after: tools.starting_after
+        ending_before: tools.ending_before
+        limit: tools.limit
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-event-types
+      description: Get Event Types
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-events.gettypes
+      with:
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.

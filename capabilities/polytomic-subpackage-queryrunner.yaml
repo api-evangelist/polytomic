@@ -1,0 +1,165 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: API Reference — subpackage_queryRunner
+  description: 'API Reference — subpackage_queryRunner. 2 operations. Lead operation: Run Query. Self-contained Naftiko capability
+    covering one Polytomic business surface.'
+  tags:
+  - Polytomic
+  - subpackage_queryRunner
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POLYTOMIC_API_KEY: POLYTOMIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: polytomic-subpackage-queryrunner
+    baseUri: https://app.polytomic.com
+    description: API Reference — subpackage_queryRunner business capability. Self-contained, no shared references.
+    resources:
+    - name: api-connections-connection_id-query
+      path: /api/connections/{connection_id}/query
+      operations:
+      - name: runquery
+        method: POST
+        description: Run Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: connection_id
+          in: path
+          type: string
+          description: Unique identifier of the connection to run the query against.
+          required: true
+        - name: query
+          in: query
+          type: string
+          description: The query to execute against the connection.
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-queries-id
+      path: /api/queries/{id}
+      operations:
+      - name: getquery
+        method: GET
+        description: Get Query Results
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the query task, as returned by POST /api/connections/{connection_id}/query.
+          required: true
+        - name: page
+          in: query
+          type: string
+          description: Opaque pagination token returned in the links.next or links.previous URL of the previous response.
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.POLYTOMIC_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: polytomic-subpackage-queryrunner-rest
+    port: 8080
+    description: REST adapter for API Reference — subpackage_queryRunner. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/connections/{connection-id}/query
+      name: api-connections-connection-id-query
+      description: REST surface for api-connections-connection_id-query.
+      operations:
+      - method: POST
+        name: runquery
+        description: Run Query
+        call: polytomic-subpackage-queryrunner.runquery
+        with:
+          connection_id: rest.connection_id
+          query: rest.query
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/queries/{id}
+      name: api-queries-id
+      description: REST surface for api-queries-id.
+      operations:
+      - method: GET
+        name: getquery
+        description: Get Query Results
+        call: polytomic-subpackage-queryrunner.getquery
+        with:
+          id: rest.id
+          page: rest.page
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: polytomic-subpackage-queryrunner-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for API Reference — subpackage_queryRunner. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: run-query
+      description: Run Query
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-queryrunner.runquery
+      with:
+        connection_id: tools.connection_id
+        query: tools.query
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-query-results
+      description: Get Query Results
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-queryrunner.getquery
+      with:
+        id: tools.id
+        page: tools.page
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.

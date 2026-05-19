@@ -1,0 +1,710 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: API Reference — subpackage_modelSync
+  description: 'API Reference — subpackage_modelSync. 12 operations. Lead operation: Get Sync Source. Self-contained Naftiko
+    capability covering one Polytomic business surface.'
+  tags:
+  - Polytomic
+  - subpackage_modelSync
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POLYTOMIC_API_KEY: POLYTOMIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: polytomic-subpackage-modelsync
+    baseUri: https://app.polytomic.com
+    description: API Reference — subpackage_modelSync business capability. Self-contained, no shared references.
+    resources:
+    - name: api-connections-id-modelsync-source
+      path: /api/connections/{id}/modelsync/source
+      operations:
+      - name: getsource
+        method: GET
+        description: Get Sync Source
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the connection.
+          required: true
+        - name: params
+          in: query
+          type: object
+          description: Query parameters used to incrementally refine a dependent source configuration. Keys correspond to
+            configuration fields returned by previous calls to this endpo
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-connections-id-modelsync-source-fields
+      path: /api/connections/{id}/modelsync/source/fields
+      operations:
+      - name: getsourcefields
+        method: GET
+        description: Model Sync Field Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the connection.
+          required: true
+        - name: params
+          in: query
+          type: object
+          description: Source configuration, matching the params used with GET /api/connections/{id}/modelsync/source, that
+            selects the specific source to return fields for.
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-syncs
+      path: /api/syncs
+      operations:
+      - name: list
+        method: GET
+        description: List Syncs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: active
+          in: query
+          type: boolean
+          description: Filter to only active or only paused syncs.
+        - name: mode
+          in: query
+          type: string
+          description: Filter by sync target mode (e.g. create, updateOrCreate, enrich).
+        - name: target_connection_id
+          in: query
+          type: string
+          description: Filter to syncs that write to the specified target connection.
+        - name: page_token
+          in: query
+          type: string
+          description: Pagination cursor returned in the previous response. Omit on the first request.
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of syncs to return. Default and maximum is 50.
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+      - name: create
+        method: POST
+        description: Create Sync
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-syncs-schedules
+      path: /api/syncs/schedules
+      operations:
+      - name: getscheduleoptions
+        method: GET
+        description: Get Sync Schedule Options
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-syncs-id
+      path: /api/syncs/{id}
+      operations:
+      - name: get
+        method: GET
+        description: Get Sync
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+      - name: update
+        method: PUT
+        description: Update Sync
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: delete
+        method: DELETE
+        description: Delete Model Sync
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-syncs-id-activate
+      path: /api/syncs/{id}/activate
+      operations:
+      - name: activate
+        method: POST
+        description: Activate Sync
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-syncs-id-cancel
+      path: /api/syncs/{id}/cancel
+      operations:
+      - name: cancel
+        method: POST
+        description: Cancel Sync
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The active execution of this sync ID will be cancelled.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-syncs-id-executions
+      path: /api/syncs/{id}/executions
+      operations:
+      - name: start
+        method: POST
+        description: Start Sync
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-syncs-id-status
+      path: /api/syncs/{id}/status
+      operations:
+      - name: getstatus
+        method: GET
+        description: Get Sync Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.POLYTOMIC_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: polytomic-subpackage-modelsync-rest
+    port: 8080
+    description: REST adapter for API Reference — subpackage_modelSync. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/connections/{id}/modelsync/source
+      name: api-connections-id-modelsync-source
+      description: REST surface for api-connections-id-modelsync-source.
+      operations:
+      - method: GET
+        name: getsource
+        description: Get Sync Source
+        call: polytomic-subpackage-modelsync.getsource
+        with:
+          id: rest.id
+          params: rest.params
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/connections/{id}/modelsync/source/fields
+      name: api-connections-id-modelsync-source-fields
+      description: REST surface for api-connections-id-modelsync-source-fields.
+      operations:
+      - method: GET
+        name: getsourcefields
+        description: Model Sync Field Query
+        call: polytomic-subpackage-modelsync.getsourcefields
+        with:
+          id: rest.id
+          params: rest.params
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/syncs
+      name: api-syncs
+      description: REST surface for api-syncs.
+      operations:
+      - method: GET
+        name: list
+        description: List Syncs
+        call: polytomic-subpackage-modelsync.list
+        with:
+          active: rest.active
+          mode: rest.mode
+          target_connection_id: rest.target_connection_id
+          page_token: rest.page_token
+          limit: rest.limit
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: create
+        description: Create Sync
+        call: polytomic-subpackage-modelsync.create
+        with:
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/syncs/schedules
+      name: api-syncs-schedules
+      description: REST surface for api-syncs-schedules.
+      operations:
+      - method: GET
+        name: getscheduleoptions
+        description: Get Sync Schedule Options
+        call: polytomic-subpackage-modelsync.getscheduleoptions
+        with:
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/syncs/{id}
+      name: api-syncs-id
+      description: REST surface for api-syncs-id.
+      operations:
+      - method: GET
+        name: get
+        description: Get Sync
+        call: polytomic-subpackage-modelsync.get
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: update
+        description: Update Sync
+        call: polytomic-subpackage-modelsync.update
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete
+        description: Delete Model Sync
+        call: polytomic-subpackage-modelsync.delete
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/syncs/{id}/activate
+      name: api-syncs-id-activate
+      description: REST surface for api-syncs-id-activate.
+      operations:
+      - method: POST
+        name: activate
+        description: Activate Sync
+        call: polytomic-subpackage-modelsync.activate
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/syncs/{id}/cancel
+      name: api-syncs-id-cancel
+      description: REST surface for api-syncs-id-cancel.
+      operations:
+      - method: POST
+        name: cancel
+        description: Cancel Sync
+        call: polytomic-subpackage-modelsync.cancel
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/syncs/{id}/executions
+      name: api-syncs-id-executions
+      description: REST surface for api-syncs-id-executions.
+      operations:
+      - method: POST
+        name: start
+        description: Start Sync
+        call: polytomic-subpackage-modelsync.start
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/syncs/{id}/status
+      name: api-syncs-id-status
+      description: REST surface for api-syncs-id-status.
+      operations:
+      - method: GET
+        name: getstatus
+        description: Get Sync Status
+        call: polytomic-subpackage-modelsync.getstatus
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: polytomic-subpackage-modelsync-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for API Reference — subpackage_modelSync. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-sync-source
+      description: Get Sync Source
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-modelsync.getsource
+      with:
+        id: tools.id
+        params: tools.params
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: model-sync-field-query
+      description: Model Sync Field Query
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-modelsync.getsourcefields
+      with:
+        id: tools.id
+        params: tools.params
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-syncs
+      description: List Syncs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-modelsync.list
+      with:
+        active: tools.active
+        mode: tools.mode
+        target_connection_id: tools.target_connection_id
+        page_token: tools.page_token
+        limit: tools.limit
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-sync
+      description: Create Sync
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-modelsync.create
+      with:
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-sync-schedule-options
+      description: Get Sync Schedule Options
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-modelsync.getscheduleoptions
+      with:
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-sync
+      description: Get Sync
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-modelsync.get
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-sync
+      description: Update Sync
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-modelsync.update
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-model-sync
+      description: Delete Model Sync
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: polytomic-subpackage-modelsync.delete
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: activate-sync
+      description: Activate Sync
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-modelsync.activate
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: cancel-sync
+      description: Cancel Sync
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-modelsync.cancel
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: start-sync
+      description: Start Sync
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-modelsync.start
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-sync-status
+      description: Get Sync Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-modelsync.getstatus
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,323 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: API Reference — subpackage_bulkSync.subpackage_bulkSync/schedules
+  description: 'API Reference — subpackage_bulkSync.subpackage_bulkSync/schedules. 5 operations. Lead operation: Get Bulk
+    Sync Schedules. Self-contained Naftiko capability covering one Polytomic business surface.'
+  tags:
+  - Polytomic
+  - subpackage_bulkSync.subpackage_bulkSync/schedules
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POLYTOMIC_API_KEY: POLYTOMIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: polytomic-subpackage-bulksync-subpackage-bulksync-schedules
+    baseUri: https://app.polytomic.com
+    description: API Reference — subpackage_bulkSync.subpackage_bulkSync/schedules business capability. Self-contained, no
+      shared references.
+    resources:
+    - name: api-bulk-syncs-sync_id-schedules
+      path: /api/bulk/syncs/{sync_id}/schedules
+      operations:
+      - name: list
+        method: GET
+        description: Get Bulk Sync Schedules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sync_id
+          in: path
+          type: string
+          description: Unique identifier of the bulk sync whose schedules should be returned.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+      - name: create
+        method: POST
+        description: Create Bulk Sync Schedule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sync_id
+          in: path
+          type: string
+          description: Unique identifier of the bulk sync to add a schedule to.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-bulk-syncs-sync_id-schedules-schedule_id
+      path: /api/bulk/syncs/{sync_id}/schedules/{schedule_id}
+      operations:
+      - name: get
+        method: GET
+        description: Get Bulk Sync Schedule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sync_id
+          in: path
+          type: string
+          description: Unique identifier of the bulk sync.
+          required: true
+        - name: schedule_id
+          in: path
+          type: string
+          description: Unique identifier of the schedule.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+      - name: update
+        method: PUT
+        description: Update Bulk Sync Schedule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sync_id
+          in: path
+          type: string
+          description: Unique identifier of the bulk sync.
+          required: true
+        - name: schedule_id
+          in: path
+          type: string
+          description: Unique identifier of the schedule to update.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: delete
+        method: DELETE
+        description: Delete Bulk Sync Schedule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sync_id
+          in: path
+          type: string
+          description: Unique identifier of the bulk sync.
+          required: true
+        - name: schedule_id
+          in: path
+          type: string
+          description: Unique identifier of the schedule to delete.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.POLYTOMIC_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: polytomic-subpackage-bulksync-subpackage-bulksync-schedules-rest
+    port: 8080
+    description: REST adapter for API Reference — subpackage_bulkSync.subpackage_bulkSync/schedules. One Spectral-compliant
+      resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/bulk/syncs/{sync-id}/schedules
+      name: api-bulk-syncs-sync-id-schedules
+      description: REST surface for api-bulk-syncs-sync_id-schedules.
+      operations:
+      - method: GET
+        name: list
+        description: Get Bulk Sync Schedules
+        call: polytomic-subpackage-bulksync-subpackage-bulksync-schedules.list
+        with:
+          sync_id: rest.sync_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: create
+        description: Create Bulk Sync Schedule
+        call: polytomic-subpackage-bulksync-subpackage-bulksync-schedules.create
+        with:
+          sync_id: rest.sync_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/bulk/syncs/{sync-id}/schedules/{schedule-id}
+      name: api-bulk-syncs-sync-id-schedules-schedule-id
+      description: REST surface for api-bulk-syncs-sync_id-schedules-schedule_id.
+      operations:
+      - method: GET
+        name: get
+        description: Get Bulk Sync Schedule
+        call: polytomic-subpackage-bulksync-subpackage-bulksync-schedules.get
+        with:
+          sync_id: rest.sync_id
+          schedule_id: rest.schedule_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: update
+        description: Update Bulk Sync Schedule
+        call: polytomic-subpackage-bulksync-subpackage-bulksync-schedules.update
+        with:
+          sync_id: rest.sync_id
+          schedule_id: rest.schedule_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete
+        description: Delete Bulk Sync Schedule
+        call: polytomic-subpackage-bulksync-subpackage-bulksync-schedules.delete
+        with:
+          sync_id: rest.sync_id
+          schedule_id: rest.schedule_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: polytomic-subpackage-bulksync-subpackage-bulksync-schedules-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for API Reference — subpackage_bulkSync.subpackage_bulkSync/schedules. One tool per consumed
+      operation, routed inline through this capability's consumes block.
+    tools:
+    - name: get-bulk-sync-schedules
+      description: Get Bulk Sync Schedules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-bulksync-subpackage-bulksync-schedules.list
+      with:
+        sync_id: tools.sync_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-bulk-sync-schedule
+      description: Create Bulk Sync Schedule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-bulksync-subpackage-bulksync-schedules.create
+      with:
+        sync_id: tools.sync_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-bulk-sync-schedule
+      description: Get Bulk Sync Schedule
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-bulksync-subpackage-bulksync-schedules.get
+      with:
+        sync_id: tools.sync_id
+        schedule_id: tools.schedule_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-bulk-sync-schedule
+      description: Update Bulk Sync Schedule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-bulksync-subpackage-bulksync-schedules.update
+      with:
+        sync_id: tools.sync_id
+        schedule_id: tools.schedule_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-bulk-sync-schedule
+      description: Delete Bulk Sync Schedule
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: polytomic-subpackage-bulksync-subpackage-bulksync-schedules.delete
+      with:
+        sync_id: tools.sync_id
+        schedule_id: tools.schedule_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.

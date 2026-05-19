@@ -1,0 +1,638 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: API Reference — subpackage_users
+  description: 'API Reference — subpackage_users. 11 operations. Lead operation: List Current Org Users. Self-contained Naftiko
+    capability covering one Polytomic business surface.'
+  tags:
+  - Polytomic
+  - subpackage_users
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POLYTOMIC_API_KEY: POLYTOMIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: polytomic-subpackage-users
+    baseUri: https://app.polytomic.com
+    description: API Reference — subpackage_users business capability. Self-contained, no shared references.
+    resources:
+    - name: api-organization-users
+      path: /api/organization/users
+      operations:
+      - name: listcurrentorgusers
+        method: GET
+        description: List Current Org Users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+      - name: createcurrentorguser
+        method: POST
+        description: Create Current Org User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-organization-users-id
+      path: /api/organization/users/{id}
+      operations:
+      - name: getcurrentorguser
+        method: GET
+        description: Get Current Org User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the user.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+      - name: updatecurrentorguser
+        method: PUT
+        description: Update Current Org User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the user to update.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deletecurrentorguser
+        method: DELETE
+        description: Delete Current Org User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the user.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-organizations-org_id-users
+      path: /api/organizations/{org_id}/users
+      operations:
+      - name: list
+        method: GET
+        description: List Partner Users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Unique identifier of the organization whose users should be listed.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer partner API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+      - name: create
+        method: POST
+        description: Create Partner User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Unique identifier of the organization the user belongs to.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer partner API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-organizations-org_id-users-id
+      path: /api/organizations/{org_id}/users/{id}
+      operations:
+      - name: get
+        method: GET
+        description: Get Partner User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the user.
+          required: true
+        - name: org_id
+          in: path
+          type: string
+          description: Unique identifier of the organization the user belongs to.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer partner API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+      - name: update
+        method: PUT
+        description: Update Partner User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the user to update.
+          required: true
+        - name: org_id
+          in: path
+          type: string
+          description: Unique identifier of the organization the user belongs to.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer partner API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: delete
+        method: DELETE
+        description: Delete Partner User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the user.
+          required: true
+        - name: org_id
+          in: path
+          type: string
+          description: Unique identifier of the organization the user belongs to.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer partner API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-organizations-org_id-users-id-keys
+      path: /api/organizations/{org_id}/users/{id}/keys
+      operations:
+      - name: createapikey
+        method: POST
+        description: Create Partner User API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Unique identifier of the organization the user belongs to.
+          required: true
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the user the key will be issued for.
+          required: true
+        - name: force
+          in: query
+          type: boolean
+          description: If true, revoke any existing API key for the user before creating a new one.
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer partner API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.POLYTOMIC_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: polytomic-subpackage-users-rest
+    port: 8080
+    description: REST adapter for API Reference — subpackage_users. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/organization/users
+      name: api-organization-users
+      description: REST surface for api-organization-users.
+      operations:
+      - method: GET
+        name: listcurrentorgusers
+        description: List Current Org Users
+        call: polytomic-subpackage-users.listcurrentorgusers
+        with:
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcurrentorguser
+        description: Create Current Org User
+        call: polytomic-subpackage-users.createcurrentorguser
+        with:
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/organization/users/{id}
+      name: api-organization-users-id
+      description: REST surface for api-organization-users-id.
+      operations:
+      - method: GET
+        name: getcurrentorguser
+        description: Get Current Org User
+        call: polytomic-subpackage-users.getcurrentorguser
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatecurrentorguser
+        description: Update Current Org User
+        call: polytomic-subpackage-users.updatecurrentorguser
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletecurrentorguser
+        description: Delete Current Org User
+        call: polytomic-subpackage-users.deletecurrentorguser
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/organizations/{org-id}/users
+      name: api-organizations-org-id-users
+      description: REST surface for api-organizations-org_id-users.
+      operations:
+      - method: GET
+        name: list
+        description: List Partner Users
+        call: polytomic-subpackage-users.list
+        with:
+          org_id: rest.org_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: create
+        description: Create Partner User
+        call: polytomic-subpackage-users.create
+        with:
+          org_id: rest.org_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/organizations/{org-id}/users/{id}
+      name: api-organizations-org-id-users-id
+      description: REST surface for api-organizations-org_id-users-id.
+      operations:
+      - method: GET
+        name: get
+        description: Get Partner User
+        call: polytomic-subpackage-users.get
+        with:
+          id: rest.id
+          org_id: rest.org_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: update
+        description: Update Partner User
+        call: polytomic-subpackage-users.update
+        with:
+          id: rest.id
+          org_id: rest.org_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete
+        description: Delete Partner User
+        call: polytomic-subpackage-users.delete
+        with:
+          id: rest.id
+          org_id: rest.org_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/organizations/{org-id}/users/{id}/keys
+      name: api-organizations-org-id-users-id-keys
+      description: REST surface for api-organizations-org_id-users-id-keys.
+      operations:
+      - method: POST
+        name: createapikey
+        description: Create Partner User API Key
+        call: polytomic-subpackage-users.createapikey
+        with:
+          org_id: rest.org_id
+          id: rest.id
+          force: rest.force
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: polytomic-subpackage-users-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for API Reference — subpackage_users. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-current-org-users
+      description: List Current Org Users
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-users.listcurrentorgusers
+      with:
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-current-org-user
+      description: Create Current Org User
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-users.createcurrentorguser
+      with:
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-current-org-user
+      description: Get Current Org User
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-users.getcurrentorguser
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-current-org-user
+      description: Update Current Org User
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-users.updatecurrentorguser
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-current-org-user
+      description: Delete Current Org User
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: polytomic-subpackage-users.deletecurrentorguser
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-partner-users
+      description: List Partner Users
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-users.list
+      with:
+        org_id: tools.org_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-partner-user
+      description: Create Partner User
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-users.create
+      with:
+        org_id: tools.org_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-partner-user
+      description: Get Partner User
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-users.get
+      with:
+        id: tools.id
+        org_id: tools.org_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-partner-user
+      description: Update Partner User
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-users.update
+      with:
+        id: tools.id
+        org_id: tools.org_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-partner-user
+      description: Delete Partner User
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: polytomic-subpackage-users.delete
+      with:
+        id: tools.id
+        org_id: tools.org_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-partner-user-api-key
+      description: Create Partner User API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-users.createapikey
+      with:
+        org_id: tools.org_id
+        id: tools.id
+        force: tools.force
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.

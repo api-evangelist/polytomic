@@ -1,0 +1,595 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: API Reference — subpackage_schemas
+  description: 'API Reference — subpackage_schemas. 9 operations. Lead operation: Upsert Schema Fields. Self-contained Naftiko
+    capability covering one Polytomic business surface.'
+  tags:
+  - Polytomic
+  - subpackage_schemas
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POLYTOMIC_API_KEY: POLYTOMIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: polytomic-subpackage-schemas
+    baseUri: https://app.polytomic.com
+    description: API Reference — subpackage_schemas business capability. Self-contained, no shared references.
+    resources:
+    - name: api-connections-connection_id-schemas-schema_id-fields
+      path: /api/connections/{connection_id}/schemas/{schema_id}/fields
+      operations:
+      - name: upsertfield
+        method: POST
+        description: Upsert Schema Fields
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: connection_id
+          in: path
+          type: string
+          description: Unique identifier of the connection.
+          required: true
+        - name: schema_id
+          in: path
+          type: string
+          description: Identifier of the schema the fields belong to.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-connections-connection_id-schemas-schema_id-fields-field_id
+      path: /api/connections/{connection_id}/schemas/{schema_id}/fields/{field_id}
+      operations:
+      - name: deletefield
+        method: DELETE
+        description: Delete Schema Field
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: connection_id
+          in: path
+          type: string
+          description: Unique identifier of the connection.
+          required: true
+        - name: schema_id
+          in: path
+          type: string
+          description: Identifier of the schema the field belongs to.
+          required: true
+        - name: field_id
+          in: path
+          type: string
+          description: Identifier of the user-defined field to delete.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+      - name: patchfield
+        method: PATCH
+        description: Patch Schema Field
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: connection_id
+          in: path
+          type: string
+          description: Connection holding the schema.
+          required: true
+        - name: schema_id
+          in: path
+          type: string
+          description: Schema identifier.
+          required: true
+        - name: field_id
+          in: path
+          type: string
+          description: Field identifier within the schema.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-connections-connection_id-schemas-schema_id-primary_keys
+      path: /api/connections/{connection_id}/schemas/{schema_id}/primary_keys
+      operations:
+      - name: setprimarykeys
+        method: PUT
+        description: Set Primary Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: connection_id
+          in: path
+          type: string
+          description: Unique identifier of the connection.
+          required: true
+        - name: schema_id
+          in: path
+          type: string
+          description: Identifier of the schema whose primary keys are being overridden.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: resetprimarykeys
+        method: DELETE
+        description: Reset Primary Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: connection_id
+          in: path
+          type: string
+          description: Unique identifier of the connection.
+          required: true
+        - name: schema_id
+          in: path
+          type: string
+          description: Identifier of the schema whose primary key override should be cleared.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-connections-id-schemas-refresh
+      path: /api/connections/{id}/schemas/refresh
+      operations:
+      - name: refresh
+        method: POST
+        description: Refresh Connection Schema
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the connection whose schema cache should be refreshed.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-connections-id-schemas-status
+      path: /api/connections/{id}/schemas/status
+      operations:
+      - name: getstatus
+        method: GET
+        description: Get Schema Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the connection whose schema cache status should be returned.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-connections-id-schemas-schema_id
+      path: /api/connections/{id}/schemas/{schema_id}
+      operations:
+      - name: get
+        method: GET
+        description: Get Schema
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the connection.
+          required: true
+        - name: schema_id
+          in: path
+          type: string
+          description: Identifier of the schema within the connection. Format depends on the connection type (e.g. schema.table
+            for databases, object name for SaaS backends).
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    - name: api-connections-id-schemas-schema_id-records
+      path: /api/connections/{id}/schemas/{schema_id}/records
+      operations:
+      - name: getrecords
+        method: GET
+        description: Get Schema Records
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Unique identifier of the connection.
+          required: true
+        - name: schema_id
+          in: path
+          type: string
+          description: Identifier of the schema within the connection.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: Bearer user API key
+          required: true
+        - name: X-Polytomic-Version
+          in: header
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.POLYTOMIC_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: polytomic-subpackage-schemas-rest
+    port: 8080
+    description: REST adapter for API Reference — subpackage_schemas. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/connections/{connection-id}/schemas/{schema-id}/fields
+      name: api-connections-connection-id-schemas-schema-id-fields
+      description: REST surface for api-connections-connection_id-schemas-schema_id-fields.
+      operations:
+      - method: POST
+        name: upsertfield
+        description: Upsert Schema Fields
+        call: polytomic-subpackage-schemas.upsertfield
+        with:
+          connection_id: rest.connection_id
+          schema_id: rest.schema_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/connections/{connection-id}/schemas/{schema-id}/fields/{field-id}
+      name: api-connections-connection-id-schemas-schema-id-fields-field-id
+      description: REST surface for api-connections-connection_id-schemas-schema_id-fields-field_id.
+      operations:
+      - method: DELETE
+        name: deletefield
+        description: Delete Schema Field
+        call: polytomic-subpackage-schemas.deletefield
+        with:
+          connection_id: rest.connection_id
+          schema_id: rest.schema_id
+          field_id: rest.field_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: patchfield
+        description: Patch Schema Field
+        call: polytomic-subpackage-schemas.patchfield
+        with:
+          connection_id: rest.connection_id
+          schema_id: rest.schema_id
+          field_id: rest.field_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/connections/{connection-id}/schemas/{schema-id}/primary-keys
+      name: api-connections-connection-id-schemas-schema-id-primary-keys
+      description: REST surface for api-connections-connection_id-schemas-schema_id-primary_keys.
+      operations:
+      - method: PUT
+        name: setprimarykeys
+        description: Set Primary Keys
+        call: polytomic-subpackage-schemas.setprimarykeys
+        with:
+          connection_id: rest.connection_id
+          schema_id: rest.schema_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: resetprimarykeys
+        description: Reset Primary Keys
+        call: polytomic-subpackage-schemas.resetprimarykeys
+        with:
+          connection_id: rest.connection_id
+          schema_id: rest.schema_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/connections/{id}/schemas/refresh
+      name: api-connections-id-schemas-refresh
+      description: REST surface for api-connections-id-schemas-refresh.
+      operations:
+      - method: POST
+        name: refresh
+        description: Refresh Connection Schema
+        call: polytomic-subpackage-schemas.refresh
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/connections/{id}/schemas/status
+      name: api-connections-id-schemas-status
+      description: REST surface for api-connections-id-schemas-status.
+      operations:
+      - method: GET
+        name: getstatus
+        description: Get Schema Status
+        call: polytomic-subpackage-schemas.getstatus
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/connections/{id}/schemas/{schema-id}
+      name: api-connections-id-schemas-schema-id
+      description: REST surface for api-connections-id-schemas-schema_id.
+      operations:
+      - method: GET
+        name: get
+        description: Get Schema
+        call: polytomic-subpackage-schemas.get
+        with:
+          id: rest.id
+          schema_id: rest.schema_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/connections/{id}/schemas/{schema-id}/records
+      name: api-connections-id-schemas-schema-id-records
+      description: REST surface for api-connections-id-schemas-schema_id-records.
+      operations:
+      - method: GET
+        name: getrecords
+        description: Get Schema Records
+        call: polytomic-subpackage-schemas.getrecords
+        with:
+          id: rest.id
+          schema_id: rest.schema_id
+          Authorization: rest.Authorization
+          X-Polytomic-Version: rest.X-Polytomic-Version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: polytomic-subpackage-schemas-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for API Reference — subpackage_schemas. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: upsert-schema-fields
+      description: Upsert Schema Fields
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-schemas.upsertfield
+      with:
+        connection_id: tools.connection_id
+        schema_id: tools.schema_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-schema-field
+      description: Delete Schema Field
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: polytomic-subpackage-schemas.deletefield
+      with:
+        connection_id: tools.connection_id
+        schema_id: tools.schema_id
+        field_id: tools.field_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: patch-schema-field
+      description: Patch Schema Field
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-schemas.patchfield
+      with:
+        connection_id: tools.connection_id
+        schema_id: tools.schema_id
+        field_id: tools.field_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: set-primary-keys
+      description: Set Primary Keys
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-schemas.setprimarykeys
+      with:
+        connection_id: tools.connection_id
+        schema_id: tools.schema_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reset-primary-keys
+      description: Reset Primary Keys
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: polytomic-subpackage-schemas.resetprimarykeys
+      with:
+        connection_id: tools.connection_id
+        schema_id: tools.schema_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: refresh-connection-schema
+      description: Refresh Connection Schema
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: polytomic-subpackage-schemas.refresh
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-schema-status
+      description: Get Schema Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-schemas.getstatus
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-schema
+      description: Get Schema
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-schemas.get
+      with:
+        id: tools.id
+        schema_id: tools.schema_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-schema-records
+      description: Get Schema Records
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: polytomic-subpackage-schemas.getrecords
+      with:
+        id: tools.id
+        schema_id: tools.schema_id
+        Authorization: tools.Authorization
+        X-Polytomic-Version: tools.X-Polytomic-Version
+      outputParameters:
+      - type: object
+        mapping: $.

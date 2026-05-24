@@ -89,6 +89,8 @@ common:
   url: https://apidocs.polytomic.com/
 - type: GitHub
   url: https://github.com/polytomic
+- type: LLMsTxt
+  url: https://docs.polytomic.com/llms.txt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

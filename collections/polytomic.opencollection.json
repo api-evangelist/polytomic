@@ -1,0 +1,4257 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_connections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Connection Types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connection_types",
+            "headers": [
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists all connection types supported by this deployment.\n\nEach entry includes per-type metadata:\n\n- The available operations the connection type supports.\n- Its category.\n- Whether the connection type is enabled for the caller's organization.\n- Which modes (source, destination, enrichment) it can act as."
+        },
+        {
+          "info": {
+            "name": "Get Connection Type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connection_types/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Connection type identifier (e.g. postgresql, salesforce, hubspot)."
+              }
+            ]
+          },
+          "docs": "Returns the JSON schema for a connection type.\n\nThis schema is intended for building forms or validating configuration payloads\nclient-side. It describes the structure Polytomic expects when you create or\nupdate a connection of the given type.\n\nThe response is metadata about the shape of the configuration, not a live\nconnection instance and not a set of current credential values."
+        },
+        {
+          "info": {
+            "name": "Connection Type Parameter Values",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connection_types/:type/parameter_values",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns completion values for parameter fields on a connection type.\n\nThis endpoint is useful during connection setup, before a connection exists or\nbefore you want to persist it. The supplied `parameters` are applied to a\ntemporary in-memory connection shape and used to resolve dependent options.\n\nWhen an endpoint requires upstream authorization before it can return values,\nPolytomic returns an error instead of guessing. In that case, complete the\nauthorization flow first and call the endpoint "
+        },
+        {
+          "info": {
+            "name": "List Connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists every connection in the caller's organization, with sensitive fields redacted.\n\nSensitive configuration values — passwords, API tokens, private keys — are\nredacted from all responses. To understand which fields a connection type\nexposes, consult the parameter schema returned by\n[`GET /api/connection_types`](../../api-reference/connections/get-types).\n\nTo inspect the data objects available on a specific connection, use\n[`POST /api/connections/{id}/schemas/refresh`](../../api-reference/schem"
+        },
+        {
+          "info": {
+            "name": "Create Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connections",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new connection of the specified type.\n\nUse [`GET /api/connection_types`](../../api-reference/connections/get-types) to retrieve the\nlist of available types and their parameter schemas. The `configuration`\nobject is type-specific; consult the [integration\nguides](../../guides/configuring-your-connections/overview)\nfor the required and optional fields for each type.\n\n> 📘 Polytomic validates the connection against the upstream service\n> immediately on creation. The request will fail if t"
+        },
+        {
+          "info": {
+            "name": "Connect",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connections/connect/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a Polytomic Connect session and returns a redirect URL that embeds the Connect modal.\n\nSee also:\n\n- [Embedding authentication](../../../guides/embedding-authentication), a guide to using Polytomic Connect."
+        },
+        {
+          "info": {
+            "name": "Test Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connections/test",
+            "headers": [
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Tests a connection configuration.\n\nThis endpoint is useful for setup flows that want to verify credentials before\npersisting them.\n\nIf you provide `connection_id`, Polytomic starts from the saved configuration\nfor that connection and then applies the request's `configuration` values on\ntop. This lets callers test a partial change without resending every existing\nfield.\n\nThe request does not persist any configuration changes even when validation\nsucceeds."
+        },
+        {
+          "info": {
+            "name": "Get Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single connection by ID, with sensitive fields redacted.\n\nTo inspect the schemas available on this connection, trigger a refresh with\n[`POST /api/connections/{id}/schemas/refresh`](../../../api-reference/schemas/refresh) and\ntrack progress via\n[`GET /api/connections/{id}/schemas/status`](../../../api-reference/schemas/get-status)."
+        },
+        {
+          "info": {
+            "name": "Update Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/connections/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a connection's configuration.\n\nUpdating a connection is a **full replacement** of its configuration. Any\n`configuration` field you omit is cleared. To make a partial change, fetch\nthe current connection with\n[`GET /api/connections/{id}`](../../../api-reference/connections/get), apply your edits, and send the\ncomplete object back.\n\n> 📘 The connection is re-validated against the upstream service after every\n> update. The request will fail if the new credentials or endpoint cannot be\n> rea"
+        },
+        {
+          "info": {
+            "name": "Delete Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/connections/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes a connection.\n\n> 🚧 Deleting a connection that is referenced by fieldsets, syncs, bulk\n> syncs, or schedules returns `422 connection in use` unless you pass\n> `force=true`. With `force=true`, the API deletes those dependent\n> resources before removing the connection."
+        },
+        {
+          "info": {
+            "name": "Connection Parameter Values",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/parameter_values",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns completion values for parameter fields on a persisted connection.\n\nUse this endpoint when the available options for one parameter depend on the\nconnection's saved credentials or previously selected settings. For example,\nafter a connection is authorized, the upstream service may be able to return\nlists of databases, schemas, or similar selectable values.\n\nFor new setup flows, prefer\n[`POST /api/connection_types/{type}/parameter_values`](../../../../api-reference/connections/get-type-para"
+        },
+        {
+          "info": {
+            "name": "Execute Connection Proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connections/:id/proxy",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection to proxy the request through."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Proxies an HTTP request to a connection's underlying API using the connection's stored credentials, subject to per-connection rate limits and size caps.\n\nThis endpoint is intended for controlled passthrough use, not as a general\nreplacement for Polytomic's modeled endpoints. The request is executed with the\nconnection's stored credentials and inherited base URL, headers, and query\nparameters.\n\nBefore building requests dynamically, call\n[`GET /api/connections/{id}/proxy/info`](../../../../api-ref"
+        },
+        {
+          "info": {
+            "name": "Get Connection Proxy Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/proxy/info",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection whose proxy contract should be returned."
+              }
+            ]
+          },
+          "docs": "Returns the proxy contract for a connection.\n\nUse this endpoint before calling\n[`POST /api/connections/{id}/proxy`](../../../../../api-reference/connections/execute-proxy)\nwhen you need to build requests programmatically. The response shows:\n\n- the inherited base URL that all proxied requests are sent to\n- locked headers and query parameters that are attached automatically\n- blocked request and response headers\n- allowed HTTP methods and body shapes\n- timeout, rate-limit, and payload-size limits"
+        },
+        {
+          "info": {
+            "name": "List Current Org Shared Connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/shared",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the parent connection whose shared copies should be listed."
+              }
+            ]
+          },
+          "docs": "Lists shared copies of a connection that the caller's organization owns.\n\nThe returned connections are the child copies, not the parent connection\nitself. This is useful when a partner workflow needs to confirm which\ndownstream organizations have already received a shared copy.\n\nCreating a new shared copy is a separate operation. Use\n[`POST /api/organizations/{org_id}/connections/{connection_id}/share`](../../../../api-reference/connections/create-shared-connection)\nfor the v5 partner-scoped flo"
+        },
+        {
+          "info": {
+            "name": "List Partner Shared Connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/connections/:connection_id/shared",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization that owns the parent connection."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the parent connection whose shared copies should be listed."
+              }
+            ]
+          },
+          "docs": "Lists shared copies of a connection owned by a specific organization in the partner account.\n\nThe `org_id` must match the organization that owns the parent connection. If it\ndoes not, the endpoint returns `404` rather than exposing information about the\nparent connection.\n\nThis endpoint is useful in partner workflows where the parent connection is in\nthe partner owner organization and the caller needs to audit which child\norganizations already have a shared copy."
+        },
+        {
+          "info": {
+            "name": "Create Partner Shared Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/connections/:connection_id/shared",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization that owns the parent connection."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the parent connection to share."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Shares a connection with another organization in the caller's partner account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Enrichment Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/modelsync/enrichment-source",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "params",
+                "value": "",
+                "type": "query",
+                "description": "Query parameters used to incrementally refine a dependent source configuration. Keys correspond to configuration fields returned by previous calls to this endpoint."
+              }
+            ]
+          },
+          "docs": "Describes the enrichment source configuration available on a connection.\n\nNot all connections support enrichment. Call this endpoint to determine\nwhether a connection can serve as an enrichment source in a model sync and,\nif so, what configuration it accepts.\n\n> ⚠️ If the connection does not support enrichment, this endpoint returns\n> `404`. Check for that status before attempting to configure an enrichment\n> source on a sync.\n\nWhen a connection does support enrichment, the response describes th"
+        },
+        {
+          "info": {
+            "name": "Enrichment Fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/enrichment/:connection_id/inputfields",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the valid input field sets for an enrichment configuration on a connection.\n\nWhen configuring an enrichment source in a model sync, use this endpoint to\ndiscover which input fields the enrichment connection requires. Pass the\nproposed enrichment configuration in the request body; the response lists the\nvalid input field sets that map your model's fields to the enrichment service's\nexpected inputs."
+        },
+        {
+          "info": {
+            "name": "Preview Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/model-preview",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "async",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a job that previews the fields a model would expose without persisting it.\n\nThe response contains a job ID that resolves to the list of fields the model\nwould expose. Poll the job until it completes to retrieve the field list. The\nmodel is not persisted — this endpoint is useful for validating a query or\nconfiguration before calling [`POST /api/models`](../../api-reference/models/create) to save it."
+        },
+        {
+          "info": {
+            "name": "List Models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/models",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists all models in the caller's organization.\n\nResults are ordered by `updated_at` descending, with `id` used as a tiebreaker.\nIf more results are available, the response includes `pagination.next_page_token`.\nPass that token back unchanged to continue from the last item you received.\n\nThe token is opaque. Do not construct or edit it yourself.\n\nThe `limit` is capped at 50. Values above that cap are reduced to 50, and\nnon-positive values fall back to the same default."
+        },
+        {
+          "info": {
+            "name": "Create Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/models",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "async",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new model.\n\nA model defines a query or view over a connection's data — for example, a SQL\nquery, a filtered object, or a joined dataset. Models are used as sources when\ncreating model syncs.\n\nThe connection referenced by `connection_id` must have source capabilities. Use\n[`GET /api/connection_types/{id}`](../../api-reference/connections/get-connection-type-schema) to check\nwhether a connection type supports use as a source."
+        },
+        {
+          "info": {
+            "name": "Get Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/models/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a single model by ID, including its source fields, identity, and filters.\n\nThe response includes the model's source fields, identity column, and any\nconfigured filters. To preview the data a model would return without saving\nchanges, use [`GET /api/models/{id}/sample`](../../../api-reference/models/sample)."
+        },
+        {
+          "info": {
+            "name": "Update Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/models/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a model's configuration.\n\nUpdating a model is a **full replacement** of its configuration. Every field in\nthe request body is written to the model; any field you omit is cleared or reset\nto its default value.\n\nTo make a partial change, fetch the current model with\n[`GET /api/models/{id}`](../../../api-reference/models/get), modify the fields you want to change, and send\nthe complete object back in the update request.\n\nChanges to source fields, filters, or the identity column take effect "
+        },
+        {
+          "info": {
+            "name": "Delete Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/models/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes a model.\n\n> 🚧 Deleting a model used by one or more syncs will break those syncs. Remove\n> or reconfigure any syncs that reference this model before deleting it."
+        },
+        {
+          "info": {
+            "name": "Sample Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/models/:id/sample",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a sample of records from a model.\n\nSynchronous requests must complete within 10 seconds. If the source query or\nenrichment step can exceed that budget, use the asynchronous option so the\nwork runs as a background job."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_modelSync",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Sync Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/modelsync/source",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "params",
+                "value": "",
+                "type": "query",
+                "description": "Query parameters used to incrementally refine a dependent source configuration. Keys correspond to configuration fields returned by previous calls to this endpoint."
+              }
+            ]
+          },
+          "docs": "Describes the source configuration available on a connection for use as a model sync source.\n\nUse this endpoint before creating a model to understand what configuration is\navailable. Once you have a configuration, resolve the fields available for\nsync mapping with\n[`GET /api/connections/{id}/modelsync/source/fields`](../../../../../api-reference/model-sync/get-source-fields)."
+        },
+        {
+          "info": {
+            "name": "Model Sync Field Query",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/modelsync/source/fields",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "params",
+                "value": "",
+                "type": "query",
+                "description": "Source configuration, matching the params used with GET /api/connections/{id}/modelsync/source, that selects the specific source to return fields for."
+              }
+            ]
+          },
+          "docs": "Returns the source fields available on a connection for a given source configuration.\n\nPass the model's source configuration as query parameters to resolve the\nfields that the connection will expose for that specific configuration. The\nreturned fields are what can be referenced in sync field mappings.\n\n> 📘 Results depend on the source configuration you supply. A different\n> table or query in the configuration may return a completely different field\n> list.\n\nThe available source configuration pa"
+        },
+        {
+          "info": {
+            "name": "List Syncs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only active or only paused syncs."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Filter by sync target mode (e.g. create, updateOrCreate, enrich)."
+              },
+              {
+                "name": "target_connection_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter to syncs that write to the specified target connection."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor returned in the previous response. Omit on the first request."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of syncs to return. Default and maximum is 50."
+              }
+            ]
+          },
+          "docs": "Lists model syncs in the caller's organization.\n\nResults are ordered by `updated_at` descending, with `id` used as a tiebreaker.\nIf more results are available, the response includes `pagination.next_page_token`.\nPass that token back unchanged to continue from the last item you received.\n\nThe token is opaque. Do not construct or edit it yourself.\n\nThe `limit` is capped at 50. Values above that cap are reduced to 50, and\nnon-positive values fall back to the same default.\n\nThis endpoint returns syn"
+        },
+        {
+          "info": {
+            "name": "Create Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/syncs",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new model sync.\n\nCreate a new sync from one or more models to a destination.\n\nAll of the functionality described in [the product\ndocumentation](https://docs.polytomic.com/docs/sync-destinations) is\nconfigurable via the API.\n\nGuides:\n\n- [Model sync (Reverse ETL) from Snowflake query to Salesforce](../../guides/code-examples/model-sync-reverse-etl-from-snowflake-query-to-salesforce)\n- [Joined model sync from Postgres, Airtable, and Stripe to Hubspot](../../guides/code-examples/joined-mod"
+        },
+        {
+          "info": {
+            "name": "Get Sync Schedule Options",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/schedules",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns the schedule types available when creating or updating a model sync.\n\nUse the `type` identifiers returned by this endpoint in the `schedule` field\nwhen creating or updating a sync via\n[`POST /api/syncs`](../../../api-reference/model-sync/create) or [`PUT /api/syncs/{id}`](../../../api-reference/model-sync/update)."
+        },
+        {
+          "info": {
+            "name": "Get Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single model sync by ID.\n\nTo check whether a sync is currently running or has recently completed, use\n[`GET /api/syncs/{id}/status`](../../../api-reference/model-sync/get-status). For the full history of\nexecutions, use [`GET /api/syncs/{id}/executions`](../../../api-reference/model-sync/executions/list)."
+        },
+        {
+          "info": {
+            "name": "Update Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/syncs/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a model sync's configuration.\n\nUpdating a model sync is a **full replacement** of the sync's configuration.\nEvery field in the request body is written to the sync; any field you omit is\ncleared or reset to its default value.\n\nTo make a partial change — for example, toggling `active` or adjusting a\nsingle field mapping — fetch the current sync with\n[`GET /api/syncs/{id}`](../../../api-reference/model-sync/get),\nmodify the fields you want to change, and send the complete object back in\nthe"
+        },
+        {
+          "info": {
+            "name": "Delete Model Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/syncs/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a model sync, cancelling any running executions.\n\nDeletion is permanent. Any running execution is cancelled before the sync\nrecord is removed. Deleted syncs cannot be recovered; recreate them using\n[`POST /api/syncs`](../../../api-reference/model-sync/create) if needed."
+        },
+        {
+          "info": {
+            "name": "Activate Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/syncs/:id/activate",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets whether a model sync is active.\n\nOnly active syncs execute on schedule or in response to a manual trigger. Set\n`active` to `false` to pause a sync without deleting it.\n\n> 📘 Deactivating a sync does not cancel an execution that is already in\n> progress. Use [`POST /api/syncs/{id}/cancel`](../../../../api-reference/model-sync/cancel) to stop a\n> running execution."
+        },
+        {
+          "info": {
+            "name": "Cancel Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/syncs/:id/cancel",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The active execution of this sync ID will be cancelled."
+              }
+            ]
+          },
+          "docs": "Requests cancellation of any running executions on a model sync.\n\nCancellation is asynchronous. A successful response means the cancellation\nsignal has been queued; the running execution continues until the signal is\nprocessed. Poll `GET /api/syncs/{id}/status` until the current execution\nreaches a terminal state (`completed`, `canceled`, or `failed`) to confirm\ncancellation has taken effect."
+        },
+        {
+          "info": {
+            "name": "Start Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/syncs/:id/executions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Starts a new execution of a model sync.\n\n> 🚧 Force full resync\n>\n> Use caution when setting the `resync` parameter to `true`. This will force a full resync of the data from the source system. This can be a time-consuming operation and may impact the performance of the source system. It is recommended to only use this option when necessary."
+        },
+        {
+          "info": {
+            "name": "Get Sync Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/:id/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the current status of a model sync.\n\nThe response includes a summary of the most recent execution, including its\nstart time, completion time, and record counts. For the complete execution\nhistory, use [`GET /api/syncs/{id}/executions`](../../../../api-reference/model-sync/executions/list)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_modelSync.subpackage_modelSync/targets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Sync Target Fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/modelsync/target/fields",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "target",
+                "value": "",
+                "type": "query",
+                "description": "Identifier of the target object (e.g. schema.table for a database destination, object name for a SaaS destination)."
+              },
+              {
+                "name": "refresh",
+                "value": "",
+                "type": "query",
+                "description": "When true, force a cache refresh of the target's schema before returning its fields."
+              }
+            ]
+          },
+          "docs": "Returns the fields of a specific target object on a connection.\n\nPass the target object identifier to retrieve the fields available for\nmapping on that object. These are the destination fields you can reference\nwhen configuring field mappings in a model sync.\n\n> 📘 To list available target objects and their identifiers, use\n> [`GET /api/connections/{id}/modelsync/targetobjects`](../../../../../../api-reference/model-sync/targets/list).\n\nFields returned here reflect the connection's current cache"
+        },
+        {
+          "info": {
+            "name": "Get Target Objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/modelsync/targetobjects",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Lists the target objects available on a connection for use as a model sync destination.\n\nIf the connection supports creating new destinations, the `target_creation`\nobject will contain information on what properties are required to create the\ntarget.\n\nTarget creation properties are all string values; the `enum` flag indicates if\nthe property has a fixed set of valid values. When `enum` is `true`, the [Target\nCreation Property\nValues](../../../../../api-reference/model-sync/targets/get-create-pro"
+        },
+        {
+          "info": {
+            "name": "Get Target Creation Property Values",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/modelsync/targetobjects/properties/:property",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "property",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the valid values for a target-creation property on a connection that supports creating new target objects.\n\nConnections which support creating new sync target objects (destinations) will\nreturn `target_creation` with their [target object list](../../../../../../../api-reference/model-sync/targets/list). This endpoint\nwill return possible values for properties where `enum` is `true`.\n\nIf the connection does not support creating new target objects, an HTTP 404 will\nbe returned.\n\nThe `value"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_modelSync.subpackage_modelSync/executions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/:sync_id/executions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "only_completed",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "ascending",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists executions for a model sync.\n\nResults are ordered by start time descending. If more results are available, the\nresponse includes `pagination.next_page_token`; pass that token back unchanged\nto continue paging.\n\nThe token is opaque. Do not construct or edit it yourself.\n\nFor full details about a specific execution — including record counts and error\nsummaries — use\n[`GET /api/syncs/{sync_id}/executions/{id}`](../../../../api-reference/model-sync/executions/get)."
+        },
+        {
+          "info": {
+            "name": "Get Execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/:sync_id/executions/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single model sync execution.\n\nFor the log files produced by this execution, use\n[`GET /api/syncs/{sync_id}/executions/{id}/{type}`](../../../../../api-reference/model-sync/executions/get-log-urls) to retrieve\nsigned URLs grouped by log category."
+        },
+        {
+          "info": {
+            "name": "Cancel Sync Execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/syncs/:sync_id/executions/:id/cancel",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the execution to cancel."
+              }
+            ]
+          },
+          "docs": "Requests cancellation of a model sync execution."
+        },
+        {
+          "info": {
+            "name": "Get Execution Console Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/:sync_id/executions/:id/consolelog",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of entries to return. Values above the logger retention limit are capped to 50."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Return only entries newer than this cursor."
+              }
+            ]
+          },
+          "docs": "Fetch the latest console log entries for a sync execution. Returns at most the most recent 50 entries retained in Redis."
+        },
+        {
+          "info": {
+            "name": "Get Execution Log Urls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/:sync_id/executions/:id/:type",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns signed URLs for every log file of a given type on a model sync execution.\n\n`{type}` identifies the log category, such as `errors` or `warnings`. The\nresponse contains a signed URL for each log file in that category.\n\n> 🚧 Signed URLs expire after a short period. If a URL has expired, re-request\n> it from this endpoint. To fetch a single file's URL directly, use\n> [`GET /api/syncs/{sync_id}/executions/{id}/{type}/{filename}`](../../../../../../api-reference/model-sync/executions/get-logs)"
+        },
+        {
+          "info": {
+            "name": "Get Execution Log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/:sync_id/executions/:id/:type/:filename",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a signed URL for a specific log file produced by a model sync execution.\n\nThe URL is signed and expires after a short period. If it has expired before\nyou download the file, call this endpoint again to obtain a fresh URL."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_bulkSync",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Bulk Syncs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only active (true) or only paused (false) syncs. Omit to return both."
+              }
+            ]
+          },
+          "docs": "Lists bulk syncs in the caller's organization.\n\nResults are ordered by `updated_at` descending, with `id` as a tiebreaker for\nsyncs modified at the same instant. Pagination uses an opaque\n`pagination.next_page_token` returned in the response; pass it back as the\n`page_token` query parameter to fetch the next page. The `limit` parameter is\noptional, and the default and maximum page size is 50 syncs.\n\n> 📘 To retrieve a specific sync, use\n> [`GET /api/bulk/syncs/{id}`](../../../api-reference/bulk-"
+        },
+        {
+          "info": {
+            "name": "Create Bulk Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new bulk sync.\n\nBulk syncs are used for the ELT pattern (Extract, Load, and Transform), where you want to sync un-transformed data to your data warehouses, databases, or cloud storage buckets like S3.\n\nAll of the functionality described in [the product\ndocumentation](https://docs.polytomic.com/docs/bulk-syncs) is configurable via\nthe API.\n\nSample code examples:\n\n- [Bulk sync (ELT) from Salesforce to S3](../../../guides/code-examples/bulk-sync-elt-from-salesforce-to-s-3)\n- [Bulk sync (E"
+        },
+        {
+          "info": {
+            "name": "Get Bulk Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "refresh_schemas",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a bulk sync by ID.\n\nThe response includes the sync's top-level configuration — source, destination,\nschedules, and discovery settings.\n\n- To check whether the sync is running and see the most-recent execution result,\n  use [`GET /api/bulk/syncs/{id}/status`](../../../../api-reference/bulk-sync/get-status).\n- To inspect which schemas are selected and how they are configured, use\n  [`GET /api/bulk/syncs/{id}/schemas`](../../../../api-reference/bulk-sync/schemas/list)."
+        },
+        {
+          "info": {
+            "name": "Update Bulk Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing bulk sync's top-level configuration.\n\nUpdating a bulk sync is a **full replacement** of the sync's top-level\nconfiguration. Every field in the request body is written to the sync; any\nfield you omit is cleared or reset to its default value.\n\nTo make a partial change — for example, toggling `active` or swapping a\nschedule — fetch the current sync with\n[`GET /api/bulk/syncs/{id}`](../../../../api-reference/bulk-sync/get),\nmodify the fields you want to change, and send the compl"
+        },
+        {
+          "info": {
+            "name": "Delete Bulk Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "refresh_schemas",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes a bulk sync, cancelling any running executions.\n\nAny execution that is currently running is cancelled before the sync record is\nremoved.\n\n> 🚧 All associated schedules, schema configurations, and execution history are\n> deleted along with the sync."
+        },
+        {
+          "info": {
+            "name": "Activate Bulk Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/activate",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets whether a bulk sync is active.\n\nOnly active syncs are eligible to execute on their configured schedule.\nDeactivating a sync prevents future scheduled runs and requests cancellation of\nany execution that is currently in progress.\n\n> 📘 To start or stop a running execution directly, use\n> [`POST /api/bulk/syncs/{id}/executions`](../../../../../api-reference/bulk-sync/start)\n> or\n> [`POST /api/bulk/syncs/{id}/cancel`](../../../../../api-reference/bulk-sync/cancel)."
+        },
+        {
+          "info": {
+            "name": "Cancel Bulk Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/cancel",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The active execution of this bulk sync ID will be cancelled."
+              }
+            ]
+          },
+          "docs": "Requests cancellation of any running executions on a bulk sync.\n\nCancellation is asynchronous. A successful response means the cancellation\nsignal has been queued; the running execution continues until the signal is\nprocessed. Poll `GET /api/bulk/syncs/{id}/status` until the current execution\nreaches a terminal state (`completed`, `canceled`, or `failed`) to confirm\ncancellation has taken effect."
+        },
+        {
+          "info": {
+            "name": "Start Bulk Sync Execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/executions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Starts a new execution of a bulk sync.\n\nThis endpoint returns the execution record immediately after the run is queued\nor started. Use the execution ID with the bulk-sync execution endpoints if you\nneed to monitor progress in detail.\n\n## Execution modes\n\n- Set `test=true` to validate the sync without writing to the destination.\n- Use `resync_mode` for destructive or full-refresh style reruns.\n- `test` and `resync_mode` are mutually exclusive.\n\nThe legacy `resync` boolean is no longer accepted on"
+        },
+        {
+          "info": {
+            "name": "Get Bulk Sync Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              }
+            ]
+          },
+          "docs": "Returns the current status of a bulk sync.\n\nThe response includes the sync's current active/inactive state together with\ninformation about the most recent execution — its status, start time, and any\nerrors — making this endpoint well-suited for health checks and monitoring\ndashboards.\n\nFor the complete execution history, use\n[`GET /api/bulk/syncs/{id}/executions`](../../../../../api-reference/bulk-sync/executions/list).\nFor the full details of a specific run, including per-schema breakdowns, use"
+        },
+        {
+          "info": {
+            "name": "Get Bulk Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/bulksync/source",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "include_fields",
+                "value": "",
+                "type": "query",
+                "description": "When true, include per-schema field lists in the response. Set to false for a smaller payload when field details are not needed."
+              }
+            ]
+          },
+          "docs": "Lists the schemas (tables or objects) available on a connection for use as a bulk sync source, optionally including per-schema field details.\n\nThe response reflects what the\nconnection currently has cached; if the upstream source has changed, trigger\na refresh first with\n[`POST /api/connections/{id}/schemas/refresh`](../../../../../api-reference/schemas/refresh).\n\nThese are the schemas available for selection, not the schemas already\nconfigured on any particular sync. To inspect schemas on a run"
+        },
+        {
+          "info": {
+            "name": "Get Bulk Destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/bulksync/target",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Describes the destination configuration schema a connection accepts when used as a bulk sync destination.\n\nThe response is a JSON Schema object describing the shape of the\n`destination_configuration` field you must supply when\n[creating](../../../../../api-reference/bulk-sync/create) or\n[updating](../../../../../api-reference/bulk-sync/update) a bulk sync that uses this\nconnection as its destination. Required fields vary by connection type.\n\n> 📘 Fetch this endpoint once per connection type rath"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_bulkSync.subpackage_bulkSync/executions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Bulk Sync Executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/executions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor returned in the previous response. Omit on the first request."
+              },
+              {
+                "name": "only_terminal",
+                "value": "",
+                "type": "query",
+                "description": "When true, only return executions that have finished. Terminal executions are ordered by updated_at."
+              },
+              {
+                "name": "ascending",
+                "value": "",
+                "type": "query",
+                "description": "When true, return executions from oldest to newest. Default is newest first."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of executions to return. Capped at 100."
+              }
+            ]
+          },
+          "docs": "Lists executions for a bulk sync.\n\nResults are ordered by start time descending by default. When more results are\navailable, the response includes an opaque `pagination.next_page_token`; pass it\nback as the `page_token` query parameter to retrieve the next page. The `limit`\nparameter is optional, and the maximum page size is 100 executions.\n\nUse `only_terminal=true` to return only finished executions. In that mode,\nexecutions are ordered by `updated_at` so recently completed runs appear first.\n\n"
+        },
+        {
+          "info": {
+            "name": "List Bulk Sync Execution Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "When true, return status for every sync in the caller's organization. Overrides any sync_id values."
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "When true, return status only for active syncs in the caller's organization. Overrides any sync_id values."
+              },
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "query",
+                "description": "Return status for the specified bulk sync. Repeat the parameter to target multiple syncs. Ignored if all or active is true."
+              }
+            ]
+          },
+          "docs": "Returns a concise per-schema status for one or more bulk syncs.\n\nThis endpoint is a summary view, not an execution-history view. Each schema is\nrepresented at most once with its most recent execution status, and running\nexecutions are preferred over older terminal ones.\n\nUse this endpoint when you want a dashboard-style answer to \"what is each sync\ndoing now?\" If you need the full execution history or a single execution's\ndetails, use [`GET /api/bulk/syncs/{id}/executions`](../../../../api-refer"
+        },
+        {
+          "info": {
+            "name": "Get Bulk Sync Execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/executions/:exec_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "exec_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the execution."
+              }
+            ]
+          },
+          "docs": "Returns a single bulk sync execution, including per-schema execution status.\n\nThe response includes a breakdown of each schema (table or object) that\nparticipated in the execution, with its individual status, row counts, and any\nerror details. This makes it suitable for diagnosing partial failures where\nsome schemas succeeded while others did not."
+        },
+        {
+          "info": {
+            "name": "Cancel Bulk Sync Execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/executions/:exec_id/cancel",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The bulk sync ID."
+              },
+              {
+                "name": "exec_id",
+                "value": "",
+                "type": "path",
+                "description": "The execution ID to cancel."
+              }
+            ]
+          },
+          "docs": "Requests cancellation of a specific bulk sync execution.\n\nCancellation is asynchronous. A successful response means the cancellation\nsignal has been queued; the execution continues to run until the signal is\nprocessed. Poll `GET /api/bulk/syncs/{id}/executions/{exec_id}` until the\nexecution reaches a terminal state (`completed`, `canceled`, or `failed`) to\nconfirm cancellation has taken effect."
+        },
+        {
+          "info": {
+            "name": "Get Bulk Execution Console Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/executions/:execution_id/consolelog",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "execution_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of entries to return. Values above the logger retention limit are capped to 50."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Return only entries newer than this cursor."
+              }
+            ]
+          },
+          "docs": "Fetch the latest console log entries for a bulk sync execution. Returns at most the most recent 50 entries retained in Redis."
+        },
+        {
+          "info": {
+            "name": "Get Bulk Sync Execution Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/executions/:execution_id/logs",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "execution_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the execution whose log files should be listed."
+              }
+            ]
+          },
+          "docs": "Returns signed URLs for the log files produced by a single bulk sync execution.\n\nEach URL in the response is pre-signed and grants temporary read access to the\ncorresponding log file. URLs expire after a short period; if you need to access\na file after the URL has expired, call this endpoint again to obtain a fresh set\nof signed URLs.\n\n> 📘 To export logs asynchronously to a destination of your choice, use\n> [`POST /api/bulk/syncs/{sync_id}/executions/{execution_id}/logs/export`](../../../../../"
+        },
+        {
+          "info": {
+            "name": "Export Sync Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/executions/:execution_id/logs/export",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "execution_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the execution whose logs should be exported."
+              },
+              {
+                "name": "notify",
+                "value": "",
+                "type": "query",
+                "description": "Send a notification to the user when the logs are ready for download."
+              }
+            ]
+          },
+          "docs": "Starts an asynchronous job that packages the log files for a single bulk sync execution into a downloadable archive.\n\n> 📘 Log export is asynchronous\n>\n> This endpoint starts a background job that packages an execution's log\n> files into a downloadable archive. The first call typically returns a\n> `job` descriptor instead of a completed result. Poll\n> [`GET /api/jobs/exportlogs/{id}`](../../../../../../../../api-reference/jobs/get)\n> with the returned `job_id` until `status` is `done`; the final"
+        },
+        {
+          "info": {
+            "name": "Get Bulk Schema Execution Console Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/executions/:execution_id/schemas/:schema_id/consolelog",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "execution_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Schema identifier for schema-scoped console logs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of entries to return. Values above the logger retention limit are capped to 50."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Return only entries newer than this cursor."
+              }
+            ]
+          },
+          "docs": "Fetch the latest console log entries for a schema within a bulk sync execution. Returns at most the most recent 50 entries retained in Redis."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_bulkSync.subpackage_bulkSync/schemas",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Bulk Sync Schemas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/schemas",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "Optional filters applied to the returned schemas. Supports enabled=true to return only enabled schemas and enabled=false to return only disabled schemas."
+              }
+            ]
+          },
+          "docs": "Lists the schemas (tables, objects) configured for a bulk sync.\n\nThis endpoint returns the schemas that have been added to and configured on this\nspecific bulk sync — not the full set of schemas available from the source\nconnection. To discover what the source connection exposes, use the source\nschemas endpoint for the relevant connection type.\n\nEach schema in the response includes its sync mode, field selections, and any\ncustom configuration applied via\n[`PATCH /api/bulk/syncs/{id}/schemas`](.."
+        },
+        {
+          "info": {
+            "name": "Update Bulk Sync Schemas",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/schemas",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Patches one or more schemas on a bulk sync at once.\n\nOnly schemas explicitly included in the request body are modified; schemas\nomitted from the request are left unchanged. This makes PATCH the right choice\nwhen you want to update a subset of tables without affecting the rest of the\nsync's schema configuration.\n\nWithin each provided schema, omitting `fields` enables all available fields on\nthat schema. To control which fields are enabled, include the `fields` array\nwith explicit `enabled` values"
+        },
+        {
+          "info": {
+            "name": "Get Bulk Sync Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/schemas/:schema_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Source-side schema identifier."
+              }
+            ]
+          },
+          "docs": "Returns the configuration of a single schema on a bulk sync.\n\nReturns the sync mode, field selections, and any other configuration applied to\nthis schema on the bulk sync.\n\nTo modify the configuration, use\n[`PATCH /api/bulk/syncs/{id}/schemas`](../../../../../../api-reference/bulk-sync/schemas/patch)\nfor a partial update across multiple schemas, or\n[`PUT /api/bulk/syncs/{id}/schemas/{schema_id}`](../../../../../../api-reference/bulk-sync/schemas/update)\nto fully replace this schema's configurati"
+        },
+        {
+          "info": {
+            "name": "Update Bulk Sync Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/schemas/:schema_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Source-side schema identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces the configuration of a single schema on a bulk sync.\n\nThis is a full replacement: every field in the request body is written to the\nschema, and any field you omit is cleared or reset to its default. Fetch the\ncurrent configuration with\n[`GET /api/bulk/syncs/{id}/schemas/{schema_id}`](../../../../../../api-reference/bulk-sync/schemas/get)\nfirst if you want to preserve existing settings while changing only a subset.\n\nOmitting `fields` enables all available fields on the schema. To control"
+        },
+        {
+          "info": {
+            "name": "Cancel Bulk Sync Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/schemas/:schema_id/cancel",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The bulk sync ID."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "The schema ID to cancel for the bulk sync."
+              }
+            ]
+          },
+          "docs": "Requests cancellation of any running executions for a specific schema on a bulk sync.\n\nCancellation is asynchronous. A successful response means the cancellation\nsignal for this schema has been queued; the schema's in-flight work continues\nuntil the signal is processed. Poll\n`GET /api/bulk/syncs/{id}/schemas/{schema_id}` and the parent execution via\n`GET /api/bulk/syncs/{id}/status` to confirm the schema has reached a terminal\nstate."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_bulkSync.subpackage_bulkSync/schedules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Bulk Sync Schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/schedules",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync whose schedules should be returned."
+              }
+            ]
+          },
+          "docs": "Lists all schedules configured for a bulk sync.\n\nA bulk sync can have multiple schedules attached; this endpoint returns all\nof them. Schedule times are returned in UTC."
+        },
+        {
+          "info": {
+            "name": "Create Bulk Sync Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/schedules",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync to add a schedule to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a new schedule to a bulk sync.\n\nA bulk sync can have multiple schedules attached; adding one here does not\nreplace existing schedules. Schedule times are interpreted in UTC.\n\nCreating a schedule only affects future automatic executions. To run the\nsync immediately, call\n[`POST /api/bulk/syncs/{id}/executions`](../../../../../api-reference/bulk-sync/start)."
+        },
+        {
+          "info": {
+            "name": "Get Bulk Sync Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/schedules/:schedule_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "schedule_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the schedule."
+              }
+            ]
+          },
+          "docs": "Returns a single schedule configured on a bulk sync.\n\nSchedule times are returned in UTC.\n\nTo see all schedules on this sync, use\n[`GET /api/bulk/syncs/{sync_id}/schedules`](../../../../../../api-reference/bulk-sync/schedules/list).\nTo update the schedule, use\n[`PUT /api/bulk/syncs/{sync_id}/schedules/{schedule_id}`](../../../../../../api-reference/bulk-sync/schedules/update)."
+        },
+        {
+          "info": {
+            "name": "Update Bulk Sync Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/schedules/:schedule_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "schedule_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the schedule to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing schedule on a bulk sync.\n\nUpdates replace the stored schedule. Send the full schedule definition\nrather than only the field you want to change. Schedule times are\ninterpreted in UTC."
+        },
+        {
+          "info": {
+            "name": "Delete Bulk Sync Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/schedules/:schedule_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "schedule_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the schedule to delete."
+              }
+            ]
+          },
+          "docs": "Removes a schedule from a bulk sync.\n\nDeleting a schedule only stops future automatic executions. It does not\ncancel an execution that is already running."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_queryRunner",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run Query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connections/:connection_id/query",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection to run the query against."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "The query to execute against the connection."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a query for asynchronous execution against the connection.\n\nThis endpoint returns immediately with a query task ID. It does not wait for\nthe query to finish. Poll [`GET /api/queries/{id}`](../../../../api-reference/query-runner/get-query) until `status`\nreaches `done` or `failed`.\n\nOnly the user who created the query can fetch its results later. Query results\nare stored temporarily and may expire; use the `expires` field from the result\nendpoint to understand how long they will remain av"
+        },
+        {
+          "info": {
+            "name": "Get Query Results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/queries/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the query task, as returned by POST /api/connections/{connection_id}/query."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Opaque pagination token returned in the links.next or links.previous URL of the previous response."
+              }
+            ]
+          },
+          "docs": "Fetches the latest status for a submitted query and, once complete, returns fields and paginated results.\n\nThis endpoint is the second step of the query-runner flow. First call\n[`POST /api/connections/{connection_id}/query`](../../../api-reference/query-runner/run-query),\nthen poll this endpoint with the returned ID.\n\nResults may be paginated across multiple blobs. When that happens, use the\nopaque `links.next` and `links.previous` URLs exactly as returned. Do not try to\nconstruct the `page` tok"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_schemas",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upsert Schema Fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connections/:connection_id/schemas/:schema_id/fields",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the schema the fields belong to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates user-defined fields on a schema, matched by field_id.\n\nFields are matched by `field_id`. Reusing an existing `field_id` updates that\nfield; using a new `field_id` creates a new user-defined field.\n\nThis makes the endpoint safe to retry when you are intentionally upserting the\nsame field definitions. It is not a patch-by-position operation.\n\nIf some fields succeed and others fail, the endpoint can return a partial\nsuccess response. Validate the response status and message rathe"
+        },
+        {
+          "info": {
+            "name": "Patch Schema Field",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.polytomic.com/api/connections/:connection_id/schemas/:schema_id/fields/:field_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Connection holding the schema."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Schema identifier."
+              },
+              {
+                "name": "field_id",
+                "value": "",
+                "type": "path",
+                "description": "Field identifier within the schema."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Edits a single field on a schema, creating an override for a detected field if needed."
+        },
+        {
+          "info": {
+            "name": "Delete Schema Field",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/connections/:connection_id/schemas/:schema_id/fields/:field_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the schema the field belongs to."
+              },
+              {
+                "name": "field_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the user-defined field to delete."
+              }
+            ]
+          },
+          "docs": "Removes a user-defined field from a schema.\n\nOnly user-defined fields — those created via\n[`POST /api/connections/{connection_id}/schemas/{schema_id}/fields`](../../../../../../../api-reference/schemas/upsert-field)\n— can be removed through this endpoint. Fields detected automatically from\nthe source cannot be deleted here; they are managed through schema refresh.\n\n> 🚧 Deleting a field that is referenced in an active sync mapping may cause\n> that sync to error on its next execution. Remove or u"
+        },
+        {
+          "info": {
+            "name": "Set Primary Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/connections/:connection_id/schemas/:schema_id/primary_keys",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the schema whose primary keys are being overridden."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Overrides the primary key detected on a schema.\n\nThis is a full replacement: the keys you supply become the complete override\nset, replacing any previously configured overrides. Omitting a key that was\npreviously set removes it.\n\nPrimary key overrides are useful when the source does not expose a primary\nkey or when the source-detected key is not the correct deduplication\nidentifier for your use case.\n\n> 📘 To revert to the source-detected primary keys and remove all overrides,\n> use [`DELETE /ap"
+        },
+        {
+          "info": {
+            "name": "Reset Primary Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/connections/:connection_id/schemas/:schema_id/primary_keys",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the schema whose primary key override should be cleared."
+              }
+            ]
+          },
+          "docs": "Deletes all primary key overrides for a schema, reverting to the primary keys detected from the source.\n\nTo replace the overrides with a new set rather than clearing them entirely,\nuse [`PUT /api/connections/{connection_id}/schemas/{schema_id}/primary_keys`](../../../../../../api-reference/schemas/set-primary-keys)\ninstead."
+        },
+        {
+          "info": {
+            "name": "Refresh Connection Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connections/:id/schemas/refresh",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection whose schema cache should be refreshed."
+              }
+            ]
+          },
+          "docs": "Refreshes a connection's cached schemas.\n\nCall this when the upstream source has added, removed, or changed tables,\nobjects, or fields and you need Polytomic to re-inspect the connection before\ncreating or updating sync configuration.\n\nThis endpoint does not return the refreshed schemas directly. Follow the\n`Location` header or poll [`GET /api/connections/{id}/schemas/status`](../../../../../api-reference/schemas/get-status)\nuntil the refresh completes, then fetch the schemas you need.\n\n> 📘 Sch"
+        },
+        {
+          "info": {
+            "name": "Get Schema Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/schemas/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection whose schema cache status should be returned."
+              }
+            ]
+          },
+          "docs": "Returns the current schema inspection status for a connection.\n\nPoll this endpoint after calling\n[`POST /api/connections/{id}/schemas/refresh`](../../../../../api-reference/schemas/refresh) to track\nprogress. When `status` transitions to `completed`, the refreshed schemas\nare available for use in sync configuration.\n\n> 📘 Schema refresh is asynchronous\n>\n> This endpoint kicks off a background refresh of the connection's cached\n> schemas and returns a `Location` header pointing at\n> [`GET /api/co"
+        },
+        {
+          "info": {
+            "name": "Get Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/schemas/:schema_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the schema within the connection. Format depends on the connection type (e.g. schema.table for databases, object name for SaaS backends)."
+              }
+            ]
+          },
+          "docs": "Returns a single schema on a connection.\n\nThe schema is returned from the connection's cached schema set. If the\nupstream source has changed since the last inspection, the result may be\nstale.\n\n> 📘 Trigger [`POST /api/connections/{id}/schemas/refresh`](../../../../../api-reference/schemas/refresh)\n> and wait for it to complete before fetching this endpoint if you need\n> up-to-date field definitions."
+        },
+        {
+          "info": {
+            "name": "Get Schema Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/schemas/:schema_id/records",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the schema within the connection."
+              }
+            ]
+          },
+          "docs": "Returns a sample of records from a schema on a connection.\n\nThe sample is intended for previewing the shape and values of data before\ncommitting to a sync configuration, not for full data export.\n\n> 🚧 The sample is not guaranteed to be representative of the full dataset.\n> Row selection is implementation-defined and may differ across connection\n> types.\n\n> 📘 If the schema's field definitions are stale, refresh them first with\n> [`POST /api/connections/{id}/schemas/refresh`](../../../../../../a"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query",
+                "description": "Organization to list events for. Only used by system callers; normal and partner callers are always scoped to their own organization."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter to a single event type. Use GET /api/events_types to list valid values."
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Return events created strictly after this timestamp."
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Return events created strictly before this timestamp."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of events to return. Default 10, maximum 100."
+              }
+            ]
+          },
+          "docs": "Lists audit events for the caller's organization.\n\nResults are paginated. If more events are available, the response includes\n`pagination.next_page_token`; pass that token back unchanged to continue from\nthe last item you received.\n\nFilter by event type using the `event_type` query parameter. Pass one of the\nidentifiers returned by [`GET /api/events_types`](../../api-reference/events/get-types) to\nnarrow results to a specific category of activity.\n\n> 📘 Events reflect audit activity scoped to th"
+        },
+        {
+          "info": {
+            "name": "Get Event Types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/events_types",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns the set of event type identifiers supported by GET /api/events.\n\nUse the identifiers returned here as the `event_type` filter value when calling\n[`GET /api/events`](../../api-reference/events/list)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/webhooks",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists the webhooks for the caller's organization.\n\n> 📘 One webhook per organization\n>\n> An organization can register a single webhook, which receives every event\n> produced in that organization. See the\n> [Events documentation](../../guides/events) for the\n> list of event types and payload shapes."
+        },
+        {
+          "info": {
+            "name": "Create Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/webhooks",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates the organization's webhook.\n\n> 📘 One webhook per organization\n>\n> An organization can register a single webhook, which receives every event\n> produced in that organization. See the\n> [Events documentation](../../guides/events) for the\n> list of event types and payload shapes."
+        },
+        {
+          "info": {
+            "name": "Get Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/webhooks/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single webhook by ID.\n\n> 📘 One webhook per organization\n>\n> An organization can register a single webhook, which receives every event\n> produced in that organization. See the\n> [Events documentation](../../../guides/events) for the\n> list of event types and payload shapes."
+        },
+        {
+          "info": {
+            "name": "Update Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/webhooks/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing webhook.\n\n> 📘 One webhook per organization\n>\n> An organization can register a single webhook, which receives every event\n> produced in that organization. See the\n> [Events documentation](../../../guides/events) for the\n> list of event types and payload shapes."
+        },
+        {
+          "info": {
+            "name": "Delete Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/webhooks/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a webhook.\n\n> 📘 One webhook per organization\n>\n> An organization can register a single webhook, which receives every event\n> produced in that organization. See the\n> [Events documentation](../../../guides/events) for the\n> list of event types and payload shapes.\n\nDeletion is permanent. To stop delivery without losing the webhook\nconfiguration, use\n[`POST /api/webhooks/{id}/disable`](../../../api-reference/webhooks/disable) instead."
+        },
+        {
+          "info": {
+            "name": "Disable Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/webhooks/:id/disable",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Disables a webhook without deleting it.\n\n> 📘 One webhook per organization\n>\n> An organization can register a single webhook, which receives every event\n> produced in that organization. See the\n> [Events documentation](../../../../guides/events) for the\n> list of event types and payload shapes.\n\nEvents are not queued while the webhook is disabled — any activity that occurs\nduring the disabled period is not delivered retroactively. To resume\ndelivery, re-enable the webhook using\n[`POST /api/webho"
+        },
+        {
+          "info": {
+            "name": "Enable Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/webhooks/:id/enable",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Re-enables a previously disabled webhook.\n\n> 📘 One webhook per organization\n>\n> An organization can register a single webhook, which receives every event\n> produced in that organization. See the\n> [Events documentation](../../../../guides/events) for the\n> list of event types and payload shapes.\n\nDelivery resumes from the next event generated after this call. Events that\noccurred while the webhook was disabled are not replayed."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/jobs/:type/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the job (usually returned by whichever endpoint started the job)."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "Job type. One of: createmodel, updatemodel, previewmodel, samplemodel, exportlogs."
+              }
+            ]
+          },
+          "docs": "Returns the current state of an asynchronous job.\n\nThis endpoint is used as a polling target by other asynchronous workflows such\nas model preview and log export. The caller must know the job `type` and `id`\nthat were returned when the job was created.\n\nIf the job is still running, the response returns `status: running` and may not\ninclude a `result` yet. Once complete, `status` becomes `done` or `failed`.\n\nOnly specific job types are supported by this endpoint. Passing an unknown\n`type` returns"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_identity",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/me",
+            "headers": [
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns information about the authenticated caller and, if applicable, the organization they are scoped to.\n\nUse this endpoint to confirm which kind of credential is being used before\ncalling endpoints with stricter authorization rules.\n\nFor user-scoped credentials, the response includes the resolved user and\norganization details. For non-user keys, the response identifies the key class\nwith the corresponding boolean flags instead of impersonating a user.\n\nThis endpoint is especially useful when"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_organization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Current Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organization",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns the organization the caller is authenticated against.\n\nThis endpoint is the safest way to discover the effective organization for a\nuser-scoped or organization-scoped credential. It does not let callers inspect\narbitrary organizations; it only returns the organization implied by the\ncredential that authenticated the request.\n\nIf you need to enumerate or look up organizations across a partner account, use\n[`GET /api/organizations`](../../api-reference/organization/list) or\n[`GET /api/orga"
+        },
+        {
+          "info": {
+            "name": "Get Organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organizations",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists every organization accessible to the calling partner, with the partner's owner organization first.\n\nIn `2025-09-18`, this endpoint is partner-scoped rather than a general\n\"current caller visibility\" listing. The partner owner organization is returned\nfirst, followed by child organizations.\n\nThis ordering matters for partner workflows such as shared connections, where\nthe parent connection must live in the partner owner organization.\n\nIf you need only the organization implied by the current"
+        },
+        {
+          "info": {
+            "name": "Create Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/organizations",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new organization under the calling partner account, optionally configuring SSO or OIDC at creation time.\n\n> 🚧 Requires partner key\n>\n> This endpoint is only accessible using [partner keys](../../guides/obtaining-api-keys#partner-keys).\n\nSSO and OIDC settings supplied at creation time can be updated later via\n`PUT /api/organizations/{id}`."
+        },
+        {
+          "info": {
+            "name": "Get Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organizations/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization."
+              }
+            ]
+          },
+          "docs": "Returns a single organization by ID.\n\n> 📘 Credential scope varies by endpoint and API version\n>\n> Organization endpoints do not all share the same credential requirements.\n> Check each endpoint's description for the caller scope that applies in that\n> API version."
+        },
+        {
+          "info": {
+            "name": "Update Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/organizations/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an organization's name and SSO or OIDC configuration.\n\n> 🚧 Requires partner key\n>\n> This endpoint is only accessible using [partner keys](../../../guides/obtaining-api-keys#partner-keys).\n\n> 📘 SSO and OIDC configuration is replaced in full on each update. Include all\n> desired settings in the request body, not just the fields you want to change."
+        },
+        {
+          "info": {
+            "name": "Delete Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/organizations/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization."
+              }
+            ]
+          },
+          "docs": "Deletes an organization.\n\nPartner callers cannot delete their own owner organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Current Org Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organization/users",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists every user in the caller's current organization.\n\nReturns user records including each user's ID, email, and assigned roles."
+        },
+        {
+          "info": {
+            "name": "Create Current Org User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/organization/users",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new user in the caller's current organization and assigns the requested permissions roles.\n\nThe new user receives an invitation email prompting them to set up their\naccount. Role assignments take effect as soon as the invitation is accepted."
+        },
+        {
+          "info": {
+            "name": "Get Current Org User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organization/users/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user."
+              }
+            ]
+          },
+          "docs": "Returns a single user from the caller's current organization."
+        },
+        {
+          "info": {
+            "name": "Update Current Org User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/organization/users/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the permissions roles assigned to a user in the caller's current organization.\n\nOnly the user's role assignments are modified. Profile information such as name\nand email address is not affected by this endpoint."
+        },
+        {
+          "info": {
+            "name": "Delete Current Org User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/organization/users/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user."
+              }
+            ]
+          },
+          "docs": "Deletes a user from the caller's current organization.\n\n> 🚧 This action is permanent. The user is immediately removed from the\n> organization and loses access to all resources within it. This cannot be\n> undone."
+        },
+        {
+          "info": {
+            "name": "List Partner Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/users",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization whose users should be listed."
+              }
+            ]
+          },
+          "docs": "Lists all users in the specified organization.\n\n> 🚧 Requires partner key\n>\n> User endpoints are only accessible using [partner keys](../../../../guides/obtaining-api-keys#partner-keys).\n\nReturns user records including each user's ID, email, and assigned roles."
+        },
+        {
+          "info": {
+            "name": "Create Partner User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/users",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization the user belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new user in the specified organization and assigns the requested permissions roles.\n\n> 🚧 Requires partner key\n>\n> User endpoints are only accessible using [partner keys](../../../../guides/obtaining-api-keys#partner-keys).\n\nThe new user receives an invitation email prompting them to set up their\naccount. Role assignments take effect as soon as the invitation is accepted."
+        },
+        {
+          "info": {
+            "name": "Get Partner User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/users/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user."
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization the user belongs to."
+              }
+            ]
+          },
+          "docs": "Returns a single user in the specified organization.\n\n> 🚧 Requires partner key\n>\n> User endpoints are only accessible using [partner keys](../../../../../guides/obtaining-api-keys#partner-keys)."
+        },
+        {
+          "info": {
+            "name": "Update Partner User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/users/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user to update."
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization the user belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a user's assigned permissions roles.\n\n> 🚧 Requires partner key\n>\n> User endpoints are only accessible using [partner keys](../../../../../guides/obtaining-api-keys#partner-keys).\n\nOnly the user's role assignments are modified. Profile information such as name\nand email address is not affected by this endpoint."
+        },
+        {
+          "info": {
+            "name": "Delete Partner User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/users/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user."
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization the user belongs to."
+              }
+            ]
+          },
+          "docs": "Deletes a user from the specified organization.\n\n> 🚧 Requires partner key\n>\n> User endpoints are only accessible using [partner keys](../../../../../guides/obtaining-api-keys#partner-keys).\n\n> 🚧 This action is permanent. The user is immediately removed from the\n> organization and loses access to all resources within it. This cannot be\n> undone."
+        },
+        {
+          "info": {
+            "name": "Create Partner User API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/users/:id/keys",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization the user belongs to."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user the key will be issued for."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "If true, revoke any existing API key for the user before creating a new one."
+              }
+            ]
+          },
+          "docs": "Issues a new API key for the specified user.\n\n> 🚧 The API key value is only included in the response at creation time and\n> cannot be retrieved again. Store it securely immediately after creation."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_permissions.subpackage_permissions/policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/permissions/policies",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists all policies in the caller's organization.\n\nEach policy binds one or more roles to a set of resources, controlling what\nactions members with those roles can perform on those resources.\n\nTo inspect a specific policy in detail, use\n[`GET /api/permissions/policies/{id}`](../../../api-reference/permissions/policies/get)."
+        },
+        {
+          "info": {
+            "name": "Create Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/permissions/policies",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new policy.\n\nA policy binds one or more roles to a set of resources, granting members who\nhold those roles the actions defined by them. Roles must already exist before\nthey are referenced in a policy; create roles using\n[`POST /api/permissions/roles`](../../../api-reference/permissions/roles/create)."
+        },
+        {
+          "info": {
+            "name": "Get Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/permissions/policies/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single policy by ID, including all action/role bindings it defines.\n\nReturns the full set of action/role bindings defined by the policy, including\nthe resources it applies to."
+        },
+        {
+          "info": {
+            "name": "Update Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/permissions/policies/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing policy.\n\nThe update is a **full replacement** of the policy's bindings. Any role or\nresource binding not included in the request body is removed. To make a\npartial change, fetch the current policy with\n[`GET /api/permissions/policies/{id}`](../../../../api-reference/permissions/policies/get), modify the relevant bindings,\nand send the complete object back."
+        },
+        {
+          "info": {
+            "name": "Delete Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/permissions/policies/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a policy.\n\nDeletion is permanent. Any access that was granted solely through this policy\nis revoked immediately for all users who depended on it."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_permissions.subpackage_permissions/roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/permissions/roles",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists all permissions roles available in the caller's organization, including built-in system roles.\n\nSystem roles such as Admin and Member are always present in every organization\nand cannot be modified or deleted. Custom roles appear alongside them and can\nbe created, updated, or removed as needed.\n\nTo inspect or modify a specific role, use\n[`GET /api/permissions/roles/{id}`](../../../api-reference/permissions/roles/get)."
+        },
+        {
+          "info": {
+            "name": "Create Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/permissions/roles",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new permissions role.\n\nProvide a `name` for the new role. The role is immediately available for use\nin permission policies.\n\nTo attach the role to resources, create or update a policy using\n[`POST /api/permissions/policies`](../../../api-reference/permissions/policies/create)."
+        },
+        {
+          "info": {
+            "name": "Get Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/permissions/roles/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single permissions role by ID.\n\nReturns the role's name, action set, and whether it is a built-in system role."
+        },
+        {
+          "info": {
+            "name": "Update Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/permissions/roles/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing permissions role's name and action set.\n\nThe update is a **full replacement** of the role definition.\n\n> 🚧 Built-in system roles (such as Admin and Member) cannot be updated.\n> Attempting to modify a system role returns an error."
+        },
+        {
+          "info": {
+            "name": "Delete Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/permissions/roles/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a permissions role.\n\n> 🚧 Built-in system roles (such as Admin and Member) cannot be deleted.\n> Attempting to delete a system role returns an error.\n\nDeleting a role does not automatically remove it from any policies that\nreference it. Update those policies separately using\n[`PUT /api/permissions/policies/{id}`](../../../../api-reference/permissions/policies/update) to avoid\nleaving stale role references."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_entities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/entities/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the entity to resolve."
+              }
+            ]
+          },
+          "docs": "Returns a resolved entity by ID.\n\nLooks up a UUID within the caller's current organization and returns the\nresource type plus enough context to fetch the canonical resource.\n\nThis endpoint is useful when you have an execution, sync, model, connection,\norganization, or user UUID and need to determine what it refers to.\n\nThe response always includes:\n\n- `id`: the UUID that was resolved.\n- `type`: the resolved entity type.\n- `canonical_path`: the canonical REST path for the resolved resource.\n\nThe "
+        },
+        {
+          "info": {
+            "name": "Get Partner Entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organizations/entities/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the entity to resolve."
+              }
+            ]
+          },
+          "docs": "Returns a resolved entity by ID within a partner organization scope.\n\nLooks up a UUID across organizations using partner authentication and returns\nthe resource type plus enough context to fetch the canonical resource.\n\nThis endpoint is intended for cross-organization partner workflows where the\ncaller has an arbitrary UUID and needs to discover both the resource type and\nthe organization it belongs to.\n\nThe response always includes:\n\n- `id`: the UUID that was resolved.\n- `type`: the resolved en"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_notifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Global Error Subscribers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/notifications/global-error-subscribers",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns the list of email addresses subscribed to global sync error notifications for the caller's organization.\n\nTo update the subscriber list, use\n[`PUT /api/notifications/global-error-subscribers`](../../../api-reference/notifications/set-global-error-subscribers)."
+        },
+        {
+          "info": {
+            "name": "Update Global Error Subscribers",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/notifications/global-error-subscribers",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces the list of email addresses subscribed to global sync error notifications for the caller's organization.\n\nThis is a **full replacement** — the request body becomes the complete\nsubscriber list. To add or remove a single address without affecting others,\nfetch the current list with\n[`GET /api/notifications/global-error-subscribers`](../../../api-reference/notifications/get-global-error-subscribers), apply your change,\nand send the modified list back."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

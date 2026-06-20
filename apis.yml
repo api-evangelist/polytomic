@@ -5,7 +5,7 @@ description: >-
   applications. The Polytomic REST API exposes connections, syncs, models, bulk syncs, identity, schemas, and webhooks
   for programmatic management of data movement.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Data Integration
   - Reverse ETL

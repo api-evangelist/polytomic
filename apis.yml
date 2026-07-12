@@ -39,6 +39,14 @@ apis:
       - type: OpenAPI
         url: openapi/polytomic-openapi.json
 common:
+  - type: TrustCenter
+    url: security/polytomic-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/polytomic-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/polytomic-domain-security.yml
+  - type: Authentication
+    url: authentication/polytomic-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/polytomic
   - type: Website
@@ -51,6 +59,8 @@ common:
     url: https://github.com/polytomic
   - type: LlmsText
     url: https://docs.polytomic.com/llms.txt
+  - url: https://polytomic.com/blog
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

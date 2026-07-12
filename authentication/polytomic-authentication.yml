@@ -1,0 +1,19 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/polytomic-openapi.json
+summary:
+  types:
+  - http
+schemes:
+- name: bearerUserAPIKey
+  type: http
+  scheme: bearer
+  description: Bearer user API key
+  sources:
+  - openapi/polytomic-openapi.json
+- name: orgScopedAPIKey
+  type: http
+  scheme: basic
+  description: Basic organization-scoped API key
+  sources:
+  - openapi/polytomic-openapi.json

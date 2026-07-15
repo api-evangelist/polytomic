@@ -39,6 +39,8 @@ apis:
       - type: OpenAPI
         url: openapi/polytomic-openapi.json
 common:
+  - type: AgenticAccess
+    url: agentic-access/polytomic-agentic-access.yml
   - type: TrustCenter
     url: security/polytomic-trust-center.yml
   - type: VulnerabilityDisclosure

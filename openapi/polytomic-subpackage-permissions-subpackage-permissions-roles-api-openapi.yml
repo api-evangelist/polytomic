@@ -1,0 +1,370 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_permissions.subpackage_permissions/roles API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_permissions.subpackage_permissions/roles
+paths:
+  /api/permissions/roles:
+    get:
+      operationId: list
+      summary: List Roles
+      description: 'Lists all permissions roles available in the caller''s organization, including built-in system roles.
+
+
+        System roles such as Admin and Member are always present in every organization
+
+        and cannot be modified or deleted. Custom roles appear alongside them and can
+
+        be created, updated, or removed as needed.
+
+
+        To inspect or modify a specific role, use
+
+        [`GET /api/permissions/roles/{id}`](../../../api-reference/permissions/roles/get).'
+      tags:
+      - subpackage_permissions.subpackage_permissions/roles
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleListResponseEnvelope'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    post:
+      operationId: create
+      summary: Create Role
+      description: 'Creates a new permissions role.
+
+
+        Provide a `name` for the new role. The role is immediately available for use
+
+        in permission policies.
+
+
+        To attach the role to resources, create or update a policy using
+
+        [`POST /api/permissions/policies`](../../../api-reference/permissions/policies/create).'
+      tags:
+      - subpackage_permissions.subpackage_permissions/roles
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRoleRequest'
+  /api/permissions/roles/{id}:
+    get:
+      operationId: get
+      summary: Get Role
+      description: 'Returns a single permissions role by ID.
+
+
+        Returns the role''s name, action set, and whether it is a built-in system role.'
+      tags:
+      - subpackage_permissions.subpackage_permissions/roles
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleResponseEnvelope'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    put:
+      operationId: update
+      summary: Update Role
+      description: 'Updates an existing permissions role''s name and action set.
+
+
+        The update is a **full replacement** of the role definition.
+
+
+        > 🚧 Built-in system roles (such as Admin and Member) cannot be updated.
+
+        > Attempting to modify a system role returns an error.'
+      tags:
+      - subpackage_permissions.subpackage_permissions/roles
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRoleRequest'
+    delete:
+      operationId: delete
+      summary: Delete Role
+      description: 'Deletes a permissions role.
+
+
+        > 🚧 Built-in system roles (such as Admin and Member) cannot be deleted.
+
+        > Attempting to delete a system role returns an error.
+
+
+        Deleting a role does not automatically remove it from any policies that
+
+        reference it. Update those policies separately using
+
+        [`PUT /api/permissions/policies/{id}`](../../../../api-reference/permissions/policies/update) to avoid
+
+        leaving stale role references.'
+      tags:
+      - subpackage_permissions.subpackage_permissions/roles
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+components:
+  schemas:
+    UpdateRoleRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+      required:
+      - name
+      title: UpdateRoleRequest
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    RoleResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        system:
+          type: boolean
+      title: RoleResponse
+    CreateRoleRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+      required:
+      - name
+      title: CreateRoleRequest
+    RoleListResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RoleResponse'
+      title: RoleListResponseEnvelope
+    RoleResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RoleResponse'
+      title: RoleResponseEnvelope
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

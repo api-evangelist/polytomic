@@ -1,0 +1,823 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_users API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_users
+paths:
+  /api/organization/users:
+    get:
+      operationId: list-current-org-users
+      summary: List Current Org Users
+      description: 'Lists every user in the caller''s current organization.
+
+
+        Returns user records including each user''s ID, email, and assigned roles.'
+      tags:
+      - subpackage_users
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    post:
+      operationId: create-current-org-user
+      summary: Create Current Org User
+      description: 'Creates a new user in the caller''s current organization and assigns the requested permissions roles.
+
+
+        The new user receives an invitation email prompting them to set up their
+
+        account. Role assignments take effect as soon as the invitation is accepted.'
+      tags:
+      - subpackage_users
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CurrentOrgCreateUserRequestSchema'
+  /api/organization/users/{id}:
+    get:
+      operationId: get-current-org-user
+      summary: Get Current Org User
+      description: Returns a single user from the caller's current organization.
+      tags:
+      - subpackage_users
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the user.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    put:
+      operationId: update-current-org-user
+      summary: Update Current Org User
+      description: 'Updates the permissions roles assigned to a user in the caller''s current organization.
+
+
+        Only the user''s role assignments are modified. Profile information such as name
+
+        and email address is not affected by this endpoint.'
+      tags:
+      - subpackage_users
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the user to update.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CurrentOrgUpdateUserRequestSchema'
+    delete:
+      operationId: delete-current-org-user
+      summary: Delete Current Org User
+      description: 'Deletes a user from the caller''s current organization.
+
+
+        > 🚧 This action is permanent. The user is immediately removed from the
+
+        > organization and loses access to all resources within it. This cannot be
+
+        > undone.'
+      tags:
+      - subpackage_users
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the user.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/organizations/{org_id}/users:
+    get:
+      operationId: list
+      summary: List Partner Users
+      description: 'Lists all users in the specified organization.
+
+
+        > 🚧 Requires partner key
+
+        >
+
+        > User endpoints are only accessible using [partner keys](../../../../guides/obtaining-api-keys#partner-keys).
+
+
+        Returns user records including each user''s ID, email, and assigned roles.'
+      tags:
+      - subpackage_users
+      parameters:
+      - name: org_id
+        in: path
+        description: Unique identifier of the organization whose users should be listed.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer partner API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    post:
+      operationId: create
+      summary: Create Partner User
+      description: 'Creates a new user in the specified organization and assigns the requested permissions roles.
+
+
+        > 🚧 Requires partner key
+
+        >
+
+        > User endpoints are only accessible using [partner keys](../../../../guides/obtaining-api-keys#partner-keys).
+
+
+        The new user receives an invitation email prompting them to set up their
+
+        account. Role assignments take effect as soon as the invitation is accepted.'
+      tags:
+      - subpackage_users
+      parameters:
+      - name: org_id
+        in: path
+        description: Unique identifier of the organization the user belongs to.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer partner API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequestSchema'
+  /api/organizations/{org_id}/users/{id}:
+    get:
+      operationId: get
+      summary: Get Partner User
+      description: 'Returns a single user in the specified organization.
+
+
+        > 🚧 Requires partner key
+
+        >
+
+        > User endpoints are only accessible using [partner keys](../../../../../guides/obtaining-api-keys#partner-keys).'
+      tags:
+      - subpackage_users
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the user.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: org_id
+        in: path
+        description: Unique identifier of the organization the user belongs to.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer partner API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    put:
+      operationId: update
+      summary: Update Partner User
+      description: 'Updates a user''s assigned permissions roles.
+
+
+        > 🚧 Requires partner key
+
+        >
+
+        > User endpoints are only accessible using [partner keys](../../../../../guides/obtaining-api-keys#partner-keys).
+
+
+        Only the user''s role assignments are modified. Profile information such as name
+
+        and email address is not affected by this endpoint.'
+      tags:
+      - subpackage_users
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the user to update.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: org_id
+        in: path
+        description: Unique identifier of the organization the user belongs to.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer partner API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequestSchema'
+    delete:
+      operationId: delete
+      summary: Delete Partner User
+      description: 'Deletes a user from the specified organization.
+
+
+        > 🚧 Requires partner key
+
+        >
+
+        > User endpoints are only accessible using [partner keys](../../../../../guides/obtaining-api-keys#partner-keys).
+
+
+        > 🚧 This action is permanent. The user is immediately removed from the
+
+        > organization and loses access to all resources within it. This cannot be
+
+        > undone.'
+      tags:
+      - subpackage_users
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the user.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: org_id
+        in: path
+        description: Unique identifier of the organization the user belongs to.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer partner API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/organizations/{org_id}/users/{id}/keys:
+    post:
+      operationId: create-api-key
+      summary: Create Partner User API Key
+      description: 'Issues a new API key for the specified user.
+
+
+        > 🚧 The API key value is only included in the response at creation time and
+
+        > cannot be retrieved again. Store it securely immediately after creation.'
+      tags:
+      - subpackage_users
+      parameters:
+      - name: org_id
+        in: path
+        description: Unique identifier of the organization the user belongs to.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: id
+        in: path
+        description: Unique identifier of the user the key will be issued for.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: force
+        in: query
+        description: If true, revoke any existing API key for the user before creating a new one.
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        description: Bearer partner API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIKeyResponseEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address used to sign in and receive notifications.
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the user.
+        organization_id:
+          type: string
+          format: uuid
+          description: Unique identifier of the organization the user belongs to.
+        role:
+          type: string
+          description: Deprecated legacy role name. Use role_ids instead.
+        role_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+          description: Identifiers of the permissions roles assigned to the user.
+      title: User
+    APIKeyResponse:
+      type: object
+      properties:
+        value:
+          type: string
+          description: Newly created API key. This value is shown only once; store it securely.
+      title: APIKeyResponse
+    APIKeyResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/APIKeyResponse'
+      title: APIKeyResponseEnvelope
+    ListUsersEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/User'
+      title: ListUsersEnvelope
+    UpdateUserRequestSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address used to sign the user in and receive notifications.
+        role:
+          type: string
+          description: Deprecated legacy role name. Use role_ids instead; setting both role and role_ids in the same request is rejected.
+        role_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Identifiers of the permissions roles to assign to the user. Must contain at least one entry when provided.
+      required:
+      - email
+      title: UpdateUserRequestSchema
+    UserEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/User'
+      title: UserEnvelope
+    CurrentOrgUpdateUserRequestSchema:
+      type: object
+      properties:
+        role:
+          type: string
+          description: Deprecated legacy role name. Use role_ids instead.
+        role_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Identifiers of the permissions roles to assign to the user. Must contain at least one entry when provided.
+      title: CurrentOrgUpdateUserRequestSchema
+    CurrentOrgCreateUserRequestSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address used to sign the user in and receive notifications.
+        role:
+          type: string
+          description: Deprecated legacy role name. Use role_ids instead; setting both role and role_ids in the same request is rejected.
+        role_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Identifiers of the permissions roles to assign to the user. Must contain at least one entry when provided.
+      required:
+      - email
+      title: CurrentOrgCreateUserRequestSchema
+    CreateUserRequestSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address used to sign the user in and receive notifications.
+        role:
+          type: string
+          description: Deprecated legacy role name. Use role_ids instead; setting both role and role_ids in the same request is rejected.
+        role_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Identifiers of the permissions roles to assign to the user. Must contain at least one entry when provided.
+      required:
+      - email
+      title: CreateUserRequestSchema
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

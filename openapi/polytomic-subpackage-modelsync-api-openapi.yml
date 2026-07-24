@@ -1,0 +1,1709 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_modelSync API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_modelSync
+paths:
+  /api/connections/{id}/modelsync/source:
+    get:
+      operationId: get-source
+      summary: Get Sync Source
+      description: 'Describes the source configuration available on a connection for use as a model sync source.
+
+
+        Use this endpoint before creating a model to understand what configuration is
+
+        available. Once you have a configuration, resolve the fields available for
+
+        sync mapping with
+
+        [`GET /api/connections/{id}/modelsync/source/fields`](../../../../../api-reference/model-sync/get-source-fields).'
+      tags:
+      - subpackage_modelSync
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the connection.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: params
+        in: query
+        description: Query parameters used to incrementally refine a dependent source configuration. Keys correspond to configuration fields returned by previous calls to this endpoint.
+        required: false
+        schema:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSyncSourceMetaEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/connections/{id}/modelsync/source/fields:
+    get:
+      operationId: get-source-fields
+      summary: Model Sync Field Query
+      description: 'Returns the source fields available on a connection for a given source configuration.
+
+
+        Pass the model''s source configuration as query parameters to resolve the
+
+        fields that the connection will expose for that specific configuration. The
+
+        returned fields are what can be referenced in sync field mappings.
+
+
+        > 📘 Results depend on the source configuration you supply. A different
+
+        > table or query in the configuration may return a completely different field
+
+        > list.
+
+
+        The available source configuration parameters are described by
+
+        [`GET /api/connections/{id}/modelsync/source`](../../../../../../api-reference/model-sync/get-source).'
+      tags:
+      - subpackage_modelSync
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the connection.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: params
+        in: query
+        description: Source configuration, matching the params used with GET /api/connections/{id}/modelsync/source, that selects the specific source to return fields for.
+        required: false
+        schema:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelFieldResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/syncs:
+    get:
+      operationId: list
+      summary: List Syncs
+      description: 'Lists model syncs in the caller''s organization.
+
+
+        Results are ordered by `updated_at` descending, with `id` used as a tiebreaker.
+
+        If more results are available, the response includes `pagination.next_page_token`.
+
+        Pass that token back unchanged to continue from the last item you received.
+
+
+        The token is opaque. Do not construct or edit it yourself.
+
+
+        The `limit` is capped at 50. Values above that cap are reduced to 50, and
+
+        non-positive values fall back to the same default.
+
+
+        This endpoint returns syncs visible to the current caller''s organization scope.
+
+        To inspect a specific sync in more detail, follow up with
+
+        [`GET /api/syncs/{id}`](../../api-reference/model-sync/get).'
+      tags:
+      - subpackage_modelSync
+      parameters:
+      - name: active
+        in: query
+        description: Filter to only active or only paused syncs.
+        required: false
+        schema:
+          type: boolean
+      - name: mode
+        in: query
+        description: Filter by sync target mode (e.g. create, updateOrCreate, enrich).
+        required: false
+        schema:
+          $ref: '#/components/schemas/ModelsyncSyncTargetMode'
+      - name: target_connection_id
+        in: query
+        description: Filter to syncs that write to the specified target connection.
+        required: false
+        schema:
+          type: string
+          format: uuid
+      - name: page_token
+        in: query
+        description: Pagination cursor returned in the previous response. Omit on the first request.
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of syncs to return. Default and maximum is 50.
+        required: false
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSyncResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    post:
+      operationId: create
+      summary: Create Sync
+      description: "Creates a new model sync.\n\nCreate a new sync from one or more models to a destination.\n\nAll of the functionality described in [the product\ndocumentation](https://docs.polytomic.com/docs/sync-destinations) is\nconfigurable via the API.\n\nGuides:\n\n- [Model sync (Reverse ETL) from Snowflake query to Salesforce](../../guides/code-examples/model-sync-reverse-etl-from-snowflake-query-to-salesforce)\n- [Joined model sync from Postgres, Airtable, and Stripe to Hubspot](../../guides/code-examples/joined-model-sync-from-postgres-airtable-and-stripe-to-hubspot)\n\n## Targets (Destinations)\n\nPolytomic refers to a model sync's destination as the \"target object\", or\ntarget. Target objects are identified by a connection ID and an object ID. You\ncan retrieve a list of all target objects for a connection using the [Get Target\nObjects](../../api-reference/model-sync/targets/list) endpoint.\n\nThe `target` object in the request specifies information about the sync destination.\n\n```json\n\"target\": {\n    \"connection_id\": \"248df4b7-aa70-47b8-a036-33ac447e668d\",\n    \"object\": \"Users\",\n},\n```\n\nSome connections support additional configuration for targets. For example,\n[Salesforce\nconnections](../../guides/configuring-your-connections/connections/salesforce#target)\nsupport optionally specifying the ingestion API to use. The target specific\noptions are passed as `configuration`; consult the [integration\nguides](../../guides/configuring-your-connections/overview)\nfor details about specific connection configurations.\n\n### Creating a new target\n\nSome integrations support creating a new target when creating a model sync. For\nexample, an ad audience or database table.\n\nWhen creating a new target, `object` is omitted and `create` is specified\ninstead. The `create` property is an object containing integration specific\nconfiguration for the new target.\n\n```json\n\"target\": {\n    \"connection_id\": \"248df4b7-aa70-47b8-a036-33ac447e668d\",\n    \"create\": {\n        \"name\": \"New audience\",\n        \"type\": \"user_audience\"\n    }\n},\n```\n\nThe [Get Target List](../../api-reference/model-sync/targets/list) endpoint returns information about whether\na connection supports target creation."
+      tags:
+      - subpackage_modelSync
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyncResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSyncRequest'
+  /api/syncs/schedules:
+    get:
+      operationId: get-schedule-options
+      summary: Get Sync Schedule Options
+      description: 'Returns the schedule types available when creating or updating a model sync.
+
+
+        Use the `type` identifiers returned by this endpoint in the `schedule` field
+
+        when creating or updating a sync via
+
+        [`POST /api/syncs`](../../../api-reference/model-sync/create) or [`PUT /api/syncs/{id}`](../../../api-reference/model-sync/update).'
+      tags:
+      - subpackage_modelSync
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleOptionResponseEnvelope'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/syncs/{id}:
+    get:
+      operationId: get
+      summary: Get Sync
+      description: 'Returns a single model sync by ID.
+
+
+        To check whether a sync is currently running or has recently completed, use
+
+        [`GET /api/syncs/{id}/status`](../../../api-reference/model-sync/get-status). For the full history of
+
+        executions, use [`GET /api/syncs/{id}/executions`](../../../api-reference/model-sync/executions/list).'
+      tags:
+      - subpackage_modelSync
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyncResponseEnvelope'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    put:
+      operationId: update
+      summary: Update Sync
+      description: 'Updates a model sync''s configuration.
+
+
+        Updating a model sync is a **full replacement** of the sync''s configuration.
+
+        Every field in the request body is written to the sync; any field you omit is
+
+        cleared or reset to its default value.
+
+
+        To make a partial change — for example, toggling `active` or adjusting a
+
+        single field mapping — fetch the current sync with
+
+        [`GET /api/syncs/{id}`](../../../api-reference/model-sync/get),
+
+        modify the fields you want to change, and send the complete object back in
+
+        the update request.
+
+
+        Updates to `active`, `schedule`, and `policies` take effect immediately.
+
+        Changes to source fields, target configuration, filters, or field mappings
+
+        take effect on the sync''s next execution.'
+      tags:
+      - subpackage_modelSync
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyncResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSyncRequest'
+    delete:
+      operationId: delete
+      summary: Delete Model Sync
+      description: 'Deletes a model sync, cancelling any running executions.
+
+
+        Deletion is permanent. Any running execution is cancelled before the sync
+
+        record is removed. Deleted syncs cannot be recovered; recreate them using
+
+        [`POST /api/syncs`](../../../api-reference/model-sync/create) if needed.'
+      tags:
+      - subpackage_modelSync
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/syncs/{id}/activate:
+    post:
+      operationId: activate
+      summary: Activate Sync
+      description: 'Sets whether a model sync is active.
+
+
+        Only active syncs execute on schedule or in response to a manual trigger. Set
+
+        `active` to `false` to pause a sync without deleting it.
+
+
+        > 📘 Deactivating a sync does not cancel an execution that is already in
+
+        > progress. Use [`POST /api/syncs/{id}/cancel`](../../../../api-reference/model-sync/cancel) to stop a
+
+        > running execution.'
+      tags:
+      - subpackage_modelSync
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivateSyncEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivateSyncInput'
+  /api/syncs/{id}/cancel:
+    post:
+      operationId: cancel
+      summary: Cancel Sync
+      description: 'Requests cancellation of any running executions on a model sync.
+
+
+        Cancellation is asynchronous. A successful response means the cancellation
+
+        signal has been queued; the running execution continues until the signal is
+
+        processed. Poll `GET /api/syncs/{id}/status` until the current execution
+
+        reaches a terminal state (`completed`, `canceled`, or `failed`) to confirm
+
+        cancellation has taken effect.'
+      tags:
+      - subpackage_modelSync
+      parameters:
+      - name: id
+        in: path
+        description: The active execution of this sync ID will be cancelled.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelSyncResponseEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/syncs/{id}/executions:
+    post:
+      operationId: start
+      summary: Start Sync
+      description: 'Starts a new execution of a model sync.
+
+
+        > 🚧 Force full resync
+
+        >
+
+        > Use caution when setting the `resync` parameter to `true`. This will force a full resync of the data from the source system. This can be a time-consuming operation and may impact the performance of the source system. It is recommended to only use this option when necessary.'
+      tags:
+      - subpackage_modelSync
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartSyncResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartSyncRequest'
+  /api/syncs/{id}/status:
+    get:
+      operationId: get-status
+      summary: Get Sync Status
+      description: 'Returns the current status of a model sync.
+
+
+        The response includes a summary of the most recent execution, including its
+
+        start time, completion time, and record counts. For the complete execution
+
+        history, use [`GET /api/syncs/{id}/executions`](../../../../api-reference/model-sync/executions/list).'
+      tags:
+      - subpackage_modelSync
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyncStatusEnvelope'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+components:
+  schemas:
+    SyncStatusResponse:
+      type: object
+      properties:
+        current_execution:
+          $ref: '#/components/schemas/GetExecutionResponseSchema'
+        last_execution:
+          $ref: '#/components/schemas/GetExecutionResponseSchema'
+        next_execution_time:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      title: SyncStatusResponse
+    ActivateSyncInput:
+      type: object
+      properties:
+        active:
+          type: boolean
+      required:
+      - active
+      title: ActivateSyncInput
+    SyncResponse:
+      type: object
+      properties:
+        active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          $ref: '#/components/schemas/OutputActor'
+        encryption_passphrase:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/SyncField'
+        filter_logic:
+          type: string
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Filter'
+        id:
+          type: string
+          format: uuid
+        identity:
+          $ref: '#/components/schemas/Identity'
+        mode:
+          $ref: '#/components/schemas/ModelsyncSyncTargetMode'
+        model_ids:
+          type: array
+          items:
+            type: string
+          description: Model IDs used in the sync.
+        name:
+          type: string
+        only_enrich_updates:
+          type: boolean
+        organization_id:
+          type: string
+          format: uuid
+        override_fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/SyncField'
+        overrides:
+          type: array
+          items:
+            $ref: '#/components/schemas/Override'
+        policies:
+          type: array
+          items:
+            type: string
+            format: uuid
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+        skip_initial_backfill:
+          type: boolean
+        sync_all_records:
+          type: boolean
+        target:
+          $ref: '#/components/schemas/Target'
+        updated_at:
+          type: string
+          format: date-time
+        updated_by:
+          $ref: '#/components/schemas/OutputActor'
+      title: SyncResponse
+    Schedule:
+      type: object
+      properties:
+        connection_id:
+          type: string
+          format: uuid
+        day_of_month:
+          type:
+          - string
+          - 'null'
+        day_of_week:
+          type:
+          - string
+          - 'null'
+        frequency:
+          $ref: '#/components/schemas/ScheduleFrequency'
+        hour:
+          type:
+          - string
+          - 'null'
+        job_id:
+          type:
+          - integer
+          - 'null'
+        minute:
+          type:
+          - string
+          - 'null'
+        month:
+          type:
+          - string
+          - 'null'
+        run_after:
+          $ref: '#/components/schemas/RunAfter'
+        run_after_success_only:
+          type:
+          - boolean
+          - 'null'
+          description: If true, the sync will only run if the dependent syncs completed successfully.
+      title: Schedule
+    ModelField:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          $ref: '#/components/schemas/OutputActor'
+        description:
+          type: string
+        example:
+          description: Any type
+        id:
+          type: string
+          format: uuid
+        label:
+          type: string
+        name:
+          type: string
+        remote_type:
+          type: string
+        type:
+          type: string
+        unique:
+          type: boolean
+        updated_at:
+          type: string
+          format: date-time
+        user_added:
+          type: boolean
+      title: ModelField
+    ScheduleOptionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ScheduleOptionResponse'
+      title: ScheduleOptionResponseEnvelope
+    CancelSyncResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      title: CancelSyncResponse
+    JsonschemaForm:
+      type: object
+      properties: {}
+      title: JsonschemaForm
+    SyncStatusEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SyncStatusResponse'
+      title: SyncStatusEnvelope
+    StartSyncResponseSchema:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+          description: Execution ID
+        status:
+          $ref: '#/components/schemas/UtilExecutionStatus'
+      title: StartSyncResponseSchema
+    CreateSyncRequest:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: Whether the sync is enabled and scheduled.
+        encryption_passphrase:
+          type: string
+          description: Passphrase for encrypting the sync data.
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/SyncField'
+          description: Fields to sync from source to destination.
+        filter_logic:
+          type: string
+          description: Logical expression to combine filters.
+        filters:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Filter'
+          description: Filters to apply to the source data.
+        identity:
+          $ref: '#/components/schemas/Identity'
+        mode:
+          $ref: '#/components/schemas/ModelsyncSyncTargetMode'
+        name:
+          type: string
+        only_enrich_updates:
+          type: boolean
+          description: Whether to use enrichment models as a source of possible changes to sync. If true, only changes to the base models will cause a record to sync.
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Organization ID for the sync; read-only with a partner key.
+        override_fields:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SyncField'
+          description: Values to set in the target unconditionally.
+        overrides:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Override'
+          description: Conditional value replacement for fields.
+        policies:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+        skip_initial_backfill:
+          type: boolean
+          description: Whether to skip the initial backfill of records; if true only records seen after the sync is enabled will be synced.
+        sync_all_records:
+          type: boolean
+          description: Whether to sync all records from the source, regardless of whether they've changed since the previous execution.
+        target:
+          $ref: '#/components/schemas/Target'
+      required:
+      - fields
+      - mode
+      - name
+      - schedule
+      - target
+      title: CreateSyncRequest
+    UtilExecutionStatus:
+      type: string
+      enum:
+      - created
+      - scheduled
+      - queued
+      - waiting
+      - running
+      - processing
+      - canceling
+      - canceled
+      - completed
+      - failed
+      - interrupted
+      title: UtilExecutionStatus
+    ActivateSyncEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ActivateSyncOutput'
+      title: ActivateSyncEnvelope
+    RunAfter:
+      type: object
+      properties:
+        bulk_sync_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        sync_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+      title: RunAfter
+    StartSyncRequest:
+      type: object
+      properties:
+        identities:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        resync:
+          type: boolean
+          default: false
+        test:
+          type: boolean
+          default: false
+      title: StartSyncRequest
+    PaginationDetails:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+      title: PaginationDetails
+    Filter:
+      type: object
+      properties:
+        field:
+          $ref: '#/components/schemas/Source'
+        field_id:
+          type: string
+          description: Model or Target field name to filter on.
+        field_type:
+          $ref: '#/components/schemas/FilterFieldReferenceType'
+        function:
+          $ref: '#/components/schemas/FilterFunction'
+        label:
+          type: string
+        value:
+          description: Any type
+      required:
+      - function
+      description: Either `field` or `field_id` must be provided. If `field` is provided, `field_id` is ignored.
+      title: Filter
+    OutputActor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        type:
+          type: string
+      title: OutputActor
+    GetExecutionResponseSchema:
+      type: object
+      properties:
+        completed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        counts:
+          $ref: '#/components/schemas/ExecutionCounts'
+        created_at:
+          type: string
+          format: date-time
+        errors:
+          type: array
+          items:
+            type: string
+        id:
+          type: string
+          format: uuid
+        started_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        status:
+          $ref: '#/components/schemas/UtilExecutionStatus'
+        type:
+          type: string
+      title: GetExecutionResponseSchema
+    SourceMeta:
+      type: object
+      properties:
+        has_items:
+          type: boolean
+          description: True when items is non-empty. Callers should present the values as a picker.
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            description: Any type
+          description: Valid values the caller may choose for this configuration item.
+        requires_one_of:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Other configuration items this item depends on; exactly one of the listed items must also be selected.
+      title: SourceMeta
+    UpdateSyncRequest:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: Whether the sync is enabled and scheduled.
+        encryption_passphrase:
+          type: string
+          description: Passphrase for encrypting the sync data.
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/SyncField'
+          description: Fields to sync from source to destination.
+        filter_logic:
+          type: string
+          description: Logical expression to combine filters.
+        filters:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Filter'
+          description: Filters to apply to the source data.
+        identity:
+          $ref: '#/components/schemas/Identity'
+        mode:
+          $ref: '#/components/schemas/ModelsyncSyncTargetMode'
+        name:
+          type: string
+        only_enrich_updates:
+          type: boolean
+          description: Whether to use enrichment models as a source of possible changes to sync. If true, only changes to the base models will cause a record to sync.
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Organization ID for the sync; read-only with a partner key.
+        override_fields:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SyncField'
+          description: Values to set in the target unconditionally.
+        overrides:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Override'
+          description: Conditional value replacement for fields.
+        policies:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+        skip_initial_backfill:
+          type: boolean
+          description: Whether to skip the initial backfill of records; if true only records seen after the sync is enabled will be synced.
+        sync_all_records:
+          type: boolean
+          description: Whether to sync all records from the source, regardless of whether they've changed since the previous execution.
+        target:
+          $ref: '#/components/schemas/Target'
+      required:
+      - fields
+      - mode
+      - name
+      - schedule
+      - target
+      title: UpdateSyncRequest
+    SyncField:
+      type: object
+      properties:
+        encryption_enabled:
+          type: boolean
+          description: Whether the field should be encrypted.
+        new:
+          type: boolean
+          default: false
+          description: New is set to true if the target field should be created by Polytomic. This is not supported by all backends.
+        override_value:
+          type: string
+          description: Value to set in the target field; if provided, 'source' is ignored.
+        source:
+          $ref: '#/components/schemas/Source'
+        sync_mode:
+          type: string
+          description: Sync mode for the field; defaults to 'updateOrCreate'. If set to 'create', the field will not be synced if it already has a value. This is not supported by all backends.
+        target:
+          type: string
+          description: Target field ID the source field value will be written to.
+      required:
+      - target
+      title: SyncField
+    ModelFieldResponse:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModelField'
+      title: ModelFieldResponse
+    ScheduleScheduleOption:
+      type: object
+      properties:
+        configuration:
+          $ref: '#/components/schemas/JsonschemaForm'
+        description:
+          type: string
+        frequency:
+          $ref: '#/components/schemas/ScheduleFrequency'
+        label:
+          type: string
+      title: ScheduleScheduleOption
+    CancelSyncResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CancelSyncResponse'
+      title: CancelSyncResponseEnvelope
+    Target:
+      type: object
+      properties:
+        configuration:
+          type: object
+          additionalProperties:
+            description: Any type
+        connection_id:
+          type: string
+          format: uuid
+        create:
+          type: object
+          additionalProperties:
+            type: string
+          description: Create a new target object with these properties.
+        filter_logic:
+          type: string
+        new_name:
+          type: string
+          description: Name for a new target object.
+        object:
+          type: string
+        search_values:
+          type: object
+          additionalProperties:
+            description: Any type
+      required:
+      - connection_id
+      title: Target
+    StartSyncResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/StartSyncResponseSchema'
+      title: StartSyncResponseEnvelope
+    ExecutionCounts:
+      type: object
+      properties:
+        delete:
+          type: integer
+          format: int64
+        error:
+          type: integer
+          format: int64
+        insert:
+          type: integer
+          format: int64
+        total:
+          type: integer
+          format: int64
+        update:
+          type: integer
+          format: int64
+        upserts:
+          type: integer
+          format: int64
+        warnings:
+          type: integer
+          format: int64
+      title: ExecutionCounts
+    ModelsyncSyncTargetMode:
+      type: string
+      enum:
+      - create
+      - update
+      - updateOrCreate
+      - replace
+      - append
+      - remove
+      - snapshot
+      title: ModelsyncSyncTargetMode
+    GetSyncSourceMetaEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SyncSourceMetaResponse'
+      title: GetSyncSourceMetaEnvelope
+    SyncResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SyncResponse'
+      title: SyncResponseEnvelope
+    ActivateSyncOutput:
+      type: object
+      properties:
+        active:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+      title: ActivateSyncOutput
+    ListSyncItem:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: Whether the sync runs on its schedule.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp the sync was created.
+        created_by:
+          $ref: '#/components/schemas/OutputActor'
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the sync.
+        mode:
+          type: string
+          description: How source records are written to the target (e.g. create, updateOrCreate, enrich).
+        model_ids:
+          type: array
+          items:
+            type: string
+          description: Model IDs used in the sync.
+        name:
+          type: string
+          description: Human-readable name of the sync.
+        only_enrich_updates:
+          type: boolean
+          description: For enrichment syncs, only process records that have been updated since the previous run.
+        organization_id:
+          type: string
+          format: uuid
+          description: Organization the sync belongs to.
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+        skip_initial_backfill:
+          type: boolean
+          description: When true, the first execution of the sync skips the initial backfill and only processes new changes.
+        sync_all_records:
+          type: boolean
+          description: When true, every execution syncs the full set of source records rather than only changes since the previous run.
+        target_connection_id:
+          type: string
+          format: uuid
+          description: Connection the sync writes to.
+        target_object:
+          type: string
+          description: Destination object (e.g. table, SaaS object) the sync writes to.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp the sync was last updated.
+        updated_by:
+          $ref: '#/components/schemas/OutputActor'
+      title: ListSyncItem
+    ScheduleOptionResponse:
+      type: object
+      properties:
+        schedule_options:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ScheduleScheduleOption'
+      title: ScheduleOptionResponse
+    ConfigurationValue:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            description: Any type
+        type:
+          type: string
+      title: ConfigurationValue
+    ListSyncResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ListSyncItem'
+        pagination:
+          $ref: '#/components/schemas/PaginationDetails'
+      title: ListSyncResponseEnvelope
+    SyncSourceMetaResponse:
+      type: object
+      properties:
+        configuration:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ConfigurationValue'
+          description: Additional configuration fields available for this source, keyed by field name.
+        items:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SourceMeta'
+          description: Map of configuration item name to its metadata (available values, required-one-of groups).
+        requires_one_of:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Configuration items where exactly one must be selected by the caller.
+      title: SyncSourceMetaResponse
+    Source:
+      type: object
+      properties:
+        field:
+          type: string
+        model_id:
+          type: string
+          format: uuid
+      required:
+      - field
+      - model_id
+      title: Source
+    FilterFunction:
+      type: string
+      enum:
+      - Equality
+      - Inequality
+      - IsNull
+      - IsNotNull
+      - 'True'
+      - 'False'
+      - OnOrAfter
+      - OnOrBefore
+      - GreaterThan
+      - GreaterThanEqual
+      - LessThan
+      - LessThanEqual
+      - StringContains
+      - StringStartsWith
+      - StringEndsWith
+      - StringDoesNotContain
+      - StringDoesNotStartWith
+      - StringDoesNotEndWith
+      - StringOneOf
+      - StringNotOneOf
+      - Between
+      - ArrayContains
+      - ArrayDoesNotContain
+      - InTheLast
+      - RelativeOnOrBefore
+      - RelativeOnOrAfter
+      - StringLike
+      - StringNotLike
+      - StringMatchesTrimmed
+      title: FilterFunction
+    Override:
+      type: object
+      properties:
+        field:
+          $ref: '#/components/schemas/Source'
+        field_id:
+          type: string
+          description: Field ID of the model field to override.
+        function:
+          $ref: '#/components/schemas/FilterFunction'
+        override:
+          description: Any type
+        value:
+          description: Any type
+      description: Either `field` or `field_id` must be provided. If `field_id` is provided, `field` is ignored.
+      title: Override
+    Identity:
+      type: object
+      properties:
+        function:
+          $ref: '#/components/schemas/SchemaIdentityFunction'
+        new_field:
+          type: boolean
+        remote_field_type_id:
+          type:
+          - string
+          - 'null'
+        source:
+          $ref: '#/components/schemas/Source'
+        target:
+          type: string
+      required:
+      - function
+      - source
+      - target
+      title: Identity
+    SchemaIdentityFunction:
+      type: string
+      enum:
+      - Equality
+      - ISubstring
+      - OneOf
+      - DomainMatch
+      - HostnameMatch
+      title: SchemaIdentityFunction
+    FilterFieldReferenceType:
+      type: string
+      enum:
+      - Model
+      - Target
+      title: FilterFieldReferenceType
+    ScheduleFrequency:
+      type: string
+      enum:
+      - manual
+      - continuous
+      - hourly
+      - daily
+      - weekly
+      - custom
+      - builder
+      - runafter
+      - multi
+      - dbtcloud
+      title: ScheduleFrequency
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

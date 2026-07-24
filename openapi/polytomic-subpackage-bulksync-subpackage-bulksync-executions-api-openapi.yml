@@ -1,0 +1,972 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_bulkSync.subpackage_bulkSync/executions API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_bulkSync.subpackage_bulkSync/executions
+paths:
+  /api/bulk/syncs/{id}/executions:
+    get:
+      operationId: list
+      summary: List Bulk Sync Executions
+      description: 'Lists executions for a bulk sync.
+
+
+        Results are ordered by start time descending by default. When more results are
+
+        available, the response includes an opaque `pagination.next_page_token`; pass it
+
+        back as the `page_token` query parameter to retrieve the next page. The `limit`
+
+        parameter is optional, and the maximum page size is 100 executions.
+
+
+        Use `only_terminal=true` to return only finished executions. In that mode,
+
+        executions are ordered by `updated_at` so recently completed runs appear first.
+
+
+        Use `ascending=true` to walk forward from the oldest execution instead of
+
+        starting with the newest execution.
+
+
+        For the full details of a single run — including per-schema execution status —
+
+        use [`GET /api/bulk/syncs/{id}/executions/{exec_id}`](../../../../../api-reference/bulk-sync/executions/get).'
+      tags:
+      - subpackage_bulkSync.subpackage_bulkSync/executions
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the bulk sync.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: page_token
+        in: query
+        description: Pagination cursor returned in the previous response. Omit on the first request.
+        required: false
+        schema:
+          type: string
+      - name: only_terminal
+        in: query
+        description: When true, only return executions that have finished. Terminal executions are ordered by updated_at.
+        required: false
+        schema:
+          type: boolean
+      - name: ascending
+        in: query
+        description: When true, return executions from oldest to newest. Default is newest first.
+        required: false
+        schema:
+          type: boolean
+      - name: limit
+        in: query
+        description: Maximum number of executions to return. Capped at 100.
+        required: false
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListBulkSyncExecutionsEnvelope'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/bulk/syncs/status:
+    get:
+      operationId: list-status
+      summary: List Bulk Sync Execution Status
+      description: 'Returns a concise per-schema status for one or more bulk syncs.
+
+
+        This endpoint is a summary view, not an execution-history view. Each schema is
+
+        represented at most once with its most recent execution status, and running
+
+        executions are preferred over older terminal ones.
+
+
+        Use this endpoint when you want a dashboard-style answer to "what is each sync
+
+        doing now?" If you need the full execution history or a single execution''s
+
+        details, use [`GET /api/bulk/syncs/{id}/executions`](../../../../api-reference/bulk-sync/executions/list) or
+
+        [`GET /api/bulk/syncs/{id}/executions/{exec_id}`](../../../../api-reference/bulk-sync/executions/get) instead.
+
+
+        Setting `all=true` or `active=true` ignores any explicit `sync_id` filters and
+
+        expands the request to the caller''s organization scope.'
+      tags:
+      - subpackage_bulkSync.subpackage_bulkSync/executions
+      parameters:
+      - name: all
+        in: query
+        description: When true, return status for every sync in the caller's organization. Overrides any sync_id values.
+        required: false
+        schema:
+          type: boolean
+      - name: active
+        in: query
+        description: When true, return status only for active syncs in the caller's organization. Overrides any sync_id values.
+        required: false
+        schema:
+          type: boolean
+      - name: sync_id
+        in: query
+        description: Return status for the specified bulk sync. Repeat the parameter to target multiple syncs. Ignored if all or active is true.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListBulkSyncExecutionsStatusEnvelope'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/bulk/syncs/{id}/executions/{exec_id}:
+    get:
+      operationId: get
+      summary: Get Bulk Sync Execution
+      description: 'Returns a single bulk sync execution, including per-schema execution status.
+
+
+        The response includes a breakdown of each schema (table or object) that
+
+        participated in the execution, with its individual status, row counts, and any
+
+        error details. This makes it suitable for diagnosing partial failures where
+
+        some schemas succeeded while others did not.'
+      tags:
+      - subpackage_bulkSync.subpackage_bulkSync/executions
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the bulk sync.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: exec_id
+        in: path
+        description: Unique identifier of the execution.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkSyncExecutionEnvelope'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/bulk/syncs/{id}/executions/{exec_id}/cancel:
+    post:
+      operationId: cancel
+      summary: Cancel Bulk Sync Execution
+      description: 'Requests cancellation of a specific bulk sync execution.
+
+
+        Cancellation is asynchronous. A successful response means the cancellation
+
+        signal has been queued; the execution continues to run until the signal is
+
+        processed. Poll `GET /api/bulk/syncs/{id}/executions/{exec_id}` until the
+
+        execution reaches a terminal state (`completed`, `canceled`, or `failed`) to
+
+        confirm cancellation has taken effect.'
+      tags:
+      - subpackage_bulkSync.subpackage_bulkSync/executions
+      parameters:
+      - name: id
+        in: path
+        description: The bulk sync ID.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: exec_id
+        in: path
+        description: The execution ID to cancel.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelBulkSyncResponseEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/bulk/syncs/{sync_id}/executions/{execution_id}/consolelog:
+    get:
+      operationId: get-console-logs
+      summary: Get Bulk Execution Console Logs
+      description: Fetch the latest console log entries for a bulk sync execution. Returns at most the most recent 50 entries retained in Redis.
+      tags:
+      - subpackage_bulkSync.subpackage_bulkSync/executions
+      parameters:
+      - name: sync_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: execution_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: limit
+        in: query
+        description: Maximum number of entries to return. Values above the logger retention limit are capped to 50.
+        required: false
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: Return only entries newer than this cursor.
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionConsoleLogsResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/bulk/syncs/{sync_id}/executions/{execution_id}/logs:
+    get:
+      operationId: get-logs
+      summary: Get Bulk Sync Execution Logs
+      description: 'Returns signed URLs for the log files produced by a single bulk sync execution.
+
+
+        Each URL in the response is pre-signed and grants temporary read access to the
+
+        corresponding log file. URLs expire after a short period; if you need to access
+
+        a file after the URL has expired, call this endpoint again to obtain a fresh set
+
+        of signed URLs.
+
+
+        > 📘 To export logs asynchronously to a destination of your choice, use
+
+        > [`POST /api/bulk/syncs/{sync_id}/executions/{execution_id}/logs/export`](../../../../../../../api-reference/bulk-sync/executions/export-logs)
+
+        > instead.'
+      tags:
+      - subpackage_bulkSync.subpackage_bulkSync/executions
+      parameters:
+      - name: sync_id
+        in: path
+        description: Unique identifier of the bulk sync.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: execution_id
+        in: path
+        description: Unique identifier of the execution whose log files should be listed.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkSyncExecutionLogsEnvelope'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/bulk/syncs/{sync_id}/executions/{execution_id}/logs/export:
+    post:
+      operationId: export-logs
+      summary: Export Sync Logs
+      description: 'Starts an asynchronous job that packages the log files for a single bulk sync execution into a downloadable archive.
+
+
+        > 📘 Log export is asynchronous
+
+        >
+
+        > This endpoint starts a background job that packages an execution''s log
+
+        > files into a downloadable archive. The first call typically returns a
+
+        > `job` descriptor instead of a completed result. Poll
+
+        > [`GET /api/jobs/exportlogs/{id}`](../../../../../../../../api-reference/jobs/get)
+
+        > with the returned `job_id` until `status` is `done`; the final response
+
+        > contains a signed `url` that can be used to download the archive.
+
+        >
+
+        > Set `notify=true` to also email the requesting user when the archive is
+
+        > ready.'
+      tags:
+      - subpackage_bulkSync.subpackage_bulkSync/executions
+      parameters:
+      - name: sync_id
+        in: path
+        description: Unique identifier of the bulk sync.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: execution_id
+        in: path
+        description: Unique identifier of the execution whose logs should be exported.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: notify
+        in: query
+        description: Send a notification to the user when the logs are ready for download.
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportSyncLogsEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/bulk/syncs/{sync_id}/executions/{execution_id}/schemas/{schema_id}/consolelog:
+    get:
+      operationId: get-schema-console-logs
+      summary: Get Bulk Schema Execution Console Logs
+      description: Fetch the latest console log entries for a schema within a bulk sync execution. Returns at most the most recent 50 entries retained in Redis.
+      tags:
+      - subpackage_bulkSync.subpackage_bulkSync/executions
+      parameters:
+      - name: sync_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: execution_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: schema_id
+        in: path
+        description: Schema identifier for schema-scoped console logs.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of entries to return. Values above the logger retention limit are capped to 50.
+        required: false
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: Return only entries newer than this cursor.
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionConsoleLogsResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+components:
+  schemas:
+    WorkTaskStatus:
+      type: string
+      enum:
+      - created
+      - running
+      - done
+      - failed
+      title: WorkTaskStatus
+    BulkSyncExecutionStatus:
+      type: object
+      properties:
+        nextExecutionTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Next scheduled execution time, if the sync has a schedule configured.
+        schemas:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSyncSchemaExecutionStatus'
+          description: Most recent execution status for each enabled schema in the sync.
+        status:
+          $ref: '#/components/schemas/BulkExecutionStatus'
+        sync_id:
+          type: string
+          format: uuid
+          description: Unique identifier of the bulk sync.
+      title: BulkSyncExecutionStatus
+    JobResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - string
+          - 'null'
+          description: Error message if the job failed.
+        job_id:
+          type: string
+          format: uuid
+          description: Identifier of the job.
+        result:
+          description: Job result. Shape depends on the job type; only populated once status is done.
+        status:
+          $ref: '#/components/schemas/WorkTaskStatus'
+        type:
+          type: string
+          description: Job type. Matches the type used to fetch the job.
+      title: JobResponse
+    BulkSchemaExecutionStatus:
+      type: string
+      enum:
+      - created
+      - scheduled
+      - running
+      - exporting
+      - canceled
+      - completed
+      - failed
+      - interrupted
+      - processing
+      title: BulkSchemaExecutionStatus
+    BulkSyncSchemaExecution:
+      type: object
+      properties:
+        completed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        error_count:
+          type: integer
+          format: int64
+        output_name:
+          type: string
+        record_count:
+          type: integer
+          format: int64
+        schema:
+          type: string
+        started_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        status:
+          $ref: '#/components/schemas/BulkSchemaExecutionStatus'
+        status_message:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        warning_count:
+          type: integer
+          format: int64
+      title: BulkSyncSchemaExecution
+    ExecutionConsoleLogsResponse:
+      type: object
+      properties:
+        entries:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ExecutionConsoleLogEntry'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+      title: ExecutionConsoleLogsResponse
+    ExportSyncLogsResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Signed URL to download the exported log archive.
+      title: ExportSyncLogsResponse
+    CancelBulkSyncResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CancelBulkSyncResponse'
+      title: CancelBulkSyncResponseEnvelope
+    BulkOutputDisposition:
+      type: string
+      enum:
+      - retain
+      - truncate
+      - rebuild
+      title: BulkOutputDisposition
+    PaginationDetails:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+      title: PaginationDetails
+    ExecutionConsoleLogEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        level:
+          type: string
+        message:
+          type: string
+        payload:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+        timestamp:
+          type: string
+          format: date-time
+      title: ExecutionConsoleLogEntry
+    BulkSyncExecutionEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkSyncExecution'
+      title: BulkSyncExecutionEnvelope
+    BulkSyncExecutionLogs:
+      type: object
+      properties:
+        Expires:
+          type: string
+          format: date-time
+          description: Timestamp at which the signed URLs in URLs stop working.
+        URLs:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Signed URLs that download the execution's log files. These URLs expire at the Expires timestamp.
+      title: BulkSyncExecutionLogs
+    BulkFetchMode:
+      type: string
+      enum:
+      - none
+      - incremental
+      - full
+      description: How the data is fetched. 'none' is normal operation for Polytomic. 'incremental' and 'full' apply to syncs from Salesforce. 'incremental' indicates the data is synced incrementally using record modification time. 'full' is necessary to catch up to the latest values for formula fields and rollup fields whose updates don't show up in incremental runs due to limitations in Salesforce.
+      title: BulkFetchMode
+    BulkSyncExecutionLogsEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkSyncExecutionLogs'
+      title: BulkSyncExecutionLogsEnvelope
+    ExportSyncLogsEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ExportSyncLogsResponse'
+        job:
+          $ref: '#/components/schemas/JobResponse'
+      title: ExportSyncLogsEnvelope
+    ListBulkSyncExecutionsEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSyncExecution'
+        pagination:
+          $ref: '#/components/schemas/PaginationDetails'
+      title: ListBulkSyncExecutionsEnvelope
+    BulkExecutionStatus:
+      type: string
+      enum:
+      - created
+      - scheduled
+      - running
+      - exporting
+      - canceling
+      - canceled
+      - completed
+      - failed
+      - processing
+      - errors
+      - interrupted
+      title: BulkExecutionStatus
+    ListBulkSyncExecutionsStatusEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSyncExecutionStatus'
+      title: ListBulkSyncExecutionsStatusEnvelope
+    BulkSyncSchemaExecutionStatus:
+      type: object
+      properties:
+        completed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the most recent execution finished. Null while the execution is still running.
+        error_count:
+          type: integer
+          format: int64
+          description: Number of errors emitted during the most recent execution.
+        execution_id:
+          type: string
+          format: uuid
+          description: ID of the most recent execution for the schema.
+        record_count:
+          type: integer
+          format: int64
+          description: Number of records processed in the most recent execution.
+        schema:
+          type: string
+          description: Schema (table or object) identifier.
+        started_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the most recent execution started.
+        status:
+          $ref: '#/components/schemas/BulkSchemaExecutionStatus'
+        status_message:
+          type: string
+          description: Human-readable detail for the current status (e.g. an error message when status is failed).
+        warning_count:
+          type: integer
+          format: int64
+          description: Number of warnings emitted during the most recent execution.
+      title: BulkSyncSchemaExecutionStatus
+    ExecutionConsoleLogsResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ExecutionConsoleLogsResponse'
+      title: ExecutionConsoleLogsResponseEnvelope
+    BulkSyncExecution:
+      type: object
+      properties:
+        completed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        error_count:
+          type: integer
+          format: int64
+        fetch_mode:
+          $ref: '#/components/schemas/BulkFetchMode'
+        id:
+          type: string
+          format: uuid
+        is_partial:
+          type: boolean
+        is_resync:
+          type: boolean
+        is_test:
+          type: boolean
+        output_disposition:
+          $ref: '#/components/schemas/BulkOutputDisposition'
+        record_count:
+          type: integer
+          format: int64
+        schemas:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSyncSchemaExecution'
+        started_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        status:
+          $ref: '#/components/schemas/BulkExecutionStatus'
+        status_message:
+          type: string
+        type:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        warning_count:
+          type: integer
+          format: int64
+      title: BulkSyncExecution
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    CancelBulkSyncResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      title: CancelBulkSyncResponse
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

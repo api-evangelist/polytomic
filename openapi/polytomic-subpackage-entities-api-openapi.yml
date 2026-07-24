@@ -1,0 +1,191 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_entities API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_entities
+paths:
+  /api/entities/{id}:
+    get:
+      operationId: get
+      summary: Get Entity
+      description: "Returns a resolved entity by ID.\n\nLooks up a UUID within the caller's current organization and returns the\nresource type plus enough context to fetch the canonical resource.\n\nThis endpoint is useful when you have an execution, sync, model, connection,\norganization, or user UUID and need to determine what it refers to.\n\nThe response always includes:\n\n- `id`: the UUID that was resolved.\n- `type`: the resolved entity type.\n- `canonical_path`: the canonical REST path for the resolved resource.\n\nThe response may also include:\n\n- `relationships`: parent resources needed to address nested resources.\n- `context`: lightweight additional context, such as bulk sync `schema_ids`.\n\nFor the normal user-scoped endpoint, `organization_id` is omitted from the\nresponse.\n\nSupported `type` values currently include:\n\n- `organization`\n- `user`\n- `connection`\n- `model`\n- `sync`\n- `sync_execution`\n- `bulk_sync`\n- `bulk_sync_execution`\n\nExamples:\n\n- A model sync execution resolves to a `sync_execution` and includes a `sync`\n  relationship.\n- A bulk sync execution resolves to a `bulk_sync_execution`, includes a\n  `bulk_sync` relationship, and may include `context.schema_ids`.\n\nIf the UUID does not exist, or exists outside the caller's scoped\norganization, the endpoint returns `404`."
+      tags:
+      - subpackage_entities
+      parameters:
+      - name: id
+        in: path
+        description: UUID of the entity to resolve.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityResponseEnvelope'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/organizations/entities/{id}:
+    get:
+      operationId: get-for-partner
+      summary: Get Partner Entity
+      description: "Returns a resolved entity by ID within a partner organization scope.\n\nLooks up a UUID across organizations using partner authentication and returns\nthe resource type plus enough context to fetch the canonical resource.\n\nThis endpoint is intended for cross-organization partner workflows where the\ncaller has an arbitrary UUID and needs to discover both the resource type and\nthe organization it belongs to.\n\nThe response always includes:\n\n- `id`: the UUID that was resolved.\n- `type`: the resolved entity type.\n- `canonical_path`: the canonical REST path for the resolved resource.\n- `organization_id`: the organization that owns the resolved resource.\n\nThe response may also include:\n\n- `relationships`: parent resources needed to address nested resources.\n- `context`: lightweight additional context, such as bulk sync `schema_ids`.\n\nSupported `type` values currently include:\n\n- `organization`\n- `user`\n- `connection`\n- `model`\n- `sync`\n- `sync_execution`\n- `bulk_sync`\n- `bulk_sync_execution`\n\nExamples:\n\n- A model sync execution resolves to a `sync_execution` and includes a `sync`\n  relationship.\n- A bulk sync execution resolves to a `bulk_sync_execution`, includes a\n  `bulk_sync` relationship, and may include `context.schema_ids`.\n\nIf the UUID does not exist, the endpoint returns `404`."
+      tags:
+      - subpackage_entities
+      parameters:
+      - name: id
+        in: path
+        description: UUID of the entity to resolve.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer partner API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityResponseEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+components:
+  schemas:
+    EntityResponse:
+      type: object
+      properties:
+        canonical_path:
+          type: string
+          description: Canonical REST path for the resolved resource, suitable for fetching it directly.
+        context:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Lightweight additional context about the resolved entity, such as bulk sync schema_ids.
+        id:
+          type: string
+          format: uuid
+          description: UUID that was resolved.
+        organization_id:
+          type: string
+          format: uuid
+          description: Organization that owns the resolved resource. Omitted from responses on the user-scoped endpoint.
+        relationships:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/EntityRelationship'
+          description: Parent resources needed to address nested resources, keyed by relationship name (e.g. "sync", "bulk_sync").
+        type:
+          type: string
+          description: 'Resolved entity type. One of: organization, user, connection, model, sync, sync_execution, bulk_sync, bulk_sync_execution.'
+      title: EntityResponse
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    EntityRelationship:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID of the related resource.
+        path:
+          type: string
+          description: Canonical REST path of the related resource.
+      title: EntityRelationship
+    EntityResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/EntityResponse'
+      title: EntityResponseEnvelope
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

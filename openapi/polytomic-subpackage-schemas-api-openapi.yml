@@ -1,0 +1,961 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_schemas API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_schemas
+paths:
+  /api/connections/{connection_id}/schemas/{schema_id}/fields:
+    post:
+      operationId: upsert-field
+      summary: Upsert Schema Fields
+      description: 'Creates or updates user-defined fields on a schema, matched by field_id.
+
+
+        Fields are matched by `field_id`. Reusing an existing `field_id` updates that
+
+        field; using a new `field_id` creates a new user-defined field.
+
+
+        This makes the endpoint safe to retry when you are intentionally upserting the
+
+        same field definitions. It is not a patch-by-position operation.
+
+
+        If some fields succeed and others fail, the endpoint can return a partial
+
+        success response. Validate the response status and message rather than assuming
+
+        the whole batch was applied uniformly.'
+      tags:
+      - subpackage_schemas
+      parameters:
+      - name: connection_id
+        in: path
+        description: Unique identifier of the connection.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: schema_id
+        in: path
+        description: Identifier of the schema the fields belong to.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schemas_UpsertField_Response_202'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertSchemaFieldRequest'
+  /api/connections/{connection_id}/schemas/{schema_id}/fields/{field_id}:
+    delete:
+      operationId: delete-field
+      summary: Delete Schema Field
+      description: 'Removes a user-defined field from a schema.
+
+
+        Only user-defined fields — those created via
+
+        [`POST /api/connections/{connection_id}/schemas/{schema_id}/fields`](../../../../../../../api-reference/schemas/upsert-field)
+
+        — can be removed through this endpoint. Fields detected automatically from
+
+        the source cannot be deleted here; they are managed through schema refresh.
+
+
+        > 🚧 Deleting a field that is referenced in an active sync mapping may cause
+
+        > that sync to error on its next execution. Remove or update any dependent
+
+        > mappings before deleting the field.'
+      tags:
+      - subpackage_schemas
+      parameters:
+      - name: connection_id
+        in: path
+        description: Unique identifier of the connection.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: schema_id
+        in: path
+        description: Identifier of the schema the field belongs to.
+        required: true
+        schema:
+          type: string
+      - name: field_id
+        in: path
+        description: Identifier of the user-defined field to delete.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schemas_DeleteField_Response_202'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    patch:
+      operationId: patch-field
+      summary: Patch Schema Field
+      description: Edits a single field on a schema, creating an override for a detected field if needed.
+      tags:
+      - subpackage_schemas
+      parameters:
+      - name: connection_id
+        in: path
+        description: Connection holding the schema.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: schema_id
+        in: path
+        description: Schema identifier.
+        required: true
+        schema:
+          type: string
+      - name: field_id
+        in: path
+        description: Field identifier within the schema.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaFieldResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchSchemaFieldRequest'
+  /api/connections/{connection_id}/schemas/{schema_id}/primary_keys:
+    put:
+      operationId: set-primary-keys
+      summary: Set Primary Keys
+      description: 'Overrides the primary key detected on a schema.
+
+
+        This is a full replacement: the keys you supply become the complete override
+
+        set, replacing any previously configured overrides. Omitting a key that was
+
+        previously set removes it.
+
+
+        Primary key overrides are useful when the source does not expose a primary
+
+        key or when the source-detected key is not the correct deduplication
+
+        identifier for your use case.
+
+
+        > 📘 To revert to the source-detected primary keys and remove all overrides,
+
+        > use [`DELETE /api/connections/{connection_id}/schemas/{schema_id}/primary_keys`](../../../../../../api-reference/schemas/reset-primary-keys).'
+      tags:
+      - subpackage_schemas
+      parameters:
+      - name: connection_id
+        in: path
+        description: Unique identifier of the connection.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: schema_id
+        in: path
+        description: Identifier of the schema whose primary keys are being overridden.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schemas_SetPrimaryKeys_Response_202'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetPrimaryKeysRequest'
+    delete:
+      operationId: reset-primary-keys
+      summary: Reset Primary Keys
+      description: 'Deletes all primary key overrides for a schema, reverting to the primary keys detected from the source.
+
+
+        To replace the overrides with a new set rather than clearing them entirely,
+
+        use [`PUT /api/connections/{connection_id}/schemas/{schema_id}/primary_keys`](../../../../../../api-reference/schemas/set-primary-keys)
+
+        instead.'
+      tags:
+      - subpackage_schemas
+      parameters:
+      - name: connection_id
+        in: path
+        description: Unique identifier of the connection.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: schema_id
+        in: path
+        description: Identifier of the schema whose primary key override should be cleared.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schemas_ResetPrimaryKeys_Response_202'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/connections/{id}/schemas/refresh:
+    post:
+      operationId: refresh
+      summary: Refresh Connection Schema
+      description: 'Refreshes a connection''s cached schemas.
+
+
+        Call this when the upstream source has added, removed, or changed tables,
+
+        objects, or fields and you need Polytomic to re-inspect the connection before
+
+        creating or updating sync configuration.
+
+
+        This endpoint does not return the refreshed schemas directly. Follow the
+
+        `Location` header or poll [`GET /api/connections/{id}/schemas/status`](../../../../../api-reference/schemas/get-status)
+
+        until the refresh completes, then fetch the schemas you need.
+
+
+        > 📘 Schema refresh is asynchronous
+
+        >
+
+        > This endpoint kicks off a background refresh of the connection''s cached
+
+        > schemas and returns a `Location` header pointing at
+
+        > [`GET /api/connections/{id}/schemas/status`](../../../../../api-reference/schemas/get-status).
+
+        > Poll that endpoint until `cache_status` transitions from `refreshing` to
+
+        > `fresh` (or until `last_refresh_finished` advances past
+
+        > `last_refresh_started`) to observe completion.
+
+        >
+
+        > Only connections whose current health status is healthy may be refreshed.'
+      tags:
+      - subpackage_schemas
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the connection whose schema cache should be refreshed.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schemas_Refresh_Response_202'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/connections/{id}/schemas/status:
+    get:
+      operationId: get-status
+      summary: Get Schema Status
+      description: 'Returns the current schema inspection status for a connection.
+
+
+        Poll this endpoint after calling
+
+        [`POST /api/connections/{id}/schemas/refresh`](../../../../../api-reference/schemas/refresh) to track
+
+        progress. When `status` transitions to `completed`, the refreshed schemas
+
+        are available for use in sync configuration.
+
+
+        > 📘 Schema refresh is asynchronous
+
+        >
+
+        > This endpoint kicks off a background refresh of the connection''s cached
+
+        > schemas and returns a `Location` header pointing at
+
+        > [`GET /api/connections/{id}/schemas/status`](../../../../../api-reference/schemas/get-status).
+
+        > Poll that endpoint until `cache_status` transitions from `refreshing` to
+
+        > `fresh` (or until `last_refresh_finished` advances past
+
+        > `last_refresh_started`) to observe completion.
+
+        >
+
+        > Only connections whose current health status is healthy may be refreshed.'
+      tags:
+      - subpackage_schemas
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the connection whose schema cache status should be returned.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkSyncSourceStatusEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/connections/{id}/schemas/{schema_id}:
+    get:
+      operationId: get
+      summary: Get Schema
+      description: 'Returns a single schema on a connection.
+
+
+        The schema is returned from the connection''s cached schema set. If the
+
+        upstream source has changed since the last inspection, the result may be
+
+        stale.
+
+
+        > 📘 Trigger [`POST /api/connections/{id}/schemas/refresh`](../../../../../api-reference/schemas/refresh)
+
+        > and wait for it to complete before fetching this endpoint if you need
+
+        > up-to-date field definitions.'
+      tags:
+      - subpackage_schemas
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the connection.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: schema_id
+        in: path
+        description: Identifier of the schema within the connection. Format depends on the connection type (e.g. schema.table for databases, object name for SaaS backends).
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkSyncSourceSchemaEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/connections/{id}/schemas/{schema_id}/records:
+    get:
+      operationId: get-records
+      summary: Get Schema Records
+      description: 'Returns a sample of records from a schema on a connection.
+
+
+        The sample is intended for previewing the shape and values of data before
+
+        committing to a sync configuration, not for full data export.
+
+
+        > 🚧 The sample is not guaranteed to be representative of the full dataset.
+
+        > Row selection is implementation-defined and may differ across connection
+
+        > types.
+
+
+        > 📘 If the schema''s field definitions are stale, refresh them first with
+
+        > [`POST /api/connections/{id}/schemas/refresh`](../../../../../../api-reference/schemas/refresh) to ensure
+
+        > the sample aligns with the current schema structure.'
+      tags:
+      - subpackage_schemas
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the connection.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: schema_id
+        in: path
+        description: Identifier of the schema within the connection.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaRecordsResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+components:
+  schemas:
+    SchemaPrimaryKeyOverrideInput:
+      type: object
+      properties:
+        field_id:
+          type: string
+        is_primary_key:
+          type: boolean
+      required:
+      - field_id
+      - is_primary_key
+      title: SchemaPrimaryKeyOverrideInput
+    schemas_Refresh_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: schemas_Refresh_Response_202
+    BulkSyncSourceStatus:
+      type: object
+      properties:
+        cache_status:
+          type: string
+        last_refresh_finished:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        last_refresh_started:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      title: BulkSyncSourceStatus
+    TypesType:
+      description: Any type
+      title: TypesType
+    SchemaRecordsResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            additionalProperties:
+              description: Any type
+      title: SchemaRecordsResponseEnvelope
+    PatchSchemaFieldRequest:
+      type: object
+      properties:
+        definition:
+          $ref: '#/components/schemas/TypesDefinition'
+        example:
+          description: Sample value surfaced in the UI.
+        label:
+          type:
+          - string
+          - 'null'
+          description: Human-readable label for the field.
+        path:
+          type:
+          - string
+          - 'null'
+          description: JSONPath used to extract the field from each source record; only meaningful for document-style backends. Pass an empty string to clear an existing path.
+        type:
+          type:
+          - string
+          - 'null'
+          description: 'One of: string, number, boolean, datetime, array, object, binary. Changing the type without supplying a matching definition clears any prior detailed type metadata.'
+      title: PatchSchemaFieldRequest
+    TypesDefinition:
+      type: object
+      properties: {}
+      title: TypesDefinition
+    SetPrimaryKeysRequest:
+      type: object
+      properties:
+        fields:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SchemaPrimaryKeyOverrideInput'
+          description: Ordered list of source fields that together form the primary key. Replaces any existing override; supply an empty list to clear.
+      title: SetPrimaryKeysRequest
+    schemas_DeleteField_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: schemas_DeleteField_Response_202
+    BulkSyncSourceStatusEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkSyncSourceStatus'
+      title: BulkSyncSourceStatusEnvelope
+    schemas_ResetPrimaryKeys_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: schemas_ResetPrimaryKeys_Response_202
+    UserFieldRequest:
+      type: object
+      properties:
+        example:
+          description: Example value shown in the UI and used as a hint for downstream consumers.
+        field_id:
+          type: string
+          description: Stable identifier for the user-defined field. Reuse an existing field_id to update a field in place.
+        label:
+          type: string
+          description: Human-readable label shown to users selecting this field in the app.
+        path:
+          type:
+          - string
+          - 'null'
+          description: JSON path expression that extracts the field's value from the source record. Required for nested or computed fields; omit for top-level fields.
+        type:
+          type: string
+          description: Polytomic type of the field (e.g. string, integer, boolean).
+      required:
+      - field_id
+      - label
+      - type
+      title: UserFieldRequest
+    schemas_SetPrimaryKeys_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: schemas_SetPrimaryKeys_Response_202
+    UtilFieldType:
+      type: string
+      enum:
+      - unknown
+      - string
+      - number
+      - boolean
+      - datetime
+      - array
+      - object
+      - binary
+      title: UtilFieldType
+    PickValue:
+      type: object
+      properties:
+        label:
+          type: string
+        value:
+          type: string
+      title: PickValue
+    UpsertSchemaFieldRequest:
+      type: object
+      properties:
+        fields:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UserFieldRequest'
+          description: Fields to create or update on the schema. Existing user-defined fields with the same field_id are replaced.
+      title: UpsertSchemaFieldRequest
+    SchemaFieldResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SchemaField'
+      title: SchemaFieldResponseEnvelope
+    SchemaField:
+      type: object
+      properties:
+        association:
+          $ref: '#/components/schemas/SchemaAssociation'
+        id:
+          type: string
+        is_primary_key:
+          type: boolean
+          description: Whether this field is part of the schema's primary key, including any user override.
+        name:
+          type: string
+        path:
+          type: string
+          description: JSONPath used to extract the field from each source record; only meaningful for document-style backends.
+        remote_type:
+          type: string
+          description: The type of the field from the remote system.
+        type:
+          $ref: '#/components/schemas/UtilFieldType'
+        type_spec:
+          $ref: '#/components/schemas/TypesType'
+        user_managed:
+          type: boolean
+          description: True when the field's effective definition came from a user override.
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/PickValue'
+      title: SchemaField
+    Schema:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchemaField'
+        id:
+          type: string
+        name:
+          type: string
+      title: Schema
+    schemas_UpsertField_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: schemas_UpsertField_Response_202
+    SchemaAssociation:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        reference_to:
+          type: array
+          items:
+            type: string
+        referenced_field:
+          type: string
+      title: SchemaAssociation
+    BulkSyncSourceSchemaEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Schema'
+      title: BulkSyncSourceSchemaEnvelope
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

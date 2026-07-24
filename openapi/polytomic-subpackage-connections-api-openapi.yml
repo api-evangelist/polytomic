@@ -1,0 +1,1935 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_connections API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_connections
+paths:
+  /api/connection_types:
+    get:
+      operationId: get-types
+      summary: Get Connection Types
+      description: 'Lists all connection types supported by this deployment.
+
+
+        Each entry includes per-type metadata:
+
+
+        - The available operations the connection type supports.
+
+        - Its category.
+
+        - Whether the connection type is enabled for the caller''s organization.
+
+        - Which modes (source, destination, enrichment) it can act as.'
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionTypeResponseEnvelope'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/connection_types/{id}:
+    get:
+      operationId: get-connection-type-schema
+      summary: Get Connection Type
+      description: 'Returns the JSON schema for a connection type.
+
+
+        This schema is intended for building forms or validating configuration payloads
+
+        client-side. It describes the structure Polytomic expects when you create or
+
+        update a connection of the given type.
+
+
+        The response is metadata about the shape of the configuration, not a live
+
+        connection instance and not a set of current credential values.'
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: id
+        in: path
+        description: Connection type identifier (e.g. postgresql, salesforce, hubspot).
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonschemaSchema'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/connection_types/{type}/parameter_values:
+    post:
+      operationId: get-type-parameter-values
+      summary: Connection Type Parameter Values
+      description: 'Returns completion values for parameter fields on a connection type.
+
+
+        This endpoint is useful during connection setup, before a connection exists or
+
+        before you want to persist it. The supplied `parameters` are applied to a
+
+        temporary in-memory connection shape and used to resolve dependent options.
+
+
+        When an endpoint requires upstream authorization before it can return values,
+
+        Polytomic returns an error instead of guessing. In that case, complete the
+
+        authorization flow first and call the endpoint again.'
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionParameterValuesResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetConnectionTypeParameterValuesRequestSchema'
+  /api/connections:
+    get:
+      operationId: list
+      summary: List Connections
+      description: 'Lists every connection in the caller''s organization, with sensitive fields redacted.
+
+
+        Sensitive configuration values — passwords, API tokens, private keys — are
+
+        redacted from all responses. To understand which fields a connection type
+
+        exposes, consult the parameter schema returned by
+
+        [`GET /api/connection_types`](../../api-reference/connections/get-types).
+
+
+        To inspect the data objects available on a specific connection, use
+
+        [`POST /api/connections/{id}/schemas/refresh`](../../api-reference/schemas/refresh)
+
+        followed by [`GET /api/connections/{id}/schemas/status`](../../api-reference/schemas/get-status).'
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionListResponseEnvelope'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    post:
+      operationId: create
+      summary: Create Connection
+      description: 'Creates a new connection of the specified type.
+
+
+        Use [`GET /api/connection_types`](../../api-reference/connections/get-types) to retrieve the
+
+        list of available types and their parameter schemas. The `configuration`
+
+        object is type-specific; consult the [integration
+
+        guides](../../guides/configuring-your-connections/overview)
+
+        for the required and optional fields for each type.
+
+
+        > 📘 Polytomic validates the connection against the upstream service
+
+        > immediately on creation. The request will fail if the credentials or
+
+        > endpoint cannot be reached.'
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateConnectionResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConnectionRequestSchema'
+  /api/connections/connect/:
+    post:
+      operationId: connect
+      summary: Connect
+      description: 'Creates a Polytomic Connect session and returns a redirect URL that embeds the Connect modal.
+
+
+        See also:
+
+
+        - [Embedding authentication](../../../guides/embedding-authentication), a guide to using Polytomic Connect.'
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectCardResponseEnvelope'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectCardRequest'
+  /api/connections/test:
+    post:
+      operationId: test-connection
+      summary: Test Connection
+      description: 'Tests a connection configuration.
+
+
+        This endpoint is useful for setup flows that want to verify credentials before
+
+        persisting them.
+
+
+        If you provide `connection_id`, Polytomic starts from the saved configuration
+
+        for that connection and then applies the request''s `configuration` values on
+
+        top. This lets callers test a partial change without resending every existing
+
+        field.
+
+
+        The request does not persist any configuration changes even when validation
+
+        succeeds.'
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestConnectionRequest'
+  /api/connections/{id}:
+    get:
+      operationId: get
+      summary: Get Connection
+      description: 'Returns a single connection by ID, with sensitive fields redacted.
+
+
+        To inspect the schemas available on this connection, trigger a refresh with
+
+        [`POST /api/connections/{id}/schemas/refresh`](../../../api-reference/schemas/refresh) and
+
+        track progress via
+
+        [`GET /api/connections/{id}/schemas/status`](../../../api-reference/schemas/get-status).'
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionResponseEnvelope'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    put:
+      operationId: update
+      summary: Update Connection
+      description: 'Updates a connection''s configuration.
+
+
+        Updating a connection is a **full replacement** of its configuration. Any
+
+        `configuration` field you omit is cleared. To make a partial change, fetch
+
+        the current connection with
+
+        [`GET /api/connections/{id}`](../../../api-reference/connections/get), apply your edits, and send the
+
+        complete object back.
+
+
+        > 📘 The connection is re-validated against the upstream service after every
+
+        > update. The request will fail if the new credentials or endpoint cannot be
+
+        > reached.
+
+
+        Syncs that are already running when the update is submitted are not
+
+        interrupted; the updated configuration takes effect on their next execution.'
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateConnectionResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateConnectionRequestSchema'
+    delete:
+      operationId: delete
+      summary: Delete Connection
+      description: 'Deletes a connection.
+
+
+        > 🚧 Deleting a connection that is referenced by fieldsets, syncs, bulk
+
+        > syncs, or schedules returns `422 connection in use` unless you pass
+
+        > `force=true`. With `force=true`, the API deletes those dependent
+
+        > resources before removing the connection.'
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: force
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/connections/{id}/parameter_values:
+    get:
+      operationId: get-parameter-values
+      summary: Connection Parameter Values
+      description: 'Returns completion values for parameter fields on a persisted connection.
+
+
+        Use this endpoint when the available options for one parameter depend on the
+
+        connection''s saved credentials or previously selected settings. For example,
+
+        after a connection is authorized, the upstream service may be able to return
+
+        lists of databases, schemas, or similar selectable values.
+
+
+        For new setup flows, prefer
+
+        [`POST /api/connection_types/{type}/parameter_values`](../../../../api-reference/connections/get-type-parameter-values),
+
+        which lets you resolve completions before the connection has been created.'
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionParameterValuesResponseEnvelope'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/connections/{id}/proxy:
+    post:
+      operationId: execute-proxy
+      summary: Execute Connection Proxy
+      description: "Proxies an HTTP request to a connection's underlying API using the connection's stored credentials, subject to per-connection rate limits and size caps.\n\nThis endpoint is intended for controlled passthrough use, not as a general\nreplacement for Polytomic's modeled endpoints. The request is executed with the\nconnection's stored credentials and inherited base URL, headers, and query\nparameters.\n\nBefore building requests dynamically, call\n[`GET /api/connections/{id}/proxy/info`](../../../../api-reference/connections/get-proxy-info)\nto inspect the inherited base URL, blocked headers, accepted body types, and\nsize and rate limits.\n\n## Important behavior\n\n- `request.path` must be relative and start with `/`.\n- Use either `request.query` or `request.rawQuery`, not both.\n- Caller-supplied headers are merged with inherited headers, but inherited auth\n  headers cannot be overridden.\n- The proxy strips a fixed set of request and response headers for safety.\n- Response bodies larger than the configured maximum are truncated, and\n  `truncated` is set to `true`.\n\nThe response includes `proxyCallId`, which you can use to correlate the call\nwith audit logs."
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the connection to proxy the request through.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteConnectionProxyEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecuteConnectionProxyRequest'
+  /api/connections/{id}/proxy/info:
+    get:
+      operationId: get-proxy-info
+      summary: Get Connection Proxy Info
+      description: 'Returns the proxy contract for a connection.
+
+
+        Use this endpoint before calling
+
+        [`POST /api/connections/{id}/proxy`](../../../../../api-reference/connections/execute-proxy)
+
+        when you need to build requests programmatically. The response shows:
+
+
+        - the inherited base URL that all proxied requests are sent to
+
+        - locked headers and query parameters that are attached automatically
+
+        - blocked request and response headers
+
+        - allowed HTTP methods and body shapes
+
+        - timeout, rate-limit, and payload-size limits
+
+
+        Sensitive inherited header and query values are redacted in the response. The
+
+        contract is still useful for discovering which keys are fixed by the
+
+        connection, even though their raw values are not exposed.'
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the connection whose proxy contract should be returned.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConnectionProxyInfoEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/connections/{id}/shared:
+    get:
+      operationId: list-shared-connections
+      summary: List Current Org Shared Connections
+      description: 'Lists shared copies of a connection that the caller''s organization owns.
+
+
+        The returned connections are the child copies, not the parent connection
+
+        itself. This is useful when a partner workflow needs to confirm which
+
+        downstream organizations have already received a shared copy.
+
+
+        Creating a new shared copy is a separate operation. Use
+
+        [`POST /api/organizations/{org_id}/connections/{connection_id}/share`](../../../../api-reference/connections/create-shared-connection)
+
+        for the v5 partner-scoped flow.'
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the parent connection whose shared copies should be listed.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionListResponseEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/organizations/{org_id}/connections/{connection_id}/shared:
+    get:
+      operationId: list-shared-connections-for-partner
+      summary: List Partner Shared Connections
+      description: 'Lists shared copies of a connection owned by a specific organization in the partner account.
+
+
+        The `org_id` must match the organization that owns the parent connection. If it
+
+        does not, the endpoint returns `404` rather than exposing information about the
+
+        parent connection.
+
+
+        This endpoint is useful in partner workflows where the parent connection is in
+
+        the partner owner organization and the caller needs to audit which child
+
+        organizations already have a shared copy.'
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: org_id
+        in: path
+        description: Unique identifier of the organization that owns the parent connection.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: connection_id
+        in: path
+        description: Unique identifier of the parent connection whose shared copies should be listed.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer partner API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionListResponseEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    post:
+      operationId: create-shared-connection
+      summary: Create Partner Shared Connection
+      description: Shares a connection with another organization in the caller's partner account.
+      tags:
+      - subpackage_connections
+      parameters:
+      - name: org_id
+        in: path
+        description: Unique identifier of the organization that owns the parent connection.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: connection_id
+        in: path
+        description: Unique identifier of the parent connection to share.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer partner API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSharedConnectionResponseEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartnerCreateSharedConnectionRequestSchema'
+components:
+  schemas:
+    ConnectionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ConnectionResponseSchema'
+      title: ConnectionResponseEnvelope
+    TestConnectionRequest:
+      type: object
+      properties:
+        configuration:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Connection configuration to test.
+        connection_id:
+          type: string
+          format: uuid
+          description: Optional existing connection ID to use as a base for testing. The provided configuration will be merged over the stored configuration for this connection before testing.
+        type:
+          type: string
+          description: The type of connection to test.
+      required:
+      - configuration
+      - type
+      title: TestConnectionRequest
+    ConnectionProxyCall:
+      type: object
+      properties:
+        body:
+          description: Request body. May be a string, a JSON object, or null.
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+          description: Additional request headers to send upstream. Headers listed in the connection's blockedRequestHeaders are rejected, and inherited auth headers cannot be overridden.
+        method:
+          type: string
+          description: HTTP method. Must be one of GET, POST, PUT, PATCH, DELETE.
+        path:
+          type: string
+          description: Relative upstream path. Query strings must be passed in request.query or request.rawQuery.
+        query:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Structured query parameters. Keys and values are URL-encoded before forwarding. Mutually exclusive with rawQuery.
+        rawQuery:
+          type: string
+          description: Exact query string fragment appended as-is after inherited query parameters. Do not include a leading '?'. Caller is responsible for encoding and syntax. Mutually exclusive with query.
+      required:
+      - method
+      - path
+      title: ConnectionProxyCall
+    JsonschemaDefinitions:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/JsonschemaSchema'
+      title: JsonschemaDefinitions
+    ExecuteConnectionProxyRequest:
+      type: object
+      properties:
+        request:
+          $ref: '#/components/schemas/ConnectionProxyCall'
+      required:
+      - request
+      title: ExecuteConnectionProxyRequest
+    ConnectionProxyStats:
+      type: object
+      properties:
+        callsLast24h:
+          type: integer
+          description: Total backend API calls made through this connection (including non-proxy calls) over the last 24 hours.
+        lastProxyCallAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp of the most recent proxy call, or null if none have occurred.
+        proxy2xxLast24h:
+          type: integer
+          description: Proxy calls that returned a 2xx status in the last 24 hours.
+        proxy4xxLast24h:
+          type: integer
+          description: Proxy calls that returned a 4xx status in the last 24 hours.
+        proxy5xxLast24h:
+          type: integer
+          description: Proxy calls that returned a 5xx status in the last 24 hours.
+        proxyCallsLast24h:
+          type: integer
+          description: Proxy calls made in the last 24 hours.
+      title: ConnectionProxyStats
+    ConnectionParameterValuesResp:
+      type: object
+      properties:
+        allows_creation:
+          type: boolean
+        values:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ConnectionParameterValue'
+      title: ConnectionParameterValuesResp
+    GetConnectionProxyInfoEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ConnectionProxyInfoResponse'
+      title: GetConnectionProxyInfoEnvelope
+    ConnectionTypeResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ConnectionType'
+      title: ConnectionTypeResponseEnvelope
+    ConnectCardResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ConnectCardResponse'
+      title: ConnectCardResponseEnvelope
+    ConnectionProxyMergeRules:
+      type: object
+      properties:
+        headers:
+          type: string
+          description: How caller-supplied headers are merged with the connection's inherited headers.
+        query:
+          type: string
+          description: How caller-supplied query parameters are merged with the connection's inherited query parameters.
+      title: ConnectionProxyMergeRules
+    CreateConnectionResponseSchema:
+      type: object
+      properties:
+        auth_code:
+          type: string
+          description: Code to enter in order to complete connection authentication.
+        auth_url:
+          type: string
+          description: URL to visit to complete connection authentication.
+        configuration:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+        healthcheck_interval:
+          type: string
+          description: Interval for connection health checking.
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        policies:
+          type: array
+          items:
+            type: string
+            format: uuid
+        saved:
+          type: boolean
+        status:
+          type: string
+        status_error:
+          type: string
+        type:
+          $ref: '#/components/schemas/ConnectionTypeSchema'
+      title: CreateConnectionResponseSchema
+    ConnectCardResponse:
+      type: object
+      properties:
+        redirect_url:
+          type: string
+          description: URL to redirect the user to in order to create the new connection.
+        token:
+          type: string
+          description: Opaque single-use token identifying the Connect session.
+      title: ConnectCardResponse
+    OutputActor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        type:
+          type: string
+      title: OutputActor
+    ConnectionType:
+      type: object
+      properties:
+        capabilities:
+          $ref: '#/components/schemas/BackendConnectionCapabilities'
+        configurationForm:
+          $ref: '#/components/schemas/ConnectionForm'
+        envConfig:
+          type: object
+          additionalProperties:
+            description: Any type
+        id:
+          type: string
+        initialConfiguration:
+          type: object
+          additionalProperties:
+            description: Any type
+        logo_url:
+          type: string
+        name:
+          type: string
+        oauth_prompt:
+          $ref: '#/components/schemas/BackendOAuthPrompt'
+        use_oauth:
+          type: boolean
+      required:
+      - capabilities
+      title: ConnectionType
+    ConnectionParameterValue:
+      type: object
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+        value:
+          description: Any type
+      title: ConnectionParameterValue
+    GetConnectionTypeParameterValuesRequestSchema:
+      type: object
+      properties:
+        connection_id:
+          type: string
+          format: uuid
+        field:
+          type: string
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+        query:
+          type: string
+      required:
+      - field
+      - parameters
+      title: GetConnectionTypeParameterValuesRequestSchema
+    ConnectionProxyInfoResponse:
+      type: object
+      properties:
+        backendType:
+          type: string
+          description: Connection backend identifier (e.g. hubspot, salesforce).
+        connectionId:
+          type: string
+          format: uuid
+          description: Unique identifier of the connection the proxy contract applies to.
+        inheritedBase:
+          $ref: '#/components/schemas/ConnectionProxyInheritedBase'
+        mergeRules:
+          $ref: '#/components/schemas/ConnectionProxyMergeRules'
+        requestContract:
+          $ref: '#/components/schemas/ConnectionProxyContract'
+        stats:
+          $ref: '#/components/schemas/ConnectionProxyStats'
+      title: ConnectionProxyInfoResponse
+    ConnectionProxyContract:
+      type: object
+      properties:
+        allowedMethods:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: HTTP methods the proxy accepts.
+        blockedRequestHeaders:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Headers the proxy strips from caller-supplied requests before forwarding.
+        blockedResponseHeaders:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Headers the proxy strips from upstream responses before returning them.
+        bodyTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Supported JSON types for request.body (e.g. object, string, null).
+        maxRequestBodyBytes:
+          type: integer
+          description: Maximum accepted request body size in bytes.
+        maxResponseBodyBytes:
+          type: integer
+          description: Maximum response body size in bytes. Larger responses are truncated.
+        pathRule:
+          type: string
+          description: Rule the caller-supplied path must satisfy.
+        queryModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Supported request query inputs. Use query for structured URL-encoded parameters or rawQuery for exact passthrough.
+        queryValueTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Supported value types for request.query.
+        rateLimitPerMinute:
+          type: integer
+          description: Maximum proxied requests per minute per connection before the proxy returns 429.
+        rawQueryRule:
+          type: string
+          description: How request.rawQuery is appended and who is responsible for encoding.
+        timeoutMs:
+          type: integer
+          description: Per-request timeout in milliseconds.
+      title: ConnectionProxyContract
+    CreateSharedConnectionResponseSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+      title: CreateSharedConnectionResponseSchema
+    BackendOAuthPrompt:
+      type: object
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+        when:
+          type: string
+      title: BackendOAuthPrompt
+    PartnerCreateSharedConnectionRequestSchema:
+      type: object
+      properties:
+        child_organization_id:
+          type: string
+          format: uuid
+          description: Unique identifier of the child organization that should receive the shared connection.
+        name:
+          type: string
+          description: Optional name for the shared copy. Defaults to the parent connection name.
+      required:
+      - child_organization_id
+      title: PartnerCreateSharedConnectionRequestSchema
+    BackendConnectionCapabilities:
+      type: object
+      properties:
+        destination:
+          type: boolean
+        enrichment:
+          type: boolean
+        orchestration:
+          type: boolean
+        source:
+          type: boolean
+      required:
+      - destination
+      - enrichment
+      - orchestration
+      - source
+      title: BackendConnectionCapabilities
+    ConnectionParameterValuesResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/ConnectionParameterValuesResp'
+      title: ConnectionParameterValuesResponseEnvelope
+    CreateSharedConnectionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CreateSharedConnectionResponseSchema'
+      title: CreateSharedConnectionResponseEnvelope
+    ConnectionResponseSchema:
+      type: object
+      properties:
+        api_calls_last_24_hours:
+          type:
+          - integer
+          - 'null'
+          description: API calls made to service in the last 24h (supported integrations only).
+        configuration:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          $ref: '#/components/schemas/OutputActor'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        parent_connection_id:
+          type: string
+          format: uuid
+          description: For shared connections, the ID of the parent connection.
+        policies:
+          type: array
+          items:
+            type: string
+            format: uuid
+        saved:
+          type: boolean
+        status:
+          type: string
+        status_error:
+          type: string
+        type:
+          $ref: '#/components/schemas/ConnectionTypeSchema'
+        updated_at:
+          type: string
+          format: date-time
+        updated_by:
+          $ref: '#/components/schemas/OutputActor'
+      title: ConnectionResponseSchema
+    ConnectionProxyResponse:
+      type: object
+      properties:
+        body:
+          type: string
+          description: Upstream response body. If the upstream returned JSON, the body is returned as-is; otherwise it is returned as a string.
+        contentType:
+          type: string
+          description: Content-Type of the upstream response.
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: Response headers returned by the upstream service. Headers listed in blockedResponseHeaders are removed.
+        latencyMs:
+          type: integer
+          format: int64
+          description: End-to-end latency of the proxied request in milliseconds.
+        proxyCallId:
+          type: string
+          format: uuid
+          description: Identifier for this proxy call, suitable for correlating with audit logs.
+        status:
+          type: integer
+          description: HTTP status code returned by the upstream service.
+        truncated:
+          type: boolean
+          description: True if the response body was truncated because it exceeded maxResponseBodyBytes.
+      title: ConnectionProxyResponse
+    ConnectCardRequest:
+      type: object
+      properties:
+        connection:
+          type: string
+          format: uuid
+          description: The id of an existing connection to update.
+        dark:
+          type: boolean
+          description: Whether to use the dark theme for the Connect modal.
+        name:
+          type: string
+          description: Name of the new connection. Must be unique per organization.
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        redirect_url:
+          type: string
+          description: URL to redirect to after connection is created.
+        type:
+          type: string
+          description: Connection type to create.
+        whitelist:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: List of connection types which are allowed to be created. Ignored if type is set.
+      required:
+      - name
+      - redirect_url
+      title: ConnectCardRequest
+    ConnectionProxyInheritedBase:
+      type: object
+      properties:
+        baseUrl:
+          type: string
+          description: Base URL all proxied requests are sent to. Caller-supplied paths are appended to this URL.
+        lockedHeaders:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ConnectionProxyLockedHeader'
+          description: Headers that are always attached to proxied requests. Sensitive values are redacted.
+        lockedQuery:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+          description: Query parameters that are always attached to proxied requests. Values are redacted.
+      title: ConnectionProxyInheritedBase
+    ExecuteConnectionProxyEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ConnectionProxyResponse'
+      title: ExecuteConnectionProxyEnvelope
+    UpdateConnectionRequestSchema:
+      type: object
+      properties:
+        configuration:
+          type: object
+          additionalProperties:
+            description: Any type
+        healthcheck_interval:
+          type: string
+          description: Override interval for connection health checking.
+        name:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        policies:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+        reconnect:
+          type: boolean
+        type:
+          type: string
+        validate:
+          type: boolean
+          default: true
+          description: Validate connection configuration.
+      required:
+      - configuration
+      - name
+      title: UpdateConnectionRequestSchema
+    CreateConnectionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CreateConnectionResponseSchema'
+      title: CreateConnectionResponseEnvelope
+    ConnectionForm:
+      type: object
+      properties:
+        jsonschema:
+          description: Any type
+        uischema:
+          description: Any type
+      title: ConnectionForm
+    OrderedMapStringGithubComInvopopJsonschemaSchema:
+      type: object
+      properties: {}
+      title: OrderedMapStringGithubComInvopopJsonschemaSchema
+    JsonschemaSchema:
+      type: object
+      properties:
+        $anchor:
+          type: string
+        $comment:
+          type: string
+        $defs:
+          $ref: '#/components/schemas/JsonschemaDefinitions'
+        $dynamicRef:
+          type: string
+        $id:
+          type: string
+        $ref:
+          type: string
+        $schema:
+          type: string
+        additionalProperties:
+          $ref: '#/components/schemas/JsonschemaSchema'
+        allOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/JsonschemaSchema'
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/JsonschemaSchema'
+        const:
+          description: Any type
+        contains:
+          $ref: '#/components/schemas/JsonschemaSchema'
+        contentEncoding:
+          type: string
+        contentMediaType:
+          type: string
+        contentSchema:
+          $ref: '#/components/schemas/JsonschemaSchema'
+        default:
+          description: Any type
+        dependentRequired:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        dependentSchemas:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/JsonschemaSchema'
+        deprecated:
+          type: boolean
+        description:
+          type: string
+        else:
+          $ref: '#/components/schemas/JsonschemaSchema'
+        enum:
+          type: array
+          items:
+            description: Any type
+        examples:
+          type: array
+          items:
+            description: Any type
+        exclusiveMaximum:
+          type: string
+        exclusiveMinimum:
+          type: string
+        format:
+          type: string
+        if:
+          $ref: '#/components/schemas/JsonschemaSchema'
+        items:
+          $ref: '#/components/schemas/JsonschemaSchema'
+        maxContains:
+          type:
+          - integer
+          - 'null'
+        maxItems:
+          type:
+          - integer
+          - 'null'
+        maxLength:
+          type:
+          - integer
+          - 'null'
+        maxProperties:
+          type:
+          - integer
+          - 'null'
+        maximum:
+          type: string
+        minContains:
+          type:
+          - integer
+          - 'null'
+        minItems:
+          type:
+          - integer
+          - 'null'
+        minLength:
+          type:
+          - integer
+          - 'null'
+        minProperties:
+          type:
+          - integer
+          - 'null'
+        minimum:
+          type: string
+        multipleOf:
+          type: string
+        not:
+          $ref: '#/components/schemas/JsonschemaSchema'
+        oneOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/JsonschemaSchema'
+        pattern:
+          type: string
+        patternProperties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/JsonschemaSchema'
+        prefixItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/JsonschemaSchema'
+        properties:
+          $ref: '#/components/schemas/OrderedMapStringGithubComInvopopJsonschemaSchema'
+        propertyNames:
+          $ref: '#/components/schemas/JsonschemaSchema'
+        readOnly:
+          type: boolean
+        required:
+          type: array
+          items:
+            type: string
+        then:
+          $ref: '#/components/schemas/JsonschemaSchema'
+        title:
+          type: string
+        type:
+          type: string
+        uniqueItems:
+          type: boolean
+        writeOnly:
+          type: boolean
+      title: JsonschemaSchema
+    ConnectionListResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ConnectionResponseSchema'
+      title: ConnectionListResponseEnvelope
+    CreateConnectionRequestSchema:
+      type: object
+      properties:
+        configuration:
+          type: object
+          additionalProperties:
+            description: Any type
+        healthcheck_interval:
+          type: string
+          description: Override interval for connection health checking.
+        name:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        policies:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+        redirect_url:
+          type: string
+          description: URL to redirect to after completing OAuth flow.
+        type:
+          type: string
+        validate:
+          type: boolean
+          default: true
+          description: Validate connection configuration.
+      required:
+      - configuration
+      - name
+      - type
+      title: CreateConnectionRequestSchema
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    ConnectionTypeSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        logo_url:
+          type: string
+        name:
+          type: string
+        operations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      title: ConnectionTypeSchema
+    ConnectionProxyLockedHeader:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Header name.
+        redacted:
+          type: boolean
+          description: True when the header value was redacted before returning it.
+        value:
+          type: string
+          description: Header value. Replaced with [REDACTED] if the header is sensitive.
+      title: ConnectionProxyLockedHeader
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

@@ -1,0 +1,260 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_queryRunner API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_queryRunner
+paths:
+  /api/connections/{connection_id}/query:
+    post:
+      operationId: run-query
+      summary: Run Query
+      description: 'Submits a query for asynchronous execution against the connection.
+
+
+        This endpoint returns immediately with a query task ID. It does not wait for
+
+        the query to finish. Poll [`GET /api/queries/{id}`](../../../../api-reference/query-runner/get-query) until `status`
+
+        reaches `done` or `failed`.
+
+
+        Only the user who created the query can fetch its results later. Query results
+
+        are stored temporarily and may expire; use the `expires` field from the result
+
+        endpoint to understand how long they will remain available.'
+      tags:
+      - subpackage_queryRunner
+      parameters:
+      - name: connection_id
+        in: path
+        description: Unique identifier of the connection to run the query against.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: query
+        in: query
+        description: The query to execute against the connection.
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunQueryEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunQueryRequest'
+  /api/queries/{id}:
+    get:
+      operationId: get-query
+      summary: Get Query Results
+      description: 'Fetches the latest status for a submitted query and, once complete, returns fields and paginated results.
+
+
+        This endpoint is the second step of the query-runner flow. First call
+
+        [`POST /api/connections/{connection_id}/query`](../../../api-reference/query-runner/run-query),
+
+        then poll this endpoint with the returned ID.
+
+
+        Results may be paginated across multiple blobs. When that happens, use the
+
+        opaque `links.next` and `links.previous` URLs exactly as returned. Do not try to
+
+        construct the `page` token yourself.
+
+
+        If the query is still running, the response may include only status metadata.
+
+        If the task is complete but the caller is not the same user that created it,
+
+        the endpoint returns `404`.'
+      tags:
+      - subpackage_queryRunner
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the query task, as returned by POST /api/connections/{connection_id}/query.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: page
+        in: query
+        description: Opaque pagination token returned in the links.next or links.previous URL of the previous response.
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResultsEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+components:
+  schemas:
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    WorkTaskStatus:
+      type: string
+      enum:
+      - created
+      - running
+      - done
+      - failed
+      title: WorkTaskStatus
+    QueryResultsEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RunQueryResult'
+        links:
+          $ref: '#/components/schemas/RunQueryPagination'
+      title: QueryResultsEnvelope
+    RunQueryPagination:
+      type: object
+      properties:
+        next:
+          type: string
+          description: URL to the next page of results, if available. This may be returned as a host relative path.
+        previous:
+          type: string
+          description: URL to the previous page of results, if available. This may be returned as a host relative path.
+      title: RunQueryPagination
+    RunQueryRequest:
+      type: object
+      properties: {}
+      title: RunQueryRequest
+    RunQueryEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RunQueryResult'
+      title: RunQueryEnvelope
+    RunQueryResult:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: The number of rows returned by the query. This will not be returned until the query completes.
+        error:
+          type: string
+          description: Error message if the query failed.
+        expires:
+          type: string
+          description: The time at which the query will expire and be deleted. This will not be returned until the query completes.
+        fields:
+          type: array
+          items:
+            type: string
+          description: The names of the fields returned by the query. This will not be returned until the query completes.
+        id:
+          type: string
+          format: uuid
+          description: The ID of the query task. Poll GET /api/queries/{id} until the task reaches done or failed to retrieve results.
+        results:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              description: Any type
+          description: The query results, returned as an array of objects.
+        status:
+          $ref: '#/components/schemas/WorkTaskStatus'
+      title: RunQueryResult
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

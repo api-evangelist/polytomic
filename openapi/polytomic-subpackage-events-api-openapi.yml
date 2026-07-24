@@ -1,0 +1,502 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_events API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_events
+paths:
+  /api/events:
+    get:
+      operationId: list
+      summary: Get Events
+      description: 'Lists audit events for the caller''s organization.
+
+
+        Results are paginated. If more events are available, the response includes
+
+        `pagination.next_page_token`; pass that token back unchanged to continue from
+
+        the last item you received.
+
+
+        Filter by event type using the `event_type` query parameter. Pass one of the
+
+        identifiers returned by [`GET /api/events_types`](../../api-reference/events/get-types) to
+
+        narrow results to a specific category of activity.
+
+
+        > 📘 Events reflect audit activity scoped to the caller''s organization.
+
+        > The log captures both user-initiated and API-initiated actions.'
+      tags:
+      - subpackage_events
+      parameters:
+      - name: organization_id
+        in: query
+        description: Organization to list events for. Only used by system callers; normal and partner callers are always scoped to their own organization.
+        required: false
+        schema:
+          type: string
+          format: uuid
+      - name: type
+        in: query
+        description: Filter to a single event type. Use GET /api/events_types to list valid values.
+        required: false
+        schema:
+          type: string
+      - name: starting_after
+        in: query
+        description: Return events created strictly after this timestamp.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: ending_before
+        in: query
+        description: Return events created strictly before this timestamp.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: limit
+        in: query
+        description: Maximum number of events to return. Default 10, maximum 100.
+        required: false
+        schema:
+          type: integer
+          default: 10
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsEnvelope'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/events_types:
+    get:
+      operationId: get-types
+      summary: Get Event Types
+      description: 'Returns the set of event type identifiers supported by GET /api/events.
+
+
+        Use the identifiers returned here as the `event_type` filter value when calling
+
+        [`GET /api/events`](../../api-reference/events/list).'
+      tags:
+      - subpackage_events
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventTypesEnvelope'
+components:
+  schemas:
+    EventTypesEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      title: EventTypesEnvelope
+    EventsEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Event'
+      title: EventsEnvelope
+    EventingSyncCompletedWithErrorsEvent:
+      type: object
+      properties:
+        error:
+          type: string
+        execution_id:
+          type: string
+          format: uuid
+        number_of_errors:
+          type: integer
+          format: int64
+        number_of_warnings:
+          type: integer
+          format: int64
+        organization_id:
+          type: string
+          format: uuid
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+        target_connection_id:
+          type: string
+          format: uuid
+      title: EventingSyncCompletedWithErrorsEvent
+    Event:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp the event was emitted.
+        event:
+          $ref: '#/components/schemas/EventPayload'
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the event.
+        organization_id:
+          type: string
+          format: uuid
+          description: Organization the event belongs to.
+        type:
+          type: string
+          description: Event type identifier.
+      title: Event
+    EventingBulkSyncCanceledEvent:
+      type: object
+      properties:
+        destination_connection_id:
+          type: string
+          format: uuid
+        execution_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        source_connection_id:
+          type: string
+          format: uuid
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+      title: EventingBulkSyncCanceledEvent
+    EventingBulkSyncFailedEvent:
+      type: object
+      properties:
+        destination_connection_id:
+          type: string
+          format: uuid
+        error:
+          type: string
+        execution_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        source_connection_id:
+          type: string
+          format: uuid
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+        trigger_source:
+          type: string
+      title: EventingBulkSyncFailedEvent
+    EventingBulkSyncCompletedEvent:
+      type: object
+      properties:
+        destination_connection_id:
+          type: string
+          format: uuid
+        execution_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        source_connection_id:
+          type: string
+          format: uuid
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+        trigger_source:
+          type: string
+      title: EventingBulkSyncCompletedEvent
+    UtilExecutionStatus:
+      type: string
+      enum:
+      - created
+      - scheduled
+      - queued
+      - waiting
+      - running
+      - processing
+      - canceling
+      - canceled
+      - completed
+      - failed
+      - interrupted
+      title: UtilExecutionStatus
+    EventingSyncCompletedEvent:
+      type: object
+      properties:
+        deleted_records:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        error_count:
+          type: integer
+          format: int64
+        errored_records:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        execution_id:
+          type: string
+          format: uuid
+        inserted_count:
+          type: integer
+          format: int64
+        inserted_records:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        organization_id:
+          type: string
+          format: uuid
+        record_count:
+          type: integer
+          format: int64
+        status:
+          $ref: '#/components/schemas/UtilExecutionStatus'
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+        target_connection_id:
+          type: string
+          format: uuid
+        total_records:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        trigger:
+          type: string
+        updated_count:
+          type: integer
+          format: int64
+        updated_records:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        upserted_count:
+          type: integer
+          format: int64
+        warning_count:
+          type: integer
+          format: int64
+        warnings:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      title: EventingSyncCompletedEvent
+    EventingBulkSyncRunningEvent:
+      type: object
+      properties:
+        destination_connection_id:
+          type: string
+          format: uuid
+        execution_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        source_connection_id:
+          type: string
+          format: uuid
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+      title: EventingBulkSyncRunningEvent
+    EventingSyncRunningEvent:
+      type: object
+      properties:
+        execution_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+        target_connection_id:
+          type: string
+          format: uuid
+      title: EventingSyncRunningEvent
+    EventingSyncFailedEvent:
+      type: object
+      properties:
+        error:
+          type: string
+        execution_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+        target_connection_id:
+          type: string
+          format: uuid
+      title: EventingSyncFailedEvent
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    EventingSyncCanceledEvent:
+      type: object
+      properties:
+        execution_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/UtilExecutionStatus'
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+        target_connection_id:
+          type: string
+          format: uuid
+      title: EventingSyncCanceledEvent
+    EventPayload:
+      oneOf:
+      - $ref: '#/components/schemas/EventingSyncRunningEvent'
+      - $ref: '#/components/schemas/EventingSyncCompletedEvent'
+      - $ref: '#/components/schemas/EventingSyncFailedEvent'
+      - $ref: '#/components/schemas/EventingSyncCanceledEvent'
+      - $ref: '#/components/schemas/EventingSyncCompletedWithErrorsEvent'
+      - $ref: '#/components/schemas/EventingBulkSyncRunningEvent'
+      - $ref: '#/components/schemas/EventingBulkSyncCompletedEvent'
+      - $ref: '#/components/schemas/EventingBulkSyncCanceledEvent'
+      - $ref: '#/components/schemas/EventingBulkSyncCompletedWithErrorEvent'
+      - $ref: '#/components/schemas/EventingBulkSyncFailedEvent'
+      title: EventPayload
+    EventingBulkSyncCompletedWithErrorEvent:
+      type: object
+      properties:
+        destination_connection_id:
+          type: string
+          format: uuid
+        execution_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        source_connection_id:
+          type: string
+          format: uuid
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+        trigger_source:
+          type: string
+      title: EventingBulkSyncCompletedWithErrorEvent
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

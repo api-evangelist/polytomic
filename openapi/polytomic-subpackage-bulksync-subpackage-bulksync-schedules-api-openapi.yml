@@ -1,0 +1,507 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_bulkSync.subpackage_bulkSync/schedules API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_bulkSync.subpackage_bulkSync/schedules
+paths:
+  /api/bulk/syncs/{sync_id}/schedules:
+    get:
+      operationId: list
+      summary: Get Bulk Sync Schedules
+      description: 'Lists all schedules configured for a bulk sync.
+
+
+        A bulk sync can have multiple schedules attached; this endpoint returns all
+
+        of them. Schedule times are returned in UTC.'
+      tags:
+      - subpackage_bulkSync.subpackage_bulkSync/schedules
+      parameters:
+      - name: sync_id
+        in: path
+        description: Unique identifier of the bulk sync whose schedules should be returned.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchedulesEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    post:
+      operationId: create
+      summary: Create Bulk Sync Schedule
+      description: 'Adds a new schedule to a bulk sync.
+
+
+        A bulk sync can have multiple schedules attached; adding one here does not
+
+        replace existing schedules. Schedule times are interpreted in UTC.
+
+
+        Creating a schedule only affects future automatic executions. To run the
+
+        sync immediately, call
+
+        [`POST /api/bulk/syncs/{id}/executions`](../../../../../api-reference/bulk-sync/start).'
+      tags:
+      - subpackage_bulkSync.subpackage_bulkSync/schedules
+      parameters:
+      - name: sync_id
+        in: path
+        description: Unique identifier of the bulk sync to add a schedule to.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateScheduleRequest'
+  /api/bulk/syncs/{sync_id}/schedules/{schedule_id}:
+    get:
+      operationId: get
+      summary: Get Bulk Sync Schedule
+      description: 'Returns a single schedule configured on a bulk sync.
+
+
+        Schedule times are returned in UTC.
+
+
+        To see all schedules on this sync, use
+
+        [`GET /api/bulk/syncs/{sync_id}/schedules`](../../../../../../api-reference/bulk-sync/schedules/list).
+
+        To update the schedule, use
+
+        [`PUT /api/bulk/syncs/{sync_id}/schedules/{schedule_id}`](../../../../../../api-reference/bulk-sync/schedules/update).'
+      tags:
+      - subpackage_bulkSync.subpackage_bulkSync/schedules
+      parameters:
+      - name: sync_id
+        in: path
+        description: Unique identifier of the bulk sync.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: schedule_id
+        in: path
+        description: Unique identifier of the schedule.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    put:
+      operationId: update
+      summary: Update Bulk Sync Schedule
+      description: 'Updates an existing schedule on a bulk sync.
+
+
+        Updates replace the stored schedule. Send the full schedule definition
+
+        rather than only the field you want to change. Schedule times are
+
+        interpreted in UTC.'
+      tags:
+      - subpackage_bulkSync.subpackage_bulkSync/schedules
+      parameters:
+      - name: sync_id
+        in: path
+        description: Unique identifier of the bulk sync.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: schedule_id
+        in: path
+        description: Unique identifier of the schedule to update.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateScheduleRequest'
+    delete:
+      operationId: delete
+      summary: Delete Bulk Sync Schedule
+      description: 'Removes a schedule from a bulk sync.
+
+
+        Deleting a schedule only stops future automatic executions. It does not
+
+        cancel an execution that is already running.'
+      tags:
+      - subpackage_bulkSync.subpackage_bulkSync/schedules
+      parameters:
+      - name: sync_id
+        in: path
+        description: Unique identifier of the bulk sync.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: schedule_id
+        in: path
+        description: Unique identifier of the schedule to delete.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+components:
+  schemas:
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    CreateScheduleRequest:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/BulkSyncScheduleAPI'
+      required:
+      - schedule
+      title: CreateScheduleRequest
+    ScheduleEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkBulkSyncSchedule'
+      title: ScheduleEnvelope
+    SchedulesEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkBulkSyncSchedule'
+      title: SchedulesEnvelope
+    BulkBulkSyncSchedule:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+          format: uuid
+        dayOfMonth:
+          type: string
+        dayOfWeek:
+          type: string
+        deletedAt:
+          type: string
+          format: date-time
+        deletedBy:
+          type: string
+          format: uuid
+        frequency:
+          $ref: '#/components/schemas/ScheduleFrequency'
+        hour:
+          type: string
+        isDefault:
+          type: boolean
+        minute:
+          type: string
+        month:
+          type: string
+        schemas:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        selectiveMode:
+          $ref: '#/components/schemas/BulkSelectiveMode'
+        syncId:
+          type: string
+          format: uuid
+        syncMode:
+          $ref: '#/components/schemas/BulkScheduleSyncMode'
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: string
+          format: uuid
+      required:
+      - frequency
+      title: BulkBulkSyncSchedule
+    UpdateScheduleRequest:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/BulkSyncScheduleAPI'
+      required:
+      - schedule
+      title: UpdateScheduleRequest
+    ScheduleFrequency:
+      type: string
+      enum:
+      - manual
+      - continuous
+      - hourly
+      - daily
+      - weekly
+      - custom
+      - builder
+      - runafter
+      - multi
+      - dbtcloud
+      title: ScheduleFrequency
+    BulkScheduleSyncMode:
+      type: string
+      enum:
+      - normal
+      - refetch
+      - resync
+      - rebuild
+      title: BulkScheduleSyncMode
+    BulkSyncScheduleAPI:
+      type: object
+      properties:
+        dayOfMonth:
+          type: string
+          description: Day of the month (1-31) for monthly schedules.
+        dayOfWeek:
+          type: string
+          description: Day of the week for weekly schedules.
+        frequency:
+          $ref: '#/components/schemas/ScheduleFrequency'
+        hour:
+          type: string
+          description: Hour of the day (0-23, in UTC) the schedule fires.
+        minute:
+          type: string
+          description: Minute of the hour (0-59) the schedule fires.
+        month:
+          type: string
+          description: Month of the year (1-12) for yearly schedules.
+        selectiveMode:
+          $ref: '#/components/schemas/BulkSelectiveMode'
+      required:
+      - frequency
+      title: BulkSyncScheduleAPI
+    BulkSelectiveMode:
+      type: string
+      enum:
+      - none
+      - incrementalFields
+      - nonincrementalFields
+      title: BulkSelectiveMode
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

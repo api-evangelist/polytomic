@@ -1,0 +1,126 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_identity API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_identity
+paths:
+  /api/me:
+    get:
+      operationId: get
+      summary: Get Identity
+      description: 'Returns information about the authenticated caller and, if applicable, the organization they are scoped to.
+
+
+        Use this endpoint to confirm which kind of credential is being used before
+
+        calling endpoints with stricter authorization rules.
+
+
+        For user-scoped credentials, the response includes the resolved user and
+
+        organization details. For non-user keys, the response identifies the key class
+
+        with the corresponding boolean flags instead of impersonating a user.
+
+
+        This endpoint is especially useful when debugging why a request is being
+
+        accepted or rejected by endpoints that are limited to particular caller types.'
+      tags:
+      - subpackage_identity
+      parameters:
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIdentityResponseEnvelope'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+components:
+  schemas:
+    GetIdentityResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GetIdentityResponseSchema'
+      title: GetIdentityResponseEnvelope
+    GetIdentityResponseSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          description: The email of the caller.
+        id:
+          type: string
+          format: uuid
+          description: The ID of the caller; this will be omitted for non-user callers.
+        is_organization:
+          type: boolean
+          description: Whether the caller is using an organization key.
+        is_partner:
+          type: boolean
+          description: Whether the caller is using a partner key.
+        is_system:
+          type: boolean
+          description: Whether the caller is a system actor.
+        is_user:
+          type: boolean
+          description: Whether the caller is a user.
+        organization_id:
+          type: string
+          format: uuid
+          description: The ID of the organization the caller belongs to.
+        organization_name:
+          type: string
+          description: The name of the organization the caller belongs to.
+        role:
+          type: string
+          description: Deprecated legacy role name. Populated only for user callers.
+      title: GetIdentityResponseSchema
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

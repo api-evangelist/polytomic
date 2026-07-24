@@ -1,0 +1,528 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_webhooks API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_webhooks
+paths:
+  /api/webhooks:
+    get:
+      operationId: list
+      summary: List Webhooks
+      description: 'Lists the webhooks for the caller''s organization.
+
+
+        > 📘 One webhook per organization
+
+        >
+
+        > An organization can register a single webhook, which receives every event
+
+        > produced in that organization. See the
+
+        > [Events documentation](../../guides/events) for the
+
+        > list of event types and payload shapes.'
+      tags:
+      - subpackage_webhooks
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookListEnvelope'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    post:
+      operationId: create
+      summary: Create Webhook
+      description: 'Creates the organization''s webhook.
+
+
+        > 📘 One webhook per organization
+
+        >
+
+        > An organization can register a single webhook, which receives every event
+
+        > produced in that organization. See the
+
+        > [Events documentation](../../guides/events) for the
+
+        > list of event types and payload shapes.'
+      tags:
+      - subpackage_webhooks
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEnvelope'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWebhooksSchema'
+  /api/webhooks/{id}:
+    get:
+      operationId: get
+      summary: Get Webhook
+      description: 'Returns a single webhook by ID.
+
+
+        > 📘 One webhook per organization
+
+        >
+
+        > An organization can register a single webhook, which receives every event
+
+        > produced in that organization. See the
+
+        > [Events documentation](../../../guides/events) for the
+
+        > list of event types and payload shapes.'
+      tags:
+      - subpackage_webhooks
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEnvelope'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    put:
+      operationId: update
+      summary: Update Webhook
+      description: 'Updates an existing webhook.
+
+
+        > 📘 One webhook per organization
+
+        >
+
+        > An organization can register a single webhook, which receives every event
+
+        > produced in that organization. See the
+
+        > [Events documentation](../../../guides/events) for the
+
+        > list of event types and payload shapes.'
+      tags:
+      - subpackage_webhooks
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEnvelope'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWebhooksSchema'
+    delete:
+      operationId: delete
+      summary: Delete Webhook
+      description: 'Deletes a webhook.
+
+
+        > 📘 One webhook per organization
+
+        >
+
+        > An organization can register a single webhook, which receives every event
+
+        > produced in that organization. See the
+
+        > [Events documentation](../../../guides/events) for the
+
+        > list of event types and payload shapes.
+
+
+        Deletion is permanent. To stop delivery without losing the webhook
+
+        configuration, use
+
+        [`POST /api/webhooks/{id}/disable`](../../../api-reference/webhooks/disable) instead.'
+      tags:
+      - subpackage_webhooks
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/webhooks/{id}/disable:
+    post:
+      operationId: disable
+      summary: Disable Webhook
+      description: 'Disables a webhook without deleting it.
+
+
+        > 📘 One webhook per organization
+
+        >
+
+        > An organization can register a single webhook, which receives every event
+
+        > produced in that organization. See the
+
+        > [Events documentation](../../../../guides/events) for the
+
+        > list of event types and payload shapes.
+
+
+        Events are not queued while the webhook is disabled — any activity that occurs
+
+        during the disabled period is not delivered retroactively. To resume
+
+        delivery, re-enable the webhook using
+
+        [`POST /api/webhooks/{id}/enable`](../../../../api-reference/webhooks/enable).'
+      tags:
+      - subpackage_webhooks
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEnvelope'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/webhooks/{id}/enable:
+    post:
+      operationId: enable
+      summary: Enable Webhook
+      description: 'Re-enables a previously disabled webhook.
+
+
+        > 📘 One webhook per organization
+
+        >
+
+        > An organization can register a single webhook, which receives every event
+
+        > produced in that organization. See the
+
+        > [Events documentation](../../../../guides/events) for the
+
+        > list of event types and payload shapes.
+
+
+        Delivery resumes from the next event generated after this call. Events that
+
+        occurred while the webhook was disabled are not replayed.'
+      tags:
+      - subpackage_webhooks
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEnvelope'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+components:
+  schemas:
+    WebhookListEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Webhook'
+      title: WebhookListEnvelope
+    CreateWebhooksSchema:
+      type: object
+      properties:
+        endpoint:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        secret:
+          type: string
+      required:
+      - endpoint
+      - secret
+      title: CreateWebhooksSchema
+    Webhook:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        disabled:
+          type: boolean
+        endpoint:
+          type: string
+        id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        secret:
+          type: string
+      title: Webhook
+    UpdateWebhooksSchema:
+      type: object
+      properties:
+        endpoint:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        secret:
+          type: string
+      required:
+      - endpoint
+      - secret
+      title: UpdateWebhooksSchema
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    WebhookEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Webhook'
+      title: WebhookEnvelope
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

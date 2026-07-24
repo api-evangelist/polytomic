@@ -1,0 +1,146 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_jobs API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_jobs
+paths:
+  /api/jobs/{type}/{id}:
+    get:
+      operationId: get
+      summary: Get Job
+      description: 'Returns the current state of an asynchronous job.
+
+
+        This endpoint is used as a polling target by other asynchronous workflows such
+
+        as model preview and log export. The caller must know the job `type` and `id`
+
+        that were returned when the job was created.
+
+
+        If the job is still running, the response returns `status: running` and may not
+
+        include a `result` yet. Once complete, `status` becomes `done` or `failed`.
+
+
+        Only specific job types are supported by this endpoint. Passing an unknown
+
+        `type` returns `400`.'
+      tags:
+      - subpackage_jobs
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the job (usually returned by whichever endpoint started the job).
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: type
+        in: path
+        description: 'Job type. One of: createmodel, updatemodel, previewmodel, samplemodel, exportlogs.'
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+components:
+  schemas:
+    JobResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/JobResponse'
+      title: JobResponseEnvelope
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    WorkTaskStatus:
+      type: string
+      enum:
+      - created
+      - running
+      - done
+      - failed
+      title: WorkTaskStatus
+    JobResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - string
+          - 'null'
+          description: Error message if the job failed.
+        job_id:
+          type: string
+          format: uuid
+          description: Identifier of the job.
+        result:
+          description: Job result. Shape depends on the job type; only populated once status is done.
+        status:
+          $ref: '#/components/schemas/WorkTaskStatus'
+        type:
+          type: string
+          description: Job type. Matches the type used to fetch the job.
+      title: JobResponse
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

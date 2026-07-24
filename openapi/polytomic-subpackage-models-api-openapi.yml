@@ -1,0 +1,1088 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_models API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_models
+paths:
+  /api/connections/{id}/modelsync/enrichment-source:
+    get:
+      operationId: get-enrichment-source
+      summary: Get Enrichment Source
+      description: 'Describes the enrichment source configuration available on a connection.
+
+
+        Not all connections support enrichment. Call this endpoint to determine
+
+        whether a connection can serve as an enrichment source in a model sync and,
+
+        if so, what configuration it accepts.
+
+
+        > ⚠️ If the connection does not support enrichment, this endpoint returns
+
+        > `404`. Check for that status before attempting to configure an enrichment
+
+        > source on a sync.
+
+
+        When a connection does support enrichment, the response describes the
+
+        configuration fields required to set it up. Pass those values in the
+
+        `enrichment` block when creating or updating a model sync.'
+      tags:
+      - subpackage_models
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of the connection.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: params
+        in: query
+        description: Query parameters used to incrementally refine a dependent source configuration. Keys correspond to configuration fields returned by previous calls to this endpoint.
+        required: false
+        schema:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSyncSourceMetaEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/enrichment/{connection_id}/inputfields:
+    post:
+      operationId: post
+      summary: Enrichment Fields
+      description: 'Returns the valid input field sets for an enrichment configuration on a connection.
+
+
+        When configuring an enrichment source in a model sync, use this endpoint to
+
+        discover which input fields the enrichment connection requires. Pass the
+
+        proposed enrichment configuration in the request body; the response lists the
+
+        valid input field sets that map your model''s fields to the enrichment service''s
+
+        expected inputs.'
+      tags:
+      - subpackage_models
+      parameters:
+      - name: connection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEnrichmentInputFieldsResponseEnvelope'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnrichmentInputFieldsRequest'
+  /api/model-preview:
+    post:
+      operationId: preview
+      summary: Preview Model
+      description: 'Submits a job that previews the fields a model would expose without persisting it.
+
+
+        The response contains a job ID that resolves to the list of fields the model
+
+        would expose. Poll the job until it completes to retrieve the field list. The
+
+        model is not persisted — this endpoint is useful for validating a query or
+
+        configuration before calling [`POST /api/models`](../../api-reference/models/create) to save it.'
+      tags:
+      - subpackage_models
+      parameters:
+      - name: async
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateModelRequest'
+  /api/models:
+    get:
+      operationId: list
+      summary: List Models
+      description: 'Lists all models in the caller''s organization.
+
+
+        Results are ordered by `updated_at` descending, with `id` used as a tiebreaker.
+
+        If more results are available, the response includes `pagination.next_page_token`.
+
+        Pass that token back unchanged to continue from the last item you received.
+
+
+        The token is opaque. Do not construct or edit it yourself.
+
+
+        The `limit` is capped at 50. Values above that cap are reduced to 50, and
+
+        non-positive values fall back to the same default.'
+      tags:
+      - subpackage_models
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelListResponseEnvelope'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    post:
+      operationId: create
+      summary: Create Model
+      description: 'Creates a new model.
+
+
+        A model defines a query or view over a connection''s data — for example, a SQL
+
+        query, a filtered object, or a joined dataset. Models are used as sources when
+
+        creating model syncs.
+
+
+        The connection referenced by `connection_id` must have source capabilities. Use
+
+        [`GET /api/connection_types/{id}`](../../api-reference/connections/get-connection-type-schema) to check
+
+        whether a connection type supports use as a source.'
+      tags:
+      - subpackage_models
+      parameters:
+      - name: async
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateModelRequest'
+  /api/models/{id}:
+    get:
+      operationId: get
+      summary: Get Model
+      description: 'Returns a single model by ID, including its source fields, identity, and filters.
+
+
+        The response includes the model''s source fields, identity column, and any
+
+        configured filters. To preview the data a model would return without saving
+
+        changes, use [`GET /api/models/{id}/sample`](../../../api-reference/models/sample).'
+      tags:
+      - subpackage_models
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: async
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelResponseEnvelope'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    put:
+      operationId: update
+      summary: Update Model
+      description: 'Updates a model''s configuration.
+
+
+        Updating a model is a **full replacement** of its configuration. Every field in
+
+        the request body is written to the model; any field you omit is cleared or reset
+
+        to its default value.
+
+
+        To make a partial change, fetch the current model with
+
+        [`GET /api/models/{id}`](../../../api-reference/models/get), modify the fields you want to change, and send
+
+        the complete object back in the update request.
+
+
+        Changes to source fields, filters, or the identity column take effect on the
+
+        next sync execution that uses this model.'
+      tags:
+      - subpackage_models
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: async
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateModelRequest'
+    delete:
+      operationId: delete
+      summary: Delete Model
+      description: 'Deletes a model.
+
+
+        > 🚧 Deleting a model used by one or more syncs will break those syncs. Remove
+
+        > or reconfigure any syncs that reference this model before deleting it.'
+      tags:
+      - subpackage_models
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: async
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/models/{id}/sample:
+    get:
+      operationId: sample
+      summary: Sample Records
+      description: 'Returns a sample of records from a model.
+
+
+        Synchronous requests must complete within 10 seconds. If the source query or
+
+        enrichment step can exceed that budget, use the asynchronous option so the
+
+        work runs as a background job.'
+      tags:
+      - subpackage_models
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: async
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelSampleResponseEnvelope'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+components:
+  schemas:
+    ModelSampleResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ModelSample'
+        job:
+          $ref: '#/components/schemas/JobResponse'
+      title: ModelSampleResponseEnvelope
+    WorkTaskStatus:
+      type: string
+      enum:
+      - created
+      - running
+      - done
+      - failed
+      title: WorkTaskStatus
+    JobResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - string
+          - 'null'
+          description: Error message if the job failed.
+        job_id:
+          type: string
+          format: uuid
+          description: Identifier of the job.
+        result:
+          description: Job result. Shape depends on the job type; only populated once status is done.
+        status:
+          $ref: '#/components/schemas/WorkTaskStatus'
+        type:
+          type: string
+          description: Job type. Matches the type used to fetch the job.
+      title: JobResponse
+    ModelField:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          $ref: '#/components/schemas/OutputActor'
+        description:
+          type: string
+        example:
+          description: Any type
+        id:
+          type: string
+          format: uuid
+        label:
+          type: string
+        name:
+          type: string
+        remote_type:
+          type: string
+        type:
+          type: string
+        unique:
+          type: boolean
+        updated_at:
+          type: string
+          format: date-time
+        user_added:
+          type: boolean
+      title: ModelField
+    ModelModelFieldRequest:
+      type: object
+      properties:
+        example:
+          type: string
+        label:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+      required:
+      - label
+      - name
+      - type
+      title: ModelModelFieldRequest
+    ModelResponse:
+      type: object
+      properties:
+        configuration:
+          type: object
+          additionalProperties:
+            description: Any type
+        connection_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          $ref: '#/components/schemas/OutputActor'
+        enricher:
+          $ref: '#/components/schemas/Enrichment'
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelField'
+        id:
+          type: string
+          format: uuid
+        identifier:
+          type: string
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelLabel'
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        policies:
+          type: array
+          items:
+            type: string
+            format: uuid
+        relations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Relation'
+        tracking_columns:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        updated_by:
+          $ref: '#/components/schemas/OutputActor'
+        version:
+          type: integer
+      title: ModelResponse
+    RelationTo:
+      type: object
+      properties:
+        field:
+          type: string
+        model_id:
+          type: string
+          format: uuid
+      title: RelationTo
+    LabelLabel:
+      type: object
+      properties: {}
+      title: LabelLabel
+    GetEnrichmentInputFieldsResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type: string
+      title: GetEnrichmentInputFieldsResponseEnvelope
+    ModelListResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModelResponse'
+      title: ModelListResponseEnvelope
+    OutputActor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        type:
+          type: string
+      title: OutputActor
+    ModelResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ModelResponse'
+        job:
+          $ref: '#/components/schemas/JobResponse'
+      title: ModelResponseEnvelope
+    CreateModelRequest:
+      type: object
+      properties:
+        additional_fields:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModelModelFieldRequest'
+        configuration:
+          type: object
+          additionalProperties:
+            description: Any type
+        connection_id:
+          type: string
+          format: uuid
+        enricher:
+          $ref: '#/components/schemas/Enrichment'
+        fields:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        identifier:
+          type: string
+        labels:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+        name:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        policies:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+        relations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModelRelation'
+        tracking_columns:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      required:
+      - configuration
+      - connection_id
+      - name
+      title: CreateModelRequest
+    SourceMeta:
+      type: object
+      properties:
+        has_items:
+          type: boolean
+          description: True when items is non-empty. Callers should present the values as a picker.
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            description: Any type
+          description: Valid values the caller may choose for this configuration item.
+        requires_one_of:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Other configuration items this item depends on; exactly one of the listed items must also be selected.
+      title: SourceMeta
+    ModelRelation:
+      type: object
+      properties:
+        from:
+          type: string
+        to:
+          $ref: '#/components/schemas/ModelRelationTo'
+      title: ModelRelation
+    EnrichmentInputFieldsRequest:
+      type: object
+      properties:
+        configuration:
+          $ref: '#/components/schemas/EnricherConfiguration'
+      title: EnrichmentInputFieldsRequest
+    GetSyncSourceMetaEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SyncSourceMetaResponse'
+      title: GetSyncSourceMetaEnvelope
+    Relation:
+      type: object
+      properties:
+        from:
+          type: string
+        to:
+          $ref: '#/components/schemas/RelationTo'
+      title: Relation
+    UpdateModelRequest:
+      type: object
+      properties:
+        additional_fields:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModelModelFieldRequest'
+        configuration:
+          type: object
+          additionalProperties:
+            description: Any type
+        connection_id:
+          type: string
+          format: uuid
+        enricher:
+          $ref: '#/components/schemas/Enrichment'
+        fields:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        identifier:
+          type: string
+        labels:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+        name:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        policies:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+        refresh:
+          type: boolean
+        relations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModelRelation'
+        tracking_columns:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      required:
+      - configuration
+      - connection_id
+      - name
+      title: UpdateModelRequest
+    Enrichment:
+      type: object
+      properties:
+        configuration:
+          $ref: '#/components/schemas/EnricherConfiguration'
+        connection_id:
+          type: string
+          format: uuid
+        enricher_id:
+          type: string
+          format: uuid
+          description: Must be provided to update an existing enrichment
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelField'
+          description: If not provided, all fields will be enabled.
+        mappings:
+          $ref: '#/components/schemas/EnricherMapping'
+      title: Enrichment
+    ConfigurationValue:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            description: Any type
+        type:
+          type: string
+      title: ConfigurationValue
+    EnricherMapping:
+      type: object
+      additionalProperties:
+        type: string
+      description: A map of parent model Source Name to child model Source Name. For example, if your model has a field called `work_email` and the enricher accepts a field called `email`, you'd send a map of `{"work_email":"email"}`. The set of required input mappings varies based on the configuration of the enrichment. You can use the `enrichment/{connection_id}/inputfields` API to discover available input field combinations for a given configuration.
+      title: EnricherMapping
+    EnricherConfiguration:
+      type: object
+      additionalProperties:
+        description: Any type
+      description: 'Similar to a model configuration, this configures the enricher. For example, if you wanted to use Apollo to enrich people, you would send `{"object": "people"}` as the configuration. Each enricher configuration can be found in the connection configuration docs.'
+      title: EnricherConfiguration
+    SyncSourceMetaResponse:
+      type: object
+      properties:
+        configuration:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ConfigurationValue'
+          description: Additional configuration fields available for this source, keyed by field name.
+        items:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SourceMeta'
+          description: Map of configuration item name to its metadata (available values, required-one-of groups).
+        requires_one_of:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Configuration items where exactly one must be selected by the caller.
+      title: SyncSourceMetaResponse
+    ModelRelationTo:
+      type: object
+      properties:
+        field:
+          type: string
+        model_id:
+          type: string
+          format: uuid
+      title: ModelRelationTo
+    ModelSample:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/SampleRecord'
+        warnings:
+          type: array
+          items:
+            type: string
+      title: ModelSample
+    SampleRecord:
+      type: object
+      additionalProperties:
+        type: object
+        additionalProperties:
+          description: Any type
+      description: 'A map of `fieldSource` -> `fieldName: fieldValue`. Because there may be field name conflicts between the base model and enrichments, the base model fields are placed in a map under the model ID. Fields from enrichments are placed under the enricher ID.'
+      title: SampleRecord
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

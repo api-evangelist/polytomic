@@ -1,0 +1,150 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_bulkSync subpackage_notifications API
+  version: 1.0.0
+servers:
+- url: https://app.polytomic.com
+tags:
+- name: subpackage_notifications
+paths:
+  /api/notifications/global-error-subscribers:
+    get:
+      operationId: get-global-error-subscribers
+      summary: Get Global Error Subscribers
+      description: 'Returns the list of email addresses subscribed to global sync error notifications for the caller''s organization.
+
+
+        To update the subscriber list, use
+
+        [`PUT /api/notifications/global-error-subscribers`](../../../api-reference/notifications/set-global-error-subscribers).'
+      tags:
+      - subpackage_notifications
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GlobalErrorSubscribersResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    put:
+      operationId: set-global-error-subscribers
+      summary: Update Global Error Subscribers
+      description: 'Replaces the list of email addresses subscribed to global sync error notifications for the caller''s organization.
+
+
+        This is a **full replacement** — the request body becomes the complete
+
+        subscriber list. To add or remove a single address without affecting others,
+
+        fetch the current list with
+
+        [`GET /api/notifications/global-error-subscribers`](../../../api-reference/notifications/get-global-error-subscribers), apply your change,
+
+        and send the modified list back.'
+      tags:
+      - subpackage_notifications
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer user API key
+        required: true
+        schema:
+          type: string
+      - name: X-Polytomic-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GlobalErrorSubscribersResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GlobalErrorSubscribersRequest'
+components:
+  schemas:
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    GlobalErrorSubscribersRequest:
+      type: object
+      properties:
+        emails:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Email addresses to subscribe to global sync error notifications. Replaces the current subscriber list; pass an empty list to unsubscribe everyone.
+      title: GlobalErrorSubscribersRequest
+    GlobalErrorSubscribersResponse:
+      type: object
+      properties:
+        emails:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Email addresses subscribed to global sync error notifications for the organization.
+      title: GlobalErrorSubscribersResponse
+  securitySchemes:
+    bearerUserAPIKey:
+      type: http
+      scheme: bearer
+      description: Bearer user API key
+    orgScopedAPIKey:
+      type: http
+      scheme: basic
+      description: Basic organization-scoped API key
+    bearerPartnerKey:
+      type: http
+      scheme: bearer
+      description: Bearer partner API key

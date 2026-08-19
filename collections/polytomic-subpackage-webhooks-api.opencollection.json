@@ -1,0 +1,208 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_webhooks API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/webhooks",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists the webhooks for the caller's organization.\n\n> 📘 One webhook per organization\n>\n> An organization can register a single webhook, which receives every event\n> produced in that organization. See the\n> [Events documentation](../../guides/events) for the\n> list of event types and payload shapes."
+        },
+        {
+          "info": {
+            "name": "Create Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/webhooks",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates the organization's webhook.\n\n> 📘 One webhook per organization\n>\n> An organization can register a single webhook, which receives every event\n> produced in that organization. See the\n> [Events documentation](../../guides/events) for the\n> list of event types and payload shapes."
+        },
+        {
+          "info": {
+            "name": "Get Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/webhooks/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single webhook by ID.\n\n> 📘 One webhook per organization\n>\n> An organization can register a single webhook, which receives every event\n> produced in that organization. See the\n> [Events documentation](../../../guides/events) for the\n> list of event types and payload shapes."
+        },
+        {
+          "info": {
+            "name": "Update Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/webhooks/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing webhook.\n\n> 📘 One webhook per organization\n>\n> An organization can register a single webhook, which receives every event\n> produced in that organization. See the\n> [Events documentation](../../../guides/events) for the\n> list of event types and payload shapes."
+        },
+        {
+          "info": {
+            "name": "Delete Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/webhooks/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a webhook.\n\n> 📘 One webhook per organization\n>\n> An organization can register a single webhook, which receives every event\n> produced in that organization. See the\n> [Events documentation](../../../guides/events) for the\n> list of event types and payload shapes.\n\nDeletion is permanent. To stop delivery without losing the webhook\nconfiguration, use\n[`POST /api/webhooks/{id}/disable`](../../../api-reference/webhooks/disable) instead."
+        },
+        {
+          "info": {
+            "name": "Disable Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/webhooks/:id/disable",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Disables a webhook without deleting it.\n\n> 📘 One webhook per organization\n>\n> An organization can register a single webhook, which receives every event\n> produced in that organization. See the\n> [Events documentation](../../../../guides/events) for the\n> list of event types and payload shapes.\n\nEvents are not queued while the webhook is disabled — any activity that occurs\nduring the disabled period is not delivered retroactively. To resume\ndelivery, re-enable the webhook using\n[`POST /api/webho"
+        },
+        {
+          "info": {
+            "name": "Enable Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/webhooks/:id/enable",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Re-enables a previously disabled webhook.\n\n> 📘 One webhook per organization\n>\n> An organization can register a single webhook, which receives every event\n> produced in that organization. See the\n> [Events documentation](../../../../guides/events) for the\n> list of event types and payload shapes.\n\nDelivery resumes from the next event generated after this call. Events that\noccurred while the webhook was disabled are not replayed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

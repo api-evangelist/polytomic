@@ -1,0 +1,474 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_connections API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_connections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Connection Types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connection_types",
+            "headers": [
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists all connection types supported by this deployment.\n\nEach entry includes per-type metadata:\n\n- The available operations the connection type supports.\n- Its category.\n- Whether the connection type is enabled for the caller's organization.\n- Which modes (source, destination, enrichment) it can act as."
+        },
+        {
+          "info": {
+            "name": "Get Connection Type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connection_types/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Connection type identifier (e.g. postgresql, salesforce, hubspot)."
+              }
+            ]
+          },
+          "docs": "Returns the JSON schema for a connection type.\n\nThis schema is intended for building forms or validating configuration payloads\nclient-side. It describes the structure Polytomic expects when you create or\nupdate a connection of the given type.\n\nThe response is metadata about the shape of the configuration, not a live\nconnection instance and not a set of current credential values."
+        },
+        {
+          "info": {
+            "name": "Connection Type Parameter Values",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connection_types/:type/parameter_values",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns completion values for parameter fields on a connection type.\n\nThis endpoint is useful during connection setup, before a connection exists or\nbefore you want to persist it. The supplied `parameters` are applied to a\ntemporary in-memory connection shape and used to resolve dependent options.\n\nWhen an endpoint requires upstream authorization before it can return values,\nPolytomic returns an error instead of guessing. In that case, complete the\nauthorization flow first and call the endpoint "
+        },
+        {
+          "info": {
+            "name": "List Connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists every connection in the caller's organization, with sensitive fields redacted.\n\nSensitive configuration values — passwords, API tokens, private keys — are\nredacted from all responses. To understand which fields a connection type\nexposes, consult the parameter schema returned by\n[`GET /api/connection_types`](../../api-reference/connections/get-types).\n\nTo inspect the data objects available on a specific connection, use\n[`POST /api/connections/{id}/schemas/refresh`](../../api-reference/schem"
+        },
+        {
+          "info": {
+            "name": "Create Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connections",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new connection of the specified type.\n\nUse [`GET /api/connection_types`](../../api-reference/connections/get-types) to retrieve the\nlist of available types and their parameter schemas. The `configuration`\nobject is type-specific; consult the [integration\nguides](../../guides/configuring-your-connections/overview)\nfor the required and optional fields for each type.\n\n> 📘 Polytomic validates the connection against the upstream service\n> immediately on creation. The request will fail if t"
+        },
+        {
+          "info": {
+            "name": "Connect",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connections/connect/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a Polytomic Connect session and returns a redirect URL that embeds the Connect modal.\n\nSee also:\n\n- [Embedding authentication](../../../guides/embedding-authentication), a guide to using Polytomic Connect."
+        },
+        {
+          "info": {
+            "name": "Test Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connections/test",
+            "headers": [
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Tests a connection configuration.\n\nThis endpoint is useful for setup flows that want to verify credentials before\npersisting them.\n\nIf you provide `connection_id`, Polytomic starts from the saved configuration\nfor that connection and then applies the request's `configuration` values on\ntop. This lets callers test a partial change without resending every existing\nfield.\n\nThe request does not persist any configuration changes even when validation\nsucceeds."
+        },
+        {
+          "info": {
+            "name": "Get Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single connection by ID, with sensitive fields redacted.\n\nTo inspect the schemas available on this connection, trigger a refresh with\n[`POST /api/connections/{id}/schemas/refresh`](../../../api-reference/schemas/refresh) and\ntrack progress via\n[`GET /api/connections/{id}/schemas/status`](../../../api-reference/schemas/get-status)."
+        },
+        {
+          "info": {
+            "name": "Update Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/connections/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a connection's configuration.\n\nUpdating a connection is a **full replacement** of its configuration. Any\n`configuration` field you omit is cleared. To make a partial change, fetch\nthe current connection with\n[`GET /api/connections/{id}`](../../../api-reference/connections/get), apply your edits, and send the\ncomplete object back.\n\n> 📘 The connection is re-validated against the upstream service after every\n> update. The request will fail if the new credentials or endpoint cannot be\n> rea"
+        },
+        {
+          "info": {
+            "name": "Delete Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/connections/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes a connection.\n\n> 🚧 Deleting a connection that is referenced by fieldsets, syncs, bulk\n> syncs, or schedules returns `422 connection in use` unless you pass\n> `force=true`. With `force=true`, the API deletes those dependent\n> resources before removing the connection."
+        },
+        {
+          "info": {
+            "name": "Connection Parameter Values",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/parameter_values",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns completion values for parameter fields on a persisted connection.\n\nUse this endpoint when the available options for one parameter depend on the\nconnection's saved credentials or previously selected settings. For example,\nafter a connection is authorized, the upstream service may be able to return\nlists of databases, schemas, or similar selectable values.\n\nFor new setup flows, prefer\n[`POST /api/connection_types/{type}/parameter_values`](../../../../api-reference/connections/get-type-para"
+        },
+        {
+          "info": {
+            "name": "Execute Connection Proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connections/:id/proxy",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection to proxy the request through."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Proxies an HTTP request to a connection's underlying API using the connection's stored credentials, subject to per-connection rate limits and size caps.\n\nThis endpoint is intended for controlled passthrough use, not as a general\nreplacement for Polytomic's modeled endpoints. The request is executed with the\nconnection's stored credentials and inherited base URL, headers, and query\nparameters.\n\nBefore building requests dynamically, call\n[`GET /api/connections/{id}/proxy/info`](../../../../api-ref"
+        },
+        {
+          "info": {
+            "name": "Get Connection Proxy Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/proxy/info",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection whose proxy contract should be returned."
+              }
+            ]
+          },
+          "docs": "Returns the proxy contract for a connection.\n\nUse this endpoint before calling\n[`POST /api/connections/{id}/proxy`](../../../../../api-reference/connections/execute-proxy)\nwhen you need to build requests programmatically. The response shows:\n\n- the inherited base URL that all proxied requests are sent to\n- locked headers and query parameters that are attached automatically\n- blocked request and response headers\n- allowed HTTP methods and body shapes\n- timeout, rate-limit, and payload-size limits"
+        },
+        {
+          "info": {
+            "name": "List Current Org Shared Connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/shared",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the parent connection whose shared copies should be listed."
+              }
+            ]
+          },
+          "docs": "Lists shared copies of a connection that the caller's organization owns.\n\nThe returned connections are the child copies, not the parent connection\nitself. This is useful when a partner workflow needs to confirm which\ndownstream organizations have already received a shared copy.\n\nCreating a new shared copy is a separate operation. Use\n[`POST /api/organizations/{org_id}/connections/{connection_id}/share`](../../../../api-reference/connections/create-shared-connection)\nfor the v5 partner-scoped flo"
+        },
+        {
+          "info": {
+            "name": "List Partner Shared Connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/connections/:connection_id/shared",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization that owns the parent connection."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the parent connection whose shared copies should be listed."
+              }
+            ]
+          },
+          "docs": "Lists shared copies of a connection owned by a specific organization in the partner account.\n\nThe `org_id` must match the organization that owns the parent connection. If it\ndoes not, the endpoint returns `404` rather than exposing information about the\nparent connection.\n\nThis endpoint is useful in partner workflows where the parent connection is in\nthe partner owner organization and the caller needs to audit which child\norganizations already have a shared copy."
+        },
+        {
+          "info": {
+            "name": "Create Partner Shared Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/connections/:connection_id/shared",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization that owns the parent connection."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the parent connection to share."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Shares a connection with another organization in the caller's partner account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

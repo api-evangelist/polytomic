@@ -1,0 +1,200 @@
+{
+  "item": [
+    {
+      "id": "56491fb7-b004-413d-8dac-c52db933bc88",
+      "name": "subpackage_identity",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "576ff66a-4769-4782-8546-a38c685035a9",
+          "name": "Get Identity",
+          "request": {
+            "name": "Get Identity",
+            "description": {
+              "content": "Returns information about the authenticated caller and, if applicable, the organization they are scoped to.\n\nUse this endpoint to confirm which kind of credential is being used before\ncalling endpoints with stricter authorization rules.\n\nFor user-scoped credentials, the response includes the resolved user and\norganization details. For non-user keys, the response identifies the key class\nwith the corresponding boolean flags instead of impersonating a user.\n\nThis endpoint is especially useful when debugging why a request is being\naccepted or rejected by endpoints that are limited to particular caller types.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f10c39d8-6938-42ab-a8fd-96457fd9a626",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"email\": \"string\",\n    \"id\": \"e37bdee3-f4d0-f7e5-3e69-25fae5038726\",\n    \"is_organization\": true,\n    \"is_partner\": false,\n    \"is_system\": true,\n    \"is_user\": true,\n    \"organization_id\": \"f230c4dc-d3d7-faec-3830-323acedcfcb4\",\n    \"organization_name\": \"string\",\n    \"role\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33fb35ff-f822-4673-a7f3-c46ad4c39bf9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 5167\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d928f984-2033-4a79-8eb4-d98645253759",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 5167\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.polytomic.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bc309b46-6398-45db-afe4-ff4c33079380",
+    "name": "API Reference subpackage_bulkSync subpackage_identity API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

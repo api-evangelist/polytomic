@@ -1,0 +1,652 @@
+{
+  "item": [
+    {
+      "id": "71853525-fc16-4950-b52a-98083fc2d5fd",
+      "name": "subpackage_entities",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "caae159a-f50e-4514-a9b3-407e910c6ce5",
+          "name": "Get Entity",
+          "request": {
+            "name": "Get Entity",
+            "description": {
+              "content": "Returns a resolved entity by ID.\n\nLooks up a UUID within the caller's current organization and returns the\nresource type plus enough context to fetch the canonical resource.\n\nThis endpoint is useful when you have an execution, sync, model, connection,\norganization, or user UUID and need to determine what it refers to.\n\nThe response always includes:\n\n- `id`: the UUID that was resolved.\n- `type`: the resolved entity type.\n- `canonical_path`: the canonical REST path for the resolved resource.\n\nThe response may also include:\n\n- `relationships`: parent resources needed to address nested resources.\n- `context`: lightweight additional context, such as bulk sync `schema_ids`.\n\nFor the normal user-scoped endpoint, `organization_id` is omitted from the\nresponse.\n\nSupported `type` values currently include:\n\n- `organization`\n- `user`\n- `connection`\n- `model`\n- `sync`\n- `sync_execution`\n- `bulk_sync`\n- `bulk_sync_execution`\n\nExamples:\n\n- A model sync execution resolves to a `sync_execution` and includes a `sync`\n  relationship.\n- A bulk sync execution resolves to a `bulk_sync_execution`, includes a\n  `bulk_sync` relationship, and may include `context.schema_ids`.\n\nIf the UUID does not exist, or exists outside the caller's scoped\norganization, the endpoint returns `404`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "entities",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) UUID of the entity to resolve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fd98f22b-21b8-4a37-8970-5200a4183d5c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "entities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) UUID of the entity to resolve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"canonical_path\": \"string\",\n    \"context\": {\n      \"key_0\": {}\n    },\n    \"id\": \"4c1c77ab-a821-2055-2604-f79cb977878f\",\n    \"organization_id\": \"f6d08cd1-1b63-aaac-5713-46b4da7c62ea\",\n    \"relationships\": {\n      \"key_0\": {\n        \"id\": \"eefefcaf-fc23-c7c5-cd2c-cc3cc3b108f1\",\n        \"path\": \"string\"\n      },\n      \"key_1\": {\n        \"id\": \"7a504e53-11a6-df6e-99b3-1da0960d83b4\",\n        \"path\": \"string\"\n      },\n      \"key_2\": {\n        \"id\": \"39d3d4cd-b769-483d-091e-6e8a75b904c7\",\n        \"path\": \"string\"\n      }\n    },\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a79ef23e-9e61-4ec6-8e38-87b42ed490de",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "entities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) UUID of the entity to resolve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 785\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f81f0dd2-8de8-4141-b7df-f73510906d1c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "entities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) UUID of the entity to resolve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 785\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0095db0-0961-4f7f-92bb-fe3764e4df25",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "entities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) UUID of the entity to resolve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 785\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "197072ec-89b9-4cc8-96d1-06e3307de5c1",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "entities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) UUID of the entity to resolve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 785\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ec89de6-0973-4f8f-95e9-5888af0a7cac",
+          "name": "Get Partner Entity",
+          "request": {
+            "name": "Get Partner Entity",
+            "description": {
+              "content": "Returns a resolved entity by ID within a partner organization scope.\n\nLooks up a UUID across organizations using partner authentication and returns\nthe resource type plus enough context to fetch the canonical resource.\n\nThis endpoint is intended for cross-organization partner workflows where the\ncaller has an arbitrary UUID and needs to discover both the resource type and\nthe organization it belongs to.\n\nThe response always includes:\n\n- `id`: the UUID that was resolved.\n- `type`: the resolved entity type.\n- `canonical_path`: the canonical REST path for the resolved resource.\n- `organization_id`: the organization that owns the resolved resource.\n\nThe response may also include:\n\n- `relationships`: parent resources needed to address nested resources.\n- `context`: lightweight additional context, such as bulk sync `schema_ids`.\n\nSupported `type` values currently include:\n\n- `organization`\n- `user`\n- `connection`\n- `model`\n- `sync`\n- `sync_execution`\n- `bulk_sync`\n- `bulk_sync_execution`\n\nExamples:\n\n- A model sync execution resolves to a `sync_execution` and includes a `sync`\n  relationship.\n- A bulk sync execution resolves to a `bulk_sync_execution`, includes a\n  `bulk_sync` relationship, and may include `context.schema_ids`.\n\nIf the UUID does not exist, the endpoint returns `404`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                "entities",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) UUID of the entity to resolve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ab56131d-ca8c-41ce-a38b-702148b5b72f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    "entities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) UUID of the entity to resolve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer partner API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"canonical_path\": \"string\",\n    \"context\": {\n      \"key_0\": {}\n    },\n    \"id\": \"4c1c77ab-a821-2055-2604-f79cb977878f\",\n    \"organization_id\": \"f6d08cd1-1b63-aaac-5713-46b4da7c62ea\",\n    \"relationships\": {\n      \"key_0\": {\n        \"id\": \"eefefcaf-fc23-c7c5-cd2c-cc3cc3b108f1\",\n        \"path\": \"string\"\n      },\n      \"key_1\": {\n        \"id\": \"7a504e53-11a6-df6e-99b3-1da0960d83b4\",\n        \"path\": \"string\"\n      },\n      \"key_2\": {\n        \"id\": \"39d3d4cd-b769-483d-091e-6e8a75b904c7\",\n        \"path\": \"string\"\n      }\n    },\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a58e458-a29f-45e0-8c4b-51d4ec016fc1",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    "entities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) UUID of the entity to resolve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer partner API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 785\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "273842dd-b770-437d-b700-3e1c9fa3f7e0",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    "entities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) UUID of the entity to resolve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer partner API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 785\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28b8e2a7-239b-4678-82d7-f682c51c4bd8",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    "entities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) UUID of the entity to resolve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer partner API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 785\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.polytomic.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cf3857bb-fd0a-4632-8147-7a0499b01c32",
+    "name": "API Reference subpackage_bulkSync subpackage_entities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

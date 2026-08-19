@@ -1,0 +1,76 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_entities API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_entities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/entities/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the entity to resolve."
+              }
+            ]
+          },
+          "docs": "Returns a resolved entity by ID.\n\nLooks up a UUID within the caller's current organization and returns the\nresource type plus enough context to fetch the canonical resource.\n\nThis endpoint is useful when you have an execution, sync, model, connection,\norganization, or user UUID and need to determine what it refers to.\n\nThe response always includes:\n\n- `id`: the UUID that was resolved.\n- `type`: the resolved entity type.\n- `canonical_path`: the canonical REST path for the resolved resource.\n\nThe "
+        },
+        {
+          "info": {
+            "name": "Get Partner Entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organizations/entities/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the entity to resolve."
+              }
+            ]
+          },
+          "docs": "Returns a resolved entity by ID within a partner organization scope.\n\nLooks up a UUID across organizations using partner authentication and returns\nthe resource type plus enough context to fetch the canonical resource.\n\nThis endpoint is intended for cross-organization partner workflows where the\ncaller has an arbitrary UUID and needs to discover both the resource type and\nthe organization it belongs to.\n\nThe response always includes:\n\n- `id`: the UUID that was resolved.\n- `type`: the resolved en"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

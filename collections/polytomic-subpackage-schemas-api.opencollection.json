@@ -1,0 +1,345 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_schemas API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_schemas",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upsert Schema Fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connections/:connection_id/schemas/:schema_id/fields",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the schema the fields belong to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates user-defined fields on a schema, matched by field_id.\n\nFields are matched by `field_id`. Reusing an existing `field_id` updates that\nfield; using a new `field_id` creates a new user-defined field.\n\nThis makes the endpoint safe to retry when you are intentionally upserting the\nsame field definitions. It is not a patch-by-position operation.\n\nIf some fields succeed and others fail, the endpoint can return a partial\nsuccess response. Validate the response status and message rathe"
+        },
+        {
+          "info": {
+            "name": "Patch Schema Field",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.polytomic.com/api/connections/:connection_id/schemas/:schema_id/fields/:field_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Connection holding the schema."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Schema identifier."
+              },
+              {
+                "name": "field_id",
+                "value": "",
+                "type": "path",
+                "description": "Field identifier within the schema."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Edits a single field on a schema, creating an override for a detected field if needed."
+        },
+        {
+          "info": {
+            "name": "Delete Schema Field",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/connections/:connection_id/schemas/:schema_id/fields/:field_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the schema the field belongs to."
+              },
+              {
+                "name": "field_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the user-defined field to delete."
+              }
+            ]
+          },
+          "docs": "Removes a user-defined field from a schema.\n\nOnly user-defined fields — those created via\n[`POST /api/connections/{connection_id}/schemas/{schema_id}/fields`](../../../../../../../api-reference/schemas/upsert-field)\n— can be removed through this endpoint. Fields detected automatically from\nthe source cannot be deleted here; they are managed through schema refresh.\n\n> 🚧 Deleting a field that is referenced in an active sync mapping may cause\n> that sync to error on its next execution. Remove or u"
+        },
+        {
+          "info": {
+            "name": "Set Primary Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/connections/:connection_id/schemas/:schema_id/primary_keys",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the schema whose primary keys are being overridden."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Overrides the primary key detected on a schema.\n\nThis is a full replacement: the keys you supply become the complete override\nset, replacing any previously configured overrides. Omitting a key that was\npreviously set removes it.\n\nPrimary key overrides are useful when the source does not expose a primary\nkey or when the source-detected key is not the correct deduplication\nidentifier for your use case.\n\n> 📘 To revert to the source-detected primary keys and remove all overrides,\n> use [`DELETE /ap"
+        },
+        {
+          "info": {
+            "name": "Reset Primary Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/connections/:connection_id/schemas/:schema_id/primary_keys",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the schema whose primary key override should be cleared."
+              }
+            ]
+          },
+          "docs": "Deletes all primary key overrides for a schema, reverting to the primary keys detected from the source.\n\nTo replace the overrides with a new set rather than clearing them entirely,\nuse [`PUT /api/connections/{connection_id}/schemas/{schema_id}/primary_keys`](../../../../../../api-reference/schemas/set-primary-keys)\ninstead."
+        },
+        {
+          "info": {
+            "name": "Refresh Connection Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connections/:id/schemas/refresh",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection whose schema cache should be refreshed."
+              }
+            ]
+          },
+          "docs": "Refreshes a connection's cached schemas.\n\nCall this when the upstream source has added, removed, or changed tables,\nobjects, or fields and you need Polytomic to re-inspect the connection before\ncreating or updating sync configuration.\n\nThis endpoint does not return the refreshed schemas directly. Follow the\n`Location` header or poll [`GET /api/connections/{id}/schemas/status`](../../../../../api-reference/schemas/get-status)\nuntil the refresh completes, then fetch the schemas you need.\n\n> 📘 Sch"
+        },
+        {
+          "info": {
+            "name": "Get Schema Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/schemas/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection whose schema cache status should be returned."
+              }
+            ]
+          },
+          "docs": "Returns the current schema inspection status for a connection.\n\nPoll this endpoint after calling\n[`POST /api/connections/{id}/schemas/refresh`](../../../../../api-reference/schemas/refresh) to track\nprogress. When `status` transitions to `completed`, the refreshed schemas\nare available for use in sync configuration.\n\n> 📘 Schema refresh is asynchronous\n>\n> This endpoint kicks off a background refresh of the connection's cached\n> schemas and returns a `Location` header pointing at\n> [`GET /api/co"
+        },
+        {
+          "info": {
+            "name": "Get Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/schemas/:schema_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the schema within the connection. Format depends on the connection type (e.g. schema.table for databases, object name for SaaS backends)."
+              }
+            ]
+          },
+          "docs": "Returns a single schema on a connection.\n\nThe schema is returned from the connection's cached schema set. If the\nupstream source has changed since the last inspection, the result may be\nstale.\n\n> 📘 Trigger [`POST /api/connections/{id}/schemas/refresh`](../../../../../api-reference/schemas/refresh)\n> and wait for it to complete before fetching this endpoint if you need\n> up-to-date field definitions."
+        },
+        {
+          "info": {
+            "name": "Get Schema Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/schemas/:schema_id/records",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the schema within the connection."
+              }
+            ]
+          },
+          "docs": "Returns a sample of records from a schema on a connection.\n\nThe sample is intended for previewing the shape and values of data before\ncommitting to a sync configuration, not for full data export.\n\n> 🚧 The sample is not guaranteed to be representative of the full dataset.\n> Row selection is implementation-defined and may differ across connection\n> types.\n\n> 📘 If the schema's field definitions are stale, refresh them first with\n> [`POST /api/connections/{id}/schemas/refresh`](../../../../../../a"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

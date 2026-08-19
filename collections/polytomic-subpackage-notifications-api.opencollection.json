@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_notifications API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_notifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Global Error Subscribers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/notifications/global-error-subscribers",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns the list of email addresses subscribed to global sync error notifications for the caller's organization.\n\nTo update the subscriber list, use\n[`PUT /api/notifications/global-error-subscribers`](../../../api-reference/notifications/set-global-error-subscribers)."
+        },
+        {
+          "info": {
+            "name": "Update Global Error Subscribers",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/notifications/global-error-subscribers",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces the list of email addresses subscribed to global sync error notifications for the caller's organization.\n\nThis is a **full replacement** — the request body becomes the complete\nsubscriber list. To add or remove a single address without affecting others,\nfetch the current list with\n[`GET /api/notifications/global-error-subscribers`](../../../api-reference/notifications/get-global-error-subscribers), apply your change,\nand send the modified list back."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

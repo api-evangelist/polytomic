@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_queryRunner API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_queryRunner",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run Query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/connections/:connection_id/query",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection to run the query against."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "The query to execute against the connection."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a query for asynchronous execution against the connection.\n\nThis endpoint returns immediately with a query task ID. It does not wait for\nthe query to finish. Poll [`GET /api/queries/{id}`](../../../../api-reference/query-runner/get-query) until `status`\nreaches `done` or `failed`.\n\nOnly the user who created the query can fetch its results later. Query results\nare stored temporarily and may expire; use the `expires` field from the result\nendpoint to understand how long they will remain av"
+        },
+        {
+          "info": {
+            "name": "Get Query Results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/queries/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the query task, as returned by POST /api/connections/{connection_id}/query."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Opaque pagination token returned in the links.next or links.previous URL of the previous response."
+              }
+            ]
+          },
+          "docs": "Fetches the latest status for a submitted query and, once complete, returns fields and paginated results.\n\nThis endpoint is the second step of the query-runner flow. First call\n[`POST /api/connections/{connection_id}/query`](../../../api-reference/query-runner/run-query),\nthen poll this endpoint with the returned ID.\n\nResults may be paginated across multiple blobs. When that happens, use the\nopaque `links.next` and `links.previous` URLs exactly as returned. Do not try to\nconstruct the `page` tok"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,152 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_permissions.subpackage_permissions/roles API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_permissions.subpackage_permissions/roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/permissions/roles",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists all permissions roles available in the caller's organization, including built-in system roles.\n\nSystem roles such as Admin and Member are always present in every organization\nand cannot be modified or deleted. Custom roles appear alongside them and can\nbe created, updated, or removed as needed.\n\nTo inspect or modify a specific role, use\n[`GET /api/permissions/roles/{id}`](../../../api-reference/permissions/roles/get)."
+        },
+        {
+          "info": {
+            "name": "Create Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/permissions/roles",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new permissions role.\n\nProvide a `name` for the new role. The role is immediately available for use\nin permission policies.\n\nTo attach the role to resources, create or update a policy using\n[`POST /api/permissions/policies`](../../../api-reference/permissions/policies/create)."
+        },
+        {
+          "info": {
+            "name": "Get Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/permissions/roles/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single permissions role by ID.\n\nReturns the role's name, action set, and whether it is a built-in system role."
+        },
+        {
+          "info": {
+            "name": "Update Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/permissions/roles/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing permissions role's name and action set.\n\nThe update is a **full replacement** of the role definition.\n\n> 🚧 Built-in system roles (such as Admin and Member) cannot be updated.\n> Attempting to modify a system role returns an error."
+        },
+        {
+          "info": {
+            "name": "Delete Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/permissions/roles/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a permissions role.\n\n> 🚧 Built-in system roles (such as Admin and Member) cannot be deleted.\n> Attempting to delete a system role returns an error.\n\nDeleting a role does not automatically remove it from any policies that\nreference it. Update those policies separately using\n[`PUT /api/permissions/policies/{id}`](../../../../api-reference/permissions/policies/update) to avoid\nleaving stale role references."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

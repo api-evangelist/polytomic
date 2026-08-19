@@ -1,0 +1,366 @@
+# Polytomic Documentation
+
+> Polytomic documentation
+
+## Guides
+- [Getting started](https://docs.polytomic.com/docs/getting-started.md)
+- [API docs](https://docs.polytomic.com/docs/api-docs.md)
+- [MCP server](https://docs.polytomic.com/docs/mcp-server.md)
+- [Contact us](https://docs.polytomic.com/docs/contact-us.md)
+- [Whitelist IPs](https://docs.polytomic.com/docs/whitelist-ips.md)
+- [Connecting via an SSH tunnel](https://docs.polytomic.com/docs/connecting-through-ssh.md): Connecting Polytomic to databases through SSH
+- [SSO/SAML configuration](https://docs.polytomic.com/docs/ssosaml-configuration.md)
+- [System status](https://docs.polytomic.com/docs/system-status.md)
+- [Data regions](https://docs.polytomic.com/docs/data-regions.md)
+- [Adding a team member](https://docs.polytomic.com/docs/adding-a-team-member.md)
+- [Introduction](https://docs.polytomic.com/docs/polytomic-harbors-introduction.md): Polytomic Harbors: secure data and context stores for your AI agents
+- [Introduction](https://docs.polytomic.com/docs/sync-destinations.md)
+- [Model Syncs](https://docs.polytomic.com/docs/model-syncs.md)
+- [Choose destination](https://docs.polytomic.com/docs/choose-destination.md)
+- [Refresh destination objects and fields](https://docs.polytomic.com/docs/refresh-destination-objects-fields.md)
+- [Choose sync type](https://docs.polytomic.com/docs/choose-sync-type.md)
+- [Specify sync mapping](https://docs.polytomic.com/docs/specify-sync-mapping.md)
+- [Custom text mapping (optional)](https://docs.polytomic.com/docs/custom-text.md)
+- [Sync model filters (optional)](https://docs.polytomic.com/docs/sync-filters.md)
+- [Mapping overrides (optional)](https://docs.polytomic.com/docs/mapping-overrides.md)
+- [Sync schedule](https://docs.polytomic.com/docs/model-sync-schedule.md): Set the frequency of your model sync
+- [Resyncing your data](https://docs.polytomic.com/docs/force-full-resync.md)
+- [Model Sync activity log](https://docs.polytomic.com/docs/model-sync-activity-log.md): A timeline of all edits to a Polytomic Model Sync
+- [Syncing changes](https://docs.polytomic.com/docs/syncing-changes.md)
+- [Bulk Syncs](https://docs.polytomic.com/docs/bulk-syncs.md): ELT your data into data warehouses, databases, and cloud storage
+- [Choose source and destination](https://docs.polytomic.com/docs/choose-source-and-destination-1.md)
+- [Choose your source objects](https://docs.polytomic.com/docs/select-source-objects.md)
+- [Table filters](https://docs.polytomic.com/docs/bulk-sync-table-filters.md)
+- [Sync schedule](https://docs.polytomic.com/docs/bulk-sync-schedule.md): Set the frequency of your bulk sync
+- [Multiple schedules](https://docs.polytomic.com/docs/bulk-sync-multiple-schedules.md): Specify multiple schedules for your Bulk Sync
+- [Incremental syncing from databases](https://docs.polytomic.com/docs/incremental-syncing-from-databases.md)
+- [Polytomic timestamp columns](https://docs.polytomic.com/docs/polytomic-timestamp-columns.md)
+- [Resyncing your tables](https://docs.polytomic.com/docs/bulk-resync-tables.md)
+- [Table and column naming](https://docs.polytomic.com/docs/bulk-sync-naming-conventions.md)
+- [Bulk Sync activity log](https://docs.polytomic.com/docs/bulk-sync-activity-log.md): A timeline of all edits to a Polytomic Bulk Sync
+- [The _polytomic_id column](https://docs.polytomic.com/docs/polytomic-id.md)
+- [Custom primary keys](https://docs.polytomic.com/docs/custom-primary-keys.md)
+- [Common advanced settings](https://docs.polytomic.com/docs/common-advanced-settings.md)
+- [Sync status dashboard](https://docs.polytomic.com/docs/sync-status-dashboard.md): See the status of all your syncs in one dashboard
+- [Sync console log](https://docs.polytomic.com/docs/sync-console-log.md): Detailed log lines for your syncs
+- [Destination-specific settings and tips](https://docs.polytomic.com/docs/destination-specific-settings.md)
+- [Affinity CRM](https://docs.polytomic.com/docs/affinity-syncs.md)
+- [Google Sheets](https://docs.polytomic.com/docs/google-sheets-syncs.md)
+- [Hubspot](https://docs.polytomic.com/docs/hubspot-syncs.md)
+- [Salesforce](https://docs.polytomic.com/docs/salesforce-syncs.md)
+- [Creating a SQL model](https://docs.polytomic.com/docs/sql-model.md)
+- [Creating a Google Sheets model](https://docs.polytomic.com/docs/google-sheets-model.md)
+- [Creating an HTTP API model](https://docs.polytomic.com/docs/http-api-model.md)
+- [Using JSON Path for model creation](https://docs.polytomic.com/docs/using-json-path-for-model-creation.md)
+- [Creating a CSV URL model](https://docs.polytomic.com/docs/csv-url-model.md)
+- [Tracking fields](https://docs.polytomic.com/docs/tracking-fields-for-models.md)
+- [Joining to other models](https://docs.polytomic.com/docs/join-to-other-models.md)
+- [Model labels](https://docs.polytomic.com/docs/model-labels.md): Categorizing your models with labels
+- [Model Activity Log](https://docs.polytomic.com/docs/model-activity-log.md): A timeline of all edits to a Polytomic model
+- [Enriching your model](https://docs.polytomic.com/docs/enriching-data.md)
+- [Notification recipients](https://docs.polytomic.com/docs/error-notification-recipients.md)
+- [dbt integrations](https://docs.polytomic.com/docs/dbt-integrations.md)
+- [Overview](https://docs.polytomic.com/docs/enrich-overview.md): A universal interface to enrich your data from ZoomInfo, Apollo.io, and other providers, no matter where it sits
+- [Supported providers](https://docs.polytomic.com/docs/enrich-supported-providers.md)
+- [API limits](https://docs.polytomic.com/docs/enrich-api-limits.md)
+- [About Query Runner](https://docs.polytomic.com/docs/about-query-runner.md)
+- [Creating workspaces](https://docs.polytomic.com/docs/workspaces.md)
+- [Integrating monitoring tools](https://docs.polytomic.com/docs/integrating-monitoring-tools.md)
+- [Email reports](https://docs.polytomic.com/docs/email-reports.md)
+- [Default user roles](https://docs.polytomic.com/docs/default-user-roles.md)
+- [Custom roles](https://docs.polytomic.com/docs/defining-your-own-roles.md)
+- [Example: restrict model-editing](https://docs.polytomic.com/docs/example-restrict-model-editors.md)
+- [Example: restrict connection management](https://docs.polytomic.com/docs/example-restrict-connection-management.md)
+- [Example: restrict sync destination](https://docs.polytomic.com/docs/example-restrict-sync-destination.md)
+- [Example: restrict sync editing](https://docs.polytomic.com/docs/permissions-example-restrict-sync-editing.md)
+- [Example: only allow Query Runner operations](https://docs.polytomic.com/docs/permissions-example-only-allow-query-runner-operations.md)
+- [Support](https://docs.polytomic.com/docs/support.md)
+- [About](https://docs.polytomic.com/docs/sync-warnings.md)
+- [Duplicate Identities](https://docs.polytomic.com/docs/polytomicduplicate_identities.md)
+- [Empty Record](https://docs.polytomic.com/docs/polytomicempty_record.md)
+- [Enrichment Failed](https://docs.polytomic.com/docs/enrichment_failed.md)
+- [Invalid Reference Removed](https://docs.polytomic.com/docs/polytomicinvalid_reference_removed.md)
+- [Missing Required Field](https://docs.polytomic.com/docs/polytomicmissing_identity_field.md)
+- [Missing or Empty Identity Field](https://docs.polytomic.com/docs/polytomicmissing_or_empty_identity.md)
+- [Salesforce — Duplicate Identities](https://docs.polytomic.com/docs/saleforceduplicate_records.md)
+- [Salesforce — Invalid Reference](https://docs.polytomic.com/docs/saleforceinvalid_reference_error.md)
+- [Salesforce — Duplicate Lead Error](https://docs.polytomic.com/docs/saleforceduplicate_lead_error.md)
+- [Importing your Polytomic workspace into Terraform](https://docs.polytomic.com/docs/importing-your-polytomic-workspace-into-terraform.md)
+- [Syncing Polytomic to GitHub](https://docs.polytomic.com/docs/syncing-polytomic-to-github.md): Update Terraform resources in GitHub based on changes made in Polytomic.
+- [Using the provider](https://docs.polytomic.com/docs/getting-started-terraform.md)
+- [On-premises setup](https://docs.polytomic.com/docs/on-premise-setup.md)
+- [Sizing and infrastructure requirements](https://docs.polytomic.com/docs/sizing-your-deployment.md)
+- [SSO (Single Sign-On)](https://docs.polytomic.com/docs/on-premise-sso.md)
+- [Integration-specific setup](https://docs.polytomic.com/docs/on-premise-integration-specifics.md)
+- [Airtable](https://docs.polytomic.com/docs/airtable-on-premises.md): Configuring Airtable with Polytomic On Premises
+- [dbt Project Repository](https://docs.polytomic.com/docs/dbt-project-repository-onprem.md): Configuring connecting to your GitHub dbt project repository with Polytomic On Premises
+- [Facebook Ad Audiences](https://docs.polytomic.com/docs/fb-audiences-on-premises.md): Configuring Facebook Ad Audiences with Polytomic On Premises
+- [Front](https://docs.polytomic.com/docs/front-on-premises.md): Configuring Front with Polytomic On Premises
+- [Google Ads](https://docs.polytomic.com/docs/google-ads-on-premises.md): Configuring Google Ads with Polytomic On Premises
+- [Google Analytics](https://docs.polytomic.com/docs/on-prem-google-analytics.md): Configuring Google Analytics with Polytomic On Premises
+- [Google Search Ads 360](https://docs.polytomic.com/docs/google-search-ads-360-on-premises.md): Configuring Google Search Ads 360 with Polytomic On Premises
+- [Google Sheets](https://docs.polytomic.com/docs/google-sheets-on-premises.md): Configuring Google Sheets with Polytomic On Premises
+- [Hubspot](https://docs.polytomic.com/docs/hubspot-on-premises.md): Configuring Hubspot with Polytomic On Premises
+- [Intercom](https://docs.polytomic.com/docs/intercom-on-premises.md): Configuring Intercom with Polytomic On Premises
+- [Microsoft Ads (formerly Bing Ads)](https://docs.polytomic.com/docs/microsoft-ads-on-prem.md): Configuring Microsoft Ads with Polytomic On Premises
+- [Outreach](https://docs.polytomic.com/docs/outreach-on-premises.md): Enabling Outreach with Polytomic On Premises
+- [Salesforce](https://docs.polytomic.com/docs/salesforce-on-premises.md): Configuring Salesforce with Polytomic On Premises
+- [Zendesk Chat](https://docs.polytomic.com/docs/zendesk-chat-on-premise.md): Configuring Zendesk Chat with Polytomic On Premises
+- [Zendesk Support](https://docs.polytomic.com/docs/zendesk-on-premises.md): Configuring Zendesk Support with Polytomic On Premises
+- [Administering your deployment](https://docs.polytomic.com/docs/administrating-your-deployment.md)
+- [Affinity CRM](https://docs.polytomic.com/docs/affinity-crm-connections.md): Source and destination
+- [Airtable](https://docs.polytomic.com/docs/airtable.md): Source and destination
+- [Amazon Keyspaces](https://docs.polytomic.com/docs/amazon-keyspaces.md): Source
+- [Amplemarket](https://docs.polytomic.com/docs/amplemarket.md): Source and enrichment
+- [Amplitude](https://docs.polytomic.com/docs/amplitude-connections.md): Source and destination
+- [Anrok](https://docs.polytomic.com/docs/anrok.md): Source
+- [Apollo.io](https://docs.polytomic.com/docs/apollo.md): Destination and enrichment
+- [App Store Connect](https://docs.polytomic.com/docs/app-store-connect.md): Source
+- [Apple Ads](https://docs.polytomic.com/docs/apple-ads.md): Source
+- [Apple Ads Attribution](https://docs.polytomic.com/docs/apple-ads-attribution.md): Enrichment
+- [AppsFlyer](https://docs.polytomic.com/docs/appsflyer.md): Source
+- [Asana](https://docs.polytomic.com/docs/asana.md): Source
+- [Ascend](https://docs.polytomic.com/docs/ascend-connections.md): Source
+- [Ashby](https://docs.polytomic.com/docs/ashby.md): Source
+- [Attio](https://docs.polytomic.com/docs/attio.md): Source and destination
+- [Auth0](https://docs.polytomic.com/docs/auth0.md): Source
+- [AWS Athena](https://docs.polytomic.com/docs/aws-athena-connections.md): Source and destination
+- [AWS DynamoDB](https://docs.polytomic.com/docs/amazon-dynamodb.md): Source
+- [AWS OpenSearch](https://docs.polytomic.com/docs/aws-opensearch.md): Source
+- [AWS S3](https://docs.polytomic.com/docs/aws-s3-connections.md): Source and destination
+- [Using AWS IAM roles to access S3 buckets](https://docs.polytomic.com/docs/iam-role-authentication-to-aws.md): Instructions for configuring Polytomic using AWS IAM role assumption.
+- [Bulk sync to S3 subfolders](https://docs.polytomic.com/docs/bulk-sync-subfolders.md)
+- [S3 Event Notifications via AWS SQS](https://docs.polytomic.com/docs/s3-event-notifications-via-aws-sqs.md)
+- [Azure Blob Storage](https://docs.polytomic.com/docs/azure-blob-storage-connections.md): Source and destination
+- [Azure Cosmos DB](https://docs.polytomic.com/docs/azure-cosmos-db-connections.md): Source
+- [Azure SQL](https://docs.polytomic.com/docs/azure-sql-connections.md): Source and destination
+- [Azure Synapse](https://docs.polytomic.com/docs/azure-synapse-connections.md): Source
+- [Barbour ABI](https://docs.polytomic.com/docs/barbour-abi.md): Source
+- [Baseten](https://docs.polytomic.com/docs/baseten.md): Source
+- [BILL](https://docs.polytomic.com/docs/bill.md): Source
+- [Botpress](https://docs.polytomic.com/docs/botpress.md): Destination
+- [Brevo](https://docs.polytomic.com/docs/brevo.md): Destination
+- [CallRail](https://docs.polytomic.com/docs/callrail.md): Source
+- [Campfire](https://docs.polytomic.com/docs/campfire.md): Source
+- [Chameleon](https://docs.polytomic.com/docs/chameleon.md): Destination
+- [Chargebee](https://docs.polytomic.com/docs/chargebee-connections.md): Source
+- [Chili Piper](https://docs.polytomic.com/docs/chili-piper.md): Source
+- [Chorus](https://docs.polytomic.com/docs/chorus.md): Source
+- [Circle](https://docs.polytomic.com/docs/circle.md): Source
+- [Clari Copilot](https://docs.polytomic.com/docs/clari-copilot.md): Source
+- [Clazar](https://docs.polytomic.com/docs/clazar.md): Source
+- [ClickHouse](https://docs.polytomic.com/docs/clickhouse.md): Source and destination
+- [Clerk](https://docs.polytomic.com/docs/clerk.md): Source
+- [Cloudflare Logs](https://docs.polytomic.com/docs/cloudflare-logs.md): Source
+- [CloudTalk](https://docs.polytomic.com/docs/cloudtalk.md): Source
+- [Construct Connect](https://docs.polytomic.com/docs/construct-connect.md): Source
+- [Coupa](https://docs.polytomic.com/docs/coupa.md): Source
+- [CSV URL](https://docs.polytomic.com/docs/csv-url-connections.md): Source
+- [Customer.io](https://docs.polytomic.com/docs/customerio.md): Source and destination
+- [Syncing from Customer.io](https://docs.polytomic.com/docs/syncing-from-customerio.md): Source
+- [Databricks](https://docs.polytomic.com/docs/databricks.md): Source and destination
+- [IAM role authentication to Databricks AWS staging buckets](https://docs.polytomic.com/docs/iam-role-authentication-to-databricks-aws-staging-buckets.md)
+- [Datadog](https://docs.polytomic.com/docs/datadog.md): Destination
+- [Dayforce](https://docs.polytomic.com/docs/dayforce.md): Source
+- [dbt Cloud](https://docs.polytomic.com/docs/dbt-cloud.md): Orchestration
+- [dbt Project Repository](https://docs.polytomic.com/docs/dbt-project-repository.md): Orchestration
+- [DealCloud](https://docs.polytomic.com/docs/dealcloud.md): Source and destination
+- [Delighted](https://docs.polytomic.com/docs/delighted.md): Source
+- [Dialpad](https://docs.polytomic.com/docs/dialpad-connections.md): Source and destination
+- [Dittofeed](https://docs.polytomic.com/docs/dittofeed.md): Destination
+- [Docker Hub](https://docs.polytomic.com/docs/docker-hub.md): Source
+- [Dropbox](https://docs.polytomic.com/docs/dropbox.md): Source
+- [Dub](https://docs.polytomic.com/docs/dub.md): Source
+- [Facebook (Meta) Ads](https://docs.polytomic.com/docs/facebook-ads-connections.md): Source and Destination
+- [Facebook Ads token authentication](https://docs.polytomic.com/docs/facebook-ads-token-authentication.md)
+- [Factors.ai](https://docs.polytomic.com/docs/factors_ai.md): Source
+- [Fathom](https://docs.polytomic.com/docs/fathom.md): Source
+- [Fireflies.ai](https://docs.polytomic.com/docs/fireflies-ai.md): Source
+- [Freshdesk](https://docs.polytomic.com/docs/freshdesk-connections.md): Source and destination
+- [Freshservice](https://docs.polytomic.com/docs/freshservice.md): Source
+- [Front](https://docs.polytomic.com/docs/front-connections.md): Source and destination
+- [FullStory](https://docs.polytomic.com/docs/fullstory-connections.md): Source
+- [G2](https://docs.polytomic.com/docs/g2.md): Source
+- [Gainsight CS](https://docs.polytomic.com/docs/gainsight-cs.md): Source
+- [Gatsby](https://docs.polytomic.com/docs/gatsby.md): Source
+- [GitHub](https://docs.polytomic.com/docs/github.md): Source
+- [Gladly](https://docs.polytomic.com/docs/gladly.md): Source
+- [Gmail](https://docs.polytomic.com/docs/gmail.md): Source
+- [Gong](https://docs.polytomic.com/docs/gong.md): Source and destination
+- [Google Ads](https://docs.polytomic.com/docs/google-ads-connections.md): Source and Destination
+- [Google Analytics (GA4)](https://docs.polytomic.com/docs/google-analytics.md): Source
+- [Google BigQuery](https://docs.polytomic.com/docs/google-bigquery.md): Source and destination
+- [Google BigQuery Workload Identity Federation](https://docs.polytomic.com/docs/google-bigquery-workload-identity-federation.md): Authenticating to Google BigQuery using WIF
+- [Google Cloud SQL](https://docs.polytomic.com/docs/google-cloud-sql-connections.md): Source and destination
+- [Google Cloud MySQL](https://docs.polytomic.com/docs/google-cloud-sql-mysql.md): Source and destination
+- [Google Cloud PostgreSQL](https://docs.polytomic.com/docs/google-cloud-sql-postgresql.md): Source and destination
+- [CDC replication](https://docs.polytomic.com/docs/google-cloud-sql-postgresql-cdc.md): Stream changes from Google Cloud SQL for PostgreSQL to data warehouses, other databases, and cloud storage buckets like S3.
+- [Google Cloud Storage](https://docs.polytomic.com/docs/google-cloud-storage-connections.md): Source and destination
+- [Google Sheets](https://docs.polytomic.com/docs/google-sheets-connections.md): Source and destination
+- [Connecting with a Google Service Account](https://docs.polytomic.com/docs/connecting-sheets-google-service-account.md)
+- [Google Workspace](https://docs.polytomic.com/docs/google-workspace-connections.md): Source
+- [Gorgias](https://docs.polytomic.com/docs/gorgias.md): Source
+- [Greenhouse](https://docs.polytomic.com/docs/greenhouse.md): Source
+- [Harmonic](https://docs.polytomic.com/docs/harmonic-connections.md): Source, destination, and enrichment
+- [Heap](https://docs.polytomic.com/docs/heap.md): Destination
+- [Heron Data](https://docs.polytomic.com/docs/heron-data.md): Source
+- [Highlevel](https://docs.polytomic.com/docs/highlevel.md): Source
+- [Highspot](https://docs.polytomic.com/docs/highspot.md): Source
+- [Honeycomb](https://docs.polytomic.com/docs/honeycomb.md): Destination
+- [HeyReach](https://docs.polytomic.com/docs/heyreach.md): Source and Destination
+- [HTTP API](https://docs.polytomic.com/docs/http-api-connections.md): Source
+- [HubSpot](https://docs.polytomic.com/docs/hubspot.md): Source and destination
+- [Instantly](https://docs.polytomic.com/docs/instantly.md): Source and destination
+- [Intellimize](https://docs.polytomic.com/docs/intellimize.md): Destination
+- [Intercom](https://docs.polytomic.com/docs/intercom-connections.md): Source and destination
+- [Ironclad](https://docs.polytomic.com/docs/ironclad.md): Source
+- [Iterable](https://docs.polytomic.com/docs/iterable-connections.md): Destination
+- [Jira](https://docs.polytomic.com/docs/jira.md): Source
+- [Juro](https://docs.polytomic.com/docs/juro.md): Source
+- [Klaviyo](https://docs.polytomic.com/docs/klaviyo-connections.md): Source and destination
+- [Knock](https://docs.polytomic.com/docs/knock.md): Source
+- [Kustomer](https://docs.polytomic.com/docs/kustomer-connections.md): Source and destination
+- [Lago](https://docs.polytomic.com/docs/lago.md): Source
+- [LearnWorlds](https://docs.polytomic.com/docs/learnworlds.md): Source
+- [Linear](https://docs.polytomic.com/docs/linear.md): Source
+- [LinkedIn Ads](https://docs.polytomic.com/docs/linkedin-ads.md): Source and destination
+- [Lob](https://docs.polytomic.com/docs/lob-connections.md): Destination
+- [Loop](https://docs.polytomic.com/docs/loop.md): Source
+- [Loops](https://docs.polytomic.com/docs/loops.md): Destination
+- [MailerCheck](https://docs.polytomic.com/docs/mailercheck.md): Enrichment
+- [Marketo](https://docs.polytomic.com/docs/marketo-connections.md): Source and destination
+- [m3ter](https://docs.polytomic.com/docs/m3ter.md): Source
+- [Meridian](https://docs.polytomic.com/docs/meridian.md): Source
+- [Microsoft Ads (formerly Bing Ads)](https://docs.polytomic.com/docs/microsoft-ads.md): Source and destination
+- [Microsoft Dynamics 365](https://docs.polytomic.com/docs/microsoft-dynamics-365.md): Source and destination
+- [Microsoft SQL Server](https://docs.polytomic.com/docs/microsoft-sql-server.md): Source and destination
+- [CDC replication](https://docs.polytomic.com/docs/cdc-replication-microsoft-sql-server.md): Stream changes from Microsoft SQL Server databases to data warehouses, other databases, and cloud storage buckets like S3.
+- [Mixpanel](https://docs.polytomic.com/docs/mixpanel.md): Source
+- [monday.com](https://docs.polytomic.com/docs/monday-com.md): Source and destination
+- [MotherDuck](https://docs.polytomic.com/docs/motherduck.md): Source and destination
+- [MongoDB](https://docs.polytomic.com/docs/mongodb.md): Source and destination
+- [MySQL](https://docs.polytomic.com/docs/mysql-connections.md): Source and destination
+- [CDC replication](https://docs.polytomic.com/docs/mysql-cdc-replication.md): Source
+- [n8n](https://docs.polytomic.com/docs/n8n.md): Source
+- [Neon PostgreSQL](https://docs.polytomic.com/docs/neon-postgresql.md): Source and destination
+- [NetSuite](https://docs.polytomic.com/docs/netsuite.md): Source and destination
+- [NetSuite OpenAir (SuiteProjects Pro)](https://docs.polytomic.com/docs/netsuite-openair.md): Source
+- [NetSuite SuiteAnalytics](https://docs.polytomic.com/docs/netsuite-suiteanalytics.md): Source
+- [Nooks](https://docs.polytomic.com/docs/nooks.md): Source
+- [Northbeam](https://docs.polytomic.com/docs/northbeam.md): Source and destination
+- [Notion](https://docs.polytomic.com/docs/notion.md): Source
+- [OpenAI Ads](https://docs.polytomic.com/docs/openai-ads.md): Source
+- [Outreach](https://docs.polytomic.com/docs/outreach.md): Source and destination
+- [Pardot](https://docs.polytomic.com/docs/pardot-connections.md): Destination
+- [Parquet](https://docs.polytomic.com/docs/parquet.md): Source and destination
+- [PartnerPage](https://docs.polytomic.com/docs/partnerpage.md): Source
+- [Paycor](https://docs.polytomic.com/docs/paycor.md): Source
+- [Pipedrive](https://docs.polytomic.com/docs/pipedrive-connections.md): Source and destination
+- [Pinterest Ads](https://docs.polytomic.com/docs/pinterest-ads.md): Destination
+- [Plain](https://docs.polytomic.com/docs/plain.md): Source and destination
+- [PlanetScale Vitess](https://docs.polytomic.com/docs/planetscale-vitess.md): Source
+- [PlusVibe](https://docs.polytomic.com/docs/plusvibe.md): Source
+- [Podscribe](https://docs.polytomic.com/docs/podscribe.md): Source and destination
+- [Polytomic Metadata](https://docs.polytomic.com/docs/polytomic-metadata.md): Source
+- [PostgreSQL](https://docs.polytomic.com/docs/postgresql-connections.md): Source and destination
+- [Connecting through AWS PrivateLink via VPC Lattice](https://docs.polytomic.com/docs/postgresql-connecting-through-aws-privatelink.md)
+- [Connecting through AWS PrivateLink via NLB](https://docs.polytomic.com/docs/connecting-through-aws-privatelink-nlb.md)
+- [CDC replication](https://docs.polytomic.com/docs/postgresql-cdc-replication.md): Stream changes from PostgresSQL to data warehouses, other databases, and cloud storage buckets like S3.
+- [PostHog](https://docs.polytomic.com/docs/posthog.md): Source
+- [PredictLeads](https://docs.polytomic.com/docs/predictleads.md): Destination and enrichment
+- [Productboard](https://docs.polytomic.com/docs/productboard.md): Source and destination
+- [Profound](https://docs.polytomic.com/docs/profound.md): Source
+- [Pylon](https://docs.polytomic.com/docs/pylon.md): Source and destination
+- [Qualtrics](https://docs.polytomic.com/docs/qualtrics.md): Source
+- [QuickBooks](https://docs.polytomic.com/docs/quickbooks.md): Source and destination
+- [Ramp](https://docs.polytomic.com/docs/ramp.md): Source
+- [Recharge](https://docs.polytomic.com/docs/recharge.md): Source
+- [Reddit Ads](https://docs.polytomic.com/docs/reddit-ads.md): Source and destination
+- [Redshift](https://docs.polytomic.com/docs/redshift-connections.md): Source and destination
+- [Redshift Serverless](https://docs.polytomic.com/docs/redshift-serverless.md): Source
+- [Reo.dev](https://docs.polytomic.com/docs/reo-dev.md): Source
+- [Rewardful](https://docs.polytomic.com/docs/rewardful.md): Source
+- [Rillet](https://docs.polytomic.com/docs/rillet.md): Source
+- [Rippling](https://docs.polytomic.com/docs/rippling.md): Source
+- [Rocketlane](https://docs.polytomic.com/docs/rocketlane.md): Source
+- [Rokt](https://docs.polytomic.com/docs/rokt.md): Source and destination
+- [Salesbricks](https://docs.polytomic.com/docs/salesbricks.md): Destination
+- [Salesforce](https://docs.polytomic.com/docs/salesforce.md): Source and destination
+- [Common errors](https://docs.polytomic.com/docs/common-salesforce-errors.md): Common errors when syncing to and from Salesforce
+- [Managing Salesforce API consumption](https://docs.polytomic.com/docs/manage-salesforce-api-consumption.md)
+- [Salesloft](https://docs.polytomic.com/docs/salesloft.md): Source and destination
+- [Scamalytics](https://docs.polytomic.com/docs/scamalytics.md): Enrichment
+- [Seal Subscriptions](https://docs.polytomic.com/docs/seal-subscriptions.md): Source
+- [Segment](https://docs.polytomic.com/docs/segment-connections.md): Destination
+- [Seismic](https://docs.polytomic.com/docs/seismic.md): Source
+- [SFTP](https://docs.polytomic.com/docs/sftp.md): Source and destination
+- [ShipBob](https://docs.polytomic.com/docs/shipbob-connections.md): Source
+- [Shippo](https://docs.polytomic.com/docs/shippo.md): Source
+- [Shopify](https://docs.polytomic.com/docs/shopify-connections.md): Source
+- [Short.io](https://docs.polytomic.com/docs/shortio.md): Source
+- [Showpad](https://docs.polytomic.com/docs/showpad.md): Source
+- [Slack](https://docs.polytomic.com/docs/slack.md): Source
+- [Smartlead.ai](https://docs.polytomic.com/docs/smartlead-ai.md): Source and destination
+- [Smartsheet](https://docs.polytomic.com/docs/smartsheet-connections.md): Source and destination
+- [Snapchat Ads](https://docs.polytomic.com/docs/snapchat-ads.md): Source
+- [Snowflake](https://docs.polytomic.com/docs/snowflake-connections.md): Source and destination
+- [Encrypting columns](https://docs.polytomic.com/docs/encrypting-snowflake-columns.md)
+- [Sprig](https://docs.polytomic.com/docs/sprig.md): Destination
+- [Sprout Social](https://docs.polytomic.com/docs/sprout-social.md): Source
+- [Standard Metrics](https://docs.polytomic.com/docs/standard-metrics.md): Source
+- [Statsig](https://docs.polytomic.com/docs/statsig-connections.md): Source
+- [Stord](https://docs.polytomic.com/docs/stord.md): Source
+- [Strackr](https://docs.polytomic.com/docs/strackr.md): Source
+- [Stripe](https://docs.polytomic.com/docs/stripe-connections.md): Source and destination
+- [Supabase](https://docs.polytomic.com/docs/supabase.md): Source and destination
+- [SurveyMonkey](https://docs.polytomic.com/docs/surveymonkey.md): Source
+- [Survicate](https://docs.polytomic.com/docs/survicate-connections.md): Source
+- [Tabs](https://docs.polytomic.com/docs/tabs.md): Source
+- [TestRail](https://docs.polytomic.com/docs/testrail.md): Source
+- [Thrive](https://docs.polytomic.com/docs/thrive.md): Source
+- [TikTok Ads](https://docs.polytomic.com/docs/tiktok-ads.md): Source and destination
+- [Tixr](https://docs.polytomic.com/docs/tixr.md): Source
+- [Towbook](https://docs.polytomic.com/docs/towbook.md): Source
+- [Twilio SendGrid](https://docs.polytomic.com/docs/twilio-sendgrid.md): Destination
+- [Typeform](https://docs.polytomic.com/docs/typeform.md): Source
+- [Unbounce](https://docs.polytomic.com/docs/unbounce.md): Source
+- [Upfluence](https://docs.polytomic.com/docs/upfluence.md): Source
+- [UpPromote](https://docs.polytomic.com/docs/uppromote.md): Source
+- [UserVoice](https://docs.polytomic.com/docs/uservoice-connections.md): Source and destination
+- [Vanilla Forums](https://docs.polytomic.com/docs/vanilla-forums-connections.md): Source
+- [Wavelength](https://docs.polytomic.com/docs/wavelength.md): Source and destination
+- [Webhooks](https://docs.polytomic.com/docs/webhooks-connections.md): Destination
+- [WorkOS](https://docs.polytomic.com/docs/workos.md): Source
+- [X Ads](https://docs.polytomic.com/docs/x-ads.md): Source
+- [Xero](https://docs.polytomic.com/docs/xero.md): Source
+- [Yotpo](https://docs.polytomic.com/docs/yotpo.md): Source
+- [Zendesk Chat](https://docs.polytomic.com/docs/zendesk-chat.md): Source
+- [Zendesk Support](https://docs.polytomic.com/docs/zendesk-support-connections.md): Source and Destination
+- [Connecting with client credentials](https://docs.polytomic.com/docs/connecting-with-client-credentials.md)
+- [Zoho CRM](https://docs.polytomic.com/docs/zoho-crm.md): Source
+- [Zoom](https://docs.polytomic.com/docs/zoom.md): Source
+- [ZoomInfo](https://docs.polytomic.com/docs/zoominfo.md): General source and enrichment
+
+## API Reference
+- [Introduction](https://docs.polytomic.com/reference/getting-started-with-your-api-3.md): This page will get you started with the Polytomic API.
+
+## Recipes
+- [Add an OAuth Connection](https://docs.polytomic.com/recipes/add-an-oauth-connection.md)
+- [Build a model](https://docs.polytomic.com/recipes/build-a-model.md)
+- [Create a bulk sync](https://docs.polytomic.com/recipes/create-a-bulk-sync.md)
+- [Create a connection with Terraform](https://docs.polytomic.com/recipes/create-a-connection-with-terraform.md)
+- [Create a custom RBAC role and policy](https://docs.polytomic.com/recipes/create-a-custom-rbac-role-and-policy.md)
+- [Create a sync](https://docs.polytomic.com/recipes/create-a-sync.md)
+- [Creating a model with Terraform](https://docs.polytomic.com/recipes/creating-a-model-with-terraform.md)
+
+## Changelog
+- [Release 2026.08.12](https://docs.polytomic.com/changelog/release-20260812.md)
+- [Release 2026.08.05.06](https://docs.polytomic.com/changelog/release-2026080506.md)
+- [Release 2026.08.05.05](https://docs.polytomic.com/changelog/release-2026080505.md)
+- [Release 2026.08.05.04](https://docs.polytomic.com/changelog/release-2026080504.md)
+- [Release 2026.08.05](https://docs.polytomic.com/changelog/release-20260805.md)
+- [Release 2026.07.29](https://docs.polytomic.com/changelog/release-20260729.md)
+- [Release 2026.07.22](https://docs.polytomic.com/changelog/release-20260722.md)
+- [Release 2026.07.15](https://docs.polytomic.com/changelog/release-20260715.md)
+- [Release 2026.07.08](https://docs.polytomic.com/changelog/release-20260708-1.md)
+- [Release 2026.07.08](https://docs.polytomic.com/changelog/release-20260708.md)

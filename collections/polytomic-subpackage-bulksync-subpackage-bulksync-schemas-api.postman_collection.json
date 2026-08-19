@@ -1,0 +1,1532 @@
+{
+  "item": [
+    {
+      "id": "6d213cec-c65d-41cc-bcbf-33ffea3bc6ac",
+      "name": "subpackage_bulkSync.subpackage_bulkSync/schemas",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4091bbd5-9e45-48fa-8b8b-701ab9d6fc08",
+          "name": "Get Bulk Sync Schemas",
+          "request": {
+            "name": "Get Bulk Sync Schemas",
+            "description": {
+              "content": "Lists the schemas (tables, objects) configured for a bulk sync.\n\nThis endpoint returns the schemas that have been added to and configured on this\nspecific bulk sync — not the full set of schemas available from the source\nconnection. To discover what the source connection exposes, use the source\nschemas endpoint for the relevant connection type.\n\nEach schema in the response includes its sync mode, field selections, and any\ncustom configuration applied via\n[`PATCH /api/bulk/syncs/{id}/schemas`](../../../../../api-reference/bulk-sync/schemas/patch)\nor\n[`PUT /api/bulk/syncs/{id}/schemas/{schema_id}`](../../../../../api-reference/bulk-sync/schemas/update).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":id",
+                "schemas"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key_0",
+                  "value": "<string>",
+                  "description": "Optional filters applied to the returned schemas. Supports enabled=true to return only enabled schemas and enabled=false to return only disabled schemas."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the bulk sync."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "425c8595-e43f-4110-8389-351af4e47070",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key_0",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key_1",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"data_cutoff_timestamp\": \"1955-02-10T01:28:44.730Z\",\n      \"disable_data_cutoff\": true,\n      \"enabled\": true,\n      \"id\": \"string\",\n      \"output_name\": \"string\",\n      \"partition_key\": \"string\",\n      \"tracking_field\": \"string\",\n      \"user_output_name\": \"string\"\n    },\n    {\n      \"data_cutoff_timestamp\": \"1947-06-11T14:51:27.706Z\",\n      \"disable_data_cutoff\": false,\n      \"enabled\": false,\n      \"id\": \"string\",\n      \"output_name\": \"string\",\n      \"partition_key\": \"string\",\n      \"tracking_field\": \"string\",\n      \"user_output_name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71a63331-1447-4361-ab49-923b8c60d425",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key_0",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key_1",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"status\": 9908\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7ad2fb2f-68b9-4e41-af1c-ab98c30cacac",
+          "name": "Update Bulk Sync Schemas",
+          "request": {
+            "name": "Update Bulk Sync Schemas",
+            "description": {
+              "content": "Patches one or more schemas on a bulk sync at once.\n\nOnly schemas explicitly included in the request body are modified; schemas\nomitted from the request are left unchanged. This makes PATCH the right choice\nwhen you want to update a subset of tables without affecting the rest of the\nsync's schema configuration.\n\nWithin each provided schema, omitting `fields` enables all available fields on\nthat schema. To control which fields are enabled, include the `fields` array\nwith explicit `enabled` values for each field.\n\n> 📘 To replace a single schema's configuration in full (clearing any fields you\n> omit), use\n> [`PUT /api/bulk/syncs/{id}/schemas/{schema_id}`](../../../../../api-reference/bulk-sync/schemas/update)\n> instead.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":id",
+                "schemas"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the bulk sync."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schemas\": [\n    {\n      \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n      \"disable_data_cutoff\": \"<boolean>\",\n      \"enabled\": \"<boolean>\",\n      \"fields\": [\n        {\n          \"enabled\": \"<boolean>\",\n          \"id\": \"<string>\",\n          \"obfuscated\": \"<boolean>\",\n          \"output_name\": \"<string>\",\n          \"user_output_name\": \"<string>\"\n        },\n        {\n          \"enabled\": \"<boolean>\",\n          \"id\": \"<string>\",\n          \"obfuscated\": \"<boolean>\",\n          \"output_name\": \"<string>\",\n          \"user_output_name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"function\": \"<string>\",\n          \"field_id\": \"<string>\",\n          \"value\": {}\n        },\n        {\n          \"function\": \"<string>\",\n          \"field_id\": \"<string>\",\n          \"value\": {}\n        }\n      ],\n      \"id\": \"<string>\",\n      \"output_name\": \"<string>\",\n      \"partition_key\": \"<string>\",\n      \"tracking_field\": \"<string>\",\n      \"user_output_name\": \"<string>\"\n    },\n    {\n      \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n      \"disable_data_cutoff\": \"<boolean>\",\n      \"enabled\": \"<boolean>\",\n      \"fields\": [\n        {\n          \"enabled\": \"<boolean>\",\n          \"id\": \"<string>\",\n          \"obfuscated\": \"<boolean>\",\n          \"output_name\": \"<string>\",\n          \"user_output_name\": \"<string>\"\n        },\n        {\n          \"enabled\": \"<boolean>\",\n          \"id\": \"<string>\",\n          \"obfuscated\": \"<boolean>\",\n          \"output_name\": \"<string>\",\n          \"user_output_name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"function\": \"<string>\",\n          \"field_id\": \"<string>\",\n          \"value\": {}\n        },\n        {\n          \"function\": \"<string>\",\n          \"field_id\": \"<string>\",\n          \"value\": {}\n        }\n      ],\n      \"id\": \"<string>\",\n      \"output_name\": \"<string>\",\n      \"partition_key\": \"<string>\",\n      \"tracking_field\": \"<string>\",\n      \"user_output_name\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "abff2574-3bf0-4f69-964c-ff3bd89152ef",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    {\n      \"data_cutoff_timestamp\": \"1995-07-06T17:43:31.566Z\",\n      \"disable_data_cutoff\": false,\n      \"enabled\": true,\n      \"fields\": [\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        },\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"function\": \"ArrayContains\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"function\": \"StringEndsWith\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        }\n      ],\n      \"id\": \"string\",\n      \"output_name\": \"string\",\n      \"partition_key\": \"string\",\n      \"tracking_field\": \"string\",\n      \"user_output_name\": \"string\"\n    },\n    {\n      \"data_cutoff_timestamp\": \"1950-08-30T05:14:49.383Z\",\n      \"disable_data_cutoff\": true,\n      \"enabled\": true,\n      \"fields\": [\n        {\n          \"enabled\": false,\n          \"id\": \"string\",\n          \"obfuscated\": true,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        },\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"function\": \"StringOneOf\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"function\": \"Inequality\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        }\n      ],\n      \"id\": \"string\",\n      \"output_name\": \"string\",\n      \"partition_key\": \"string\",\n      \"tracking_field\": \"string\",\n      \"user_output_name\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"data_cutoff_timestamp\": \"2016-06-22T02:45:59.920Z\",\n      \"disable_data_cutoff\": true,\n      \"enabled\": false,\n      \"fields\": [\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        },\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": true,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"function\": \"GreaterThanEqual\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"function\": \"StringContains\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        }\n      ],\n      \"id\": \"string\",\n      \"output_name\": \"string\",\n      \"partition_key\": \"string\",\n      \"tracking_field\": \"string\",\n      \"user_output_name\": \"string\"\n    },\n    {\n      \"data_cutoff_timestamp\": \"1970-08-23T08:55:08.146Z\",\n      \"disable_data_cutoff\": true,\n      \"enabled\": true,\n      \"fields\": [\n        {\n          \"enabled\": false,\n          \"id\": \"string\",\n          \"obfuscated\": true,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        },\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": true,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"function\": \"False\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"function\": \"StringMatchesTrimmed\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        }\n      ],\n      \"id\": \"string\",\n      \"output_name\": \"string\",\n      \"partition_key\": \"string\",\n      \"tracking_field\": \"string\",\n      \"user_output_name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35eee13a-c8c6-4a34-9671-9abd60930d38",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    {\n      \"data_cutoff_timestamp\": \"1995-07-06T17:43:31.566Z\",\n      \"disable_data_cutoff\": false,\n      \"enabled\": true,\n      \"fields\": [\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        },\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"function\": \"ArrayContains\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"function\": \"StringEndsWith\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        }\n      ],\n      \"id\": \"string\",\n      \"output_name\": \"string\",\n      \"partition_key\": \"string\",\n      \"tracking_field\": \"string\",\n      \"user_output_name\": \"string\"\n    },\n    {\n      \"data_cutoff_timestamp\": \"1950-08-30T05:14:49.383Z\",\n      \"disable_data_cutoff\": true,\n      \"enabled\": true,\n      \"fields\": [\n        {\n          \"enabled\": false,\n          \"id\": \"string\",\n          \"obfuscated\": true,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        },\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"function\": \"StringOneOf\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"function\": \"Inequality\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        }\n      ],\n      \"id\": \"string\",\n      \"output_name\": \"string\",\n      \"partition_key\": \"string\",\n      \"tracking_field\": \"string\",\n      \"user_output_name\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"status\": 9908\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dba4790c-8e35-40c3-9310-1e8328cfaf16",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    {\n      \"data_cutoff_timestamp\": \"1995-07-06T17:43:31.566Z\",\n      \"disable_data_cutoff\": false,\n      \"enabled\": true,\n      \"fields\": [\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        },\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"function\": \"ArrayContains\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"function\": \"StringEndsWith\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        }\n      ],\n      \"id\": \"string\",\n      \"output_name\": \"string\",\n      \"partition_key\": \"string\",\n      \"tracking_field\": \"string\",\n      \"user_output_name\": \"string\"\n    },\n    {\n      \"data_cutoff_timestamp\": \"1950-08-30T05:14:49.383Z\",\n      \"disable_data_cutoff\": true,\n      \"enabled\": true,\n      \"fields\": [\n        {\n          \"enabled\": false,\n          \"id\": \"string\",\n          \"obfuscated\": true,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        },\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"function\": \"StringOneOf\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"function\": \"Inequality\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        }\n      ],\n      \"id\": \"string\",\n      \"output_name\": \"string\",\n      \"partition_key\": \"string\",\n      \"tracking_field\": \"string\",\n      \"user_output_name\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"status\": 9908\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8e4c8f9-b0d8-4743-aece-6a1e707fbea2",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    {\n      \"data_cutoff_timestamp\": \"1995-07-06T17:43:31.566Z\",\n      \"disable_data_cutoff\": false,\n      \"enabled\": true,\n      \"fields\": [\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        },\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"function\": \"ArrayContains\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"function\": \"StringEndsWith\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        }\n      ],\n      \"id\": \"string\",\n      \"output_name\": \"string\",\n      \"partition_key\": \"string\",\n      \"tracking_field\": \"string\",\n      \"user_output_name\": \"string\"\n    },\n    {\n      \"data_cutoff_timestamp\": \"1950-08-30T05:14:49.383Z\",\n      \"disable_data_cutoff\": true,\n      \"enabled\": true,\n      \"fields\": [\n        {\n          \"enabled\": false,\n          \"id\": \"string\",\n          \"obfuscated\": true,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        },\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"function\": \"StringOneOf\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"function\": \"Inequality\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        }\n      ],\n      \"id\": \"string\",\n      \"output_name\": \"string\",\n      \"partition_key\": \"string\",\n      \"tracking_field\": \"string\",\n      \"user_output_name\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"status\": 9908\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a768997-7bcb-4d6c-9517-49ad0a028f26",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    {\n      \"data_cutoff_timestamp\": \"1995-07-06T17:43:31.566Z\",\n      \"disable_data_cutoff\": false,\n      \"enabled\": true,\n      \"fields\": [\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        },\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"function\": \"ArrayContains\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"function\": \"StringEndsWith\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        }\n      ],\n      \"id\": \"string\",\n      \"output_name\": \"string\",\n      \"partition_key\": \"string\",\n      \"tracking_field\": \"string\",\n      \"user_output_name\": \"string\"\n    },\n    {\n      \"data_cutoff_timestamp\": \"1950-08-30T05:14:49.383Z\",\n      \"disable_data_cutoff\": true,\n      \"enabled\": true,\n      \"fields\": [\n        {\n          \"enabled\": false,\n          \"id\": \"string\",\n          \"obfuscated\": true,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        },\n        {\n          \"enabled\": true,\n          \"id\": \"string\",\n          \"obfuscated\": false,\n          \"output_name\": \"string\",\n          \"user_output_name\": \"string\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"function\": \"StringOneOf\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"function\": \"Inequality\",\n          \"field_id\": \"string\",\n          \"value\": {}\n        }\n      ],\n      \"id\": \"string\",\n      \"output_name\": \"string\",\n      \"partition_key\": \"string\",\n      \"tracking_field\": \"string\",\n      \"user_output_name\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"status\": 9908\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74125af6-6d73-4278-b7fc-7b978ead64d7",
+          "name": "Get Bulk Sync Schema",
+          "request": {
+            "name": "Get Bulk Sync Schema",
+            "description": {
+              "content": "Returns the configuration of a single schema on a bulk sync.\n\nReturns the sync mode, field selections, and any other configuration applied to\nthis schema on the bulk sync.\n\nTo modify the configuration, use\n[`PATCH /api/bulk/syncs/{id}/schemas`](../../../../../../api-reference/bulk-sync/schemas/patch)\nfor a partial update across multiple schemas, or\n[`PUT /api/bulk/syncs/{id}/schemas/{schema_id}`](../../../../../../api-reference/bulk-sync/schemas/update)\nto fully replace this schema's configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":id",
+                "schemas",
+                ":schema_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the bulk sync."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "schema_id",
+                  "description": "(Required) Source-side schema identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "660a6a95-7298-4030-b1ef-665d9bc19ca5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas",
+                    ":schema_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "schema_id",
+                      "description": "(Required) Source-side schema identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"data_cutoff_timestamp\": \"1998-04-30T20:08:08.290Z\",\n    \"disable_data_cutoff\": true,\n    \"enabled\": false,\n    \"fields\": [\n      {\n        \"enabled\": true,\n        \"id\": \"string\",\n        \"obfuscated\": true,\n        \"output_name\": \"string\",\n        \"user_output_name\": \"string\"\n      },\n      {\n        \"enabled\": false,\n        \"id\": \"string\",\n        \"obfuscated\": false,\n        \"output_name\": \"string\",\n        \"user_output_name\": \"string\"\n      }\n    ],\n    \"filters\": [\n      {\n        \"function\": \"StringNotOneOf\",\n        \"field_id\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"function\": \"InTheLast\",\n        \"field_id\": \"string\",\n        \"value\": {}\n      }\n    ],\n    \"id\": \"string\",\n    \"output_name\": \"string\",\n    \"partition_key\": \"string\",\n    \"tracking_field\": \"string\",\n    \"user_output_name\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b6f21be-db8b-435b-b703-0dd9d999e5da",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas",
+                    ":schema_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "schema_id",
+                      "description": "(Required) Source-side schema identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"status\": 9908\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dd598325-5791-4126-b66a-398949a3ebec",
+          "name": "Update Bulk Sync Schema",
+          "request": {
+            "name": "Update Bulk Sync Schema",
+            "description": {
+              "content": "Replaces the configuration of a single schema on a bulk sync.\n\nThis is a full replacement: every field in the request body is written to the\nschema, and any field you omit is cleared or reset to its default. Fetch the\ncurrent configuration with\n[`GET /api/bulk/syncs/{id}/schemas/{schema_id}`](../../../../../../api-reference/bulk-sync/schemas/get)\nfirst if you want to preserve existing settings while changing only a subset.\n\nOmitting `fields` enables all available fields on the schema. To control which\nfields are enabled, include the `fields` array with explicit `enabled` values.\n\n> 📘 To update multiple schemas in a single request without affecting others,\n> use the partial-update endpoint\n> [`PATCH /api/bulk/syncs/{id}/schemas`](../../../../../../api-reference/bulk-sync/schemas/patch)\n> instead.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":id",
+                "schemas",
+                ":schema_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the bulk sync."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "schema_id",
+                  "description": "(Required) Source-side schema identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_data_cutoff\": \"<boolean>\",\n  \"enabled\": \"<boolean>\",\n  \"fields\": [\n    {\n      \"enabled\": \"<boolean>\",\n      \"id\": \"<string>\",\n      \"obfuscated\": \"<boolean>\",\n      \"user_output_name\": \"<string>\"\n    },\n    {\n      \"enabled\": \"<boolean>\",\n      \"id\": \"<string>\",\n      \"obfuscated\": \"<boolean>\",\n      \"user_output_name\": \"<string>\"\n    }\n  ],\n  \"filters\": [\n    {\n      \"function\": \"<string>\",\n      \"field_id\": \"<string>\",\n      \"value\": {}\n    },\n    {\n      \"function\": \"<string>\",\n      \"field_id\": \"<string>\",\n      \"value\": {}\n    }\n  ],\n  \"partition_key\": \"<string>\",\n  \"tracking_field\": \"<string>\",\n  \"user_output_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9b71ab25-7a68-4ed5-8016-c68e5279f1e6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas",
+                    ":schema_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "schema_id",
+                      "description": "(Required) Source-side schema identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_data_cutoff\": \"<boolean>\",\n  \"enabled\": \"<boolean>\",\n  \"fields\": [\n    {\n      \"enabled\": true,\n      \"id\": \"string\",\n      \"obfuscated\": true,\n      \"user_output_name\": \"string\"\n    },\n    {\n      \"enabled\": false,\n      \"id\": \"string\",\n      \"obfuscated\": true,\n      \"user_output_name\": \"string\"\n    }\n  ],\n  \"filters\": [\n    {\n      \"function\": \"ArrayDoesNotContain\",\n      \"field_id\": \"string\",\n      \"value\": {}\n    },\n    {\n      \"function\": \"RelativeOnOrBefore\",\n      \"field_id\": \"string\",\n      \"value\": {}\n    }\n  ],\n  \"partition_key\": \"<string>\",\n  \"tracking_field\": \"<string>\",\n  \"user_output_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"data_cutoff_timestamp\": \"1998-04-30T20:08:08.290Z\",\n    \"disable_data_cutoff\": true,\n    \"enabled\": false,\n    \"fields\": [\n      {\n        \"enabled\": true,\n        \"id\": \"string\",\n        \"obfuscated\": true,\n        \"output_name\": \"string\",\n        \"user_output_name\": \"string\"\n      },\n      {\n        \"enabled\": false,\n        \"id\": \"string\",\n        \"obfuscated\": false,\n        \"output_name\": \"string\",\n        \"user_output_name\": \"string\"\n      }\n    ],\n    \"filters\": [\n      {\n        \"function\": \"StringNotOneOf\",\n        \"field_id\": \"string\",\n        \"value\": {}\n      },\n      {\n        \"function\": \"InTheLast\",\n        \"field_id\": \"string\",\n        \"value\": {}\n      }\n    ],\n    \"id\": \"string\",\n    \"output_name\": \"string\",\n    \"partition_key\": \"string\",\n    \"tracking_field\": \"string\",\n    \"user_output_name\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f757e98b-69dd-4c5a-aa30-272ed6bdaee9",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas",
+                    ":schema_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "schema_id",
+                      "description": "(Required) Source-side schema identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_data_cutoff\": \"<boolean>\",\n  \"enabled\": \"<boolean>\",\n  \"fields\": [\n    {\n      \"enabled\": true,\n      \"id\": \"string\",\n      \"obfuscated\": true,\n      \"user_output_name\": \"string\"\n    },\n    {\n      \"enabled\": false,\n      \"id\": \"string\",\n      \"obfuscated\": true,\n      \"user_output_name\": \"string\"\n    }\n  ],\n  \"filters\": [\n    {\n      \"function\": \"ArrayDoesNotContain\",\n      \"field_id\": \"string\",\n      \"value\": {}\n    },\n    {\n      \"function\": \"RelativeOnOrBefore\",\n      \"field_id\": \"string\",\n      \"value\": {}\n    }\n  ],\n  \"partition_key\": \"<string>\",\n  \"tracking_field\": \"<string>\",\n  \"user_output_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"status\": 9908\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b658bf7-fc24-4cdf-8cef-43551c412bab",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas",
+                    ":schema_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "schema_id",
+                      "description": "(Required) Source-side schema identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_data_cutoff\": \"<boolean>\",\n  \"enabled\": \"<boolean>\",\n  \"fields\": [\n    {\n      \"enabled\": true,\n      \"id\": \"string\",\n      \"obfuscated\": true,\n      \"user_output_name\": \"string\"\n    },\n    {\n      \"enabled\": false,\n      \"id\": \"string\",\n      \"obfuscated\": true,\n      \"user_output_name\": \"string\"\n    }\n  ],\n  \"filters\": [\n    {\n      \"function\": \"ArrayDoesNotContain\",\n      \"field_id\": \"string\",\n      \"value\": {}\n    },\n    {\n      \"function\": \"RelativeOnOrBefore\",\n      \"field_id\": \"string\",\n      \"value\": {}\n    }\n  ],\n  \"partition_key\": \"<string>\",\n  \"tracking_field\": \"<string>\",\n  \"user_output_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"status\": 9908\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efaf0692-af68-486a-8dcf-a00cbcb6c9dc",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas",
+                    ":schema_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "schema_id",
+                      "description": "(Required) Source-side schema identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_data_cutoff\": \"<boolean>\",\n  \"enabled\": \"<boolean>\",\n  \"fields\": [\n    {\n      \"enabled\": true,\n      \"id\": \"string\",\n      \"obfuscated\": true,\n      \"user_output_name\": \"string\"\n    },\n    {\n      \"enabled\": false,\n      \"id\": \"string\",\n      \"obfuscated\": true,\n      \"user_output_name\": \"string\"\n    }\n  ],\n  \"filters\": [\n    {\n      \"function\": \"ArrayDoesNotContain\",\n      \"field_id\": \"string\",\n      \"value\": {}\n    },\n    {\n      \"function\": \"RelativeOnOrBefore\",\n      \"field_id\": \"string\",\n      \"value\": {}\n    }\n  ],\n  \"partition_key\": \"<string>\",\n  \"tracking_field\": \"<string>\",\n  \"user_output_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"status\": 9908\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1fbbc1d1-5085-45cc-8702-0b83e27e340e",
+          "name": "Cancel Bulk Sync Schema",
+          "request": {
+            "name": "Cancel Bulk Sync Schema",
+            "description": {
+              "content": "Requests cancellation of any running executions for a specific schema on a bulk sync.\n\nCancellation is asynchronous. A successful response means the cancellation\nsignal for this schema has been queued; the schema's in-flight work continues\nuntil the signal is processed. Poll\n`GET /api/bulk/syncs/{id}/schemas/{schema_id}` and the parent execution via\n`GET /api/bulk/syncs/{id}/status` to confirm the schema has reached a terminal\nstate.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":id",
+                "schemas",
+                ":schema_id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The bulk sync ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "schema_id",
+                  "description": "(Required) The schema ID to cancel for the bulk sync."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e1489d7f-a973-4fa0-9e56-5d871c0858ce",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas",
+                    ":schema_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The bulk sync ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "schema_id",
+                      "description": "(Required) The schema ID to cancel for the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20ec1490-9e83-408d-86ec-4a5dead16d95",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas",
+                    ":schema_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The bulk sync ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "schema_id",
+                      "description": "(Required) The schema ID to cancel for the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"status\": 9908\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f82db0b-c269-46cd-b6b2-e2c81d36ed07",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas",
+                    ":schema_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The bulk sync ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "schema_id",
+                      "description": "(Required) The schema ID to cancel for the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"status\": 9908\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d7817f3-0f17-4545-901f-89319f3c2f61",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "schemas",
+                    ":schema_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The bulk sync ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "schema_id",
+                      "description": "(Required) The schema ID to cancel for the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"status\": 9908\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.polytomic.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "fddaf470-3c6f-437c-966b-6eff0d3359ad",
+    "name": "API Reference subpackage_bulkSync subpackage_bulkSync.subpackage_bulkSync/schemas API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

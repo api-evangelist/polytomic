@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_jobs API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/jobs/:type/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the job (usually returned by whichever endpoint started the job)."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "Job type. One of: createmodel, updatemodel, previewmodel, samplemodel, exportlogs."
+              }
+            ]
+          },
+          "docs": "Returns the current state of an asynchronous job.\n\nThis endpoint is used as a polling target by other asynchronous workflows such\nas model preview and log export. The caller must know the job `type` and `id`\nthat were returned when the job was created.\n\nIf the job is still running, the response returns `status: running` and may not\ninclude a `result` yet. Once complete, `status` becomes `done` or `failed`.\n\nOnly specific job types are supported by this endpoint. Passing an unknown\n`type` returns"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

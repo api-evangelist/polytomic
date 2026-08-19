@@ -1,0 +1,396 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_modelSync API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_modelSync",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Sync Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/modelsync/source",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "params",
+                "value": "",
+                "type": "query",
+                "description": "Query parameters used to incrementally refine a dependent source configuration. Keys correspond to configuration fields returned by previous calls to this endpoint."
+              }
+            ]
+          },
+          "docs": "Describes the source configuration available on a connection for use as a model sync source.\n\nUse this endpoint before creating a model to understand what configuration is\navailable. Once you have a configuration, resolve the fields available for\nsync mapping with\n[`GET /api/connections/{id}/modelsync/source/fields`](../../../../../api-reference/model-sync/get-source-fields)."
+        },
+        {
+          "info": {
+            "name": "Model Sync Field Query",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/modelsync/source/fields",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "params",
+                "value": "",
+                "type": "query",
+                "description": "Source configuration, matching the params used with GET /api/connections/{id}/modelsync/source, that selects the specific source to return fields for."
+              }
+            ]
+          },
+          "docs": "Returns the source fields available on a connection for a given source configuration.\n\nPass the model's source configuration as query parameters to resolve the\nfields that the connection will expose for that specific configuration. The\nreturned fields are what can be referenced in sync field mappings.\n\n> 📘 Results depend on the source configuration you supply. A different\n> table or query in the configuration may return a completely different field\n> list.\n\nThe available source configuration pa"
+        },
+        {
+          "info": {
+            "name": "List Syncs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only active or only paused syncs."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Filter by sync target mode (e.g. create, updateOrCreate, enrich)."
+              },
+              {
+                "name": "target_connection_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter to syncs that write to the specified target connection."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor returned in the previous response. Omit on the first request."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of syncs to return. Default and maximum is 50."
+              }
+            ]
+          },
+          "docs": "Lists model syncs in the caller's organization.\n\nResults are ordered by `updated_at` descending, with `id` used as a tiebreaker.\nIf more results are available, the response includes `pagination.next_page_token`.\nPass that token back unchanged to continue from the last item you received.\n\nThe token is opaque. Do not construct or edit it yourself.\n\nThe `limit` is capped at 50. Values above that cap are reduced to 50, and\nnon-positive values fall back to the same default.\n\nThis endpoint returns syn"
+        },
+        {
+          "info": {
+            "name": "Create Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/syncs",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new model sync.\n\nCreate a new sync from one or more models to a destination.\n\nAll of the functionality described in [the product\ndocumentation](https://docs.polytomic.com/docs/sync-destinations) is\nconfigurable via the API.\n\nGuides:\n\n- [Model sync (Reverse ETL) from Snowflake query to Salesforce](../../guides/code-examples/model-sync-reverse-etl-from-snowflake-query-to-salesforce)\n- [Joined model sync from Postgres, Airtable, and Stripe to Hubspot](../../guides/code-examples/joined-mod"
+        },
+        {
+          "info": {
+            "name": "Get Sync Schedule Options",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/schedules",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns the schedule types available when creating or updating a model sync.\n\nUse the `type` identifiers returned by this endpoint in the `schedule` field\nwhen creating or updating a sync via\n[`POST /api/syncs`](../../../api-reference/model-sync/create) or [`PUT /api/syncs/{id}`](../../../api-reference/model-sync/update)."
+        },
+        {
+          "info": {
+            "name": "Get Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single model sync by ID.\n\nTo check whether a sync is currently running or has recently completed, use\n[`GET /api/syncs/{id}/status`](../../../api-reference/model-sync/get-status). For the full history of\nexecutions, use [`GET /api/syncs/{id}/executions`](../../../api-reference/model-sync/executions/list)."
+        },
+        {
+          "info": {
+            "name": "Update Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/syncs/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a model sync's configuration.\n\nUpdating a model sync is a **full replacement** of the sync's configuration.\nEvery field in the request body is written to the sync; any field you omit is\ncleared or reset to its default value.\n\nTo make a partial change — for example, toggling `active` or adjusting a\nsingle field mapping — fetch the current sync with\n[`GET /api/syncs/{id}`](../../../api-reference/model-sync/get),\nmodify the fields you want to change, and send the complete object back in\nthe"
+        },
+        {
+          "info": {
+            "name": "Delete Model Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/syncs/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a model sync, cancelling any running executions.\n\nDeletion is permanent. Any running execution is cancelled before the sync\nrecord is removed. Deleted syncs cannot be recovered; recreate them using\n[`POST /api/syncs`](../../../api-reference/model-sync/create) if needed."
+        },
+        {
+          "info": {
+            "name": "Activate Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/syncs/:id/activate",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets whether a model sync is active.\n\nOnly active syncs execute on schedule or in response to a manual trigger. Set\n`active` to `false` to pause a sync without deleting it.\n\n> 📘 Deactivating a sync does not cancel an execution that is already in\n> progress. Use [`POST /api/syncs/{id}/cancel`](../../../../api-reference/model-sync/cancel) to stop a\n> running execution."
+        },
+        {
+          "info": {
+            "name": "Cancel Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/syncs/:id/cancel",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The active execution of this sync ID will be cancelled."
+              }
+            ]
+          },
+          "docs": "Requests cancellation of any running executions on a model sync.\n\nCancellation is asynchronous. A successful response means the cancellation\nsignal has been queued; the running execution continues until the signal is\nprocessed. Poll `GET /api/syncs/{id}/status` until the current execution\nreaches a terminal state (`completed`, `canceled`, or `failed`) to confirm\ncancellation has taken effect."
+        },
+        {
+          "info": {
+            "name": "Start Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/syncs/:id/executions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Starts a new execution of a model sync.\n\n> 🚧 Force full resync\n>\n> Use caution when setting the `resync` parameter to `true`. This will force a full resync of the data from the source system. This can be a time-consuming operation and may impact the performance of the source system. It is recommended to only use this option when necessary."
+        },
+        {
+          "info": {
+            "name": "Get Sync Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/:id/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the current status of a model sync.\n\nThe response includes a summary of the most recent execution, including its\nstart time, completion time, and record counts. For the complete execution\nhistory, use [`GET /api/syncs/{id}/executions`](../../../../api-reference/model-sync/executions/list)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

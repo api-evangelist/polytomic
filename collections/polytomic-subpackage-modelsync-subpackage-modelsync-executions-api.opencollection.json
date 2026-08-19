@@ -1,0 +1,254 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_modelSync.subpackage_modelSync/executions API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_modelSync.subpackage_modelSync/executions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/:sync_id/executions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "only_completed",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "ascending",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists executions for a model sync.\n\nResults are ordered by start time descending. If more results are available, the\nresponse includes `pagination.next_page_token`; pass that token back unchanged\nto continue paging.\n\nThe token is opaque. Do not construct or edit it yourself.\n\nFor full details about a specific execution — including record counts and error\nsummaries — use\n[`GET /api/syncs/{sync_id}/executions/{id}`](../../../../api-reference/model-sync/executions/get)."
+        },
+        {
+          "info": {
+            "name": "Get Execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/:sync_id/executions/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single model sync execution.\n\nFor the log files produced by this execution, use\n[`GET /api/syncs/{sync_id}/executions/{id}/{type}`](../../../../../api-reference/model-sync/executions/get-log-urls) to retrieve\nsigned URLs grouped by log category."
+        },
+        {
+          "info": {
+            "name": "Cancel Sync Execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/syncs/:sync_id/executions/:id/cancel",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the execution to cancel."
+              }
+            ]
+          },
+          "docs": "Requests cancellation of a model sync execution."
+        },
+        {
+          "info": {
+            "name": "Get Execution Console Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/:sync_id/executions/:id/consolelog",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of entries to return. Values above the logger retention limit are capped to 50."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Return only entries newer than this cursor."
+              }
+            ]
+          },
+          "docs": "Fetch the latest console log entries for a sync execution. Returns at most the most recent 50 entries retained in Redis."
+        },
+        {
+          "info": {
+            "name": "Get Execution Log Urls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/:sync_id/executions/:id/:type",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns signed URLs for every log file of a given type on a model sync execution.\n\n`{type}` identifies the log category, such as `errors` or `warnings`. The\nresponse contains a signed URL for each log file in that category.\n\n> 🚧 Signed URLs expire after a short period. If a URL has expired, re-request\n> it from this endpoint. To fetch a single file's URL directly, use\n> [`GET /api/syncs/{sync_id}/executions/{id}/{type}/{filename}`](../../../../../../api-reference/model-sync/executions/get-logs)"
+        },
+        {
+          "info": {
+            "name": "Get Execution Log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/syncs/:sync_id/executions/:id/:type/:filename",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a signed URL for a specific log file produced by a model sync execution.\n\nThe URL is signed and expires after a short period. If it has expired before\nyou download the file, call this endpoint again to obtain a fresh URL."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

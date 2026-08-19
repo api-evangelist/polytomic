@@ -1,0 +1,354 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_bulkSync.subpackage_bulkSync/executions API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_bulkSync.subpackage_bulkSync/executions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Bulk Sync Executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/executions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor returned in the previous response. Omit on the first request."
+              },
+              {
+                "name": "only_terminal",
+                "value": "",
+                "type": "query",
+                "description": "When true, only return executions that have finished. Terminal executions are ordered by updated_at."
+              },
+              {
+                "name": "ascending",
+                "value": "",
+                "type": "query",
+                "description": "When true, return executions from oldest to newest. Default is newest first."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of executions to return. Capped at 100."
+              }
+            ]
+          },
+          "docs": "Lists executions for a bulk sync.\n\nResults are ordered by start time descending by default. When more results are\navailable, the response includes an opaque `pagination.next_page_token`; pass it\nback as the `page_token` query parameter to retrieve the next page. The `limit`\nparameter is optional, and the maximum page size is 100 executions.\n\nUse `only_terminal=true` to return only finished executions. In that mode,\nexecutions are ordered by `updated_at` so recently completed runs appear first.\n\n"
+        },
+        {
+          "info": {
+            "name": "List Bulk Sync Execution Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "When true, return status for every sync in the caller's organization. Overrides any sync_id values."
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "When true, return status only for active syncs in the caller's organization. Overrides any sync_id values."
+              },
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "query",
+                "description": "Return status for the specified bulk sync. Repeat the parameter to target multiple syncs. Ignored if all or active is true."
+              }
+            ]
+          },
+          "docs": "Returns a concise per-schema status for one or more bulk syncs.\n\nThis endpoint is a summary view, not an execution-history view. Each schema is\nrepresented at most once with its most recent execution status, and running\nexecutions are preferred over older terminal ones.\n\nUse this endpoint when you want a dashboard-style answer to \"what is each sync\ndoing now?\" If you need the full execution history or a single execution's\ndetails, use [`GET /api/bulk/syncs/{id}/executions`](../../../../api-refer"
+        },
+        {
+          "info": {
+            "name": "Get Bulk Sync Execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/executions/:exec_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "exec_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the execution."
+              }
+            ]
+          },
+          "docs": "Returns a single bulk sync execution, including per-schema execution status.\n\nThe response includes a breakdown of each schema (table or object) that\nparticipated in the execution, with its individual status, row counts, and any\nerror details. This makes it suitable for diagnosing partial failures where\nsome schemas succeeded while others did not."
+        },
+        {
+          "info": {
+            "name": "Cancel Bulk Sync Execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/executions/:exec_id/cancel",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The bulk sync ID."
+              },
+              {
+                "name": "exec_id",
+                "value": "",
+                "type": "path",
+                "description": "The execution ID to cancel."
+              }
+            ]
+          },
+          "docs": "Requests cancellation of a specific bulk sync execution.\n\nCancellation is asynchronous. A successful response means the cancellation\nsignal has been queued; the execution continues to run until the signal is\nprocessed. Poll `GET /api/bulk/syncs/{id}/executions/{exec_id}` until the\nexecution reaches a terminal state (`completed`, `canceled`, or `failed`) to\nconfirm cancellation has taken effect."
+        },
+        {
+          "info": {
+            "name": "Get Bulk Execution Console Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/executions/:execution_id/consolelog",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "execution_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of entries to return. Values above the logger retention limit are capped to 50."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Return only entries newer than this cursor."
+              }
+            ]
+          },
+          "docs": "Fetch the latest console log entries for a bulk sync execution. Returns at most the most recent 50 entries retained in Redis."
+        },
+        {
+          "info": {
+            "name": "Get Bulk Sync Execution Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/executions/:execution_id/logs",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "execution_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the execution whose log files should be listed."
+              }
+            ]
+          },
+          "docs": "Returns signed URLs for the log files produced by a single bulk sync execution.\n\nEach URL in the response is pre-signed and grants temporary read access to the\ncorresponding log file. URLs expire after a short period; if you need to access\na file after the URL has expired, call this endpoint again to obtain a fresh set\nof signed URLs.\n\n> 📘 To export logs asynchronously to a destination of your choice, use\n> [`POST /api/bulk/syncs/{sync_id}/executions/{execution_id}/logs/export`](../../../../../"
+        },
+        {
+          "info": {
+            "name": "Export Sync Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/executions/:execution_id/logs/export",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "execution_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the execution whose logs should be exported."
+              },
+              {
+                "name": "notify",
+                "value": "",
+                "type": "query",
+                "description": "Send a notification to the user when the logs are ready for download."
+              }
+            ]
+          },
+          "docs": "Starts an asynchronous job that packages the log files for a single bulk sync execution into a downloadable archive.\n\n> 📘 Log export is asynchronous\n>\n> This endpoint starts a background job that packages an execution's log\n> files into a downloadable archive. The first call typically returns a\n> `job` descriptor instead of a completed result. Poll\n> [`GET /api/jobs/exportlogs/{id}`](../../../../../../../../api-reference/jobs/get)\n> with the returned `job_id` until `status` is `done`; the final"
+        },
+        {
+          "info": {
+            "name": "Get Bulk Schema Execution Console Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/executions/:execution_id/schemas/:schema_id/consolelog",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "execution_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Schema identifier for schema-scoped console logs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of entries to return. Values above the logger retention limit are capped to 50."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Return only entries newer than this cursor."
+              }
+            ]
+          },
+          "docs": "Fetch the latest console log entries for a schema within a bulk sync execution. Returns at most the most recent 50 entries retained in Redis."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

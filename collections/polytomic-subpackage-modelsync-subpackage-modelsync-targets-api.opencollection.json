@@ -1,0 +1,120 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_modelSync.subpackage_modelSync/targets API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_modelSync.subpackage_modelSync/targets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Sync Target Fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/modelsync/target/fields",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "target",
+                "value": "",
+                "type": "query",
+                "description": "Identifier of the target object (e.g. schema.table for a database destination, object name for a SaaS destination)."
+              },
+              {
+                "name": "refresh",
+                "value": "",
+                "type": "query",
+                "description": "When true, force a cache refresh of the target's schema before returning its fields."
+              }
+            ]
+          },
+          "docs": "Returns the fields of a specific target object on a connection.\n\nPass the target object identifier to retrieve the fields available for\nmapping on that object. These are the destination fields you can reference\nwhen configuring field mappings in a model sync.\n\n> 📘 To list available target objects and their identifiers, use\n> [`GET /api/connections/{id}/modelsync/targetobjects`](../../../../../../api-reference/model-sync/targets/list).\n\nFields returned here reflect the connection's current cache"
+        },
+        {
+          "info": {
+            "name": "Get Target Objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/modelsync/targetobjects",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Lists the target objects available on a connection for use as a model sync destination.\n\nIf the connection supports creating new destinations, the `target_creation`\nobject will contain information on what properties are required to create the\ntarget.\n\nTarget creation properties are all string values; the `enum` flag indicates if\nthe property has a fixed set of valid values. When `enum` is `true`, the [Target\nCreation Property\nValues](../../../../../api-reference/model-sync/targets/get-create-pro"
+        },
+        {
+          "info": {
+            "name": "Get Target Creation Property Values",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/modelsync/targetobjects/properties/:property",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "property",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the valid values for a target-creation property on a connection that supports creating new target objects.\n\nConnections which support creating new sync target objects (destinations) will\nreturn `target_creation` with their [target object list](../../../../../../../api-reference/model-sync/targets/list). This endpoint\nwill return possible values for properties where `enum` is `true`.\n\nIf the connection does not support creating new target objects, an HTTP 404 will\nbe returned.\n\nThe `value"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

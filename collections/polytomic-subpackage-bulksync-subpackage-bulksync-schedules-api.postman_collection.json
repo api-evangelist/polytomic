@@ -1,0 +1,1825 @@
+{
+  "item": [
+    {
+      "id": "f4d21055-2b17-4871-8fc1-995377f74735",
+      "name": "subpackage_bulkSync.subpackage_bulkSync/schedules",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "deb3ceca-4d3f-4be5-87b7-ef1c89a5c881",
+          "name": "Get Bulk Sync Schedules",
+          "request": {
+            "name": "Get Bulk Sync Schedules",
+            "description": {
+              "content": "Lists all schedules configured for a bulk sync.\n\nA bulk sync can have multiple schedules attached; this endpoint returns all\nof them. Schedule times are returned in UTC.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":sync_id",
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "sync_id",
+                  "description": "(Required) Unique identifier of the bulk sync whose schedules should be returned."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cb96b7a2-0e06-437c-ae60-0bc2b753edc4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync whose schedules should be returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"frequency\": \"weekly\",\n      \"createdAt\": \"1992-09-25T05:36:28.999Z\",\n      \"createdBy\": \"d8df381d-a056-d963-dcfc-5c8e81ab291e\",\n      \"dayOfMonth\": \"string\",\n      \"dayOfWeek\": \"string\",\n      \"deletedAt\": \"1979-05-19T14:25:03.054Z\",\n      \"deletedBy\": \"938ff918-eb19-6120-7e77-f1ca711d10d5\",\n      \"hour\": \"string\",\n      \"isDefault\": false,\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selectiveMode\": \"none\",\n      \"syncId\": \"04cd8766-d8dd-39aa-3201-429e23513496\",\n      \"syncMode\": \"rebuild\",\n      \"updatedAt\": \"2009-06-01T14:33:12.345Z\",\n      \"updatedBy\": \"9fdda4fe-1010-c14e-16f8-20c9a81a9553\"\n    },\n    {\n      \"frequency\": \"hourly\",\n      \"createdAt\": \"1975-01-04T15:26:39.077Z\",\n      \"createdBy\": \"727ee56f-4308-62e3-1634-1b145447b622\",\n      \"dayOfMonth\": \"string\",\n      \"dayOfWeek\": \"string\",\n      \"deletedAt\": \"1947-07-28T01:21:24.353Z\",\n      \"deletedBy\": \"ac69edc3-b431-14f2-ecb7-c3d58c0b505f\",\n      \"hour\": \"string\",\n      \"isDefault\": false,\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selectiveMode\": \"nonincrementalFields\",\n      \"syncId\": \"700204bd-3823-8820-86c4-975dc1a691f5\",\n      \"syncMode\": \"normal\",\n      \"updatedAt\": \"1953-10-31T06:24:51.189Z\",\n      \"updatedBy\": \"ce66159c-2837-719a-1477-039331ae0883\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a1bc416-592e-4bf8-a864-b5bcaa472611",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync whose schedules should be returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c23960d-de1d-4881-96f0-7c53a2735c2d",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync whose schedules should be returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7159664f-9493-41b7-a5ad-0178a3823d9a",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync whose schedules should be returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e15f1d26-af68-4b10-ad30-e5be0cfe2661",
+          "name": "Create Bulk Sync Schedule",
+          "request": {
+            "name": "Create Bulk Sync Schedule",
+            "description": {
+              "content": "Adds a new schedule to a bulk sync.\n\nA bulk sync can have multiple schedules attached; adding one here does not\nreplace existing schedules. Schedule times are interpreted in UTC.\n\nCreating a schedule only affects future automatic executions. To run the\nsync immediately, call\n[`POST /api/bulk/syncs/{id}/executions`](../../../../../api-reference/bulk-sync/start).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":sync_id",
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "sync_id",
+                  "description": "(Required) Unique identifier of the bulk sync to add a schedule to."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schedule\": {\n    \"frequency\": \"<string>\",\n    \"dayOfMonth\": \"<string>\",\n    \"dayOfWeek\": \"<string>\",\n    \"hour\": \"<string>\",\n    \"minute\": \"<string>\",\n    \"month\": \"<string>\",\n    \"selectiveMode\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5b8459ff-1b20-401a-8d29-963202492526",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync to add a schedule to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"frequency\": \"runafter\",\n    \"dayOfMonth\": \"string\",\n    \"dayOfWeek\": \"string\",\n    \"hour\": \"string\",\n    \"minute\": \"string\",\n    \"month\": \"string\",\n    \"selectiveMode\": \"incrementalFields\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"frequency\": \"runafter\",\n    \"createdAt\": \"1996-08-01T18:48:29.588Z\",\n    \"createdBy\": \"cc00584b-cac0-a7bd-c87e-c87b72dfd6f6\",\n    \"dayOfMonth\": \"string\",\n    \"dayOfWeek\": \"string\",\n    \"deletedAt\": \"1958-05-16T16:47:08.204Z\",\n    \"deletedBy\": \"1994dc81-7629-674c-62df-37be969cea01\",\n    \"hour\": \"string\",\n    \"isDefault\": false,\n    \"minute\": \"string\",\n    \"month\": \"string\",\n    \"schemas\": [\n      \"string\",\n      \"string\"\n    ],\n    \"selectiveMode\": \"incrementalFields\",\n    \"syncId\": \"fefc390e-097f-6089-e003-59d285149bfe\",\n    \"syncMode\": \"resync\",\n    \"updatedAt\": \"1951-08-20T07:06:29.208Z\",\n    \"updatedBy\": \"86871cd1-66de-0a5f-8dca-da62fc6919d2\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77dc6089-822a-4baa-8f2c-3680d13ba923",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync to add a schedule to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"frequency\": \"runafter\",\n    \"dayOfMonth\": \"string\",\n    \"dayOfWeek\": \"string\",\n    \"hour\": \"string\",\n    \"minute\": \"string\",\n    \"month\": \"string\",\n    \"selectiveMode\": \"incrementalFields\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c94a758f-0102-4004-97bc-8076b513442b",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync to add a schedule to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"frequency\": \"runafter\",\n    \"dayOfMonth\": \"string\",\n    \"dayOfWeek\": \"string\",\n    \"hour\": \"string\",\n    \"minute\": \"string\",\n    \"month\": \"string\",\n    \"selectiveMode\": \"incrementalFields\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8693d23-d6ea-40d0-a3a0-47f0f85d1d9a",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync to add a schedule to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"frequency\": \"runafter\",\n    \"dayOfMonth\": \"string\",\n    \"dayOfWeek\": \"string\",\n    \"hour\": \"string\",\n    \"minute\": \"string\",\n    \"month\": \"string\",\n    \"selectiveMode\": \"incrementalFields\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c882f5bb-753c-42e7-b228-42f89792a598",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync to add a schedule to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"frequency\": \"runafter\",\n    \"dayOfMonth\": \"string\",\n    \"dayOfWeek\": \"string\",\n    \"hour\": \"string\",\n    \"minute\": \"string\",\n    \"month\": \"string\",\n    \"selectiveMode\": \"incrementalFields\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "120fad0a-d097-44c4-8068-d224ce0b4472",
+          "name": "Get Bulk Sync Schedule",
+          "request": {
+            "name": "Get Bulk Sync Schedule",
+            "description": {
+              "content": "Returns a single schedule configured on a bulk sync.\n\nSchedule times are returned in UTC.\n\nTo see all schedules on this sync, use\n[`GET /api/bulk/syncs/{sync_id}/schedules`](../../../../../../api-reference/bulk-sync/schedules/list).\nTo update the schedule, use\n[`PUT /api/bulk/syncs/{sync_id}/schedules/{schedule_id}`](../../../../../../api-reference/bulk-sync/schedules/update).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":sync_id",
+                "schedules",
+                ":schedule_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "sync_id",
+                  "description": "(Required) Unique identifier of the bulk sync."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "schedule_id",
+                  "description": "(Required) Unique identifier of the schedule."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4c17661a-e2ee-4e55-85ca-a3271ff7b7c5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules",
+                    ":schedule_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule_id",
+                      "description": "(Required) Unique identifier of the schedule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"frequency\": \"runafter\",\n    \"createdAt\": \"1996-08-01T18:48:29.588Z\",\n    \"createdBy\": \"cc00584b-cac0-a7bd-c87e-c87b72dfd6f6\",\n    \"dayOfMonth\": \"string\",\n    \"dayOfWeek\": \"string\",\n    \"deletedAt\": \"1958-05-16T16:47:08.204Z\",\n    \"deletedBy\": \"1994dc81-7629-674c-62df-37be969cea01\",\n    \"hour\": \"string\",\n    \"isDefault\": false,\n    \"minute\": \"string\",\n    \"month\": \"string\",\n    \"schemas\": [\n      \"string\",\n      \"string\"\n    ],\n    \"selectiveMode\": \"incrementalFields\",\n    \"syncId\": \"fefc390e-097f-6089-e003-59d285149bfe\",\n    \"syncMode\": \"resync\",\n    \"updatedAt\": \"1951-08-20T07:06:29.208Z\",\n    \"updatedBy\": \"86871cd1-66de-0a5f-8dca-da62fc6919d2\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "024d3105-aa4a-4169-a29b-250c1dab09db",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules",
+                    ":schedule_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule_id",
+                      "description": "(Required) Unique identifier of the schedule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50148dfd-32dc-449e-b41f-4a5d35b535cc",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules",
+                    ":schedule_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule_id",
+                      "description": "(Required) Unique identifier of the schedule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "227803f6-9c29-461f-b128-99cbb1788f3d",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules",
+                    ":schedule_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule_id",
+                      "description": "(Required) Unique identifier of the schedule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "205c6c3b-52de-4680-b485-6659582d963f",
+          "name": "Update Bulk Sync Schedule",
+          "request": {
+            "name": "Update Bulk Sync Schedule",
+            "description": {
+              "content": "Updates an existing schedule on a bulk sync.\n\nUpdates replace the stored schedule. Send the full schedule definition\nrather than only the field you want to change. Schedule times are\ninterpreted in UTC.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":sync_id",
+                "schedules",
+                ":schedule_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "sync_id",
+                  "description": "(Required) Unique identifier of the bulk sync."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "schedule_id",
+                  "description": "(Required) Unique identifier of the schedule to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schedule\": {\n    \"frequency\": \"<string>\",\n    \"dayOfMonth\": \"<string>\",\n    \"dayOfWeek\": \"<string>\",\n    \"hour\": \"<string>\",\n    \"minute\": \"<string>\",\n    \"month\": \"<string>\",\n    \"selectiveMode\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c7108a98-5719-4b02-bb54-895f35e86d5b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules",
+                    ":schedule_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule_id",
+                      "description": "(Required) Unique identifier of the schedule to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"frequency\": \"builder\",\n    \"dayOfMonth\": \"string\",\n    \"dayOfWeek\": \"string\",\n    \"hour\": \"string\",\n    \"minute\": \"string\",\n    \"month\": \"string\",\n    \"selectiveMode\": \"nonincrementalFields\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"frequency\": \"runafter\",\n    \"createdAt\": \"1996-08-01T18:48:29.588Z\",\n    \"createdBy\": \"cc00584b-cac0-a7bd-c87e-c87b72dfd6f6\",\n    \"dayOfMonth\": \"string\",\n    \"dayOfWeek\": \"string\",\n    \"deletedAt\": \"1958-05-16T16:47:08.204Z\",\n    \"deletedBy\": \"1994dc81-7629-674c-62df-37be969cea01\",\n    \"hour\": \"string\",\n    \"isDefault\": false,\n    \"minute\": \"string\",\n    \"month\": \"string\",\n    \"schemas\": [\n      \"string\",\n      \"string\"\n    ],\n    \"selectiveMode\": \"incrementalFields\",\n    \"syncId\": \"fefc390e-097f-6089-e003-59d285149bfe\",\n    \"syncMode\": \"resync\",\n    \"updatedAt\": \"1951-08-20T07:06:29.208Z\",\n    \"updatedBy\": \"86871cd1-66de-0a5f-8dca-da62fc6919d2\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7013e9a3-92b6-430b-86a7-e1b440e9abbc",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules",
+                    ":schedule_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule_id",
+                      "description": "(Required) Unique identifier of the schedule to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"frequency\": \"builder\",\n    \"dayOfMonth\": \"string\",\n    \"dayOfWeek\": \"string\",\n    \"hour\": \"string\",\n    \"minute\": \"string\",\n    \"month\": \"string\",\n    \"selectiveMode\": \"nonincrementalFields\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a32b993-2fd1-4dec-8d7d-ac269deed412",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules",
+                    ":schedule_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule_id",
+                      "description": "(Required) Unique identifier of the schedule to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"frequency\": \"builder\",\n    \"dayOfMonth\": \"string\",\n    \"dayOfWeek\": \"string\",\n    \"hour\": \"string\",\n    \"minute\": \"string\",\n    \"month\": \"string\",\n    \"selectiveMode\": \"nonincrementalFields\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e72266f-6967-4fd0-8d9e-b4b48fea6ca6",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules",
+                    ":schedule_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule_id",
+                      "description": "(Required) Unique identifier of the schedule to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"frequency\": \"builder\",\n    \"dayOfMonth\": \"string\",\n    \"dayOfWeek\": \"string\",\n    \"hour\": \"string\",\n    \"minute\": \"string\",\n    \"month\": \"string\",\n    \"selectiveMode\": \"nonincrementalFields\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff636d11-3858-4b0e-bc54-228bd7d8251e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules",
+                    ":schedule_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule_id",
+                      "description": "(Required) Unique identifier of the schedule to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"frequency\": \"builder\",\n    \"dayOfMonth\": \"string\",\n    \"dayOfWeek\": \"string\",\n    \"hour\": \"string\",\n    \"minute\": \"string\",\n    \"month\": \"string\",\n    \"selectiveMode\": \"nonincrementalFields\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "26aefa87-9655-49c7-9dc3-3f1a33afb617",
+          "name": "Delete Bulk Sync Schedule",
+          "request": {
+            "name": "Delete Bulk Sync Schedule",
+            "description": {
+              "content": "Removes a schedule from a bulk sync.\n\nDeleting a schedule only stops future automatic executions. It does not\ncancel an execution that is already running.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":sync_id",
+                "schedules",
+                ":schedule_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "sync_id",
+                  "description": "(Required) Unique identifier of the bulk sync."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "schedule_id",
+                  "description": "(Required) Unique identifier of the schedule to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "75e56714-fa98-4827-89af-b97c302c2980",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules",
+                    ":schedule_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule_id",
+                      "description": "(Required) Unique identifier of the schedule to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "24254b9e-ffb4-46c0-8c82-8410d6d6cd06",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules",
+                    ":schedule_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule_id",
+                      "description": "(Required) Unique identifier of the schedule to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91e766a9-4be1-483f-b39f-a21b4f55fdd7",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules",
+                    ":schedule_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule_id",
+                      "description": "(Required) Unique identifier of the schedule to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05cf1cfb-f3fa-48b8-9bf9-5b57b82f9252",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":sync_id",
+                    "schedules",
+                    ":schedule_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "sync_id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule_id",
+                      "description": "(Required) Unique identifier of the schedule to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"status\": 7388\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.polytomic.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "dae3c227-210f-498f-882c-64a2322fbb4e",
+    "name": "API Reference subpackage_bulkSync subpackage_bulkSync.subpackage_bulkSync/schedules API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_events API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query",
+                "description": "Organization to list events for. Only used by system callers; normal and partner callers are always scoped to their own organization."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter to a single event type. Use GET /api/events_types to list valid values."
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Return events created strictly after this timestamp."
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Return events created strictly before this timestamp."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of events to return. Default 10, maximum 100."
+              }
+            ]
+          },
+          "docs": "Lists audit events for the caller's organization.\n\nResults are paginated. If more events are available, the response includes\n`pagination.next_page_token`; pass that token back unchanged to continue from\nthe last item you received.\n\nFilter by event type using the `event_type` query parameter. Pass one of the\nidentifiers returned by [`GET /api/events_types`](../../api-reference/events/get-types) to\nnarrow results to a specific category of activity.\n\n> 📘 Events reflect audit activity scoped to th"
+        },
+        {
+          "info": {
+            "name": "Get Event Types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/events_types",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns the set of event type identifiers supported by GET /api/events.\n\nUse the identifiers returned here as the `event_type` filter value when calling\n[`GET /api/events`](../../api-reference/events/list)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

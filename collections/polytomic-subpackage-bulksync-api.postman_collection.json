@@ -1,0 +1,3141 @@
+{
+  "item": [
+    {
+      "id": "cd13b5ec-46fc-46fb-be6c-d8b77a4ed8df",
+      "name": "subpackage_bulkSync",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cc5b5060-7e99-4ad5-a12a-4e2853d9d4d2",
+          "name": "List Bulk Syncs",
+          "request": {
+            "name": "List Bulk Syncs",
+            "description": {
+              "content": "Lists bulk syncs in the caller's organization.\n\nResults are ordered by `updated_at` descending, with `id` as a tiebreaker for\nsyncs modified at the same instant. Pagination uses an opaque\n`pagination.next_page_token` returned in the response; pass it back as the\n`page_token` query parameter to fetch the next page. The `limit` parameter is\noptional, and the default and maximum page size is 50 syncs.\n\n> 📘 To retrieve a specific sync, use\n> [`GET /api/bulk/syncs/{id}`](../../../api-reference/bulk-sync/get)\n> instead of filtering the list client-side.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "active",
+                  "value": "<boolean>",
+                  "description": "Filter to only active (true) or only paused (false) syncs. Omit to return both."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "53b91a17-69c1-4883-a8e7-acef71913bc4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "active",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"active\": false,\n      \"additional_schedules\": [\n        {\n          \"frequency\": \"custom\",\n          \"created_at\": \"2025-08-12T12:22:40.989Z\",\n          \"created_by\": {\n            \"id\": \"31992e54-b2a5-1eda-3c79-c36a3f072e79\",\n            \"name\": \"string\",\n            \"type\": \"string\"\n          },\n          \"day_of_month\": \"string\",\n          \"day_of_week\": \"string\",\n          \"hour\": \"string\",\n          \"id\": \"38bbb460-bef7-3a69-ac6d-3a30ec9f381c\",\n          \"minute\": \"string\",\n          \"month\": \"string\",\n          \"resync_mode\": \"rebuild\",\n          \"schemas\": [\n            \"string\",\n            \"string\"\n          ],\n          \"selective_mode\": \"nonincrementalFields\",\n          \"updated_at\": \"1972-01-13T19:24:21.330Z\",\n          \"updated_by\": {\n            \"id\": \"de081831-93be-29e3-184e-2c7112c97098\",\n            \"name\": \"string\",\n            \"type\": \"string\"\n          }\n        },\n        {\n          \"frequency\": \"dbtcloud\",\n          \"created_at\": \"1948-05-01T04:25:18.187Z\",\n          \"created_by\": {\n            \"id\": \"da679dae-99b9-2d3d-ead4-5e14181279a8\",\n            \"name\": \"string\",\n            \"type\": \"string\"\n          },\n          \"day_of_month\": \"string\",\n          \"day_of_week\": \"string\",\n          \"hour\": \"string\",\n          \"id\": \"58000568-0c6c-ed4f-9539-a8653ffed134\",\n          \"minute\": \"string\",\n          \"month\": \"string\",\n          \"resync_mode\": \"resync\",\n          \"schemas\": [\n            \"string\",\n            \"string\"\n          ],\n          \"selective_mode\": \"none\",\n          \"updated_at\": \"1955-07-15T17:48:37.575Z\",\n          \"updated_by\": {\n            \"id\": \"e1ea5485-37a6-1a48-1791-9851c15c2182\",\n            \"name\": \"string\",\n            \"type\": \"string\"\n          }\n        }\n      ],\n      \"automatically_add_new_fields\": \"onlyIncremental\",\n      \"automatically_add_new_objects\": \"all\",\n      \"concurrency_limit\": 4092,\n      \"created_at\": \"1955-10-11T00:17:03.490Z\",\n      \"created_by\": {\n        \"id\": \"9e567943-3cbf-5ab1-c75f-621270852d47\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      },\n      \"data_cutoff_timestamp\": \"1980-03-30T15:29:19.780Z\",\n      \"default_schedule\": {\n        \"frequency\": \"weekly\",\n        \"created_at\": \"1975-05-17T12:19:18.712Z\",\n        \"created_by\": {\n          \"id\": \"27bceac7-bec0-b069-11cf-c3b836a0fca6\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        },\n        \"day_of_month\": \"string\",\n        \"day_of_week\": \"string\",\n        \"hour\": \"string\",\n        \"id\": \"cb1cc367-c2b5-496c-a802-87d88ff5bb74\",\n        \"minute\": \"string\",\n        \"month\": \"string\",\n        \"updated_at\": \"2006-11-30T13:50:38.075Z\",\n        \"updated_by\": {\n          \"id\": \"7744f356-007f-5b45-01f9-21fd3f36ef45\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        }\n      },\n      \"destination_configuration\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      \"destination_connection_id\": \"aeb9d1a4-bd87-f0e7-e3ba-496d2d31592c\",\n      \"disable_record_timestamps\": false,\n      \"id\": \"6a79afeb-d2eb-5a03-3a97-4580a2633c34\",\n      \"mode\": \"snapshot\",\n      \"name\": \"string\",\n      \"normalize_names\": \"enabled\",\n      \"organization_id\": \"0651f914-8393-3fca-d543-cb5302b89f53\",\n      \"policies\": [\n        \"44b6d127-7702-99d0-4d35-ce04b1417d41\",\n        \"c6749e50-45b7-5bfb-9a01-14318715d6c1\"\n      ],\n      \"resync_concurrency_limit\": 4039,\n      \"source_configuration\": {\n        \"key_0\": {}\n      },\n      \"source_connection_id\": \"ae3b6e78-4f98-bfef-2e36-f4f8aa803d97\",\n      \"updated_at\": \"1971-02-22T00:52:52.590Z\",\n      \"updated_by\": {\n        \"id\": \"81edb15d-5c7e-649e-7e5d-811e2e2b6371\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      }\n    },\n    {\n      \"active\": true,\n      \"additional_schedules\": [\n        {\n          \"frequency\": \"continuous\",\n          \"created_at\": \"2021-09-25T03:19:38.341Z\",\n          \"created_by\": {\n            \"id\": \"ee41ed23-c05d-2a63-df51-f406b62bff53\",\n            \"name\": \"string\",\n            \"type\": \"string\"\n          },\n          \"day_of_month\": \"string\",\n          \"day_of_week\": \"string\",\n          \"hour\": \"string\",\n          \"id\": \"cd522944-c8ee-c0d2-4d21-70c9e7e03fb9\",\n          \"minute\": \"string\",\n          \"month\": \"string\",\n          \"resync_mode\": \"refetch\",\n          \"schemas\": [\n            \"string\",\n            \"string\"\n          ],\n          \"selective_mode\": \"none\",\n          \"updated_at\": \"2018-04-09T15:25:44.676Z\",\n          \"updated_by\": {\n            \"id\": \"c42e832f-2992-e232-d844-b95f4c115b6e\",\n            \"name\": \"string\",\n            \"type\": \"string\"\n          }\n        },\n        {\n          \"frequency\": \"manual\",\n          \"created_at\": \"1956-03-01T12:57:34.576Z\",\n          \"created_by\": {\n            \"id\": \"8e8f421e-d0f9-ccdb-99b7-4a7306d377e8\",\n            \"name\": \"string\",\n            \"type\": \"string\"\n          },\n          \"day_of_month\": \"string\",\n          \"day_of_week\": \"string\",\n          \"hour\": \"string\",\n          \"id\": \"75a97ac7-748f-923d-2c8e-ab050f599405\",\n          \"minute\": \"string\",\n          \"month\": \"string\",\n          \"resync_mode\": \"resync\",\n          \"schemas\": [\n            \"string\",\n            \"string\"\n          ],\n          \"selective_mode\": \"incrementalFields\",\n          \"updated_at\": \"2002-02-05T02:52:43.637Z\",\n          \"updated_by\": {\n            \"id\": \"446f7682-44cb-2edb-e83c-6b8e978a233f\",\n            \"name\": \"string\",\n            \"type\": \"string\"\n          }\n        }\n      ],\n      \"automatically_add_new_fields\": \"none\",\n      \"automatically_add_new_objects\": \"none\",\n      \"concurrency_limit\": 1642,\n      \"created_at\": \"1987-07-28T06:15:38.506Z\",\n      \"created_by\": {\n        \"id\": \"4e6cc944-c4f8-6bc2-63e0-e5412e77a137\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      },\n      \"data_cutoff_timestamp\": \"1953-11-30T18:24:21.616Z\",\n      \"default_schedule\": {\n        \"frequency\": \"hourly\",\n        \"created_at\": \"1949-05-06T18:35:39.753Z\",\n        \"created_by\": {\n          \"id\": \"a1c639fe-e9b5-dafc-ba11-3ec21a236b7d\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        },\n        \"day_of_month\": \"string\",\n        \"day_of_week\": \"string\",\n        \"hour\": \"string\",\n        \"id\": \"62f2377a-75e1-1af7-8d2a-53fb968fd440\",\n        \"minute\": \"string\",\n        \"month\": \"string\",\n        \"updated_at\": \"2016-07-31T02:26:31.836Z\",\n        \"updated_by\": {\n          \"id\": \"f42c68c8-96a8-29a9-8dc2-ae9ec4d6b8b9\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        }\n      },\n      \"destination_configuration\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      \"destination_connection_id\": \"f580c817-6ffd-2ab1-8a4e-2a2e5a867075\",\n      \"disable_record_timestamps\": false,\n      \"id\": \"aaa0d313-66e5-1fad-0b41-e4f3065edcce\",\n      \"mode\": \"snapshot\",\n      \"name\": \"string\",\n      \"normalize_names\": \"disabled\",\n      \"organization_id\": \"7ffc19b2-8809-2c25-f072-5de351338d79\",\n      \"policies\": [\n        \"c8d4324c-7c0a-c439-ac9f-cadb67c2b9d6\",\n        \"bf0f6170-107b-187b-bab2-0051e250b2f8\"\n      ],\n      \"resync_concurrency_limit\": 2670,\n      \"source_configuration\": {\n        \"key_0\": {}\n      },\n      \"source_connection_id\": \"7e6da68b-9df3-07db-0cbb-9d2f5286b9e1\",\n      \"updated_at\": \"1972-07-06T17:14:19.004Z\",\n      \"updated_by\": {\n        \"id\": \"ce183028-1316-94c3-a7ff-2bc407079064\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b71f312-b200-4c82-8d8d-4216950d96c4",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "active",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c9590991-80da-4d57-a87a-1e81ce481485",
+          "name": "Create Bulk Sync",
+          "request": {
+            "name": "Create Bulk Sync",
+            "description": {
+              "content": "Creates a new bulk sync.\n\nBulk syncs are used for the ELT pattern (Extract, Load, and Transform), where you want to sync un-transformed data to your data warehouses, databases, or cloud storage buckets like S3.\n\nAll of the functionality described in [the product\ndocumentation](https://docs.polytomic.com/docs/bulk-syncs) is configurable via\nthe API.\n\nSample code examples:\n\n- [Bulk sync (ELT) from Salesforce to S3](../../../guides/code-examples/bulk-sync-elt-from-salesforce-to-s-3)\n- [Bulk sync (ELT) from Salesforce to Snowflake](../../../guides/code-examples/bulk-sync-elt-from-salesforce-to-snowflake)\n- [Bulk sync (ELT) from HubSpot to PostgreSQL](../../../guides/code-examples/bulk-sync-elt-from-hub-spot-to-postgre-sql)\n\n## Connection specific configuration\n\nThe `destination_configuration` is integration-specific configuration for the\nselected bulk sync destination. This includes settings such as the output schema\nand is required when creating a new sync.\n\nThe `source_configuration` is optional. It allows configuration for how\nPolytomic reads data from the source connection. This will not be available for\nintegrations that do not support additional configuration.\n\nConsult the [connection configurations](../../../guides/configuring-your-connections/overview)\nto see configurations for particular integrations (for example, [here](../../../guides/configuring-your-connections/connections/postgre-sql#source-1) is the available source configuration for the PostgreSQL bulk sync source).\n\n## Defaults and selection behavior\n\nIf `schemas` is omitted, the sync is created with all available source schemas\nselected. Pass `schemas` explicitly if you want the initial sync to include\nonly a subset of tables or objects.\n\nSchedule times are interpreted in UTC.\n\nWhen omitted, automatic discovery defaults are conservative:\n\n- `automatically_add_new_objects` defaults to not enabling newly discovered\n  source objects automatically.\n- `automatically_add_new_fields` defaults to enabling newly discovered fields\n  on already selected objects.\n- `normalize_names` defaults to enabled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"default_schedule\": {\n    \"frequency\": \"<string>\",\n    \"day_of_month\": \"<string>\",\n    \"day_of_week\": \"<string>\",\n    \"hour\": \"<string>\",\n    \"id\": \"<uuid>\",\n    \"minute\": \"<string>\",\n    \"month\": \"<string>\"\n  },\n  \"destination_configuration\": {\n    \"key_0\": {}\n  },\n  \"destination_connection_id\": \"<uuid>\",\n  \"mode\": \"<string>\",\n  \"name\": \"<string>\",\n  \"source_connection_id\": \"<uuid>\",\n  \"active\": \"<boolean,null>\",\n  \"additional_schedules\": [\n    {\n      \"frequency\": \"<string>\",\n      \"day_of_month\": \"<string>\",\n      \"day_of_week\": \"<string>\",\n      \"hour\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"minute\": \"<string>\",\n      \"month\": \"<string>\",\n      \"resync_mode\": \"<string>\",\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"selective_mode\": \"<string>\"\n    },\n    {\n      \"frequency\": \"<string>\",\n      \"day_of_month\": \"<string>\",\n      \"day_of_week\": \"<string>\",\n      \"hour\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"minute\": \"<string>\",\n      \"month\": \"<string>\",\n      \"resync_mode\": \"<string>\",\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"selective_mode\": \"<string>\"\n    }\n  ],\n  \"automatically_add_new_fields\": \"<string>\",\n  \"automatically_add_new_objects\": \"<string>\",\n  \"concurrency_limit\": \"<integer,null>\",\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_record_timestamps\": false,\n  \"normalize_names\": \"<string>\",\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"resync_concurrency_limit\": \"<integer,null>\",\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"source_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "14e52239-5adf-40b6-a126-7449d57bb4ce",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"default_schedule\": {\n    \"frequency\": \"runafter\",\n    \"day_of_month\": \"string\",\n    \"day_of_week\": \"string\",\n    \"hour\": \"string\",\n    \"id\": \"65615558-6cf7-b037-02eb-68a54ec7d483\",\n    \"minute\": \"string\",\n    \"month\": \"string\"\n  },\n  \"destination_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"destination_connection_id\": \"<uuid>\",\n  \"mode\": \"replicate\",\n  \"name\": \"<string>\",\n  \"source_connection_id\": \"<uuid>\",\n  \"active\": \"<boolean,null>\",\n  \"additional_schedules\": [\n    {\n      \"frequency\": \"hourly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"4f8ced27-6b66-ff92-4ada-431c11d43538\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"rebuild\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"incrementalFields\"\n    },\n    {\n      \"frequency\": \"hourly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"7b014411-72b0-c40c-f0a0-e0cd8985edc5\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"resync\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"incrementalFields\"\n    }\n  ],\n  \"automatically_add_new_fields\": \"onlyNonIncremental\",\n  \"automatically_add_new_objects\": \"none\",\n  \"concurrency_limit\": \"<integer,null>\",\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_record_timestamps\": false,\n  \"normalize_names\": \"legacy\",\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"resync_concurrency_limit\": \"<integer,null>\",\n  \"schemas\": [\n    \"string\",\n    \"string\"\n  ],\n  \"source_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"active\": false,\n    \"additional_schedules\": [\n      {\n        \"frequency\": \"continuous\",\n        \"created_at\": \"2025-08-08T14:29:50.780Z\",\n        \"created_by\": {\n          \"id\": \"e8edfe3f-3e52-bf5f-67a2-7792fa60c867\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        },\n        \"day_of_month\": \"string\",\n        \"day_of_week\": \"string\",\n        \"hour\": \"string\",\n        \"id\": \"6c0c5fa8-13c5-7fbb-b6b8-07784a10a63d\",\n        \"minute\": \"string\",\n        \"month\": \"string\",\n        \"resync_mode\": \"rebuild\",\n        \"schemas\": [\n          \"string\",\n          \"string\"\n        ],\n        \"selective_mode\": \"none\",\n        \"updated_at\": \"1949-04-05T08:12:00.448Z\",\n        \"updated_by\": {\n          \"id\": \"1040ffe3-d83d-5f7b-b007-9f89c937b576\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        }\n      },\n      {\n        \"frequency\": \"multi\",\n        \"created_at\": \"1996-03-17T21:26:00.025Z\",\n        \"created_by\": {\n          \"id\": \"4e6fd3db-f839-0106-ce96-93e16155ee7a\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        },\n        \"day_of_month\": \"string\",\n        \"day_of_week\": \"string\",\n        \"hour\": \"string\",\n        \"id\": \"18bb1027-a713-5904-1ff2-c06122fb601c\",\n        \"minute\": \"string\",\n        \"month\": \"string\",\n        \"resync_mode\": \"rebuild\",\n        \"schemas\": [\n          \"string\",\n          \"string\"\n        ],\n        \"selective_mode\": \"nonincrementalFields\",\n        \"updated_at\": \"1979-05-01T16:45:06.972Z\",\n        \"updated_by\": {\n          \"id\": \"d1b5dee8-0e0b-df7b-6e84-2dbf2c571066\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        }\n      }\n    ],\n    \"automatically_add_new_fields\": \"all\",\n    \"automatically_add_new_objects\": \"none\",\n    \"concurrency_limit\": 4925,\n    \"created_at\": \"1989-06-13T15:37:09.128Z\",\n    \"created_by\": {\n      \"id\": \"7547b8af-3f24-17b5-5647-d9e809d41eba\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"data_cutoff_timestamp\": \"1989-09-24T06:59:12.293Z\",\n    \"default_schedule\": {\n      \"frequency\": \"hourly\",\n      \"created_at\": \"1979-10-02T11:09:05.165Z\",\n      \"created_by\": {\n        \"id\": \"254f25a8-f6e8-2476-dff0-ebb51473c7b7\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      },\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"50ab6430-2df7-4e99-6bfb-916fd9dd0793\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"updated_at\": \"1967-06-27T21:45:04.061Z\",\n      \"updated_by\": {\n        \"id\": \"1874be70-fd7b-7d8d-9e58-72cd4103d6e8\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      }\n    },\n    \"destination_configuration\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"destination_connection_id\": \"3934a01c-87a8-6af4-285f-2fba6c53fe51\",\n    \"disable_record_timestamps\": false,\n    \"id\": \"d86c13e7-8040-e067-6ef5-fff465224da2\",\n    \"mode\": \"replicate\",\n    \"name\": \"string\",\n    \"normalize_names\": \"legacy\",\n    \"organization_id\": \"cd5935fa-ed2d-cdf8-915c-2c780c6a23ea\",\n    \"policies\": [\n      \"c81c4fc3-b047-0f70-fe98-a9c325dfd759\",\n      \"8de8f72d-4ee9-bc24-fe68-9727d7fb959a\"\n    ],\n    \"resync_concurrency_limit\": 1623,\n    \"source_configuration\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"source_connection_id\": \"236ae772-ab6a-3b99-3354-7aa7ddac7b8a\",\n    \"updated_at\": \"1992-08-31T10:26:46.983Z\",\n    \"updated_by\": {\n      \"id\": \"f463cf53-0592-3909-a47b-5621d6b33daa\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "608d0044-560c-49b1-a0b8-8caa77f7754a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"default_schedule\": {\n    \"frequency\": \"runafter\",\n    \"day_of_month\": \"string\",\n    \"day_of_week\": \"string\",\n    \"hour\": \"string\",\n    \"id\": \"65615558-6cf7-b037-02eb-68a54ec7d483\",\n    \"minute\": \"string\",\n    \"month\": \"string\"\n  },\n  \"destination_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"destination_connection_id\": \"<uuid>\",\n  \"mode\": \"replicate\",\n  \"name\": \"<string>\",\n  \"source_connection_id\": \"<uuid>\",\n  \"active\": \"<boolean,null>\",\n  \"additional_schedules\": [\n    {\n      \"frequency\": \"hourly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"4f8ced27-6b66-ff92-4ada-431c11d43538\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"rebuild\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"incrementalFields\"\n    },\n    {\n      \"frequency\": \"hourly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"7b014411-72b0-c40c-f0a0-e0cd8985edc5\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"resync\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"incrementalFields\"\n    }\n  ],\n  \"automatically_add_new_fields\": \"onlyNonIncremental\",\n  \"automatically_add_new_objects\": \"none\",\n  \"concurrency_limit\": \"<integer,null>\",\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_record_timestamps\": false,\n  \"normalize_names\": \"legacy\",\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"resync_concurrency_limit\": \"<integer,null>\",\n  \"schemas\": [\n    \"string\",\n    \"string\"\n  ],\n  \"source_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87cb5229-3b0a-41e3-bb5a-1468b203ceaf",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"default_schedule\": {\n    \"frequency\": \"runafter\",\n    \"day_of_month\": \"string\",\n    \"day_of_week\": \"string\",\n    \"hour\": \"string\",\n    \"id\": \"65615558-6cf7-b037-02eb-68a54ec7d483\",\n    \"minute\": \"string\",\n    \"month\": \"string\"\n  },\n  \"destination_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"destination_connection_id\": \"<uuid>\",\n  \"mode\": \"replicate\",\n  \"name\": \"<string>\",\n  \"source_connection_id\": \"<uuid>\",\n  \"active\": \"<boolean,null>\",\n  \"additional_schedules\": [\n    {\n      \"frequency\": \"hourly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"4f8ced27-6b66-ff92-4ada-431c11d43538\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"rebuild\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"incrementalFields\"\n    },\n    {\n      \"frequency\": \"hourly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"7b014411-72b0-c40c-f0a0-e0cd8985edc5\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"resync\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"incrementalFields\"\n    }\n  ],\n  \"automatically_add_new_fields\": \"onlyNonIncremental\",\n  \"automatically_add_new_objects\": \"none\",\n  \"concurrency_limit\": \"<integer,null>\",\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_record_timestamps\": false,\n  \"normalize_names\": \"legacy\",\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"resync_concurrency_limit\": \"<integer,null>\",\n  \"schemas\": [\n    \"string\",\n    \"string\"\n  ],\n  \"source_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4dc30d8-bad5-4796-ac6e-234d44f7e431",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"default_schedule\": {\n    \"frequency\": \"runafter\",\n    \"day_of_month\": \"string\",\n    \"day_of_week\": \"string\",\n    \"hour\": \"string\",\n    \"id\": \"65615558-6cf7-b037-02eb-68a54ec7d483\",\n    \"minute\": \"string\",\n    \"month\": \"string\"\n  },\n  \"destination_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"destination_connection_id\": \"<uuid>\",\n  \"mode\": \"replicate\",\n  \"name\": \"<string>\",\n  \"source_connection_id\": \"<uuid>\",\n  \"active\": \"<boolean,null>\",\n  \"additional_schedules\": [\n    {\n      \"frequency\": \"hourly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"4f8ced27-6b66-ff92-4ada-431c11d43538\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"rebuild\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"incrementalFields\"\n    },\n    {\n      \"frequency\": \"hourly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"7b014411-72b0-c40c-f0a0-e0cd8985edc5\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"resync\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"incrementalFields\"\n    }\n  ],\n  \"automatically_add_new_fields\": \"onlyNonIncremental\",\n  \"automatically_add_new_objects\": \"none\",\n  \"concurrency_limit\": \"<integer,null>\",\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_record_timestamps\": false,\n  \"normalize_names\": \"legacy\",\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"resync_concurrency_limit\": \"<integer,null>\",\n  \"schemas\": [\n    \"string\",\n    \"string\"\n  ],\n  \"source_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a19180c-fad9-4af5-b4fb-e54c9589933c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"default_schedule\": {\n    \"frequency\": \"runafter\",\n    \"day_of_month\": \"string\",\n    \"day_of_week\": \"string\",\n    \"hour\": \"string\",\n    \"id\": \"65615558-6cf7-b037-02eb-68a54ec7d483\",\n    \"minute\": \"string\",\n    \"month\": \"string\"\n  },\n  \"destination_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"destination_connection_id\": \"<uuid>\",\n  \"mode\": \"replicate\",\n  \"name\": \"<string>\",\n  \"source_connection_id\": \"<uuid>\",\n  \"active\": \"<boolean,null>\",\n  \"additional_schedules\": [\n    {\n      \"frequency\": \"hourly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"4f8ced27-6b66-ff92-4ada-431c11d43538\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"rebuild\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"incrementalFields\"\n    },\n    {\n      \"frequency\": \"hourly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"7b014411-72b0-c40c-f0a0-e0cd8985edc5\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"resync\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"incrementalFields\"\n    }\n  ],\n  \"automatically_add_new_fields\": \"onlyNonIncremental\",\n  \"automatically_add_new_objects\": \"none\",\n  \"concurrency_limit\": \"<integer,null>\",\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_record_timestamps\": false,\n  \"normalize_names\": \"legacy\",\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"resync_concurrency_limit\": \"<integer,null>\",\n  \"schemas\": [\n    \"string\",\n    \"string\"\n  ],\n  \"source_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "28a923c3-6e8d-41c7-9eea-f4252c5af30b",
+          "name": "Get Bulk Sync",
+          "request": {
+            "name": "Get Bulk Sync",
+            "description": {
+              "content": "Returns a bulk sync by ID.\n\nThe response includes the sync's top-level configuration — source, destination,\nschedules, and discovery settings.\n\n- To check whether the sync is running and see the most-recent execution result,\n  use [`GET /api/bulk/syncs/{id}/status`](../../../../api-reference/bulk-sync/get-status).\n- To inspect which schemas are selected and how they are configured, use\n  [`GET /api/bulk/syncs/{id}/schemas`](../../../../api-reference/bulk-sync/schemas/list).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "refresh_schemas",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cdd05b3c-8f4a-48e4-abbd-04ca7bb1eb0b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "refresh_schemas",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"active\": false,\n    \"additional_schedules\": [\n      {\n        \"frequency\": \"continuous\",\n        \"created_at\": \"2025-08-08T14:29:50.780Z\",\n        \"created_by\": {\n          \"id\": \"e8edfe3f-3e52-bf5f-67a2-7792fa60c867\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        },\n        \"day_of_month\": \"string\",\n        \"day_of_week\": \"string\",\n        \"hour\": \"string\",\n        \"id\": \"6c0c5fa8-13c5-7fbb-b6b8-07784a10a63d\",\n        \"minute\": \"string\",\n        \"month\": \"string\",\n        \"resync_mode\": \"rebuild\",\n        \"schemas\": [\n          \"string\",\n          \"string\"\n        ],\n        \"selective_mode\": \"none\",\n        \"updated_at\": \"1949-04-05T08:12:00.448Z\",\n        \"updated_by\": {\n          \"id\": \"1040ffe3-d83d-5f7b-b007-9f89c937b576\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        }\n      },\n      {\n        \"frequency\": \"multi\",\n        \"created_at\": \"1996-03-17T21:26:00.025Z\",\n        \"created_by\": {\n          \"id\": \"4e6fd3db-f839-0106-ce96-93e16155ee7a\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        },\n        \"day_of_month\": \"string\",\n        \"day_of_week\": \"string\",\n        \"hour\": \"string\",\n        \"id\": \"18bb1027-a713-5904-1ff2-c06122fb601c\",\n        \"minute\": \"string\",\n        \"month\": \"string\",\n        \"resync_mode\": \"rebuild\",\n        \"schemas\": [\n          \"string\",\n          \"string\"\n        ],\n        \"selective_mode\": \"nonincrementalFields\",\n        \"updated_at\": \"1979-05-01T16:45:06.972Z\",\n        \"updated_by\": {\n          \"id\": \"d1b5dee8-0e0b-df7b-6e84-2dbf2c571066\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        }\n      }\n    ],\n    \"automatically_add_new_fields\": \"all\",\n    \"automatically_add_new_objects\": \"none\",\n    \"concurrency_limit\": 4925,\n    \"created_at\": \"1989-06-13T15:37:09.128Z\",\n    \"created_by\": {\n      \"id\": \"7547b8af-3f24-17b5-5647-d9e809d41eba\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"data_cutoff_timestamp\": \"1989-09-24T06:59:12.293Z\",\n    \"default_schedule\": {\n      \"frequency\": \"hourly\",\n      \"created_at\": \"1979-10-02T11:09:05.165Z\",\n      \"created_by\": {\n        \"id\": \"254f25a8-f6e8-2476-dff0-ebb51473c7b7\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      },\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"50ab6430-2df7-4e99-6bfb-916fd9dd0793\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"updated_at\": \"1967-06-27T21:45:04.061Z\",\n      \"updated_by\": {\n        \"id\": \"1874be70-fd7b-7d8d-9e58-72cd4103d6e8\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      }\n    },\n    \"destination_configuration\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"destination_connection_id\": \"3934a01c-87a8-6af4-285f-2fba6c53fe51\",\n    \"disable_record_timestamps\": false,\n    \"id\": \"d86c13e7-8040-e067-6ef5-fff465224da2\",\n    \"mode\": \"replicate\",\n    \"name\": \"string\",\n    \"normalize_names\": \"legacy\",\n    \"organization_id\": \"cd5935fa-ed2d-cdf8-915c-2c780c6a23ea\",\n    \"policies\": [\n      \"c81c4fc3-b047-0f70-fe98-a9c325dfd759\",\n      \"8de8f72d-4ee9-bc24-fe68-9727d7fb959a\"\n    ],\n    \"resync_concurrency_limit\": 1623,\n    \"source_configuration\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"source_connection_id\": \"236ae772-ab6a-3b99-3354-7aa7ddac7b8a\",\n    \"updated_at\": \"1992-08-31T10:26:46.983Z\",\n    \"updated_by\": {\n      \"id\": \"f463cf53-0592-3909-a47b-5621d6b33daa\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc133468-32a0-415a-8f67-1eb0a29cec75",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "refresh_schemas",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c2e1e3bf-a1cb-455c-9119-30a77c3baf98",
+          "name": "Update Bulk Sync",
+          "request": {
+            "name": "Update Bulk Sync",
+            "description": {
+              "content": "Updates an existing bulk sync's top-level configuration.\n\nUpdating a bulk sync is a **full replacement** of the sync's top-level\nconfiguration. Every field in the request body is written to the sync; any\nfield you omit is cleared or reset to its default value.\n\nTo make a partial change — for example, toggling `active` or swapping a\nschedule — fetch the current sync with\n[`GET /api/bulk/syncs/{id}`](../../../../api-reference/bulk-sync/get),\nmodify the fields you want to change, and send the complete object back in\nthe update request.\n\nUpdates to `active`, `schedules`, and `policies` take effect immediately.\nChanges to source or destination configuration take effect on the sync's\nnext execution.\n\nBecause omitted fields are reset to their defaults, the discovery and\nnaming options behave the same as on create when left out:\n\n- `automatically_add_new_objects` resets to not enabling newly discovered\n  source objects automatically.\n- `automatically_add_new_fields` resets to enabling newly discovered\n  fields on already selected objects.\n- `normalize_names` resets to enabled.\n\nSend the existing values explicitly if you want to preserve a non-default or\nnon-empty setting, including schema and field selections.\n\n> 📘 Updating schemas\n>\n> Schema updates are not performed through this endpoint. Use the\n> [Update Bulk Sync Schemas](../../../../api-reference/bulk-sync/schemas/patch)\n> endpoint to change a subset of schemas, or\n> [Update Bulk Sync Schema](../../../../api-reference/bulk-sync/schemas/update)\n> to replace a single schema's configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the bulk sync to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"default_schedule\": {\n    \"frequency\": \"<string>\",\n    \"day_of_month\": \"<string>\",\n    \"day_of_week\": \"<string>\",\n    \"hour\": \"<string>\",\n    \"id\": \"<uuid>\",\n    \"minute\": \"<string>\",\n    \"month\": \"<string>\"\n  },\n  \"destination_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"destination_connection_id\": \"<uuid>\",\n  \"mode\": \"<string>\",\n  \"name\": \"<string>\",\n  \"source_connection_id\": \"<uuid>\",\n  \"active\": \"<boolean,null>\",\n  \"additional_schedules\": [\n    {\n      \"frequency\": \"<string>\",\n      \"day_of_month\": \"<string>\",\n      \"day_of_week\": \"<string>\",\n      \"hour\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"minute\": \"<string>\",\n      \"month\": \"<string>\",\n      \"resync_mode\": \"<string>\",\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"selective_mode\": \"<string>\"\n    },\n    {\n      \"frequency\": \"<string>\",\n      \"day_of_month\": \"<string>\",\n      \"day_of_week\": \"<string>\",\n      \"hour\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"minute\": \"<string>\",\n      \"month\": \"<string>\",\n      \"resync_mode\": \"<string>\",\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"selective_mode\": \"<string>\"\n    }\n  ],\n  \"automatically_add_new_fields\": \"<string>\",\n  \"automatically_add_new_objects\": \"<string>\",\n  \"concurrency_limit\": \"<integer,null>\",\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_record_timestamps\": false,\n  \"normalize_names\": \"<string>\",\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"resync_concurrency_limit\": \"<integer,null>\",\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"source_configuration\": {\n    \"key_0\": {}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c41fcc72-6d56-4a1f-b1ec-058de7ac1c70",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"default_schedule\": {\n    \"frequency\": \"weekly\",\n    \"day_of_month\": \"string\",\n    \"day_of_week\": \"string\",\n    \"hour\": \"string\",\n    \"id\": \"a65fb00e-ff93-f634-27dd-2024091be22a\",\n    \"minute\": \"string\",\n    \"month\": \"string\"\n  },\n  \"destination_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"destination_connection_id\": \"<uuid>\",\n  \"mode\": \"snapshot\",\n  \"name\": \"<string>\",\n  \"source_connection_id\": \"<uuid>\",\n  \"active\": \"<boolean,null>\",\n  \"additional_schedules\": [\n    {\n      \"frequency\": \"manual\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"2e7f33ba-2331-6678-7622-ddb48c88b192\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"refetch\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"none\"\n    },\n    {\n      \"frequency\": \"weekly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"bec91ab8-540f-bc01-f8a1-6173d91a9a54\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"normal\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"none\"\n    }\n  ],\n  \"automatically_add_new_fields\": \"onlyIncremental\",\n  \"automatically_add_new_objects\": \"all\",\n  \"concurrency_limit\": \"<integer,null>\",\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_record_timestamps\": false,\n  \"normalize_names\": \"disabled\",\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"resync_concurrency_limit\": \"<integer,null>\",\n  \"schemas\": [\n    \"string\",\n    \"string\"\n  ],\n  \"source_configuration\": {\n    \"key_0\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"active\": false,\n    \"additional_schedules\": [\n      {\n        \"frequency\": \"continuous\",\n        \"created_at\": \"2025-08-08T14:29:50.780Z\",\n        \"created_by\": {\n          \"id\": \"e8edfe3f-3e52-bf5f-67a2-7792fa60c867\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        },\n        \"day_of_month\": \"string\",\n        \"day_of_week\": \"string\",\n        \"hour\": \"string\",\n        \"id\": \"6c0c5fa8-13c5-7fbb-b6b8-07784a10a63d\",\n        \"minute\": \"string\",\n        \"month\": \"string\",\n        \"resync_mode\": \"rebuild\",\n        \"schemas\": [\n          \"string\",\n          \"string\"\n        ],\n        \"selective_mode\": \"none\",\n        \"updated_at\": \"1949-04-05T08:12:00.448Z\",\n        \"updated_by\": {\n          \"id\": \"1040ffe3-d83d-5f7b-b007-9f89c937b576\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        }\n      },\n      {\n        \"frequency\": \"multi\",\n        \"created_at\": \"1996-03-17T21:26:00.025Z\",\n        \"created_by\": {\n          \"id\": \"4e6fd3db-f839-0106-ce96-93e16155ee7a\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        },\n        \"day_of_month\": \"string\",\n        \"day_of_week\": \"string\",\n        \"hour\": \"string\",\n        \"id\": \"18bb1027-a713-5904-1ff2-c06122fb601c\",\n        \"minute\": \"string\",\n        \"month\": \"string\",\n        \"resync_mode\": \"rebuild\",\n        \"schemas\": [\n          \"string\",\n          \"string\"\n        ],\n        \"selective_mode\": \"nonincrementalFields\",\n        \"updated_at\": \"1979-05-01T16:45:06.972Z\",\n        \"updated_by\": {\n          \"id\": \"d1b5dee8-0e0b-df7b-6e84-2dbf2c571066\",\n          \"name\": \"string\",\n          \"type\": \"string\"\n        }\n      }\n    ],\n    \"automatically_add_new_fields\": \"all\",\n    \"automatically_add_new_objects\": \"none\",\n    \"concurrency_limit\": 4925,\n    \"created_at\": \"1989-06-13T15:37:09.128Z\",\n    \"created_by\": {\n      \"id\": \"7547b8af-3f24-17b5-5647-d9e809d41eba\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"data_cutoff_timestamp\": \"1989-09-24T06:59:12.293Z\",\n    \"default_schedule\": {\n      \"frequency\": \"hourly\",\n      \"created_at\": \"1979-10-02T11:09:05.165Z\",\n      \"created_by\": {\n        \"id\": \"254f25a8-f6e8-2476-dff0-ebb51473c7b7\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      },\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"50ab6430-2df7-4e99-6bfb-916fd9dd0793\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"updated_at\": \"1967-06-27T21:45:04.061Z\",\n      \"updated_by\": {\n        \"id\": \"1874be70-fd7b-7d8d-9e58-72cd4103d6e8\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      }\n    },\n    \"destination_configuration\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"destination_connection_id\": \"3934a01c-87a8-6af4-285f-2fba6c53fe51\",\n    \"disable_record_timestamps\": false,\n    \"id\": \"d86c13e7-8040-e067-6ef5-fff465224da2\",\n    \"mode\": \"replicate\",\n    \"name\": \"string\",\n    \"normalize_names\": \"legacy\",\n    \"organization_id\": \"cd5935fa-ed2d-cdf8-915c-2c780c6a23ea\",\n    \"policies\": [\n      \"c81c4fc3-b047-0f70-fe98-a9c325dfd759\",\n      \"8de8f72d-4ee9-bc24-fe68-9727d7fb959a\"\n    ],\n    \"resync_concurrency_limit\": 1623,\n    \"source_configuration\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"source_connection_id\": \"236ae772-ab6a-3b99-3354-7aa7ddac7b8a\",\n    \"updated_at\": \"1992-08-31T10:26:46.983Z\",\n    \"updated_by\": {\n      \"id\": \"f463cf53-0592-3909-a47b-5621d6b33daa\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80f15acc-d871-41d7-a0e0-5cb98b922af3",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"default_schedule\": {\n    \"frequency\": \"weekly\",\n    \"day_of_month\": \"string\",\n    \"day_of_week\": \"string\",\n    \"hour\": \"string\",\n    \"id\": \"a65fb00e-ff93-f634-27dd-2024091be22a\",\n    \"minute\": \"string\",\n    \"month\": \"string\"\n  },\n  \"destination_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"destination_connection_id\": \"<uuid>\",\n  \"mode\": \"snapshot\",\n  \"name\": \"<string>\",\n  \"source_connection_id\": \"<uuid>\",\n  \"active\": \"<boolean,null>\",\n  \"additional_schedules\": [\n    {\n      \"frequency\": \"manual\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"2e7f33ba-2331-6678-7622-ddb48c88b192\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"refetch\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"none\"\n    },\n    {\n      \"frequency\": \"weekly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"bec91ab8-540f-bc01-f8a1-6173d91a9a54\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"normal\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"none\"\n    }\n  ],\n  \"automatically_add_new_fields\": \"onlyIncremental\",\n  \"automatically_add_new_objects\": \"all\",\n  \"concurrency_limit\": \"<integer,null>\",\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_record_timestamps\": false,\n  \"normalize_names\": \"disabled\",\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"resync_concurrency_limit\": \"<integer,null>\",\n  \"schemas\": [\n    \"string\",\n    \"string\"\n  ],\n  \"source_configuration\": {\n    \"key_0\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1512b347-14bb-4617-9515-b6db642f2d9b",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"default_schedule\": {\n    \"frequency\": \"weekly\",\n    \"day_of_month\": \"string\",\n    \"day_of_week\": \"string\",\n    \"hour\": \"string\",\n    \"id\": \"a65fb00e-ff93-f634-27dd-2024091be22a\",\n    \"minute\": \"string\",\n    \"month\": \"string\"\n  },\n  \"destination_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"destination_connection_id\": \"<uuid>\",\n  \"mode\": \"snapshot\",\n  \"name\": \"<string>\",\n  \"source_connection_id\": \"<uuid>\",\n  \"active\": \"<boolean,null>\",\n  \"additional_schedules\": [\n    {\n      \"frequency\": \"manual\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"2e7f33ba-2331-6678-7622-ddb48c88b192\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"refetch\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"none\"\n    },\n    {\n      \"frequency\": \"weekly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"bec91ab8-540f-bc01-f8a1-6173d91a9a54\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"normal\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"none\"\n    }\n  ],\n  \"automatically_add_new_fields\": \"onlyIncremental\",\n  \"automatically_add_new_objects\": \"all\",\n  \"concurrency_limit\": \"<integer,null>\",\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_record_timestamps\": false,\n  \"normalize_names\": \"disabled\",\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"resync_concurrency_limit\": \"<integer,null>\",\n  \"schemas\": [\n    \"string\",\n    \"string\"\n  ],\n  \"source_configuration\": {\n    \"key_0\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a01ef71-fe79-4b6d-b7b4-af14857d1795",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"default_schedule\": {\n    \"frequency\": \"weekly\",\n    \"day_of_month\": \"string\",\n    \"day_of_week\": \"string\",\n    \"hour\": \"string\",\n    \"id\": \"a65fb00e-ff93-f634-27dd-2024091be22a\",\n    \"minute\": \"string\",\n    \"month\": \"string\"\n  },\n  \"destination_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"destination_connection_id\": \"<uuid>\",\n  \"mode\": \"snapshot\",\n  \"name\": \"<string>\",\n  \"source_connection_id\": \"<uuid>\",\n  \"active\": \"<boolean,null>\",\n  \"additional_schedules\": [\n    {\n      \"frequency\": \"manual\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"2e7f33ba-2331-6678-7622-ddb48c88b192\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"refetch\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"none\"\n    },\n    {\n      \"frequency\": \"weekly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"bec91ab8-540f-bc01-f8a1-6173d91a9a54\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"normal\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"none\"\n    }\n  ],\n  \"automatically_add_new_fields\": \"onlyIncremental\",\n  \"automatically_add_new_objects\": \"all\",\n  \"concurrency_limit\": \"<integer,null>\",\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_record_timestamps\": false,\n  \"normalize_names\": \"disabled\",\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"resync_concurrency_limit\": \"<integer,null>\",\n  \"schemas\": [\n    \"string\",\n    \"string\"\n  ],\n  \"source_configuration\": {\n    \"key_0\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2102607-8309-4df2-be2f-f264ca01a247",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"default_schedule\": {\n    \"frequency\": \"weekly\",\n    \"day_of_month\": \"string\",\n    \"day_of_week\": \"string\",\n    \"hour\": \"string\",\n    \"id\": \"a65fb00e-ff93-f634-27dd-2024091be22a\",\n    \"minute\": \"string\",\n    \"month\": \"string\"\n  },\n  \"destination_configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"destination_connection_id\": \"<uuid>\",\n  \"mode\": \"snapshot\",\n  \"name\": \"<string>\",\n  \"source_connection_id\": \"<uuid>\",\n  \"active\": \"<boolean,null>\",\n  \"additional_schedules\": [\n    {\n      \"frequency\": \"manual\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"2e7f33ba-2331-6678-7622-ddb48c88b192\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"refetch\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"none\"\n    },\n    {\n      \"frequency\": \"weekly\",\n      \"day_of_month\": \"string\",\n      \"day_of_week\": \"string\",\n      \"hour\": \"string\",\n      \"id\": \"bec91ab8-540f-bc01-f8a1-6173d91a9a54\",\n      \"minute\": \"string\",\n      \"month\": \"string\",\n      \"resync_mode\": \"normal\",\n      \"schemas\": [\n        \"string\",\n        \"string\"\n      ],\n      \"selective_mode\": \"none\"\n    }\n  ],\n  \"automatically_add_new_fields\": \"onlyIncremental\",\n  \"automatically_add_new_objects\": \"all\",\n  \"concurrency_limit\": \"<integer,null>\",\n  \"data_cutoff_timestamp\": \"<string,null-date-time>\",\n  \"disable_record_timestamps\": false,\n  \"normalize_names\": \"disabled\",\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"resync_concurrency_limit\": \"<integer,null>\",\n  \"schemas\": [\n    \"string\",\n    \"string\"\n  ],\n  \"source_configuration\": {\n    \"key_0\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f225b57d-09d6-4c9c-8357-fc21ee6d24c4",
+          "name": "Delete Bulk Sync",
+          "request": {
+            "name": "Delete Bulk Sync",
+            "description": {
+              "content": "Deletes a bulk sync, cancelling any running executions.\n\nAny execution that is currently running is cancelled before the sync record is\nremoved.\n\n> 🚧 All associated schedules, schema configurations, and execution history are\n> deleted along with the sync.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "refresh_schemas",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fb1b07cd-179b-428a-a5c7-8f84780ed484",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "refresh_schemas",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "370c6550-c488-46d6-a668-5d46eb4297f5",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "refresh_schemas",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "451f5776-ff90-43e1-932f-6831fc4cc181",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "refresh_schemas",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3317ec5d-f270-4f23-b2cf-b16bd3560e33",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "refresh_schemas",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ff06e12-1422-4f31-9992-c3d758695c2c",
+          "name": "Activate Bulk Sync",
+          "request": {
+            "name": "Activate Bulk Sync",
+            "description": {
+              "content": "Sets whether a bulk sync is active.\n\nOnly active syncs are eligible to execute on their configured schedule.\nDeactivating a sync prevents future scheduled runs and requests cancellation of\nany execution that is currently in progress.\n\n> 📘 To start or stop a running execution directly, use\n> [`POST /api/bulk/syncs/{id}/executions`](../../../../../api-reference/bulk-sync/start)\n> or\n> [`POST /api/bulk/syncs/{id}/cancel`](../../../../../api-reference/bulk-sync/cancel).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":id",
+                "activate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"active\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "55a9ee16-1648-4fbf-b30d-8e18dbe007f7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"active\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"active\": true,\n    \"id\": \"6101aea5-6d14-3558-a406-f200573df6cc\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbba0729-79ae-4388-875a-0a8fbc0ce12b",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"active\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab6569d1-74d9-482c-9137-dece824b1788",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"active\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7dc584df-60c9-40f1-8e75-f5d33010d73f",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"active\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f9754959-d27a-422d-907e-4ef9592f07ea",
+          "name": "Cancel Bulk Sync",
+          "request": {
+            "name": "Cancel Bulk Sync",
+            "description": {
+              "content": "Requests cancellation of any running executions on a bulk sync.\n\nCancellation is asynchronous. A successful response means the cancellation\nsignal has been queued; the running execution continues until the signal is\nprocessed. Poll `GET /api/bulk/syncs/{id}/status` until the current execution\nreaches a terminal state (`completed`, `canceled`, or `failed`) to confirm\ncancellation has taken effect.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The active execution of this bulk sync ID will be cancelled."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "06ab4ba2-e0a7-44ac-bc39-4a3879063da6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The active execution of this bulk sync ID will be cancelled."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b5bf926-91da-40a2-8b65-8d36b6a16c6a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The active execution of this bulk sync ID will be cancelled."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9352730c-34d1-44cf-96b4-c8ef6f95212f",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The active execution of this bulk sync ID will be cancelled."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d4cb081-0e91-44c1-bc9e-bfd9ec604569",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The active execution of this bulk sync ID will be cancelled."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d427793c-ba4c-44b7-a62f-bf3b6b4a30d6",
+          "name": "Start Bulk Sync Execution",
+          "request": {
+            "name": "Start Bulk Sync Execution",
+            "description": {
+              "content": "Starts a new execution of a bulk sync.\n\nThis endpoint returns the execution record immediately after the run is queued\nor started. Use the execution ID with the bulk-sync execution endpoints if you\nneed to monitor progress in detail.\n\n## Execution modes\n\n- Set `test=true` to validate the sync without writing to the destination.\n- Use `resync_mode` for destructive or full-refresh style reruns.\n- `test` and `resync_mode` are mutually exclusive.\n\nThe legacy `resync` boolean is no longer accepted on this v5 endpoint. Send\n`resync_mode` instead.\n\nIf another execution is already running, the endpoint returns `409 Conflict`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":id",
+                "executions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the bulk sync."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fetch_mode\": \"<string>\",\n  \"resync_mode\": \"<string>\",\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"test\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9197ef33-f116-47a0-aabe-e0c10b3ae9d0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fetch_mode\": \"incremental\",\n  \"resync_mode\": \"rebuild\",\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"test\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"completed_at\": \"2010-07-24T15:26:46.353Z\",\n    \"created_at\": \"1965-12-20T23:35:45.881Z\",\n    \"error_count\": 8647,\n    \"fetch_mode\": \"incremental\",\n    \"id\": \"07a34ac4-80d0-b5ca-a29d-4451b9a6167c\",\n    \"is_partial\": false,\n    \"is_resync\": true,\n    \"is_test\": true,\n    \"output_disposition\": \"retain\",\n    \"record_count\": 4227,\n    \"schemas\": [\n      {\n        \"completed_at\": \"1946-10-31T02:30:38.765Z\",\n        \"created_at\": \"2020-03-19T14:52:21.963Z\",\n        \"error_count\": 3181,\n        \"output_name\": \"string\",\n        \"record_count\": 9859,\n        \"schema\": \"string\",\n        \"started_at\": \"1979-03-27T12:03:30.115Z\",\n        \"status\": \"completed\",\n        \"status_message\": \"string\",\n        \"updated_at\": \"2015-07-12T06:54:59.341Z\",\n        \"warning_count\": 9072\n      },\n      {\n        \"completed_at\": \"1995-05-07T01:04:03.961Z\",\n        \"created_at\": \"1953-03-20T23:29:09.518Z\",\n        \"error_count\": 8177,\n        \"output_name\": \"string\",\n        \"record_count\": 1389,\n        \"schema\": \"string\",\n        \"started_at\": \"2016-03-21T02:22:17.415Z\",\n        \"status\": \"failed\",\n        \"status_message\": \"string\",\n        \"updated_at\": \"2003-03-03T12:09:31.615Z\",\n        \"warning_count\": 3607\n      }\n    ],\n    \"started_at\": \"1974-03-25T23:29:37.704Z\",\n    \"status\": \"scheduled\",\n    \"status_message\": \"string\",\n    \"type\": \"string\",\n    \"updated_at\": \"2019-09-07T04:44:55.107Z\",\n    \"warning_count\": 3011\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffbf5717-a696-4588-a571-47a6d5f8d947",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fetch_mode\": \"incremental\",\n  \"resync_mode\": \"rebuild\",\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"test\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47905c6f-afdb-4a4a-a27d-563b6090cf7c",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fetch_mode\": \"incremental\",\n  \"resync_mode\": \"rebuild\",\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"test\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6ae97dee-1d53-43e6-acfe-17ce0e192b5b",
+          "name": "Get Bulk Sync Status",
+          "request": {
+            "name": "Get Bulk Sync Status",
+            "description": {
+              "content": "Returns the current status of a bulk sync.\n\nThe response includes the sync's current active/inactive state together with\ninformation about the most recent execution — its status, start time, and any\nerrors — making this endpoint well-suited for health checks and monitoring\ndashboards.\n\nFor the complete execution history, use\n[`GET /api/bulk/syncs/{id}/executions`](../../../../../api-reference/bulk-sync/executions/list).\nFor the full details of a specific run, including per-schema breakdowns, use\n[`GET /api/bulk/syncs/{id}/executions/{exec_id}`](../../../../../api-reference/bulk-sync/executions/get).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "bulk",
+                "syncs",
+                ":id",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the bulk sync."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "21eed131-3420-4c04-8fe0-362c6a67b308",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"current_execution\": {\n      \"completed_at\": \"2006-01-01T23:54:18.273Z\",\n      \"created_at\": \"1969-09-18T07:17:55.651Z\",\n      \"error_count\": 5002,\n      \"fetch_mode\": \"full\",\n      \"id\": \"50ffa785-5ce0-3e45-8e6b-0690e564e5a5\",\n      \"is_partial\": true,\n      \"is_resync\": true,\n      \"is_test\": true,\n      \"output_disposition\": \"rebuild\",\n      \"record_count\": 5347,\n      \"schemas\": [\n        {\n          \"completed_at\": \"1952-10-15T22:07:23.976Z\",\n          \"created_at\": \"1993-03-19T00:49:26.788Z\",\n          \"error_count\": 9837,\n          \"output_name\": \"string\",\n          \"record_count\": 7475,\n          \"schema\": \"string\",\n          \"started_at\": \"2015-09-02T06:43:17.150Z\",\n          \"status\": \"running\",\n          \"status_message\": \"string\",\n          \"updated_at\": \"2013-07-14T06:42:34.411Z\",\n          \"warning_count\": 6785\n        },\n        {\n          \"completed_at\": \"2005-10-07T22:33:05.468Z\",\n          \"created_at\": \"2009-02-23T21:32:02.326Z\",\n          \"error_count\": 6823,\n          \"output_name\": \"string\",\n          \"record_count\": 6095,\n          \"schema\": \"string\",\n          \"started_at\": \"1949-09-03T23:32:14.804Z\",\n          \"status\": \"failed\",\n          \"status_message\": \"string\",\n          \"updated_at\": \"2018-05-05T22:48:42.988Z\",\n          \"warning_count\": 2409\n        }\n      ],\n      \"started_at\": \"1961-06-01T22:46:56.398Z\",\n      \"status\": \"failed\",\n      \"status_message\": \"string\",\n      \"type\": \"string\",\n      \"updated_at\": \"2007-11-20T03:17:03.764Z\",\n      \"warning_count\": 1658\n    },\n    \"ingestion_status\": {\n      \"enabled\": true,\n      \"highwater_mark\": \"string\",\n      \"is_running\": true,\n      \"position\": \"string\",\n      \"position_time\": \"2023-06-09T06:11:17.834Z\",\n      \"status\": \"warning\",\n      \"status_message\": \"string\",\n      \"updated_at\": \"1973-06-02T21:09:58.521Z\"\n    },\n    \"last_execution\": {\n      \"completed_at\": \"1985-06-26T13:14:28.640Z\",\n      \"created_at\": \"2011-11-29T10:21:05.525Z\",\n      \"error_count\": 488,\n      \"fetch_mode\": \"full\",\n      \"id\": \"142019ab-5805-4568-14dc-f8ed0460f5fa\",\n      \"is_partial\": true,\n      \"is_resync\": false,\n      \"is_test\": true,\n      \"output_disposition\": \"truncate\",\n      \"record_count\": 5674,\n      \"schemas\": [\n        {\n          \"completed_at\": \"2021-11-15T23:47:31.642Z\",\n          \"created_at\": \"1968-12-25T04:09:47.811Z\",\n          \"error_count\": 4673,\n          \"output_name\": \"string\",\n          \"record_count\": 705,\n          \"schema\": \"string\",\n          \"started_at\": \"1961-01-30T04:32:27.962Z\",\n          \"status\": \"processing\",\n          \"status_message\": \"string\",\n          \"updated_at\": \"2013-03-17T18:06:37.855Z\",\n          \"warning_count\": 2492\n        },\n        {\n          \"completed_at\": \"2000-08-01T06:25:48.130Z\",\n          \"created_at\": \"1961-11-25T13:06:47.211Z\",\n          \"error_count\": 6403,\n          \"output_name\": \"string\",\n          \"record_count\": 5123,\n          \"schema\": \"string\",\n          \"started_at\": \"1991-07-08T22:40:04.835Z\",\n          \"status\": \"completed\",\n          \"status_message\": \"string\",\n          \"updated_at\": \"1980-01-09T23:44:02.066Z\",\n          \"warning_count\": 3316\n        }\n      ],\n      \"started_at\": \"1959-09-19T18:49:29.217Z\",\n      \"status\": \"canceled\",\n      \"status_message\": \"string\",\n      \"type\": \"string\",\n      \"updated_at\": \"1967-09-23T10:41:01.480Z\",\n      \"warning_count\": 5490\n    },\n    \"next_execution_time\": \"1986-06-13T23:07:08.276Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b47781b2-dbad-45a1-8631-5288de89d686",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2e3e0d3-6ed3-4c49-95c1-802626523200",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "bulk",
+                    "syncs",
+                    ":id",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the bulk sync."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d4450cdf-af15-464f-bb9b-09e731dfcbd3",
+          "name": "Get Bulk Source",
+          "request": {
+            "name": "Get Bulk Source",
+            "description": {
+              "content": "Lists the schemas (tables or objects) available on a connection for use as a bulk sync source, optionally including per-schema field details.\n\nThe response reflects what the\nconnection currently has cached; if the upstream source has changed, trigger\na refresh first with\n[`POST /api/connections/{id}/schemas/refresh`](../../../../../api-reference/schemas/refresh).\n\nThese are the schemas available for selection, not the schemas already\nconfigured on any particular sync. To inspect schemas on a running sync, use\n[`GET /api/bulk/syncs/{id}/schemas`](../../../../../api-reference/bulk-sync/schemas/list).\n\nPass `include_fields=true` to receive per-schema field details in a single call.\nOmit it when you only need the schema list, as field enumeration can be slow for\nlarge sources.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "connections",
+                ":id",
+                "bulksync",
+                "source"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_fields",
+                  "value": "true",
+                  "description": "When true, include per-schema field lists in the response. Set to false for a smaller payload when field details are not needed."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the connection."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "450c3335-28c6-46b5-a17f-5178153d18b4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "connections",
+                    ":id",
+                    "bulksync",
+                    "source"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_fields",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the connection."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"capabilities\": {\n      \"supports_tracking_fields\": true\n    },\n    \"configuration\": {},\n    \"schemas\": [\n      {\n        \"fields\": [\n          {\n            \"association\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": \"string\",\n            \"is_primary_key\": false,\n            \"name\": \"string\",\n            \"path\": \"string\",\n            \"remote_type\": \"string\",\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type_spec\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"user_managed\": false,\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"association\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": \"string\",\n            \"is_primary_key\": true,\n            \"name\": \"string\",\n            \"path\": \"string\",\n            \"remote_type\": \"string\",\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type_spec\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"user_managed\": false,\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"id\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"fields\": [\n          {\n            \"association\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": \"string\",\n            \"is_primary_key\": true,\n            \"name\": \"string\",\n            \"path\": \"string\",\n            \"remote_type\": \"string\",\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type_spec\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"user_managed\": false,\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"association\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": \"string\",\n            \"is_primary_key\": false,\n            \"name\": \"string\",\n            \"path\": \"string\",\n            \"remote_type\": \"string\",\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type_spec\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"user_managed\": false,\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"id\": \"string\",\n        \"name\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1bfbb067-f669-4b4b-8035-961e7d267a22",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "connections",
+                    ":id",
+                    "bulksync",
+                    "source"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_fields",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the connection."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24ccc3ed-fc56-4528-af3f-0dd189e3fa77",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "connections",
+                    ":id",
+                    "bulksync",
+                    "source"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_fields",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the connection."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cdf24a9-b83f-424a-953b-4493896b9747",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "connections",
+                    ":id",
+                    "bulksync",
+                    "source"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_fields",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the connection."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6b5fd788-da2b-4110-ae21-bcca7b99d825",
+          "name": "Get Bulk Destination",
+          "request": {
+            "name": "Get Bulk Destination",
+            "description": {
+              "content": "Describes the destination configuration schema a connection accepts when used as a bulk sync destination.\n\nThe response is a JSON Schema object describing the shape of the\n`destination_configuration` field you must supply when\n[creating](../../../../../api-reference/bulk-sync/create) or\n[updating](../../../../../api-reference/bulk-sync/update) a bulk sync that uses this\nconnection as its destination. Required fields vary by connection type.\n\n> 📘 Fetch this endpoint once per connection type rather than once per sync.\n> The configuration schema is the same for all syncs sharing the same\n> destination connection.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "connections",
+                ":id",
+                "bulksync",
+                "target"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "83afe00b-3c58-468f-a6dd-d17b8aa5287a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "connections",
+                    ":id",
+                    "bulksync",
+                    "target"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"configuration\": {\n      \"key_0\": {}\n    },\n    \"modes\": [\n      {\n        \"description\": \"string\",\n        \"id\": \"snapshot\",\n        \"label\": \"string\",\n        \"requires_identity\": false,\n        \"supports_field_sync_mode\": true,\n        \"supports_target_filters\": true\n      },\n      {\n        \"description\": \"string\",\n        \"id\": \"replicate\",\n        \"label\": \"string\",\n        \"requires_identity\": true,\n        \"supports_field_sync_mode\": false,\n        \"supports_target_filters\": true\n      }\n    ],\n    \"supported_resync_modes\": [\n      \"rebuild\",\n      \"rebuild\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "406d6209-53c1-417a-84bd-99effa12d8fa",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "connections",
+                    ":id",
+                    "bulksync",
+                    "target"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6985b39f-98a6-4117-b636-42c2c0a8671c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "connections",
+                    ":id",
+                    "bulksync",
+                    "target"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d9a976a-4d39-4371-997e-0d26eb558f3e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "connections",
+                    ":id",
+                    "bulksync",
+                    "target"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"status\": 9878\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.polytomic.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "69424267-d244-49bb-85c0-f676139827e0",
+    "name": "API Reference subpackage_bulkSync API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

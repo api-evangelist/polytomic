@@ -1,0 +1,306 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_models API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Enrichment Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/modelsync/enrichment-source",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "params",
+                "value": "",
+                "type": "query",
+                "description": "Query parameters used to incrementally refine a dependent source configuration. Keys correspond to configuration fields returned by previous calls to this endpoint."
+              }
+            ]
+          },
+          "docs": "Describes the enrichment source configuration available on a connection.\n\nNot all connections support enrichment. Call this endpoint to determine\nwhether a connection can serve as an enrichment source in a model sync and,\nif so, what configuration it accepts.\n\n> ⚠️ If the connection does not support enrichment, this endpoint returns\n> `404`. Check for that status before attempting to configure an enrichment\n> source on a sync.\n\nWhen a connection does support enrichment, the response describes th"
+        },
+        {
+          "info": {
+            "name": "Enrichment Fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/enrichment/:connection_id/inputfields",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the valid input field sets for an enrichment configuration on a connection.\n\nWhen configuring an enrichment source in a model sync, use this endpoint to\ndiscover which input fields the enrichment connection requires. Pass the\nproposed enrichment configuration in the request body; the response lists the\nvalid input field sets that map your model's fields to the enrichment service's\nexpected inputs."
+        },
+        {
+          "info": {
+            "name": "Preview Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/model-preview",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "async",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a job that previews the fields a model would expose without persisting it.\n\nThe response contains a job ID that resolves to the list of fields the model\nwould expose. Poll the job until it completes to retrieve the field list. The\nmodel is not persisted — this endpoint is useful for validating a query or\nconfiguration before calling [`POST /api/models`](../../api-reference/models/create) to save it."
+        },
+        {
+          "info": {
+            "name": "List Models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/models",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists all models in the caller's organization.\n\nResults are ordered by `updated_at` descending, with `id` used as a tiebreaker.\nIf more results are available, the response includes `pagination.next_page_token`.\nPass that token back unchanged to continue from the last item you received.\n\nThe token is opaque. Do not construct or edit it yourself.\n\nThe `limit` is capped at 50. Values above that cap are reduced to 50, and\nnon-positive values fall back to the same default."
+        },
+        {
+          "info": {
+            "name": "Create Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/models",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "async",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new model.\n\nA model defines a query or view over a connection's data — for example, a SQL\nquery, a filtered object, or a joined dataset. Models are used as sources when\ncreating model syncs.\n\nThe connection referenced by `connection_id` must have source capabilities. Use\n[`GET /api/connection_types/{id}`](../../api-reference/connections/get-connection-type-schema) to check\nwhether a connection type supports use as a source."
+        },
+        {
+          "info": {
+            "name": "Get Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/models/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a single model by ID, including its source fields, identity, and filters.\n\nThe response includes the model's source fields, identity column, and any\nconfigured filters. To preview the data a model would return without saving\nchanges, use [`GET /api/models/{id}/sample`](../../../api-reference/models/sample)."
+        },
+        {
+          "info": {
+            "name": "Update Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/models/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a model's configuration.\n\nUpdating a model is a **full replacement** of its configuration. Every field in\nthe request body is written to the model; any field you omit is cleared or reset\nto its default value.\n\nTo make a partial change, fetch the current model with\n[`GET /api/models/{id}`](../../../api-reference/models/get), modify the fields you want to change, and send\nthe complete object back in the update request.\n\nChanges to source fields, filters, or the identity column take effect "
+        },
+        {
+          "info": {
+            "name": "Delete Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/models/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes a model.\n\n> 🚧 Deleting a model used by one or more syncs will break those syncs. Remove\n> or reconfigure any syncs that reference this model before deleting it."
+        },
+        {
+          "info": {
+            "name": "Sample Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/models/:id/sample",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a sample of records from a model.\n\nSynchronous requests must complete within 10 seconds. If the source query or\nenrichment step can exceed that budget, use the asynchronous option so the\nwork runs as a background job."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

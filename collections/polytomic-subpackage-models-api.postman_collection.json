@@ -1,0 +1,2693 @@
+{
+  "item": [
+    {
+      "id": "5e994a66-91bb-4193-9076-7f4fc2ae4184",
+      "name": "subpackage_models",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "98d7a768-95e8-4ce9-a096-af74b10fbd5f",
+          "name": "Get Enrichment Source",
+          "request": {
+            "name": "Get Enrichment Source",
+            "description": {
+              "content": "Describes the enrichment source configuration available on a connection.\n\nNot all connections support enrichment. Call this endpoint to determine\nwhether a connection can serve as an enrichment source in a model sync and,\nif so, what configuration it accepts.\n\n> ⚠️ If the connection does not support enrichment, this endpoint returns\n> `404`. Check for that status before attempting to configure an enrichment\n> source on a sync.\n\nWhen a connection does support enrichment, the response describes the\nconfiguration fields required to set it up. Pass those values in the\n`enrichment` block when creating or updating a model sync.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "connections",
+                ":id",
+                "modelsync",
+                "enrichment-source"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key_0",
+                  "value": "[\"<string>\",\"<string>\"]",
+                  "description": "Query parameters used to incrementally refine a dependent source configuration. Keys correspond to configuration fields returned by previous calls to this endpoint."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the connection."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "72ea7aa9-4e71-40c3-a04f-5259edf732b3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "connections",
+                    ":id",
+                    "modelsync",
+                    "enrichment-source"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key_0",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the connection."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"configuration\": {\n      \"key_0\": {\n        \"type\": \"string\"\n      }\n    },\n    \"items\": {\n      \"key_0\": {\n        \"has_items\": false,\n        \"requires_one_of\": null\n      }\n    },\n    \"requires_one_of\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "450385fd-41dd-4398-a557-493b244648d1",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "connections",
+                    ":id",
+                    "modelsync",
+                    "enrichment-source"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key_0",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the connection."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "95faa65a-ce9a-487c-8c23-7ee618e341ec",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "connections",
+                    ":id",
+                    "modelsync",
+                    "enrichment-source"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key_0",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the connection."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96c27375-2076-4be7-8d26-00d05b14ef62",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "connections",
+                    ":id",
+                    "modelsync",
+                    "enrichment-source"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key_0",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the connection."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4be888bf-e15c-417b-87b1-cdc237374112",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "connections",
+                    ":id",
+                    "modelsync",
+                    "enrichment-source"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key_0",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the connection."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ebc03d4b-ceab-40b2-aed3-76374f6d39ed",
+          "name": "Enrichment Fields",
+          "request": {
+            "name": "Enrichment Fields",
+            "description": {
+              "content": "Returns the valid input field sets for an enrichment configuration on a connection.\n\nWhen configuring an enrichment source in a model sync, use this endpoint to\ndiscover which input fields the enrichment connection requires. Pass the\nproposed enrichment configuration in the request body; the response lists the\nvalid input field sets that map your model's fields to the enrichment service's\nexpected inputs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "enrichment",
+                ":connection_id",
+                "inputfields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "connection_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "395cd0cc-88e9-4d65-a67f-f02fd18d0ff3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichment",
+                    ":connection_id",
+                    "inputfields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "connection_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    [\n      \"string\",\n      \"string\"\n    ],\n    [\n      \"string\",\n      \"string\"\n    ]\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "94764532-33e7-4fe6-bf97-8a651994117e",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichment",
+                    ":connection_id",
+                    "inputfields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "connection_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7bdfb314-015a-4812-b29f-764fec89fc3f",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichment",
+                    ":connection_id",
+                    "inputfields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "connection_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "969e6ebf-42a1-472a-ad3d-dc4f87c09628",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichment",
+                    ":connection_id",
+                    "inputfields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "connection_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f28bd42e-e3c7-4ad4-ade1-68a044f37dde",
+          "name": "Preview Model",
+          "request": {
+            "name": "Preview Model",
+            "description": {
+              "content": "Submits a job that previews the fields a model would expose without persisting it.\n\nThe response contains a job ID that resolves to the list of fields the model\nwould expose. Poll the job until it completes to retrieve the field list. The\nmodel is not persisted — this endpoint is useful for validating a query or\nconfiguration before calling [`POST /api/models`](../../api-reference/models/create) to save it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "model-preview"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "async",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"label\": \"<string>\",\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"example\": \"<string>\"\n    },\n    {\n      \"label\": \"<string>\",\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"example\": \"<string>\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {}\n    },\n    \"connection_id\": \"<uuid>\",\n    \"enricher_id\": \"<uuid>\",\n    \"fields\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"created_by\": {\n          \"id\": \"<uuid>\",\n          \"name\": \"<string>\",\n          \"type\": \"<string>\"\n        },\n        \"description\": \"<string>\",\n        \"example\": {},\n        \"id\": \"<uuid>\",\n        \"label\": \"<string>\",\n        \"name\": \"<string>\",\n        \"remote_type\": \"<string>\",\n        \"type\": \"<string>\",\n        \"unique\": \"<boolean>\",\n        \"updated_at\": \"<dateTime>\",\n        \"user_added\": \"<boolean>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"created_by\": {\n          \"id\": \"<uuid>\",\n          \"name\": \"<string>\",\n          \"type\": \"<string>\"\n        },\n        \"description\": \"<string>\",\n        \"example\": {},\n        \"id\": \"<uuid>\",\n        \"label\": \"<string>\",\n        \"name\": \"<string>\",\n        \"remote_type\": \"<string>\",\n        \"type\": \"<string>\",\n        \"unique\": \"<boolean>\",\n        \"updated_at\": \"<dateTime>\",\n        \"user_added\": \"<boolean>\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"<string>\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"relations\": [\n    {\n      \"from\": \"<string>\",\n      \"to\": {\n        \"field\": \"<string>\",\n        \"model_id\": \"<uuid>\"\n      }\n    },\n    {\n      \"from\": \"<string>\",\n      \"to\": {\n        \"field\": \"<string>\",\n        \"model_id\": \"<uuid>\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1e61a733-b010-40ef-b71f-dc52bef9f910",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "model-preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"type\": \"string\"\n    },\n    {\n      \"type\": \"string\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"connection_id\": \"058ea545-27c2-1beb-9a68-c621357c1f16\",\n    \"enricher_id\": \"cd6c844e-7881-bb49-ece6-fa6c79d39843\",\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"string\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"relations\": [\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"907456be-2cb1-0cee-6ce7-307354b9fb81\"\n      }\n    },\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"b056eca3-ac1b-039f-5236-7037b2b23f70\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"connection_id\": \"729b3743-7329-f7cc-20e7-242d744d47a7\",\n    \"created_at\": \"1959-01-14T07:34:45.313Z\",\n    \"created_by\": {\n      \"id\": \"a2e4a0e0-14d3-46b9-11e1-e7b15aa67ebf\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"enricher\": {\n      \"configuration\": {\n        \"key_0\": {}\n      },\n      \"connection_id\": \"a6ac7a22-4f66-d8c7-9d0b-5b09a0120e28\",\n      \"enricher_id\": \"01bafd03-2c61-a1f7-ec2f-08be0f2c4306\",\n      \"fields\": [\n        {\n          \"type\": \"object\"\n        },\n        {\n          \"type\": \"object\"\n        }\n      ],\n      \"mappings\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    },\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"id\": \"a2f262b4-bcb1-a0a0-bbae-f395d97dee00\",\n    \"identifier\": \"string\",\n    \"name\": \"string\",\n    \"organization_id\": \"3ecf8359-6bbf-2c55-da78-78cedd3d3f85\",\n    \"policies\": [\n      \"01ae8b73-7a71-0e04-7441-d60c83f7735b\",\n      \"12cd18a1-c6bb-9b8c-a188-7780612b2a2e\"\n    ],\n    \"relations\": [\n      {\n        \"from\": \"string\",\n        \"to\": {\n          \"field\": \"string\",\n          \"model_id\": \"82e2bcc5-7815-1e3f-6874-9b24663516e1\"\n        }\n      },\n      {\n        \"from\": \"string\",\n        \"to\": {\n          \"field\": \"string\",\n          \"model_id\": \"2b6620f6-5209-4685-d4b6-6ae0c922cf61\"\n        }\n      }\n    ],\n    \"tracking_columns\": [\n      \"string\",\n      \"string\"\n    ],\n    \"type\": \"string\",\n    \"updated_at\": \"1961-02-02T23:40:19.415Z\",\n    \"updated_by\": {\n      \"id\": \"c1693373-8e1f-b3f6-f181-c7a207f8fd57\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"version\": 2094\n  },\n  \"job\": {\n    \"error\": \"string\",\n    \"job_id\": \"6807dcfe-f371-7754-6d9d-ae87cac6665b\",\n    \"result\": {},\n    \"status\": \"done\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c9436ab-0453-49d5-b878-af2e2c6b25c9",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "model-preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"type\": \"string\"\n    },\n    {\n      \"type\": \"string\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"connection_id\": \"058ea545-27c2-1beb-9a68-c621357c1f16\",\n    \"enricher_id\": \"cd6c844e-7881-bb49-ece6-fa6c79d39843\",\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"string\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"relations\": [\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"907456be-2cb1-0cee-6ce7-307354b9fb81\"\n      }\n    },\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"b056eca3-ac1b-039f-5236-7037b2b23f70\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3cb73d7-15e9-456a-b913-c3e52a1bd102",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "model-preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"type\": \"string\"\n    },\n    {\n      \"type\": \"string\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"connection_id\": \"058ea545-27c2-1beb-9a68-c621357c1f16\",\n    \"enricher_id\": \"cd6c844e-7881-bb49-ece6-fa6c79d39843\",\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"string\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"relations\": [\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"907456be-2cb1-0cee-6ce7-307354b9fb81\"\n      }\n    },\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"b056eca3-ac1b-039f-5236-7037b2b23f70\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de0273ba-a0db-409d-bec4-5d212afbece5",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "model-preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"type\": \"string\"\n    },\n    {\n      \"type\": \"string\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"connection_id\": \"058ea545-27c2-1beb-9a68-c621357c1f16\",\n    \"enricher_id\": \"cd6c844e-7881-bb49-ece6-fa6c79d39843\",\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"string\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"relations\": [\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"907456be-2cb1-0cee-6ce7-307354b9fb81\"\n      }\n    },\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"b056eca3-ac1b-039f-5236-7037b2b23f70\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ab57ba0-33e3-41fe-8b55-3fae3bd8742a",
+          "name": "List Models",
+          "request": {
+            "name": "List Models",
+            "description": {
+              "content": "Lists all models in the caller's organization.\n\nResults are ordered by `updated_at` descending, with `id` used as a tiebreaker.\nIf more results are available, the response includes `pagination.next_page_token`.\nPass that token back unchanged to continue from the last item you received.\n\nThe token is opaque. Do not construct or edit it yourself.\n\nThe `limit` is capped at 50. Values above that cap are reduced to 50, and\nnon-positive values fall back to the same default.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0869625a-981d-4331-981e-d77ace8c3c86",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"configuration\": {\n        \"key_0\": {}\n      },\n      \"connection_id\": \"bfe199e6-48ed-5fb1-c07f-ac16c8c6d95e\",\n      \"created_at\": \"2022-02-20T13:33:48.655Z\",\n      \"created_by\": {\n        \"id\": \"f23800bd-b6c6-4d0f-48b0-320d58b0e783\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      },\n      \"enricher\": {\n        \"configuration\": {\n          \"key_0\": {}\n        },\n        \"connection_id\": \"3fe2b048-da1d-a123-65c3-d48733d66b56\",\n        \"enricher_id\": \"56056b21-000b-3b6b-272a-60310ffb473f\",\n        \"fields\": [\n          {\n            \"type\": \"object\"\n          },\n          {\n            \"type\": \"object\"\n          }\n        ],\n        \"mappings\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"fields\": [\n        {\n          \"type\": \"object\"\n        },\n        {\n          \"type\": \"object\"\n        }\n      ],\n      \"id\": \"a9c3927d-dd92-e90a-1634-dcbb023517e9\",\n      \"identifier\": \"string\",\n      \"name\": \"string\",\n      \"organization_id\": \"9db2939a-dd2d-1442-49e2-3b8192e0dc7d\",\n      \"policies\": [\n        \"e3c8a17b-7b88-01e2-431c-8b1e55a39d19\",\n        \"1df0750c-5586-c272-28c1-7fa85ca1be11\"\n      ],\n      \"relations\": [\n        {\n          \"from\": \"string\",\n          \"to\": {\n            \"field\": \"string\",\n            \"model_id\": \"ade2eaa4-9775-fbb6-a532-05b64841a3af\"\n          }\n        },\n        {\n          \"from\": \"string\",\n          \"to\": {\n            \"field\": \"string\",\n            \"model_id\": \"8ea26b08-0e44-be30-9125-332c8339455b\"\n          }\n        }\n      ],\n      \"tracking_columns\": [\n        \"string\",\n        \"string\"\n      ],\n      \"type\": \"string\",\n      \"updated_at\": \"1993-02-13T23:07:35.613Z\",\n      \"updated_by\": {\n        \"id\": \"ff4c7a5b-55e5-c1e7-cf97-ad156c774204\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      },\n      \"version\": 3974\n    },\n    {\n      \"configuration\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      },\n      \"connection_id\": \"b73020ea-a018-6843-e8eb-7bd696111680\",\n      \"created_at\": \"1998-04-19T21:31:42.506Z\",\n      \"created_by\": {\n        \"id\": \"2869d5fe-2d5c-f790-c7e8-a06c14c22f4b\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      },\n      \"enricher\": {\n        \"configuration\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"connection_id\": \"f994e03b-44f2-b2bc-4685-263a461a6cff\",\n        \"enricher_id\": \"74c87a5c-38cf-97df-00cf-d9208e85082c\",\n        \"fields\": [\n          {\n            \"type\": \"object\"\n          },\n          {\n            \"type\": \"object\"\n          }\n        ],\n        \"mappings\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\"\n        }\n      },\n      \"fields\": [\n        {\n          \"type\": \"object\"\n        },\n        {\n          \"type\": \"object\"\n        }\n      ],\n      \"id\": \"273ba3f4-07e7-e4e1-f0d4-43a56972a91c\",\n      \"identifier\": \"string\",\n      \"name\": \"string\",\n      \"organization_id\": \"3e9442e5-f30e-2ca1-9b1b-e9eb2fa933be\",\n      \"policies\": [\n        \"40fb3a70-bf01-6ede-a1f2-01bc285c06a3\",\n        \"3fad1ec3-dd72-4c64-0b6c-2f79bd233bec\"\n      ],\n      \"relations\": [\n        {\n          \"from\": \"string\",\n          \"to\": {\n            \"field\": \"string\",\n            \"model_id\": \"192d27e0-8967-8b53-e9e0-d7182f69775e\"\n          }\n        },\n        {\n          \"from\": \"string\",\n          \"to\": {\n            \"field\": \"string\",\n            \"model_id\": \"d347937c-c9b1-451e-17f5-62e0ed77c34a\"\n          }\n        }\n      ],\n      \"tracking_columns\": [\n        \"string\",\n        \"string\"\n      ],\n      \"type\": \"string\",\n      \"updated_at\": \"2023-11-30T02:11:10.184Z\",\n      \"updated_by\": {\n        \"id\": \"c7dc3bb6-3b7e-2e4a-c5b3-63e8aead0fa8\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      },\n      \"version\": 2035\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db28c943-8b17-48ac-9372-6b6b933004a2",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d7d9bfb4-c7d6-4740-908a-4183a52daad1",
+          "name": "Create Model",
+          "request": {
+            "name": "Create Model",
+            "description": {
+              "content": "Creates a new model.\n\nA model defines a query or view over a connection's data — for example, a SQL\nquery, a filtered object, or a joined dataset. Models are used as sources when\ncreating model syncs.\n\nThe connection referenced by `connection_id` must have source capabilities. Use\n[`GET /api/connection_types/{id}`](../../api-reference/connections/get-connection-type-schema) to check\nwhether a connection type supports use as a source.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "async",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"label\": \"<string>\",\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"example\": \"<string>\"\n    },\n    {\n      \"label\": \"<string>\",\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"example\": \"<string>\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {}\n    },\n    \"connection_id\": \"<uuid>\",\n    \"enricher_id\": \"<uuid>\",\n    \"fields\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"created_by\": {\n          \"id\": \"<uuid>\",\n          \"name\": \"<string>\",\n          \"type\": \"<string>\"\n        },\n        \"description\": \"<string>\",\n        \"example\": {},\n        \"id\": \"<uuid>\",\n        \"label\": \"<string>\",\n        \"name\": \"<string>\",\n        \"remote_type\": \"<string>\",\n        \"type\": \"<string>\",\n        \"unique\": \"<boolean>\",\n        \"updated_at\": \"<dateTime>\",\n        \"user_added\": \"<boolean>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"created_by\": {\n          \"id\": \"<uuid>\",\n          \"name\": \"<string>\",\n          \"type\": \"<string>\"\n        },\n        \"description\": \"<string>\",\n        \"example\": {},\n        \"id\": \"<uuid>\",\n        \"label\": \"<string>\",\n        \"name\": \"<string>\",\n        \"remote_type\": \"<string>\",\n        \"type\": \"<string>\",\n        \"unique\": \"<boolean>\",\n        \"updated_at\": \"<dateTime>\",\n        \"user_added\": \"<boolean>\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"<string>\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"relations\": [\n    {\n      \"from\": \"<string>\",\n      \"to\": {\n        \"field\": \"<string>\",\n        \"model_id\": \"<uuid>\"\n      }\n    },\n    {\n      \"from\": \"<string>\",\n      \"to\": {\n        \"field\": \"<string>\",\n        \"model_id\": \"<uuid>\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1c8f8f5d-d6bb-484c-ad84-316ee14622b7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"type\": \"string\"\n    },\n    {\n      \"type\": \"string\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"connection_id\": \"058ea545-27c2-1beb-9a68-c621357c1f16\",\n    \"enricher_id\": \"cd6c844e-7881-bb49-ece6-fa6c79d39843\",\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"string\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"relations\": [\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"907456be-2cb1-0cee-6ce7-307354b9fb81\"\n      }\n    },\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"b056eca3-ac1b-039f-5236-7037b2b23f70\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"connection_id\": \"729b3743-7329-f7cc-20e7-242d744d47a7\",\n    \"created_at\": \"1959-01-14T07:34:45.313Z\",\n    \"created_by\": {\n      \"id\": \"a2e4a0e0-14d3-46b9-11e1-e7b15aa67ebf\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"enricher\": {\n      \"configuration\": {\n        \"key_0\": {}\n      },\n      \"connection_id\": \"a6ac7a22-4f66-d8c7-9d0b-5b09a0120e28\",\n      \"enricher_id\": \"01bafd03-2c61-a1f7-ec2f-08be0f2c4306\",\n      \"fields\": [\n        {\n          \"type\": \"object\"\n        },\n        {\n          \"type\": \"object\"\n        }\n      ],\n      \"mappings\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    },\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"id\": \"a2f262b4-bcb1-a0a0-bbae-f395d97dee00\",\n    \"identifier\": \"string\",\n    \"name\": \"string\",\n    \"organization_id\": \"3ecf8359-6bbf-2c55-da78-78cedd3d3f85\",\n    \"policies\": [\n      \"01ae8b73-7a71-0e04-7441-d60c83f7735b\",\n      \"12cd18a1-c6bb-9b8c-a188-7780612b2a2e\"\n    ],\n    \"relations\": [\n      {\n        \"from\": \"string\",\n        \"to\": {\n          \"field\": \"string\",\n          \"model_id\": \"82e2bcc5-7815-1e3f-6874-9b24663516e1\"\n        }\n      },\n      {\n        \"from\": \"string\",\n        \"to\": {\n          \"field\": \"string\",\n          \"model_id\": \"2b6620f6-5209-4685-d4b6-6ae0c922cf61\"\n        }\n      }\n    ],\n    \"tracking_columns\": [\n      \"string\",\n      \"string\"\n    ],\n    \"type\": \"string\",\n    \"updated_at\": \"1961-02-02T23:40:19.415Z\",\n    \"updated_by\": {\n      \"id\": \"c1693373-8e1f-b3f6-f181-c7a207f8fd57\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"version\": 2094\n  },\n  \"job\": {\n    \"error\": \"string\",\n    \"job_id\": \"6807dcfe-f371-7754-6d9d-ae87cac6665b\",\n    \"result\": {},\n    \"status\": \"done\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6648ff0-019f-4042-82b9-5dde2b63b514",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"type\": \"string\"\n    },\n    {\n      \"type\": \"string\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"connection_id\": \"058ea545-27c2-1beb-9a68-c621357c1f16\",\n    \"enricher_id\": \"cd6c844e-7881-bb49-ece6-fa6c79d39843\",\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"string\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"relations\": [\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"907456be-2cb1-0cee-6ce7-307354b9fb81\"\n      }\n    },\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"b056eca3-ac1b-039f-5236-7037b2b23f70\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf5bf393-dfce-42d6-9e4c-b834a07f9960",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"type\": \"string\"\n    },\n    {\n      \"type\": \"string\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"connection_id\": \"058ea545-27c2-1beb-9a68-c621357c1f16\",\n    \"enricher_id\": \"cd6c844e-7881-bb49-ece6-fa6c79d39843\",\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"string\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"relations\": [\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"907456be-2cb1-0cee-6ce7-307354b9fb81\"\n      }\n    },\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"b056eca3-ac1b-039f-5236-7037b2b23f70\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acde6951-8044-49f6-85ee-03de06ad59f4",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"type\": \"string\"\n    },\n    {\n      \"type\": \"string\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"connection_id\": \"058ea545-27c2-1beb-9a68-c621357c1f16\",\n    \"enricher_id\": \"cd6c844e-7881-bb49-ece6-fa6c79d39843\",\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"string\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"relations\": [\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"907456be-2cb1-0cee-6ce7-307354b9fb81\"\n      }\n    },\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"b056eca3-ac1b-039f-5236-7037b2b23f70\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2197ce6c-2f59-467b-ae9a-744db7c026ad",
+          "name": "Get Model",
+          "request": {
+            "name": "Get Model",
+            "description": {
+              "content": "Returns a single model by ID, including its source fields, identity, and filters.\n\nThe response includes the model's source fields, identity column, and any\nconfigured filters. To preview the data a model would return without saving\nchanges, use [`GET /api/models/{id}/sample`](../../../api-reference/models/sample).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "models",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "async",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b6f1ff19-1283-4fa2-b231-49607840ca33",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"connection_id\": \"729b3743-7329-f7cc-20e7-242d744d47a7\",\n    \"created_at\": \"1959-01-14T07:34:45.313Z\",\n    \"created_by\": {\n      \"id\": \"a2e4a0e0-14d3-46b9-11e1-e7b15aa67ebf\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"enricher\": {\n      \"configuration\": {\n        \"key_0\": {}\n      },\n      \"connection_id\": \"a6ac7a22-4f66-d8c7-9d0b-5b09a0120e28\",\n      \"enricher_id\": \"01bafd03-2c61-a1f7-ec2f-08be0f2c4306\",\n      \"fields\": [\n        {\n          \"type\": \"object\"\n        },\n        {\n          \"type\": \"object\"\n        }\n      ],\n      \"mappings\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    },\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"id\": \"a2f262b4-bcb1-a0a0-bbae-f395d97dee00\",\n    \"identifier\": \"string\",\n    \"name\": \"string\",\n    \"organization_id\": \"3ecf8359-6bbf-2c55-da78-78cedd3d3f85\",\n    \"policies\": [\n      \"01ae8b73-7a71-0e04-7441-d60c83f7735b\",\n      \"12cd18a1-c6bb-9b8c-a188-7780612b2a2e\"\n    ],\n    \"relations\": [\n      {\n        \"from\": \"string\",\n        \"to\": {\n          \"field\": \"string\",\n          \"model_id\": \"82e2bcc5-7815-1e3f-6874-9b24663516e1\"\n        }\n      },\n      {\n        \"from\": \"string\",\n        \"to\": {\n          \"field\": \"string\",\n          \"model_id\": \"2b6620f6-5209-4685-d4b6-6ae0c922cf61\"\n        }\n      }\n    ],\n    \"tracking_columns\": [\n      \"string\",\n      \"string\"\n    ],\n    \"type\": \"string\",\n    \"updated_at\": \"1961-02-02T23:40:19.415Z\",\n    \"updated_by\": {\n      \"id\": \"c1693373-8e1f-b3f6-f181-c7a207f8fd57\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"version\": 2094\n  },\n  \"job\": {\n    \"error\": \"string\",\n    \"job_id\": \"6807dcfe-f371-7754-6d9d-ae87cac6665b\",\n    \"result\": {},\n    \"status\": \"done\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2242b006-837b-420e-8cb3-e7ba6a931e22",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a71e94c0-d3df-440e-b661-192de2452ece",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "266203c7-43ae-4f93-86c0-c79dd80ba731",
+          "name": "Update Model",
+          "request": {
+            "name": "Update Model",
+            "description": {
+              "content": "Updates a model's configuration.\n\nUpdating a model is a **full replacement** of its configuration. Every field in\nthe request body is written to the model; any field you omit is cleared or reset\nto its default value.\n\nTo make a partial change, fetch the current model with\n[`GET /api/models/{id}`](../../../api-reference/models/get), modify the fields you want to change, and send\nthe complete object back in the update request.\n\nChanges to source fields, filters, or the identity column take effect on the\nnext sync execution that uses this model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "models",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "async",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"configuration\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"label\": \"<string>\",\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"example\": \"<string>\"\n    },\n    {\n      \"label\": \"<string>\",\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"example\": \"<string>\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    \"connection_id\": \"<uuid>\",\n    \"enricher_id\": \"<uuid>\",\n    \"fields\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"created_by\": {\n          \"id\": \"<uuid>\",\n          \"name\": \"<string>\",\n          \"type\": \"<string>\"\n        },\n        \"description\": \"<string>\",\n        \"example\": {},\n        \"id\": \"<uuid>\",\n        \"label\": \"<string>\",\n        \"name\": \"<string>\",\n        \"remote_type\": \"<string>\",\n        \"type\": \"<string>\",\n        \"unique\": \"<boolean>\",\n        \"updated_at\": \"<dateTime>\",\n        \"user_added\": \"<boolean>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"created_by\": {\n          \"id\": \"<uuid>\",\n          \"name\": \"<string>\",\n          \"type\": \"<string>\"\n        },\n        \"description\": \"<string>\",\n        \"example\": {},\n        \"id\": \"<uuid>\",\n        \"label\": \"<string>\",\n        \"name\": \"<string>\",\n        \"remote_type\": \"<string>\",\n        \"type\": \"<string>\",\n        \"unique\": \"<boolean>\",\n        \"updated_at\": \"<dateTime>\",\n        \"user_added\": \"<boolean>\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"refresh\": \"<boolean>\",\n  \"relations\": [\n    {\n      \"from\": \"<string>\",\n      \"to\": {\n        \"field\": \"<string>\",\n        \"model_id\": \"<uuid>\"\n      }\n    },\n    {\n      \"from\": \"<string>\",\n      \"to\": {\n        \"field\": \"<string>\",\n        \"model_id\": \"<uuid>\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0d7765d0-e92c-4ae0-85d0-a187f345b02f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"type\": \"string\"\n    },\n    {\n      \"type\": \"string\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"connection_id\": \"dbb7454b-422d-e069-0bd7-e3ef31c25544\",\n    \"enricher_id\": \"ad6bb6a4-06ff-4bfc-4bde-7f5e641123ed\",\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"refresh\": \"<boolean>\",\n  \"relations\": [\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"083f7413-2066-c13e-c729-15307a1948f5\"\n      }\n    },\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"bcd65620-825b-f1e6-f393-d9c72ab0aec0\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"connection_id\": \"729b3743-7329-f7cc-20e7-242d744d47a7\",\n    \"created_at\": \"1959-01-14T07:34:45.313Z\",\n    \"created_by\": {\n      \"id\": \"a2e4a0e0-14d3-46b9-11e1-e7b15aa67ebf\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"enricher\": {\n      \"configuration\": {\n        \"key_0\": {}\n      },\n      \"connection_id\": \"a6ac7a22-4f66-d8c7-9d0b-5b09a0120e28\",\n      \"enricher_id\": \"01bafd03-2c61-a1f7-ec2f-08be0f2c4306\",\n      \"fields\": [\n        {\n          \"type\": \"object\"\n        },\n        {\n          \"type\": \"object\"\n        }\n      ],\n      \"mappings\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    },\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"id\": \"a2f262b4-bcb1-a0a0-bbae-f395d97dee00\",\n    \"identifier\": \"string\",\n    \"name\": \"string\",\n    \"organization_id\": \"3ecf8359-6bbf-2c55-da78-78cedd3d3f85\",\n    \"policies\": [\n      \"01ae8b73-7a71-0e04-7441-d60c83f7735b\",\n      \"12cd18a1-c6bb-9b8c-a188-7780612b2a2e\"\n    ],\n    \"relations\": [\n      {\n        \"from\": \"string\",\n        \"to\": {\n          \"field\": \"string\",\n          \"model_id\": \"82e2bcc5-7815-1e3f-6874-9b24663516e1\"\n        }\n      },\n      {\n        \"from\": \"string\",\n        \"to\": {\n          \"field\": \"string\",\n          \"model_id\": \"2b6620f6-5209-4685-d4b6-6ae0c922cf61\"\n        }\n      }\n    ],\n    \"tracking_columns\": [\n      \"string\",\n      \"string\"\n    ],\n    \"type\": \"string\",\n    \"updated_at\": \"1961-02-02T23:40:19.415Z\",\n    \"updated_by\": {\n      \"id\": \"c1693373-8e1f-b3f6-f181-c7a207f8fd57\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"version\": 2094\n  },\n  \"job\": {\n    \"error\": \"string\",\n    \"job_id\": \"6807dcfe-f371-7754-6d9d-ae87cac6665b\",\n    \"result\": {},\n    \"status\": \"done\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd56d825-f08b-4c55-a16c-29b3999550aa",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"type\": \"string\"\n    },\n    {\n      \"type\": \"string\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"connection_id\": \"dbb7454b-422d-e069-0bd7-e3ef31c25544\",\n    \"enricher_id\": \"ad6bb6a4-06ff-4bfc-4bde-7f5e641123ed\",\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"refresh\": \"<boolean>\",\n  \"relations\": [\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"083f7413-2066-c13e-c729-15307a1948f5\"\n      }\n    },\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"bcd65620-825b-f1e6-f393-d9c72ab0aec0\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92887236-e32b-48d2-b314-198a386bbd76",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"type\": \"string\"\n    },\n    {\n      \"type\": \"string\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"connection_id\": \"dbb7454b-422d-e069-0bd7-e3ef31c25544\",\n    \"enricher_id\": \"ad6bb6a4-06ff-4bfc-4bde-7f5e641123ed\",\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"refresh\": \"<boolean>\",\n  \"relations\": [\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"083f7413-2066-c13e-c729-15307a1948f5\"\n      }\n    },\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"bcd65620-825b-f1e6-f393-d9c72ab0aec0\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cf4f906-7359-426e-a341-71ce6bbcc365",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"key_0\": {}\n  },\n  \"connection_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"additional_fields\": [\n    {\n      \"type\": \"string\"\n    },\n    {\n      \"type\": \"string\"\n    }\n  ],\n  \"enricher\": {\n    \"configuration\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"connection_id\": \"dbb7454b-422d-e069-0bd7-e3ef31c25544\",\n    \"enricher_id\": \"ad6bb6a4-06ff-4bfc-4bde-7f5e641123ed\",\n    \"fields\": [\n      {\n        \"type\": \"object\"\n      },\n      {\n        \"type\": \"object\"\n      }\n    ],\n    \"mappings\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    }\n  },\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": \"<string>\",\n  \"labels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"organization_id\": \"<string,null-uuid>\",\n  \"policies\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"refresh\": \"<boolean>\",\n  \"relations\": [\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"083f7413-2066-c13e-c729-15307a1948f5\"\n      }\n    },\n    {\n      \"from\": \"string\",\n      \"to\": {\n        \"field\": \"string\",\n        \"model_id\": \"bcd65620-825b-f1e6-f393-d9c72ab0aec0\"\n      }\n    }\n  ],\n  \"tracking_columns\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2885fe2-53f6-46c3-b895-76eb558cc24e",
+          "name": "Delete Model",
+          "request": {
+            "name": "Delete Model",
+            "description": {
+              "content": "Deletes a model.\n\n> 🚧 Deleting a model used by one or more syncs will break those syncs. Remove\n> or reconfigure any syncs that reference this model before deleting it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "models",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "async",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "23ace460-ab72-4f03-a68f-b74c03a2f27a",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fb9daa35-a407-4964-b5fd-5edba2691f3b",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff726b41-3d2d-40d4-b08a-f3bab4f25692",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6fc0a94c-3c39-4ebf-8545-d8d28580d852",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a95b49f-80e3-44f3-bb2f-f58912133496",
+          "name": "Sample Records",
+          "request": {
+            "name": "Sample Records",
+            "description": {
+              "content": "Returns a sample of records from a model.\n\nSynchronous requests must complete within 10 seconds. If the source query or\nenrichment step can exceed that budget, use the asynchronous option so the\nwork runs as a background job.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "models",
+                ":id",
+                "sample"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "async",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Polytomic-Version",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "782e06fa-4d0c-4bea-8823-4630ba01a456",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id",
+                    "sample"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"records\": [\n      {\n        \"key_0\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"key_1\": {\n          \"key_0\": {},\n          \"key_1\": {},\n          \"key_2\": {}\n        }\n      },\n      {\n        \"key_0\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        }\n      }\n    ],\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"job\": {\n    \"error\": \"string\",\n    \"job_id\": \"7815632f-733f-cbc9-5bbc-3d49652558e3\",\n    \"result\": {},\n    \"status\": \"done\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3e2b862-7f43-48dd-ada4-38b9c449a9d7",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id",
+                    "sample"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b03cf661-bb92-47d1-b1af-016082fc670b",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id",
+                    "sample"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e92a62bf-7894-4478-a06d-713f6839f45c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "models",
+                    ":id",
+                    "sample"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer user API key",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Polytomic-Version",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"status\": 5869\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.polytomic.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e3748e85-fa8b-4584-97fe-44bf18c4d55a",
+    "name": "API Reference subpackage_bulkSync subpackage_models API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

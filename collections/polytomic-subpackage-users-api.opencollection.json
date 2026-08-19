@@ -1,0 +1,367 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_users API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Current Org Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organization/users",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists every user in the caller's current organization.\n\nReturns user records including each user's ID, email, and assigned roles."
+        },
+        {
+          "info": {
+            "name": "Create Current Org User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/organization/users",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new user in the caller's current organization and assigns the requested permissions roles.\n\nThe new user receives an invitation email prompting them to set up their\naccount. Role assignments take effect as soon as the invitation is accepted."
+        },
+        {
+          "info": {
+            "name": "Get Current Org User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organization/users/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user."
+              }
+            ]
+          },
+          "docs": "Returns a single user from the caller's current organization."
+        },
+        {
+          "info": {
+            "name": "Update Current Org User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/organization/users/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the permissions roles assigned to a user in the caller's current organization.\n\nOnly the user's role assignments are modified. Profile information such as name\nand email address is not affected by this endpoint."
+        },
+        {
+          "info": {
+            "name": "Delete Current Org User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/organization/users/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user."
+              }
+            ]
+          },
+          "docs": "Deletes a user from the caller's current organization.\n\n> 🚧 This action is permanent. The user is immediately removed from the\n> organization and loses access to all resources within it. This cannot be\n> undone."
+        },
+        {
+          "info": {
+            "name": "List Partner Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/users",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization whose users should be listed."
+              }
+            ]
+          },
+          "docs": "Lists all users in the specified organization.\n\n> 🚧 Requires partner key\n>\n> User endpoints are only accessible using [partner keys](../../../../guides/obtaining-api-keys#partner-keys).\n\nReturns user records including each user's ID, email, and assigned roles."
+        },
+        {
+          "info": {
+            "name": "Create Partner User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/users",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization the user belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new user in the specified organization and assigns the requested permissions roles.\n\n> 🚧 Requires partner key\n>\n> User endpoints are only accessible using [partner keys](../../../../guides/obtaining-api-keys#partner-keys).\n\nThe new user receives an invitation email prompting them to set up their\naccount. Role assignments take effect as soon as the invitation is accepted."
+        },
+        {
+          "info": {
+            "name": "Get Partner User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/users/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user."
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization the user belongs to."
+              }
+            ]
+          },
+          "docs": "Returns a single user in the specified organization.\n\n> 🚧 Requires partner key\n>\n> User endpoints are only accessible using [partner keys](../../../../../guides/obtaining-api-keys#partner-keys)."
+        },
+        {
+          "info": {
+            "name": "Update Partner User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/users/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user to update."
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization the user belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a user's assigned permissions roles.\n\n> 🚧 Requires partner key\n>\n> User endpoints are only accessible using [partner keys](../../../../../guides/obtaining-api-keys#partner-keys).\n\nOnly the user's role assignments are modified. Profile information such as name\nand email address is not affected by this endpoint."
+        },
+        {
+          "info": {
+            "name": "Delete Partner User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/users/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user."
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization the user belongs to."
+              }
+            ]
+          },
+          "docs": "Deletes a user from the specified organization.\n\n> 🚧 Requires partner key\n>\n> User endpoints are only accessible using [partner keys](../../../../../guides/obtaining-api-keys#partner-keys).\n\n> 🚧 This action is permanent. The user is immediately removed from the\n> organization and loses access to all resources within it. This cannot be\n> undone."
+        },
+        {
+          "info": {
+            "name": "Create Partner User API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/organizations/:org_id/users/:id/keys",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the organization the user belongs to."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user the key will be issued for."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "If true, revoke any existing API key for the user before creating a new one."
+              }
+            ]
+          },
+          "docs": "Issues a new API key for the specified user.\n\n> 🚧 The API key value is only included in the response at creation time and\n> cannot be retrieved again. Store it securely immediately after creation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

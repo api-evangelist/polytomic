@@ -1,0 +1,189 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_bulkSync.subpackage_bulkSync/schedules API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_bulkSync.subpackage_bulkSync/schedules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Bulk Sync Schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/schedules",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync whose schedules should be returned."
+              }
+            ]
+          },
+          "docs": "Lists all schedules configured for a bulk sync.\n\nA bulk sync can have multiple schedules attached; this endpoint returns all\nof them. Schedule times are returned in UTC."
+        },
+        {
+          "info": {
+            "name": "Create Bulk Sync Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/schedules",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync to add a schedule to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a new schedule to a bulk sync.\n\nA bulk sync can have multiple schedules attached; adding one here does not\nreplace existing schedules. Schedule times are interpreted in UTC.\n\nCreating a schedule only affects future automatic executions. To run the\nsync immediately, call\n[`POST /api/bulk/syncs/{id}/executions`](../../../../../api-reference/bulk-sync/start)."
+        },
+        {
+          "info": {
+            "name": "Get Bulk Sync Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/schedules/:schedule_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "schedule_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the schedule."
+              }
+            ]
+          },
+          "docs": "Returns a single schedule configured on a bulk sync.\n\nSchedule times are returned in UTC.\n\nTo see all schedules on this sync, use\n[`GET /api/bulk/syncs/{sync_id}/schedules`](../../../../../../api-reference/bulk-sync/schedules/list).\nTo update the schedule, use\n[`PUT /api/bulk/syncs/{sync_id}/schedules/{schedule_id}`](../../../../../../api-reference/bulk-sync/schedules/update)."
+        },
+        {
+          "info": {
+            "name": "Update Bulk Sync Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/schedules/:schedule_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "schedule_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the schedule to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing schedule on a bulk sync.\n\nUpdates replace the stored schedule. Send the full schedule definition\nrather than only the field you want to change. Schedule times are\ninterpreted in UTC."
+        },
+        {
+          "info": {
+            "name": "Delete Bulk Sync Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:sync_id/schedules/:schedule_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "schedule_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the schedule to delete."
+              }
+            ]
+          },
+          "docs": "Removes a schedule from a bulk sync.\n\nDeleting a schedule only stops future automatic executions. It does not\ncancel an execution that is already running."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

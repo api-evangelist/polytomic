@@ -1,0 +1,195 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_bulkSync.subpackage_bulkSync/schemas API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_bulkSync.subpackage_bulkSync/schemas",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Bulk Sync Schemas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/schemas",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "Optional filters applied to the returned schemas. Supports enabled=true to return only enabled schemas and enabled=false to return only disabled schemas."
+              }
+            ]
+          },
+          "docs": "Lists the schemas (tables, objects) configured for a bulk sync.\n\nThis endpoint returns the schemas that have been added to and configured on this\nspecific bulk sync — not the full set of schemas available from the source\nconnection. To discover what the source connection exposes, use the source\nschemas endpoint for the relevant connection type.\n\nEach schema in the response includes its sync mode, field selections, and any\ncustom configuration applied via\n[`PATCH /api/bulk/syncs/{id}/schemas`](.."
+        },
+        {
+          "info": {
+            "name": "Update Bulk Sync Schemas",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/schemas",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Patches one or more schemas on a bulk sync at once.\n\nOnly schemas explicitly included in the request body are modified; schemas\nomitted from the request are left unchanged. This makes PATCH the right choice\nwhen you want to update a subset of tables without affecting the rest of the\nsync's schema configuration.\n\nWithin each provided schema, omitting `fields` enables all available fields on\nthat schema. To control which fields are enabled, include the `fields` array\nwith explicit `enabled` values"
+        },
+        {
+          "info": {
+            "name": "Get Bulk Sync Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/schemas/:schema_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Source-side schema identifier."
+              }
+            ]
+          },
+          "docs": "Returns the configuration of a single schema on a bulk sync.\n\nReturns the sync mode, field selections, and any other configuration applied to\nthis schema on the bulk sync.\n\nTo modify the configuration, use\n[`PATCH /api/bulk/syncs/{id}/schemas`](../../../../../../api-reference/bulk-sync/schemas/patch)\nfor a partial update across multiple schemas, or\n[`PUT /api/bulk/syncs/{id}/schemas/{schema_id}`](../../../../../../api-reference/bulk-sync/schemas/update)\nto fully replace this schema's configurati"
+        },
+        {
+          "info": {
+            "name": "Update Bulk Sync Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/schemas/:schema_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Source-side schema identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces the configuration of a single schema on a bulk sync.\n\nThis is a full replacement: every field in the request body is written to the\nschema, and any field you omit is cleared or reset to its default. Fetch the\ncurrent configuration with\n[`GET /api/bulk/syncs/{id}/schemas/{schema_id}`](../../../../../../api-reference/bulk-sync/schemas/get)\nfirst if you want to preserve existing settings while changing only a subset.\n\nOmitting `fields` enables all available fields on the schema. To control"
+        },
+        {
+          "info": {
+            "name": "Cancel Bulk Sync Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/schemas/:schema_id/cancel",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The bulk sync ID."
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "The schema ID to cancel for the bulk sync."
+              }
+            ]
+          },
+          "docs": "Requests cancellation of any running executions for a specific schema on a bulk sync.\n\nCancellation is asynchronous. A successful response means the cancellation\nsignal for this schema has been queued; the schema's in-flight work continues\nuntil the signal is processed. Poll\n`GET /api/bulk/syncs/{id}/schemas/{schema_id}` and the parent execution via\n`GET /api/bulk/syncs/{id}/status` to confirm the schema has reached a terminal\nstate."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync subpackage_identity API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_identity",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/me",
+            "headers": [
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns information about the authenticated caller and, if applicable, the organization they are scoped to.\n\nUse this endpoint to confirm which kind of credential is being used before\ncalling endpoints with stricter authorization rules.\n\nFor user-scoped credentials, the response includes the resolved user and\norganization details. For non-user keys, the response identifies the key class\nwith the corresponding boolean flags instead of impersonating a user.\n\nThis endpoint is especially useful when"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

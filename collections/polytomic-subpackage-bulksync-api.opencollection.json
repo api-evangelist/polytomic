@@ -1,0 +1,357 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_bulkSync API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_bulkSync",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Bulk Syncs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only active (true) or only paused (false) syncs. Omit to return both."
+              }
+            ]
+          },
+          "docs": "Lists bulk syncs in the caller's organization.\n\nResults are ordered by `updated_at` descending, with `id` as a tiebreaker for\nsyncs modified at the same instant. Pagination uses an opaque\n`pagination.next_page_token` returned in the response; pass it back as the\n`page_token` query parameter to fetch the next page. The `limit` parameter is\noptional, and the default and maximum page size is 50 syncs.\n\n> 📘 To retrieve a specific sync, use\n> [`GET /api/bulk/syncs/{id}`](../../../api-reference/bulk-"
+        },
+        {
+          "info": {
+            "name": "Create Bulk Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new bulk sync.\n\nBulk syncs are used for the ELT pattern (Extract, Load, and Transform), where you want to sync un-transformed data to your data warehouses, databases, or cloud storage buckets like S3.\n\nAll of the functionality described in [the product\ndocumentation](https://docs.polytomic.com/docs/bulk-syncs) is configurable via\nthe API.\n\nSample code examples:\n\n- [Bulk sync (ELT) from Salesforce to S3](../../../guides/code-examples/bulk-sync-elt-from-salesforce-to-s-3)\n- [Bulk sync (E"
+        },
+        {
+          "info": {
+            "name": "Get Bulk Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "refresh_schemas",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a bulk sync by ID.\n\nThe response includes the sync's top-level configuration — source, destination,\nschedules, and discovery settings.\n\n- To check whether the sync is running and see the most-recent execution result,\n  use [`GET /api/bulk/syncs/{id}/status`](../../../../api-reference/bulk-sync/get-status).\n- To inspect which schemas are selected and how they are configured, use\n  [`GET /api/bulk/syncs/{id}/schemas`](../../../../api-reference/bulk-sync/schemas/list)."
+        },
+        {
+          "info": {
+            "name": "Update Bulk Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing bulk sync's top-level configuration.\n\nUpdating a bulk sync is a **full replacement** of the sync's top-level\nconfiguration. Every field in the request body is written to the sync; any\nfield you omit is cleared or reset to its default value.\n\nTo make a partial change — for example, toggling `active` or swapping a\nschedule — fetch the current sync with\n[`GET /api/bulk/syncs/{id}`](../../../../api-reference/bulk-sync/get),\nmodify the fields you want to change, and send the compl"
+        },
+        {
+          "info": {
+            "name": "Delete Bulk Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "refresh_schemas",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes a bulk sync, cancelling any running executions.\n\nAny execution that is currently running is cancelled before the sync record is\nremoved.\n\n> 🚧 All associated schedules, schema configurations, and execution history are\n> deleted along with the sync."
+        },
+        {
+          "info": {
+            "name": "Activate Bulk Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/activate",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets whether a bulk sync is active.\n\nOnly active syncs are eligible to execute on their configured schedule.\nDeactivating a sync prevents future scheduled runs and requests cancellation of\nany execution that is currently in progress.\n\n> 📘 To start or stop a running execution directly, use\n> [`POST /api/bulk/syncs/{id}/executions`](../../../../../api-reference/bulk-sync/start)\n> or\n> [`POST /api/bulk/syncs/{id}/cancel`](../../../../../api-reference/bulk-sync/cancel)."
+        },
+        {
+          "info": {
+            "name": "Cancel Bulk Sync",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/cancel",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The active execution of this bulk sync ID will be cancelled."
+              }
+            ]
+          },
+          "docs": "Requests cancellation of any running executions on a bulk sync.\n\nCancellation is asynchronous. A successful response means the cancellation\nsignal has been queued; the running execution continues until the signal is\nprocessed. Poll `GET /api/bulk/syncs/{id}/status` until the current execution\nreaches a terminal state (`completed`, `canceled`, or `failed`) to confirm\ncancellation has taken effect."
+        },
+        {
+          "info": {
+            "name": "Start Bulk Sync Execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/executions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Starts a new execution of a bulk sync.\n\nThis endpoint returns the execution record immediately after the run is queued\nor started. Use the execution ID with the bulk-sync execution endpoints if you\nneed to monitor progress in detail.\n\n## Execution modes\n\n- Set `test=true` to validate the sync without writing to the destination.\n- Use `resync_mode` for destructive or full-refresh style reruns.\n- `test` and `resync_mode` are mutually exclusive.\n\nThe legacy `resync` boolean is no longer accepted on"
+        },
+        {
+          "info": {
+            "name": "Get Bulk Sync Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/bulk/syncs/:id/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the bulk sync."
+              }
+            ]
+          },
+          "docs": "Returns the current status of a bulk sync.\n\nThe response includes the sync's current active/inactive state together with\ninformation about the most recent execution — its status, start time, and any\nerrors — making this endpoint well-suited for health checks and monitoring\ndashboards.\n\nFor the complete execution history, use\n[`GET /api/bulk/syncs/{id}/executions`](../../../../../api-reference/bulk-sync/executions/list).\nFor the full details of a specific run, including per-schema breakdowns, use"
+        },
+        {
+          "info": {
+            "name": "Get Bulk Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/bulksync/source",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the connection."
+              },
+              {
+                "name": "include_fields",
+                "value": "",
+                "type": "query",
+                "description": "When true, include per-schema field lists in the response. Set to false for a smaller payload when field details are not needed."
+              }
+            ]
+          },
+          "docs": "Lists the schemas (tables or objects) available on a connection for use as a bulk sync source, optionally including per-schema field details.\n\nThe response reflects what the\nconnection currently has cached; if the upstream source has changed, trigger\na refresh first with\n[`POST /api/connections/{id}/schemas/refresh`](../../../../../api-reference/schemas/refresh).\n\nThese are the schemas available for selection, not the schemas already\nconfigured on any particular sync. To inspect schemas on a run"
+        },
+        {
+          "info": {
+            "name": "Get Bulk Destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.polytomic.com/api/connections/:id/bulksync/target",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Polytomic-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Describes the destination configuration schema a connection accepts when used as a bulk sync destination.\n\nThe response is a JSON Schema object describing the shape of the\n`destination_configuration` field you must supply when\n[creating](../../../../../api-reference/bulk-sync/create) or\n[updating](../../../../../api-reference/bulk-sync/update) a bulk sync that uses this\nconnection as its destination. Required fields vary by connection type.\n\n> 📘 Fetch this endpoint once per connection type rath"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

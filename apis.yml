@@ -22,6 +22,12 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/polytomic.
 tags:
   - Data Integration
   - Reverse ETL
+  - Unified-API
+  - ELT
+  - Data Sync
+tags_raw:
+  - Data Integration
+  - Reverse ETL
   - Unified API
   - ELT
   - Data Sync
@@ -103,7 +109,8 @@ apis:
     The subpackage_connections API from Polytomic — 12 operation(s) for subpackage_connections.
   humanURL: https://www.polytomic.com/
   baseURL: https://app.polytomic.com
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_connections
   properties:
   - type: OpenAPI
@@ -119,7 +126,8 @@ apis:
   description: The subpackage_entities API from Polytomic — 2 operation(s) for subpackage_entities.
   humanURL: https://www.polytomic.com/
   baseURL: https://app.polytomic.com
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_entities
   properties:
   - type: OpenAPI
@@ -135,7 +143,8 @@ apis:
   description: The subpackage_events API from Polytomic — 2 operation(s) for subpackage_events.
   humanURL: https://www.polytomic.com/
   baseURL: https://app.polytomic.com
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_events
   properties:
   - type: OpenAPI
@@ -151,7 +160,8 @@ apis:
   description: The subpackage_identity API from Polytomic — 1 operation(s) for subpackage_identity.
   humanURL: https://www.polytomic.com/
   baseURL: https://app.polytomic.com
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_identity
   properties:
   - type: OpenAPI
@@ -167,7 +177,8 @@ apis:
   description: The subpackage_jobs API from Polytomic — 1 operation(s) for subpackage_jobs.
   humanURL: https://www.polytomic.com/
   baseURL: https://app.polytomic.com
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_jobs
   properties:
   - type: OpenAPI
@@ -183,7 +194,8 @@ apis:
   description: The subpackage_models API from Polytomic — 6 operation(s) for subpackage_models.
   humanURL: https://www.polytomic.com/
   baseURL: https://app.polytomic.com
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_models
   properties:
   - type: OpenAPI
@@ -250,7 +262,8 @@ apis:
     The subpackage_notifications API from Polytomic — 1 operation(s) for subpackage_notifications.
   humanURL: https://www.polytomic.com/
   baseURL: https://app.polytomic.com
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_notifications
   properties:
   - type: OpenAPI
@@ -267,7 +280,8 @@ apis:
     The subpackage_organization API from Polytomic — 3 operation(s) for subpackage_organization.
   humanURL: https://www.polytomic.com/
   baseURL: https://app.polytomic.com
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_organization
   properties:
   - type: OpenAPI
@@ -335,7 +349,8 @@ apis:
   description: The subpackage_schemas API from Polytomic — 7 operation(s) for subpackage_schemas.
   humanURL: https://www.polytomic.com/
   baseURL: https://app.polytomic.com
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_schemas
   properties:
   - type: OpenAPI
@@ -351,7 +366,8 @@ apis:
   description: The subpackage_users API from Polytomic — 5 operation(s) for subpackage_users.
   humanURL: https://www.polytomic.com/
   baseURL: https://app.polytomic.com
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_users
   properties:
   - type: OpenAPI
@@ -367,7 +383,8 @@ apis:
   description: The subpackage_webhooks API from Polytomic — 4 operation(s) for subpackage_webhooks.
   humanURL: https://www.polytomic.com/
   baseURL: https://app.polytomic.com
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_webhooks
   properties:
   - type: OpenAPI

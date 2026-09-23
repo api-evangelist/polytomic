@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference subpackage_bulkSync subpackage_entities API
+  title: Reference Subpackage Entities API
   version: 1.0.0
 servers:
 - url: https://app.polytomic.com
@@ -11,7 +11,77 @@ paths:
     get:
       operationId: get
       summary: Get Entity
-      description: "Returns a resolved entity by ID.\n\nLooks up a UUID within the caller's current organization and returns the\nresource type plus enough context to fetch the canonical resource.\n\nThis endpoint is useful when you have an execution, sync, model, connection,\norganization, or user UUID and need to determine what it refers to.\n\nThe response always includes:\n\n- `id`: the UUID that was resolved.\n- `type`: the resolved entity type.\n- `canonical_path`: the canonical REST path for the resolved resource.\n\nThe response may also include:\n\n- `relationships`: parent resources needed to address nested resources.\n- `context`: lightweight additional context, such as bulk sync `schema_ids`.\n\nFor the normal user-scoped endpoint, `organization_id` is omitted from the\nresponse.\n\nSupported `type` values currently include:\n\n- `organization`\n- `user`\n- `connection`\n- `model`\n- `sync`\n- `sync_execution`\n- `bulk_sync`\n- `bulk_sync_execution`\n\nExamples:\n\n- A model sync execution resolves to a `sync_execution` and includes a `sync`\n  relationship.\n- A bulk sync execution resolves to a `bulk_sync_execution`, includes a\n  `bulk_sync` relationship, and may include `context.schema_ids`.\n\nIf the UUID does not exist, or exists outside the caller's scoped\norganization, the endpoint returns `404`."
+      description: 'Returns a resolved entity by ID.
+
+
+        Looks up a UUID within the caller''s current organization and returns the
+
+        resource type plus enough context to fetch the canonical resource.
+
+
+        This endpoint is useful when you have an execution, sync, model, connection,
+
+        organization, or user UUID and need to determine what it refers to.
+
+
+        The response always includes:
+
+
+        - `id`: the UUID that was resolved.
+
+        - `type`: the resolved entity type.
+
+        - `canonical_path`: the canonical REST path for the resolved resource.
+
+
+        The response may also include:
+
+
+        - `relationships`: parent resources needed to address nested resources.
+
+        - `context`: lightweight additional context, such as bulk sync `schema_ids`.
+
+
+        For the normal user-scoped endpoint, `organization_id` is omitted from the
+
+        response.
+
+
+        Supported `type` values currently include:
+
+
+        - `organization`
+
+        - `user`
+
+        - `connection`
+
+        - `model`
+
+        - `sync`
+
+        - `sync_execution`
+
+        - `bulk_sync`
+
+        - `bulk_sync_execution`
+
+
+        Examples:
+
+
+        - A model sync execution resolves to a `sync_execution` and includes a `sync`
+
+        relationship.
+
+        - A bulk sync execution resolves to a `bulk_sync_execution`, includes a
+
+        `bulk_sync` relationship, and may include `context.schema_ids`.
+
+
+        If the UUID does not exist, or exists outside the caller''s scoped
+
+        organization, the endpoint returns `404`.'
       tags:
       - subpackage_entities
       parameters:
@@ -68,7 +138,74 @@ paths:
     get:
       operationId: get-for-partner
       summary: Get Partner Entity
-      description: "Returns a resolved entity by ID within a partner organization scope.\n\nLooks up a UUID across organizations using partner authentication and returns\nthe resource type plus enough context to fetch the canonical resource.\n\nThis endpoint is intended for cross-organization partner workflows where the\ncaller has an arbitrary UUID and needs to discover both the resource type and\nthe organization it belongs to.\n\nThe response always includes:\n\n- `id`: the UUID that was resolved.\n- `type`: the resolved entity type.\n- `canonical_path`: the canonical REST path for the resolved resource.\n- `organization_id`: the organization that owns the resolved resource.\n\nThe response may also include:\n\n- `relationships`: parent resources needed to address nested resources.\n- `context`: lightweight additional context, such as bulk sync `schema_ids`.\n\nSupported `type` values currently include:\n\n- `organization`\n- `user`\n- `connection`\n- `model`\n- `sync`\n- `sync_execution`\n- `bulk_sync`\n- `bulk_sync_execution`\n\nExamples:\n\n- A model sync execution resolves to a `sync_execution` and includes a `sync`\n  relationship.\n- A bulk sync execution resolves to a `bulk_sync_execution`, includes a\n  `bulk_sync` relationship, and may include `context.schema_ids`.\n\nIf the UUID does not exist, the endpoint returns `404`."
+      description: 'Returns a resolved entity by ID within a partner organization scope.
+
+
+        Looks up a UUID across organizations using partner authentication and returns
+
+        the resource type plus enough context to fetch the canonical resource.
+
+
+        This endpoint is intended for cross-organization partner workflows where the
+
+        caller has an arbitrary UUID and needs to discover both the resource type and
+
+        the organization it belongs to.
+
+
+        The response always includes:
+
+
+        - `id`: the UUID that was resolved.
+
+        - `type`: the resolved entity type.
+
+        - `canonical_path`: the canonical REST path for the resolved resource.
+
+        - `organization_id`: the organization that owns the resolved resource.
+
+
+        The response may also include:
+
+
+        - `relationships`: parent resources needed to address nested resources.
+
+        - `context`: lightweight additional context, such as bulk sync `schema_ids`.
+
+
+        Supported `type` values currently include:
+
+
+        - `organization`
+
+        - `user`
+
+        - `connection`
+
+        - `model`
+
+        - `sync`
+
+        - `sync_execution`
+
+        - `bulk_sync`
+
+        - `bulk_sync_execution`
+
+
+        Examples:
+
+
+        - A model sync execution resolves to a `sync_execution` and includes a `sync`
+
+        relationship.
+
+        - A bulk sync execution resolves to a `bulk_sync_execution`, includes a
+
+        `bulk_sync` relationship, and may include `context.schema_ids`.
+
+
+        If the UUID does not exist, the endpoint returns `404`.'
       tags:
       - subpackage_entities
       parameters:
@@ -117,6 +254,20 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
     EntityResponse:
       type: object
       properties:
@@ -145,20 +296,6 @@ components:
           type: string
           description: 'Resolved entity type. One of: organization, user, connection, model, sync, sync_execution, bulk_sync, bulk_sync_execution.'
       title: EntityResponse
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
     EntityRelationship:
       type: object
       properties:

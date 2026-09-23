@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference subpackage_bulkSync subpackage_modelSync.subpackage_modelSync/targets API
+  title: Reference Subpackage Model Sync.subpackage Model…
   version: 1.0.0
 servers:
 - url: https://app.polytomic.com
@@ -23,14 +23,14 @@ paths:
 
         > 📘 To list available target objects and their identifiers, use
 
-        > [`GET /api/connections/{id}/modelsync/targetobjects`](../../../../../../api-reference/model-sync/targets/list).
+        > `GET /api/connections/{id}/modelsync/targetobjects`.
 
 
         Fields returned here reflect the connection''s current cached state. If the
 
         upstream object schema has changed, trigger a schema refresh with
 
-        [`POST /api/connections/{id}/schemas/refresh`](../../../../../../api-reference/schemas/refresh)
+        `POST /api/connections/{id}/schemas/refresh`
 
         before calling this endpoint.'
       tags:
@@ -107,11 +107,11 @@ paths:
 
         Target creation properties are all string values; the `enum` flag indicates if
 
-        the property has a fixed set of valid values. When `enum` is `true`, the [Target
+        the property has a fixed set of valid values. When `enum` is `true`, the Target
 
         Creation Property
 
-        Values](../../../../../api-reference/model-sync/targets/get-create-property)
+        Values
 
         endpoint can be used to retrieve the valid values.
 
@@ -179,7 +179,64 @@ paths:
     get:
       operationId: get-create-property
       summary: Get Target Creation Property Values
-      description: "Returns the valid values for a target-creation property on a connection that supports creating new target objects.\n\nConnections which support creating new sync target objects (destinations) will\nreturn `target_creation` with their [target object list](../../../../../../../api-reference/model-sync/targets/list). This endpoint\nwill return possible values for properties where `enum` is `true`.\n\nIf the connection does not support creating new target objects, an HTTP 404 will\nbe returned.\n\nThe `values` array lists the valid options (and labels) for the property. Each\nmember of the `values` array has a `label` and `value`. For exaample,\n\n```json\n{\n  \"data\": [\n    {\n      \"id\": \"account\",\n      \"title\": \"Account ID\",\n      \"enum\": true,\n      \"values\": [\n        {\n          \"value\": \"1234567::urn:li:organization:987654\",\n          \"label\": \"Polytomic Inc. (1234567)\"\n        }\n      ]\n    }\n  ]\n}\n```\n\nThe `value` for the selected option should be passed when [creating a\nsync](../../../../../../../api-reference/model-sync/create)."
+      description: 'Returns the valid values for a target-creation property on a connection that supports creating new target objects.
+
+
+        Connections which support creating new sync target objects (destinations) will
+
+        return `target_creation` with their target object list. This endpoint
+
+        will return possible values for properties where `enum` is `true`.
+
+
+        If the connection does not support creating new target objects, an HTTP 404 will
+
+        be returned.
+
+
+        The `values` array lists the valid options (and labels) for the property. Each
+
+        member of the `values` array has a `label` and `value`. For exaample,
+
+
+        ```json
+
+        {
+
+        "data": [
+
+        {
+
+        "id": "account",
+
+        "title": "Account ID",
+
+        "enum": true,
+
+        "values": [
+
+        {
+
+        "value": "1234567::urn:li:organization:987654",
+
+        "label": "Polytomic Inc. (1234567)"
+
+        }
+
+        ]
+
+        }
+
+        ]
+
+        }
+
+        ```
+
+
+        The `value` for the selected option should be passed when creating a
+
+        sync.'
       tags:
       - subpackage_modelSync.subpackage_modelSync/targets
       parameters:
@@ -238,6 +295,22 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
+    TargetPropertyValuesEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TargetPropertyValues'
+      title: TargetPropertyValuesEnvelope
+    UtilEnumValue:
+      type: object
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+        value:
+          type: string
+      title: UtilEnumValue
     TargetObject:
       type: object
       properties:
@@ -253,6 +326,43 @@ components:
           type: string
           description: The name of the target object.
       title: TargetObject
+    SupportedMode:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ModelsyncSyncTargetMode'
+        requires_identity:
+          type: boolean
+          description: True if the sync mode requires an identity field mapping.
+        supports_per_field_mode:
+          type: boolean
+          description: True if the target supports per-field sync modes.
+        supports_target_filters:
+          type: boolean
+          description: True if the sync mode supports target filters.
+      title: SupportedMode
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    IdentityFunction:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+      title: IdentityFunction
     TargetField:
       type: object
       properties:
@@ -305,6 +415,39 @@ components:
             $ref: '#/components/schemas/UtilEnumValue'
           description: Valid values for the target property.
       title: TargetPropertyValues
+    Mode:
+      type: object
+      properties:
+        description:
+          type: string
+        label:
+          type: string
+        mode:
+          type: string
+        requires_identity:
+          type: boolean
+        supports_field_sync_mode:
+          type: boolean
+        supports_target_filters:
+          type: boolean
+      title: Mode
+    ModelsyncSyncTargetMode:
+      type: string
+      enum:
+      - create
+      - update
+      - updateOrCreate
+      - replace
+      - append
+      - remove
+      - snapshot
+      title: ModelsyncSyncTargetMode
+    TargetResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TargetResponse'
+      title: TargetResponseEnvelope
     TargetResponse:
       type: object
       properties:
@@ -330,32 +473,6 @@ components:
           type: string
           format: date-time
       title: TargetResponse
-    UtilEnumValue:
-      type: object
-      properties:
-        label:
-          type:
-          - string
-          - 'null'
-        value:
-          type: string
-      title: UtilEnumValue
-    Mode:
-      type: object
-      properties:
-        description:
-          type: string
-        label:
-          type: string
-        mode:
-          type: string
-        requires_identity:
-          type: boolean
-        supports_field_sync_mode:
-          type: boolean
-        supports_target_filters:
-          type: boolean
-      title: Mode
     TargetCreator:
       type: object
       properties:
@@ -368,18 +485,6 @@ components:
           type: boolean
           description: True if the connection supports target creation.
       title: TargetCreator
-    TargetObjectsResponseEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TargetObject'
-        target_creation:
-          $ref: '#/components/schemas/TargetCreator'
-      title: TargetObjectsResponseEnvelope
     SyncDestinationProperties:
       type: object
       properties:
@@ -410,6 +515,18 @@ components:
         use_field_names_as_labels:
           type: boolean
       title: SyncDestinationProperties
+    TargetObjectsResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TargetObject'
+        target_creation:
+          $ref: '#/components/schemas/TargetCreator'
+      title: TargetObjectsResponseEnvelope
     TargetCreateInput:
       type: object
       properties:
@@ -423,66 +540,6 @@ components:
           type: string
           description: A human readable title for the target property.
       title: TargetCreateInput
-    TargetResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/TargetResponse'
-      title: TargetResponseEnvelope
-    ModelsyncSyncTargetMode:
-      type: string
-      enum:
-      - create
-      - update
-      - updateOrCreate
-      - replace
-      - append
-      - remove
-      - snapshot
-      title: ModelsyncSyncTargetMode
-    IdentityFunction:
-      type: object
-      properties:
-        id:
-          type: string
-        label:
-          type: string
-      title: IdentityFunction
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
-    TargetPropertyValuesEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/TargetPropertyValues'
-      title: TargetPropertyValuesEnvelope
-    SupportedMode:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ModelsyncSyncTargetMode'
-        requires_identity:
-          type: boolean
-          description: True if the sync mode requires an identity field mapping.
-        supports_per_field_mode:
-          type: boolean
-          description: True if the target supports per-field sync modes.
-        supports_target_filters:
-          type: boolean
-          description: True if the sync mode supports target filters.
-      title: SupportedMode
   securitySchemes:
     bearerUserAPIKey:
       type: http

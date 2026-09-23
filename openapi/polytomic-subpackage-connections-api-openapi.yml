@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference subpackage_bulkSync subpackage_connections API
+  title: Reference Subpackage Connections API
   version: 1.0.0
 servers:
 - url: https://app.polytomic.com
@@ -182,14 +182,14 @@ paths:
 
         exposes, consult the parameter schema returned by
 
-        [`GET /api/connection_types`](../../api-reference/connections/get-types).
+        `GET /api/connection_types`.
 
 
         To inspect the data objects available on a specific connection, use
 
-        [`POST /api/connections/{id}/schemas/refresh`](../../api-reference/schemas/refresh)
+        `POST /api/connections/{id}/schemas/refresh`
 
-        followed by [`GET /api/connections/{id}/schemas/status`](../../api-reference/schemas/get-status).'
+        followed by `GET /api/connections/{id}/schemas/status`.'
       tags:
       - subpackage_connections
       parameters:
@@ -223,13 +223,13 @@ paths:
       description: 'Creates a new connection of the specified type.
 
 
-        Use [`GET /api/connection_types`](../../api-reference/connections/get-types) to retrieve the
+        Use `GET /api/connection_types` to retrieve the
 
         list of available types and their parameter schemas. The `configuration`
 
-        object is type-specific; consult the [integration
+        object is type-specific; consult the integration
 
-        guides](../../guides/configuring-your-connections/overview)
+        guides
 
         for the required and optional fields for each type.
 
@@ -305,7 +305,7 @@ paths:
         See also:
 
 
-        - [Embedding authentication](../../../guides/embedding-authentication), a guide to using Polytomic Connect.'
+        - Embedding authentication, a guide to using Polytomic Connect.'
       tags:
       - subpackage_connections
       parameters:
@@ -423,11 +423,11 @@ paths:
 
         To inspect the schemas available on this connection, trigger a refresh with
 
-        [`POST /api/connections/{id}/schemas/refresh`](../../../api-reference/schemas/refresh) and
+        `POST /api/connections/{id}/schemas/refresh` and
 
         track progress via
 
-        [`GET /api/connections/{id}/schemas/status`](../../../api-reference/schemas/get-status).'
+        `GET /api/connections/{id}/schemas/status`.'
       tags:
       - subpackage_connections
       parameters:
@@ -479,7 +479,7 @@ paths:
 
         the current connection with
 
-        [`GET /api/connections/{id}`](../../../api-reference/connections/get), apply your edits, and send the
+        `GET /api/connections/{id}`, apply your edits, and send the
 
         complete object back.
 
@@ -651,7 +651,7 @@ paths:
 
         For new setup flows, prefer
 
-        [`POST /api/connection_types/{type}/parameter_values`](../../../../api-reference/connections/get-type-parameter-values),
+        `POST /api/connection_types/{type}/parameter_values`,
 
         which lets you resolve completions before the connection has been created.'
       tags:
@@ -697,7 +697,48 @@ paths:
     post:
       operationId: execute-proxy
       summary: Execute Connection Proxy
-      description: "Proxies an HTTP request to a connection's underlying API using the connection's stored credentials, subject to per-connection rate limits and size caps.\n\nThis endpoint is intended for controlled passthrough use, not as a general\nreplacement for Polytomic's modeled endpoints. The request is executed with the\nconnection's stored credentials and inherited base URL, headers, and query\nparameters.\n\nBefore building requests dynamically, call\n[`GET /api/connections/{id}/proxy/info`](../../../../api-reference/connections/get-proxy-info)\nto inspect the inherited base URL, blocked headers, accepted body types, and\nsize and rate limits.\n\n## Important behavior\n\n- `request.path` must be relative and start with `/`.\n- Use either `request.query` or `request.rawQuery`, not both.\n- Caller-supplied headers are merged with inherited headers, but inherited auth\n  headers cannot be overridden.\n- The proxy strips a fixed set of request and response headers for safety.\n- Response bodies larger than the configured maximum are truncated, and\n  `truncated` is set to `true`.\n\nThe response includes `proxyCallId`, which you can use to correlate the call\nwith audit logs."
+      description: 'Proxies an HTTP request to a connection''s underlying API using the connection''s stored credentials, subject to per-connection rate limits and size caps.
+
+
+        This endpoint is intended for controlled passthrough use, not as a general
+
+        replacement for Polytomic''s modeled endpoints. The request is executed with the
+
+        connection''s stored credentials and inherited base URL, headers, and query
+
+        parameters.
+
+
+        Before building requests dynamically, call
+
+        `GET /api/connections/{id}/proxy/info`
+
+        to inspect the inherited base URL, blocked headers, accepted body types, and
+
+        size and rate limits.
+
+
+        ## Important behavior
+
+
+        - `request.path` must be relative and start with `/`.
+
+        - Use either `request.query` or `request.rawQuery`, not both.
+
+        - Caller-supplied headers are merged with inherited headers, but inherited auth
+
+        headers cannot be overridden.
+
+        - The proxy strips a fixed set of request and response headers for safety.
+
+        - Response bodies larger than the configured maximum are truncated, and
+
+        `truncated` is set to `true`.
+
+
+        The response includes `proxyCallId`, which you can use to correlate the call
+
+        with audit logs.'
       tags:
       - subpackage_connections
       parameters:
@@ -788,7 +829,7 @@ paths:
 
         Use this endpoint before calling
 
-        [`POST /api/connections/{id}/proxy`](../../../../../api-reference/connections/execute-proxy)
+        `POST /api/connections/{id}/proxy`
 
         when you need to build requests programmatically. The response shows:
 
@@ -883,7 +924,7 @@ paths:
 
         Creating a new shared copy is a separate operation. Use
 
-        [`POST /api/organizations/{org_id}/connections/{connection_id}/share`](../../../../api-reference/connections/create-shared-connection)
+        `POST /api/organizations/{org_id}/connections/{connection_id}/share`
 
         for the v5 partner-scoped flow.'
       tags:
@@ -1080,31 +1121,94 @@ paths:
               $ref: '#/components/schemas/PartnerCreateSharedConnectionRequestSchema'
 components:
   schemas:
-    ConnectionResponseEnvelope:
+    ExecuteConnectionProxyEnvelope:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/ConnectionResponseSchema'
-      title: ConnectionResponseEnvelope
-    TestConnectionRequest:
+          $ref: '#/components/schemas/ConnectionProxyResponse'
+      title: ExecuteConnectionProxyEnvelope
+    ConnectionParameterValuesResp:
       type: object
       properties:
-        configuration:
+        allows_creation:
+          type: boolean
+        values:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ConnectionParameterValue'
+      title: ConnectionParameterValuesResp
+    ConnectionForm:
+      type: object
+      properties:
+        jsonschema:
+          description: Any type
+        uischema:
+          description: Any type
+      title: ConnectionForm
+    CreateSharedConnectionResponseSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+      title: CreateSharedConnectionResponseSchema
+    ConnectionParameterValue:
+      type: object
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+        value:
+          description: Any type
+      title: ConnectionParameterValue
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
           type: object
           additionalProperties:
             description: Any type
-          description: Connection configuration to test.
-        connection_id:
-          type: string
-          format: uuid
-          description: Optional existing connection ID to use as a base for testing. The provided configuration will be merged over the stored configuration for this connection before testing.
-        type:
-          type: string
-          description: The type of connection to test.
-      required:
-      - configuration
-      - type
-      title: TestConnectionRequest
+        status:
+          type: integer
+      title: ApiError
+    ConnectionProxyStats:
+      type: object
+      properties:
+        callsLast24h:
+          type: integer
+          description: Total backend API calls made through this connection (including non-proxy calls) over the last 24 hours.
+        lastProxyCallAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp of the most recent proxy call, or null if none have occurred.
+        proxy2xxLast24h:
+          type: integer
+          description: Proxy calls that returned a 2xx status in the last 24 hours.
+        proxy4xxLast24h:
+          type: integer
+          description: Proxy calls that returned a 4xx status in the last 24 hours.
+        proxy5xxLast24h:
+          type: integer
+          description: Proxy calls that returned a 5xx status in the last 24 hours.
+        proxyCallsLast24h:
+          type: integer
+          description: Proxy calls made in the last 24 hours.
+      title: ConnectionProxyStats
+    GetConnectionProxyInfoEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ConnectionProxyInfoResponse'
+      title: GetConnectionProxyInfoEnvelope
     ConnectionProxyCall:
       type: object
       properties:
@@ -1133,88 +1237,20 @@ components:
       - method
       - path
       title: ConnectionProxyCall
-    JsonschemaDefinitions:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/JsonschemaSchema'
-      title: JsonschemaDefinitions
-    ExecuteConnectionProxyRequest:
+    BackendOAuthPrompt:
       type: object
       properties:
-        request:
-          $ref: '#/components/schemas/ConnectionProxyCall'
-      required:
-      - request
-      title: ExecuteConnectionProxyRequest
-    ConnectionProxyStats:
-      type: object
-      properties:
-        callsLast24h:
-          type: integer
-          description: Total backend API calls made through this connection (including non-proxy calls) over the last 24 hours.
-        lastProxyCallAt:
+        key:
           type:
           - string
           - 'null'
-          format: date-time
-          description: Timestamp of the most recent proxy call, or null if none have occurred.
-        proxy2xxLast24h:
-          type: integer
-          description: Proxy calls that returned a 2xx status in the last 24 hours.
-        proxy4xxLast24h:
-          type: integer
-          description: Proxy calls that returned a 4xx status in the last 24 hours.
-        proxy5xxLast24h:
-          type: integer
-          description: Proxy calls that returned a 5xx status in the last 24 hours.
-        proxyCallsLast24h:
-          type: integer
-          description: Proxy calls made in the last 24 hours.
-      title: ConnectionProxyStats
-    ConnectionParameterValuesResp:
-      type: object
-      properties:
-        allows_creation:
-          type: boolean
-        values:
+        value:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/ConnectionParameterValue'
-      title: ConnectionParameterValuesResp
-    GetConnectionProxyInfoEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ConnectionProxyInfoResponse'
-      title: GetConnectionProxyInfoEnvelope
-    ConnectionTypeResponseEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ConnectionType'
-      title: ConnectionTypeResponseEnvelope
-    ConnectCardResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ConnectCardResponse'
-      title: ConnectCardResponseEnvelope
-    ConnectionProxyMergeRules:
-      type: object
-      properties:
-        headers:
+        when:
           type: string
-          description: How caller-supplied headers are merged with the connection's inherited headers.
-        query:
-          type: string
-          description: How caller-supplied query parameters are merged with the connection's inherited query parameters.
-      title: ConnectionProxyMergeRules
+      title: BackendOAuthPrompt
     CreateConnectionResponseSchema:
       type: object
       properties:
@@ -1255,104 +1291,6 @@ components:
         type:
           $ref: '#/components/schemas/ConnectionTypeSchema'
       title: CreateConnectionResponseSchema
-    ConnectCardResponse:
-      type: object
-      properties:
-        redirect_url:
-          type: string
-          description: URL to redirect the user to in order to create the new connection.
-        token:
-          type: string
-          description: Opaque single-use token identifying the Connect session.
-      title: ConnectCardResponse
-    OutputActor:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        type:
-          type: string
-      title: OutputActor
-    ConnectionType:
-      type: object
-      properties:
-        capabilities:
-          $ref: '#/components/schemas/BackendConnectionCapabilities'
-        configurationForm:
-          $ref: '#/components/schemas/ConnectionForm'
-        envConfig:
-          type: object
-          additionalProperties:
-            description: Any type
-        id:
-          type: string
-        initialConfiguration:
-          type: object
-          additionalProperties:
-            description: Any type
-        logo_url:
-          type: string
-        name:
-          type: string
-        oauth_prompt:
-          $ref: '#/components/schemas/BackendOAuthPrompt'
-        use_oauth:
-          type: boolean
-      required:
-      - capabilities
-      title: ConnectionType
-    ConnectionParameterValue:
-      type: object
-      properties:
-        label:
-          type:
-          - string
-          - 'null'
-        value:
-          description: Any type
-      title: ConnectionParameterValue
-    GetConnectionTypeParameterValuesRequestSchema:
-      type: object
-      properties:
-        connection_id:
-          type: string
-          format: uuid
-        field:
-          type: string
-        parameters:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            description: Any type
-        query:
-          type: string
-      required:
-      - field
-      - parameters
-      title: GetConnectionTypeParameterValuesRequestSchema
-    ConnectionProxyInfoResponse:
-      type: object
-      properties:
-        backendType:
-          type: string
-          description: Connection backend identifier (e.g. hubspot, salesforce).
-        connectionId:
-          type: string
-          format: uuid
-          description: Unique identifier of the connection the proxy contract applies to.
-        inheritedBase:
-          $ref: '#/components/schemas/ConnectionProxyInheritedBase'
-        mergeRules:
-          $ref: '#/components/schemas/ConnectionProxyMergeRules'
-        requestContract:
-          $ref: '#/components/schemas/ConnectionProxyContract'
-        stats:
-          $ref: '#/components/schemas/ConnectionProxyStats'
-      title: ConnectionProxyInfoResponse
     ConnectionProxyContract:
       type: object
       properties:
@@ -1417,123 +1355,11 @@ components:
           type: integer
           description: Per-request timeout in milliseconds.
       title: ConnectionProxyContract
-    CreateSharedConnectionResponseSchema:
+    JsonschemaDefinitions:
       type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-      title: CreateSharedConnectionResponseSchema
-    BackendOAuthPrompt:
-      type: object
-      properties:
-        key:
-          type:
-          - string
-          - 'null'
-        value:
-          type:
-          - string
-          - 'null'
-        when:
-          type: string
-      title: BackendOAuthPrompt
-    PartnerCreateSharedConnectionRequestSchema:
-      type: object
-      properties:
-        child_organization_id:
-          type: string
-          format: uuid
-          description: Unique identifier of the child organization that should receive the shared connection.
-        name:
-          type: string
-          description: Optional name for the shared copy. Defaults to the parent connection name.
-      required:
-      - child_organization_id
-      title: PartnerCreateSharedConnectionRequestSchema
-    BackendConnectionCapabilities:
-      type: object
-      properties:
-        destination:
-          type: boolean
-        enrichment:
-          type: boolean
-        orchestration:
-          type: boolean
-        source:
-          type: boolean
-      required:
-      - destination
-      - enrichment
-      - orchestration
-      - source
-      title: BackendConnectionCapabilities
-    ConnectionParameterValuesResponseEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/ConnectionParameterValuesResp'
-      title: ConnectionParameterValuesResponseEnvelope
-    CreateSharedConnectionResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CreateSharedConnectionResponseSchema'
-      title: CreateSharedConnectionResponseEnvelope
-    ConnectionResponseSchema:
-      type: object
-      properties:
-        api_calls_last_24_hours:
-          type:
-          - integer
-          - 'null'
-          description: API calls made to service in the last 24h (supported integrations only).
-        configuration:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            description: Any type
-        created_at:
-          type: string
-          format: date-time
-        created_by:
-          $ref: '#/components/schemas/OutputActor'
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        organization_id:
-          type: string
-          format: uuid
-        parent_connection_id:
-          type: string
-          format: uuid
-          description: For shared connections, the ID of the parent connection.
-        policies:
-          type: array
-          items:
-            type: string
-            format: uuid
-        saved:
-          type: boolean
-        status:
-          type: string
-        status_error:
-          type: string
-        type:
-          $ref: '#/components/schemas/ConnectionTypeSchema'
-        updated_at:
-          type: string
-          format: date-time
-        updated_by:
-          $ref: '#/components/schemas/OutputActor'
-      title: ConnectionResponseSchema
+      additionalProperties:
+        $ref: '#/components/schemas/JsonschemaSchema'
+      title: JsonschemaDefinitions
     ConnectionProxyResponse:
       type: object
       properties:
@@ -1565,122 +1391,16 @@ components:
           type: boolean
           description: True if the response body was truncated because it exceeded maxResponseBodyBytes.
       title: ConnectionProxyResponse
-    ConnectCardRequest:
-      type: object
-      properties:
-        connection:
-          type: string
-          format: uuid
-          description: The id of an existing connection to update.
-        dark:
-          type: boolean
-          description: Whether to use the dark theme for the Connect modal.
-        name:
-          type: string
-          description: Name of the new connection. Must be unique per organization.
-        organization_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        redirect_url:
-          type: string
-          description: URL to redirect to after connection is created.
-        type:
-          type: string
-          description: Connection type to create.
-        whitelist:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: List of connection types which are allowed to be created. Ignored if type is set.
-      required:
-      - name
-      - redirect_url
-      title: ConnectCardRequest
-    ConnectionProxyInheritedBase:
-      type: object
-      properties:
-        baseUrl:
-          type: string
-          description: Base URL all proxied requests are sent to. Caller-supplied paths are appended to this URL.
-        lockedHeaders:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ConnectionProxyLockedHeader'
-          description: Headers that are always attached to proxied requests. Sensitive values are redacted.
-        lockedQuery:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            description: Any type
-          description: Query parameters that are always attached to proxied requests. Values are redacted.
-      title: ConnectionProxyInheritedBase
-    ExecuteConnectionProxyEnvelope:
+    ConnectionListResponseEnvelope:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/ConnectionProxyResponse'
-      title: ExecuteConnectionProxyEnvelope
-    UpdateConnectionRequestSchema:
-      type: object
-      properties:
-        configuration:
-          type: object
-          additionalProperties:
-            description: Any type
-        healthcheck_interval:
-          type: string
-          description: Override interval for connection health checking.
-        name:
-          type: string
-        organization_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        policies:
           type:
           - array
           - 'null'
           items:
-            type: string
-            format: uuid
-        reconnect:
-          type: boolean
-        type:
-          type: string
-        validate:
-          type: boolean
-          default: true
-          description: Validate connection configuration.
-      required:
-      - configuration
-      - name
-      title: UpdateConnectionRequestSchema
-    CreateConnectionResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CreateConnectionResponseSchema'
-      title: CreateConnectionResponseEnvelope
-    ConnectionForm:
-      type: object
-      properties:
-        jsonschema:
-          description: Any type
-        uischema:
-          description: Any type
-      title: ConnectionForm
-    OrderedMapStringGithubComInvopopJsonschemaSchema:
-      type: object
-      properties: {}
-      title: OrderedMapStringGithubComInvopopJsonschemaSchema
+            $ref: '#/components/schemas/ConnectionResponseSchema'
+      title: ConnectionListResponseEnvelope
     JsonschemaSchema:
       type: object
       properties:
@@ -1829,7 +1549,162 @@ components:
         writeOnly:
           type: boolean
       title: JsonschemaSchema
-    ConnectionListResponseEnvelope:
+    OrderedMapStringGithubComInvopopJsonschemaSchema:
+      type: object
+      properties: {}
+      title: OrderedMapStringGithubComInvopopJsonschemaSchema
+    CreateSharedConnectionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CreateSharedConnectionResponseSchema'
+      title: CreateSharedConnectionResponseEnvelope
+    BackendConnectionCapabilities:
+      type: object
+      properties:
+        destination:
+          type: boolean
+        enrichment:
+          type: boolean
+        orchestration:
+          type: boolean
+        source:
+          type: boolean
+      required:
+      - destination
+      - enrichment
+      - orchestration
+      - source
+      title: BackendConnectionCapabilities
+    ConnectionProxyInheritedBase:
+      type: object
+      properties:
+        baseUrl:
+          type: string
+          description: Base URL all proxied requests are sent to. Caller-supplied paths are appended to this URL.
+        lockedHeaders:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ConnectionProxyLockedHeader'
+          description: Headers that are always attached to proxied requests. Sensitive values are redacted.
+        lockedQuery:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+          description: Query parameters that are always attached to proxied requests. Values are redacted.
+      title: ConnectionProxyInheritedBase
+    OutputActor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        type:
+          type: string
+      title: OutputActor
+    TestConnectionRequest:
+      type: object
+      properties:
+        configuration:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Connection configuration to test.
+        connection_id:
+          type: string
+          format: uuid
+          description: Optional existing connection ID to use as a base for testing. The provided configuration will be merged over the stored configuration for this connection before testing.
+        type:
+          type: string
+          description: The type of connection to test.
+      required:
+      - configuration
+      - type
+      title: TestConnectionRequest
+    ConnectionParameterValuesResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/ConnectionParameterValuesResp'
+      title: ConnectionParameterValuesResponseEnvelope
+    ConnectCardRequest:
+      type: object
+      properties:
+        connection:
+          type: string
+          format: uuid
+          description: The id of an existing connection to update.
+        dark:
+          type: boolean
+          description: Whether to use the dark theme for the Connect modal.
+        name:
+          type: string
+          description: Name of the new connection. Must be unique per organization.
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        redirect_url:
+          type: string
+          description: URL to redirect to after connection is created.
+        type:
+          type: string
+          description: Connection type to create.
+        whitelist:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: List of connection types which are allowed to be created. Ignored if type is set.
+      required:
+      - name
+      - redirect_url
+      title: ConnectCardRequest
+    ConnectionProxyInfoResponse:
+      type: object
+      properties:
+        backendType:
+          type: string
+          description: Connection backend identifier (e.g. hubspot, salesforce).
+        connectionId:
+          type: string
+          format: uuid
+          description: Unique identifier of the connection the proxy contract applies to.
+        inheritedBase:
+          $ref: '#/components/schemas/ConnectionProxyInheritedBase'
+        mergeRules:
+          $ref: '#/components/schemas/ConnectionProxyMergeRules'
+        requestContract:
+          $ref: '#/components/schemas/ConnectionProxyContract'
+        stats:
+          $ref: '#/components/schemas/ConnectionProxyStats'
+      title: ConnectionProxyInfoResponse
+    ConnectionProxyLockedHeader:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Header name.
+        redacted:
+          type: boolean
+          description: True when the header value was redacted before returning it.
+        value:
+          type: string
+          description: Header value. Replaced with [REDACTED] if the header is sensitive.
+      title: ConnectionProxyLockedHeader
+    ConnectionTypeResponseEnvelope:
       type: object
       properties:
         data:
@@ -1837,8 +1712,26 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ConnectionResponseSchema'
-      title: ConnectionListResponseEnvelope
+            $ref: '#/components/schemas/ConnectionType'
+      title: ConnectionTypeResponseEnvelope
+    CreateConnectionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CreateConnectionResponseSchema'
+      title: CreateConnectionResponseEnvelope
+    ConnectionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ConnectionResponseSchema'
+      title: ConnectionResponseEnvelope
+    ConnectCardResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ConnectCardResponse'
+      title: ConnectCardResponseEnvelope
     CreateConnectionRequestSchema:
       type: object
       properties:
@@ -1877,20 +1770,90 @@ components:
       - name
       - type
       title: CreateConnectionRequestSchema
-    ApiError:
+    ConnectCardResponse:
       type: object
       properties:
-        key:
+        redirect_url:
           type: string
-        message:
+          description: URL to redirect the user to in order to create the new connection.
+        token:
           type: string
-        metadata:
+          description: Opaque single-use token identifying the Connect session.
+      title: ConnectCardResponse
+    UpdateConnectionRequestSchema:
+      type: object
+      properties:
+        configuration:
           type: object
           additionalProperties:
             description: Any type
-        status:
-          type: integer
-      title: ApiError
+        healthcheck_interval:
+          type: string
+          description: Override interval for connection health checking.
+        name:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        policies:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+        reconnect:
+          type: boolean
+        type:
+          type: string
+        validate:
+          type: boolean
+          default: true
+          description: Validate connection configuration.
+      required:
+      - configuration
+      - name
+      title: UpdateConnectionRequestSchema
+    ConnectionType:
+      type: object
+      properties:
+        capabilities:
+          $ref: '#/components/schemas/BackendConnectionCapabilities'
+        configurationForm:
+          $ref: '#/components/schemas/ConnectionForm'
+        envConfig:
+          type: object
+          additionalProperties:
+            description: Any type
+        id:
+          type: string
+        initialConfiguration:
+          type: object
+          additionalProperties:
+            description: Any type
+        logo_url:
+          type: string
+        name:
+          type: string
+        oauth_prompt:
+          $ref: '#/components/schemas/BackendOAuthPrompt'
+        use_oauth:
+          type: boolean
+      required:
+      - capabilities
+      title: ConnectionType
+    ConnectionProxyMergeRules:
+      type: object
+      properties:
+        headers:
+          type: string
+          description: How caller-supplied headers are merged with the connection's inherited headers.
+        query:
+          type: string
+          description: How caller-supplied query parameters are merged with the connection's inherited query parameters.
+      title: ConnectionProxyMergeRules
     ConnectionTypeSchema:
       type: object
       properties:
@@ -1907,19 +1870,97 @@ components:
           items:
             type: string
       title: ConnectionTypeSchema
-    ConnectionProxyLockedHeader:
+    PartnerCreateSharedConnectionRequestSchema:
       type: object
       properties:
+        child_organization_id:
+          type: string
+          format: uuid
+          description: Unique identifier of the child organization that should receive the shared connection.
         name:
           type: string
-          description: Header name.
-        redacted:
-          type: boolean
-          description: True when the header value was redacted before returning it.
-        value:
+          description: Optional name for the shared copy. Defaults to the parent connection name.
+      required:
+      - child_organization_id
+      title: PartnerCreateSharedConnectionRequestSchema
+    ExecuteConnectionProxyRequest:
+      type: object
+      properties:
+        request:
+          $ref: '#/components/schemas/ConnectionProxyCall'
+      required:
+      - request
+      title: ExecuteConnectionProxyRequest
+    GetConnectionTypeParameterValuesRequestSchema:
+      type: object
+      properties:
+        connection_id:
           type: string
-          description: Header value. Replaced with [REDACTED] if the header is sensitive.
-      title: ConnectionProxyLockedHeader
+          format: uuid
+        field:
+          type: string
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+        query:
+          type: string
+      required:
+      - field
+      - parameters
+      title: GetConnectionTypeParameterValuesRequestSchema
+    ConnectionResponseSchema:
+      type: object
+      properties:
+        api_calls_last_24_hours:
+          type:
+          - integer
+          - 'null'
+          description: API calls made to service in the last 24h (supported integrations only).
+        configuration:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          $ref: '#/components/schemas/OutputActor'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        parent_connection_id:
+          type: string
+          format: uuid
+          description: For shared connections, the ID of the parent connection.
+        policies:
+          type: array
+          items:
+            type: string
+            format: uuid
+        saved:
+          type: boolean
+        status:
+          type: string
+        status_error:
+          type: string
+        type:
+          $ref: '#/components/schemas/ConnectionTypeSchema'
+        updated_at:
+          type: string
+          format: date-time
+        updated_by:
+          $ref: '#/components/schemas/OutputActor'
+      title: ConnectionResponseSchema
   securitySchemes:
     bearerUserAPIKey:
       type: http

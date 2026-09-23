@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference subpackage_bulkSync subpackage_modelSync API
+  title: Reference Subpackage Model Sync API
   version: 1.0.0
 servers:
 - url: https://app.polytomic.com
@@ -20,7 +20,7 @@ paths:
 
         sync mapping with
 
-        [`GET /api/connections/{id}/modelsync/source/fields`](../../../../../api-reference/model-sync/get-source-fields).'
+        `GET /api/connections/{id}/modelsync/source/fields`.'
       tags:
       - subpackage_modelSync
       parameters:
@@ -106,7 +106,7 @@ paths:
 
         The available source configuration parameters are described by
 
-        [`GET /api/connections/{id}/modelsync/source`](../../../../../../api-reference/model-sync/get-source).'
+        `GET /api/connections/{id}/modelsync/source`.'
       tags:
       - subpackage_modelSync
       parameters:
@@ -195,7 +195,7 @@ paths:
 
         To inspect a specific sync in more detail, follow up with
 
-        [`GET /api/syncs/{id}`](../../api-reference/model-sync/get).'
+        `GET /api/syncs/{id}`.'
       tags:
       - subpackage_modelSync
       parameters:
@@ -269,7 +269,107 @@ paths:
     post:
       operationId: create
       summary: Create Sync
-      description: "Creates a new model sync.\n\nCreate a new sync from one or more models to a destination.\n\nAll of the functionality described in [the product\ndocumentation](https://docs.polytomic.com/docs/sync-destinations) is\nconfigurable via the API.\n\nGuides:\n\n- [Model sync (Reverse ETL) from Snowflake query to Salesforce](../../guides/code-examples/model-sync-reverse-etl-from-snowflake-query-to-salesforce)\n- [Joined model sync from Postgres, Airtable, and Stripe to Hubspot](../../guides/code-examples/joined-model-sync-from-postgres-airtable-and-stripe-to-hubspot)\n\n## Targets (Destinations)\n\nPolytomic refers to a model sync's destination as the \"target object\", or\ntarget. Target objects are identified by a connection ID and an object ID. You\ncan retrieve a list of all target objects for a connection using the [Get Target\nObjects](../../api-reference/model-sync/targets/list) endpoint.\n\nThe `target` object in the request specifies information about the sync destination.\n\n```json\n\"target\": {\n    \"connection_id\": \"248df4b7-aa70-47b8-a036-33ac447e668d\",\n    \"object\": \"Users\",\n},\n```\n\nSome connections support additional configuration for targets. For example,\n[Salesforce\nconnections](../../guides/configuring-your-connections/connections/salesforce#target)\nsupport optionally specifying the ingestion API to use. The target specific\noptions are passed as `configuration`; consult the [integration\nguides](../../guides/configuring-your-connections/overview)\nfor details about specific connection configurations.\n\n### Creating a new target\n\nSome integrations support creating a new target when creating a model sync. For\nexample, an ad audience or database table.\n\nWhen creating a new target, `object` is omitted and `create` is specified\ninstead. The `create` property is an object containing integration specific\nconfiguration for the new target.\n\n```json\n\"target\": {\n    \"connection_id\": \"248df4b7-aa70-47b8-a036-33ac447e668d\",\n    \"create\": {\n        \"name\": \"New audience\",\n        \"type\": \"user_audience\"\n    }\n},\n```\n\nThe [Get Target List](../../api-reference/model-sync/targets/list) endpoint returns information about whether\na connection supports target creation."
+      description: 'Creates a new model sync.
+
+
+        Create a new sync from one or more models to a destination.
+
+
+        All of the functionality described in the product
+
+        documentation is
+
+        configurable via the API.
+
+
+        Guides:
+
+
+        - Model sync (Reverse ETL) from Snowflake query to Salesforce
+
+        - Joined model sync from Postgres, Airtable, and Stripe to Hubspot
+
+
+        ## Targets (Destinations)
+
+
+        Polytomic refers to a model sync''s destination as the "target object", or
+
+        target. Target objects are identified by a connection ID and an object ID. You
+
+        can retrieve a list of all target objects for a connection using the Get Target
+
+        Objects endpoint.
+
+
+        The `target` object in the request specifies information about the sync destination.
+
+
+        ```json
+
+        "target": {
+
+        "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
+
+        "object": "Users",
+
+        },
+
+        ```
+
+
+        Some connections support additional configuration for targets. For example,
+
+        Salesforce
+
+        connections
+
+        support optionally specifying the ingestion API to use. The target specific
+
+        options are passed as `configuration`; consult the integration
+
+        guides
+
+        for details about specific connection configurations.
+
+
+        ### Creating a new target
+
+
+        Some integrations support creating a new target when creating a model sync. For
+
+        example, an ad audience or database table.
+
+
+        When creating a new target, `object` is omitted and `create` is specified
+
+        instead. The `create` property is an object containing integration specific
+
+        configuration for the new target.
+
+
+        ```json
+
+        "target": {
+
+        "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
+
+        "create": {
+
+        "name": "New audience",
+
+        "type": "user_audience"
+
+        }
+
+        },
+
+        ```
+
+
+        The Get Target List endpoint returns information about whether
+
+        a connection supports target creation.'
       tags:
       - subpackage_modelSync
       parameters:
@@ -331,7 +431,7 @@ paths:
 
         when creating or updating a sync via
 
-        [`POST /api/syncs`](../../../api-reference/model-sync/create) or [`PUT /api/syncs/{id}`](../../../api-reference/model-sync/update).'
+        `POST /api/syncs` or `PUT /api/syncs/{id}`.'
       tags:
       - subpackage_modelSync
       parameters:
@@ -368,9 +468,9 @@ paths:
 
         To check whether a sync is currently running or has recently completed, use
 
-        [`GET /api/syncs/{id}/status`](../../../api-reference/model-sync/get-status). For the full history of
+        `GET /api/syncs/{id}/status`. For the full history of
 
-        executions, use [`GET /api/syncs/{id}/executions`](../../../api-reference/model-sync/executions/list).'
+        executions, use `GET /api/syncs/{id}/executions`.'
       tags:
       - subpackage_modelSync
       parameters:
@@ -427,7 +527,7 @@ paths:
 
         single field mapping — fetch the current sync with
 
-        [`GET /api/syncs/{id}`](../../../api-reference/model-sync/get),
+        `GET /api/syncs/{id}`,
 
         modify the fields you want to change, and send the complete object back in
 
@@ -517,7 +617,7 @@ paths:
 
         record is removed. Deleted syncs cannot be recovered; recreate them using
 
-        [`POST /api/syncs`](../../../api-reference/model-sync/create) if needed.'
+        `POST /api/syncs` if needed.'
       tags:
       - subpackage_modelSync
       parameters:
@@ -585,7 +685,7 @@ paths:
 
         > 📘 Deactivating a sync does not cancel an execution that is already in
 
-        > progress. Use [`POST /api/syncs/{id}/cancel`](../../../../api-reference/model-sync/cancel) to stop a
+        > progress. Use `POST /api/syncs/{id}/cancel` to stop a
 
         > running execution.'
       tags:
@@ -785,7 +885,7 @@ paths:
 
         start time, completion time, and record counts. For the complete execution
 
-        history, use [`GET /api/syncs/{id}/executions`](../../../../api-reference/model-sync/executions/list).'
+        history, use `GET /api/syncs/{id}/executions`.'
       tags:
       - subpackage_modelSync
       parameters:
@@ -827,27 +927,105 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    SyncStatusResponse:
+    SchemaIdentityFunction:
+      type: string
+      enum:
+      - Equality
+      - ISubstring
+      - OneOf
+      - DomainMatch
+      - HostnameMatch
+      title: SchemaIdentityFunction
+    Target:
       type: object
       properties:
-        current_execution:
-          $ref: '#/components/schemas/GetExecutionResponseSchema'
-        last_execution:
-          $ref: '#/components/schemas/GetExecutionResponseSchema'
-        next_execution_time:
-          type:
-          - string
-          - 'null'
-          format: date-time
-      title: SyncStatusResponse
-    ActivateSyncInput:
-      type: object
-      properties:
-        active:
-          type: boolean
+        configuration:
+          type: object
+          additionalProperties:
+            description: Any type
+        connection_id:
+          type: string
+          format: uuid
+        create:
+          type: object
+          additionalProperties:
+            type: string
+          description: Create a new target object with these properties.
+        filter_logic:
+          type: string
+        new_name:
+          type: string
+          description: Name for a new target object.
+        object:
+          type: string
+        search_values:
+          type: object
+          additionalProperties:
+            description: Any type
       required:
-      - active
-      title: ActivateSyncInput
+      - connection_id
+      title: Target
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    SyncField:
+      type: object
+      properties:
+        encryption_enabled:
+          type: boolean
+          description: Whether the field should be encrypted.
+        new:
+          type: boolean
+          default: false
+          description: New is set to true if the target field should be created by Polytomic. This is not supported by all backends.
+        override_value:
+          type: string
+          description: Value to set in the target field; if provided, 'source' is ignored.
+        source:
+          $ref: '#/components/schemas/Source'
+        sync_mode:
+          type: string
+          description: Sync mode for the field; defaults to 'updateOrCreate'. If set to 'create', the field will not be synced if it already has a value. This is not supported by all backends.
+        target:
+          type: string
+          description: Target field ID the source field value will be written to.
+      required:
+      - target
+      title: SyncField
+    CancelSyncResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CancelSyncResponse'
+      title: CancelSyncResponseEnvelope
+    ModelsyncSyncTargetMode:
+      type: string
+      enum:
+      - create
+      - update
+      - updateOrCreate
+      - replace
+      - append
+      - remove
+      - snapshot
+      title: ModelsyncSyncTargetMode
+    StartSyncResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/StartSyncResponseSchema'
+      title: StartSyncResponseEnvelope
     SyncResponse:
       type: object
       properties:
@@ -916,83 +1094,6 @@ components:
         updated_by:
           $ref: '#/components/schemas/OutputActor'
       title: SyncResponse
-    Schedule:
-      type: object
-      properties:
-        connection_id:
-          type: string
-          format: uuid
-        day_of_month:
-          type:
-          - string
-          - 'null'
-        day_of_week:
-          type:
-          - string
-          - 'null'
-        frequency:
-          $ref: '#/components/schemas/ScheduleFrequency'
-        hour:
-          type:
-          - string
-          - 'null'
-        job_id:
-          type:
-          - integer
-          - 'null'
-        minute:
-          type:
-          - string
-          - 'null'
-        month:
-          type:
-          - string
-          - 'null'
-        run_after:
-          $ref: '#/components/schemas/RunAfter'
-        run_after_success_only:
-          type:
-          - boolean
-          - 'null'
-          description: If true, the sync will only run if the dependent syncs completed successfully.
-      title: Schedule
-    ModelField:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        created_by:
-          $ref: '#/components/schemas/OutputActor'
-        description:
-          type: string
-        example:
-          description: Any type
-        id:
-          type: string
-          format: uuid
-        label:
-          type: string
-        name:
-          type: string
-        remote_type:
-          type: string
-        type:
-          type: string
-        unique:
-          type: boolean
-        updated_at:
-          type: string
-          format: date-time
-        user_added:
-          type: boolean
-      title: ModelField
-    ScheduleOptionResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ScheduleOptionResponse'
-      title: ScheduleOptionResponseEnvelope
     CancelSyncResponse:
       type: object
       properties:
@@ -1003,12 +1104,12 @@ components:
       type: object
       properties: {}
       title: JsonschemaForm
-    SyncStatusEnvelope:
+    PaginationDetails:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/SyncStatusResponse'
-      title: SyncStatusEnvelope
+        next_page_token:
+          type: string
+      title: PaginationDetails
     StartSyncResponseSchema:
       type: object
       properties:
@@ -1022,140 +1123,64 @@ components:
         status:
           $ref: '#/components/schemas/UtilExecutionStatus'
       title: StartSyncResponseSchema
-    CreateSyncRequest:
+    SourceMeta:
       type: object
       properties:
-        active:
+        has_items:
           type: boolean
-          description: Whether the sync is enabled and scheduled.
-        encryption_passphrase:
-          type: string
-          description: Passphrase for encrypting the sync data.
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/SyncField'
-          description: Fields to sync from source to destination.
-        filter_logic:
-          type: string
-          description: Logical expression to combine filters.
-        filters:
+          description: True when items is non-empty. Callers should present the values as a picker.
+        items:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/Filter'
-          description: Filters to apply to the source data.
-        identity:
-          $ref: '#/components/schemas/Identity'
-        mode:
-          $ref: '#/components/schemas/ModelsyncSyncTargetMode'
-        name:
-          type: string
-        only_enrich_updates:
-          type: boolean
-          description: Whether to use enrichment models as a source of possible changes to sync. If true, only changes to the base models will cause a record to sync.
-        organization_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-          description: Organization ID for the sync; read-only with a partner key.
-        override_fields:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SyncField'
-          description: Values to set in the target unconditionally.
-        overrides:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Override'
-          description: Conditional value replacement for fields.
-        policies:
+            description: Any type
+          description: Valid values the caller may choose for this configuration item.
+        requires_one_of:
           type:
           - array
           - 'null'
           items:
             type: string
-            format: uuid
-        schedule:
-          $ref: '#/components/schemas/Schedule'
-        skip_initial_backfill:
-          type: boolean
-          description: Whether to skip the initial backfill of records; if true only records seen after the sync is enabled will be synced.
-        sync_all_records:
-          type: boolean
-          description: Whether to sync all records from the source, regardless of whether they've changed since the previous execution.
-        target:
-          $ref: '#/components/schemas/Target'
-      required:
-      - fields
-      - mode
-      - name
-      - schedule
-      - target
-      title: CreateSyncRequest
-    UtilExecutionStatus:
+          description: Other configuration items this item depends on; exactly one of the listed items must also be selected.
+      title: SourceMeta
+    ScheduleFrequency:
       type: string
       enum:
-      - created
-      - scheduled
-      - queued
-      - waiting
-      - running
-      - processing
-      - canceling
-      - canceled
-      - completed
-      - failed
-      - interrupted
-      title: UtilExecutionStatus
+      - manual
+      - continuous
+      - hourly
+      - daily
+      - weekly
+      - custom
+      - builder
+      - runafter
+      - multi
+      - dbtcloud
+      title: ScheduleFrequency
+    SyncStatusEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SyncStatusResponse'
+      title: SyncStatusEnvelope
     ActivateSyncEnvelope:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/ActivateSyncOutput'
       title: ActivateSyncEnvelope
-    RunAfter:
+    OutputActor:
       type: object
       properties:
-        bulk_sync_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-        sync_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-      title: RunAfter
-    StartSyncRequest:
-      type: object
-      properties:
-        identities:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        resync:
-          type: boolean
-          default: false
-        test:
-          type: boolean
-          default: false
-      title: StartSyncRequest
-    PaginationDetails:
-      type: object
-      properties:
-        next_page_token:
+        id:
           type: string
-      title: PaginationDetails
+          format: uuid
+        name:
+          type: string
+        type:
+          type: string
+      title: OutputActor
     Filter:
       type: object
       properties:
@@ -1176,17 +1201,111 @@ components:
       - function
       description: Either `field` or `field_id` must be provided. If `field` is provided, `field_id` is ignored.
       title: Filter
-    OutputActor:
+    ExecutionCounts:
       type: object
       properties:
-        id:
+        delete:
+          type: integer
+          format: int64
+        error:
+          type: integer
+          format: int64
+        insert:
+          type: integer
+          format: int64
+        total:
+          type: integer
+          format: int64
+        update:
+          type: integer
+          format: int64
+        upserts:
+          type: integer
+          format: int64
+        warnings:
+          type: integer
+          format: int64
+      title: ExecutionCounts
+    SyncStatusResponse:
+      type: object
+      properties:
+        current_execution:
+          $ref: '#/components/schemas/GetExecutionResponseSchema'
+        last_execution:
+          $ref: '#/components/schemas/GetExecutionResponseSchema'
+        next_execution_time:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      title: SyncStatusResponse
+    ActivateSyncInput:
+      type: object
+      properties:
+        active:
+          type: boolean
+      required:
+      - active
+      title: ActivateSyncInput
+    FilterFunction:
+      type: string
+      enum:
+      - Equality
+      - Inequality
+      - IsNull
+      - IsNotNull
+      - 'True'
+      - 'False'
+      - OnOrAfter
+      - OnOrBefore
+      - GreaterThan
+      - GreaterThanEqual
+      - LessThan
+      - LessThanEqual
+      - StringContains
+      - StringStartsWith
+      - StringEndsWith
+      - StringDoesNotContain
+      - StringDoesNotStartWith
+      - StringDoesNotEndWith
+      - StringOneOf
+      - StringNotOneOf
+      - Between
+      - ArrayContains
+      - ArrayDoesNotContain
+      - InTheLast
+      - RelativeOnOrBefore
+      - RelativeOnOrAfter
+      - StringLike
+      - StringNotLike
+      - StringMatchesTrimmed
+      title: FilterFunction
+    Override:
+      type: object
+      properties:
+        field:
+          $ref: '#/components/schemas/Source'
+        field_id:
           type: string
-          format: uuid
-        name:
-          type: string
+          description: Field ID of the model field to override.
+        function:
+          $ref: '#/components/schemas/FilterFunction'
+        override:
+          description: Any type
+        value:
+          description: Any type
+      description: Either `field` or `field_id` must be provided. If `field_id` is provided, `field` is ignored.
+      title: Override
+    ConfigurationValue:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            description: Any type
         type:
           type: string
-      title: OutputActor
+      title: ConfigurationValue
     GetExecutionResponseSchema:
       type: object
       properties:
@@ -1217,27 +1336,12 @@ components:
         type:
           type: string
       title: GetExecutionResponseSchema
-    SourceMeta:
+    ScheduleOptionResponseEnvelope:
       type: object
       properties:
-        has_items:
-          type: boolean
-          description: True when items is non-empty. Callers should present the values as a picker.
-        items:
-          type:
-          - array
-          - 'null'
-          items:
-            description: Any type
-          description: Valid values the caller may choose for this configuration item.
-        requires_one_of:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Other configuration items this item depends on; exactly one of the listed items must also be selected.
-      title: SourceMeta
+        data:
+          $ref: '#/components/schemas/ScheduleOptionResponse'
+      title: ScheduleOptionResponseEnvelope
     UpdateSyncRequest:
       type: object
       properties:
@@ -1315,150 +1419,65 @@ components:
       - schedule
       - target
       title: UpdateSyncRequest
-    SyncField:
+    SyncSourceMetaResponse:
       type: object
       properties:
-        encryption_enabled:
-          type: boolean
-          description: Whether the field should be encrypted.
-        new:
-          type: boolean
-          default: false
-          description: New is set to true if the target field should be created by Polytomic. This is not supported by all backends.
-        override_value:
-          type: string
-          description: Value to set in the target field; if provided, 'source' is ignored.
-        source:
-          $ref: '#/components/schemas/Source'
-        sync_mode:
-          type: string
-          description: Sync mode for the field; defaults to 'updateOrCreate'. If set to 'create', the field will not be synced if it already has a value. This is not supported by all backends.
-        target:
-          type: string
-          description: Target field ID the source field value will be written to.
-      required:
-      - target
-      title: SyncField
-    ModelFieldResponse:
-      type: object
-      properties:
-        data:
+        configuration:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ConfigurationValue'
+          description: Additional configuration fields available for this source, keyed by field name.
+        items:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SourceMeta'
+          description: Map of configuration item name to its metadata (available values, required-one-of groups).
+        requires_one_of:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ModelField'
-      title: ModelFieldResponse
-    ScheduleScheduleOption:
-      type: object
-      properties:
-        configuration:
-          $ref: '#/components/schemas/JsonschemaForm'
-        description:
-          type: string
-        frequency:
-          $ref: '#/components/schemas/ScheduleFrequency'
-        label:
-          type: string
-      title: ScheduleScheduleOption
-    CancelSyncResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CancelSyncResponse'
-      title: CancelSyncResponseEnvelope
-    Target:
-      type: object
-      properties:
-        configuration:
-          type: object
-          additionalProperties:
-            description: Any type
-        connection_id:
-          type: string
-          format: uuid
-        create:
-          type: object
-          additionalProperties:
             type: string
-          description: Create a new target object with these properties.
-        filter_logic:
-          type: string
-        new_name:
-          type: string
-          description: Name for a new target object.
-        object:
-          type: string
-        search_values:
-          type: object
-          additionalProperties:
-            description: Any type
-      required:
-      - connection_id
-      title: Target
-    StartSyncResponseEnvelope:
+          description: Configuration items where exactly one must be selected by the caller.
+      title: SyncSourceMetaResponse
+    StartSyncRequest:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/StartSyncResponseSchema'
-      title: StartSyncResponseEnvelope
-    ExecutionCounts:
-      type: object
-      properties:
-        delete:
-          type: integer
-          format: int64
-        error:
-          type: integer
-          format: int64
-        insert:
-          type: integer
-          format: int64
-        total:
-          type: integer
-          format: int64
-        update:
-          type: integer
-          format: int64
-        upserts:
-          type: integer
-          format: int64
-        warnings:
-          type: integer
-          format: int64
-      title: ExecutionCounts
-    ModelsyncSyncTargetMode:
-      type: string
-      enum:
-      - create
-      - update
-      - updateOrCreate
-      - replace
-      - append
-      - remove
-      - snapshot
-      title: ModelsyncSyncTargetMode
-    GetSyncSourceMetaEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/SyncSourceMetaResponse'
-      title: GetSyncSourceMetaEnvelope
-    SyncResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/SyncResponse'
-      title: SyncResponseEnvelope
-    ActivateSyncOutput:
-      type: object
-      properties:
-        active:
+        identities:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        resync:
           type: boolean
-        id:
+          default: false
+        test:
+          type: boolean
+          default: false
+      title: StartSyncRequest
+    Identity:
+      type: object
+      properties:
+        function:
+          $ref: '#/components/schemas/SchemaIdentityFunction'
+        new_field:
+          type: boolean
+        remote_field_type_id:
+          type:
+          - string
+          - 'null'
+        source:
+          $ref: '#/components/schemas/Source'
+        target:
           type: string
-          format: uuid
-      title: ActivateSyncOutput
+      required:
+      - function
+      - source
+      - target
+      title: Identity
     ListSyncItem:
       type: object
       properties:
@@ -1515,6 +1534,169 @@ components:
         updated_by:
           $ref: '#/components/schemas/OutputActor'
       title: ListSyncItem
+    SyncResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SyncResponse'
+      title: SyncResponseEnvelope
+    Schedule:
+      type: object
+      properties:
+        connection_id:
+          type: string
+          format: uuid
+        day_of_month:
+          type:
+          - string
+          - 'null'
+        day_of_week:
+          type:
+          - string
+          - 'null'
+        frequency:
+          $ref: '#/components/schemas/ScheduleFrequency'
+        hour:
+          type:
+          - string
+          - 'null'
+        job_id:
+          type:
+          - integer
+          - 'null'
+        minute:
+          type:
+          - string
+          - 'null'
+        month:
+          type:
+          - string
+          - 'null'
+        run_after:
+          $ref: '#/components/schemas/RunAfter'
+        run_after_success_only:
+          type:
+          - boolean
+          - 'null'
+          description: If true, the sync will only run if the dependent syncs completed successfully.
+      title: Schedule
+    ModelField:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          $ref: '#/components/schemas/OutputActor'
+        description:
+          type: string
+        example:
+          description: Any type
+        id:
+          type: string
+          format: uuid
+        label:
+          type: string
+        name:
+          type: string
+        remote_type:
+          type: string
+        type:
+          type: string
+        unique:
+          type: boolean
+        updated_at:
+          type: string
+          format: date-time
+        user_added:
+          type: boolean
+      title: ModelField
+    CreateSyncRequest:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: Whether the sync is enabled and scheduled.
+        encryption_passphrase:
+          type: string
+          description: Passphrase for encrypting the sync data.
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/SyncField'
+          description: Fields to sync from source to destination.
+        filter_logic:
+          type: string
+          description: Logical expression to combine filters.
+        filters:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Filter'
+          description: Filters to apply to the source data.
+        identity:
+          $ref: '#/components/schemas/Identity'
+        mode:
+          $ref: '#/components/schemas/ModelsyncSyncTargetMode'
+        name:
+          type: string
+        only_enrich_updates:
+          type: boolean
+          description: Whether to use enrichment models as a source of possible changes to sync. If true, only changes to the base models will cause a record to sync.
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Organization ID for the sync; read-only with a partner key.
+        override_fields:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SyncField'
+          description: Values to set in the target unconditionally.
+        overrides:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Override'
+          description: Conditional value replacement for fields.
+        policies:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+        skip_initial_backfill:
+          type: boolean
+          description: Whether to skip the initial backfill of records; if true only records seen after the sync is enabled will be synced.
+        sync_all_records:
+          type: boolean
+          description: Whether to sync all records from the source, regardless of whether they've changed since the previous execution.
+        target:
+          $ref: '#/components/schemas/Target'
+      required:
+      - fields
+      - mode
+      - name
+      - schedule
+      - target
+      title: CreateSyncRequest
+    ActivateSyncOutput:
+      type: object
+      properties:
+        active:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+      title: ActivateSyncOutput
     ScheduleOptionResponse:
       type: object
       properties:
@@ -1525,16 +1707,22 @@ components:
           items:
             $ref: '#/components/schemas/ScheduleScheduleOption'
       title: ScheduleOptionResponse
-    ConfigurationValue:
+    GetSyncSourceMetaEnvelope:
       type: object
       properties:
-        items:
-          type: array
+        data:
+          $ref: '#/components/schemas/SyncSourceMetaResponse'
+      title: GetSyncSourceMetaEnvelope
+    ModelFieldResponse:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
           items:
-            description: Any type
-        type:
-          type: string
-      title: ConfigurationValue
+            $ref: '#/components/schemas/ModelField'
+      title: ModelFieldResponse
     ListSyncResponseEnvelope:
       type: object
       properties:
@@ -1547,29 +1735,39 @@ components:
         pagination:
           $ref: '#/components/schemas/PaginationDetails'
       title: ListSyncResponseEnvelope
-    SyncSourceMetaResponse:
+    FilterFieldReferenceType:
+      type: string
+      enum:
+      - Model
+      - Target
+      title: FilterFieldReferenceType
+    ScheduleScheduleOption:
       type: object
       properties:
         configuration:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ConfigurationValue'
-          description: Additional configuration fields available for this source, keyed by field name.
-        items:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/SourceMeta'
-          description: Map of configuration item name to its metadata (available values, required-one-of groups).
-        requires_one_of:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Configuration items where exactly one must be selected by the caller.
-      title: SyncSourceMetaResponse
+          $ref: '#/components/schemas/JsonschemaForm'
+        description:
+          type: string
+        frequency:
+          $ref: '#/components/schemas/ScheduleFrequency'
+        label:
+          type: string
+      title: ScheduleScheduleOption
+    UtilExecutionStatus:
+      type: string
+      enum:
+      - created
+      - scheduled
+      - queued
+      - waiting
+      - running
+      - processing
+      - canceling
+      - canceled
+      - completed
+      - failed
+      - interrupted
+      title: UtilExecutionStatus
     Source:
       type: object
       properties:
@@ -1582,118 +1780,20 @@ components:
       - field
       - model_id
       title: Source
-    FilterFunction:
-      type: string
-      enum:
-      - Equality
-      - Inequality
-      - IsNull
-      - IsNotNull
-      - 'True'
-      - 'False'
-      - OnOrAfter
-      - OnOrBefore
-      - GreaterThan
-      - GreaterThanEqual
-      - LessThan
-      - LessThanEqual
-      - StringContains
-      - StringStartsWith
-      - StringEndsWith
-      - StringDoesNotContain
-      - StringDoesNotStartWith
-      - StringDoesNotEndWith
-      - StringOneOf
-      - StringNotOneOf
-      - Between
-      - ArrayContains
-      - ArrayDoesNotContain
-      - InTheLast
-      - RelativeOnOrBefore
-      - RelativeOnOrAfter
-      - StringLike
-      - StringNotLike
-      - StringMatchesTrimmed
-      title: FilterFunction
-    Override:
+    RunAfter:
       type: object
       properties:
-        field:
-          $ref: '#/components/schemas/Source'
-        field_id:
-          type: string
-          description: Field ID of the model field to override.
-        function:
-          $ref: '#/components/schemas/FilterFunction'
-        override:
-          description: Any type
-        value:
-          description: Any type
-      description: Either `field` or `field_id` must be provided. If `field_id` is provided, `field` is ignored.
-      title: Override
-    Identity:
-      type: object
-      properties:
-        function:
-          $ref: '#/components/schemas/SchemaIdentityFunction'
-        new_field:
-          type: boolean
-        remote_field_type_id:
-          type:
-          - string
-          - 'null'
-        source:
-          $ref: '#/components/schemas/Source'
-        target:
-          type: string
-      required:
-      - function
-      - source
-      - target
-      title: Identity
-    SchemaIdentityFunction:
-      type: string
-      enum:
-      - Equality
-      - ISubstring
-      - OneOf
-      - DomainMatch
-      - HostnameMatch
-      title: SchemaIdentityFunction
-    FilterFieldReferenceType:
-      type: string
-      enum:
-      - Model
-      - Target
-      title: FilterFieldReferenceType
-    ScheduleFrequency:
-      type: string
-      enum:
-      - manual
-      - continuous
-      - hourly
-      - daily
-      - weekly
-      - custom
-      - builder
-      - runafter
-      - multi
-      - dbtcloud
-      title: ScheduleFrequency
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
+        bulk_sync_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        sync_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+      title: RunAfter
   securitySchemes:
     bearerUserAPIKey:
       type: http

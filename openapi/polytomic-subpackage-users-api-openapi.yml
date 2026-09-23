@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference subpackage_bulkSync subpackage_users API
+  title: Reference Subpackage Users API
   version: 1.0.0
 servers:
 - url: https://app.polytomic.com
@@ -280,7 +280,7 @@ paths:
 
         >
 
-        > User endpoints are only accessible using [partner keys](../../../../guides/obtaining-api-keys#partner-keys).
+        > User endpoints are only accessible using partner keys.
 
 
         Returns user records including each user''s ID, email, and assigned roles.'
@@ -334,7 +334,7 @@ paths:
 
         >
 
-        > User endpoints are only accessible using [partner keys](../../../../guides/obtaining-api-keys#partner-keys).
+        > User endpoints are only accessible using partner keys.
 
 
         The new user receives an invitation email prompting them to set up their
@@ -402,7 +402,7 @@ paths:
 
         >
 
-        > User endpoints are only accessible using [partner keys](../../../../../guides/obtaining-api-keys#partner-keys).'
+        > User endpoints are only accessible using partner keys.'
       tags:
       - subpackage_users
       parameters:
@@ -466,7 +466,7 @@ paths:
 
         >
 
-        > User endpoints are only accessible using [partner keys](../../../../../guides/obtaining-api-keys#partner-keys).
+        > User endpoints are only accessible using partner keys.
 
 
         Only the user''s role assignments are modified. Profile information such as name
@@ -540,7 +540,7 @@ paths:
 
         >
 
-        > User endpoints are only accessible using [partner keys](../../../../../guides/obtaining-api-keys#partner-keys).
+        > User endpoints are only accessible using partner keys.
 
 
         > 🚧 This action is permanent. The user is immediately removed from the
@@ -672,6 +672,110 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
+    CreateUserRequestSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address used to sign the user in and receive notifications.
+        role:
+          type: string
+          description: Deprecated legacy role name. Use role_ids instead; setting both role and role_ids in the same request is rejected.
+        role_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Identifiers of the permissions roles to assign to the user. Must contain at least one entry when provided.
+      required:
+      - email
+      title: CreateUserRequestSchema
+    UpdateUserRequestSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address used to sign the user in and receive notifications.
+        role:
+          type: string
+          description: Deprecated legacy role name. Use role_ids instead; setting both role and role_ids in the same request is rejected.
+        role_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Identifiers of the permissions roles to assign to the user. Must contain at least one entry when provided.
+      required:
+      - email
+      title: UpdateUserRequestSchema
+    CurrentOrgCreateUserRequestSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address used to sign the user in and receive notifications.
+        role:
+          type: string
+          description: Deprecated legacy role name. Use role_ids instead; setting both role and role_ids in the same request is rejected.
+        role_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Identifiers of the permissions roles to assign to the user. Must contain at least one entry when provided.
+      required:
+      - email
+      title: CurrentOrgCreateUserRequestSchema
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    APIKeyResponse:
+      type: object
+      properties:
+        value:
+          type: string
+          description: Newly created API key. This value is shown only once; store it securely.
+      title: APIKeyResponse
+    APIKeyResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/APIKeyResponse'
+      title: APIKeyResponseEnvelope
+    CurrentOrgUpdateUserRequestSchema:
+      type: object
+      properties:
+        role:
+          type: string
+          description: Deprecated legacy role name. Use role_ids instead.
+        role_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Identifiers of the permissions roles to assign to the user. Must contain at least one entry when provided.
+      title: CurrentOrgUpdateUserRequestSchema
+    ListUsersEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/User'
+      title: ListUsersEnvelope
     User:
       type: object
       properties:
@@ -698,116 +802,12 @@ components:
             format: uuid
           description: Identifiers of the permissions roles assigned to the user.
       title: User
-    APIKeyResponse:
-      type: object
-      properties:
-        value:
-          type: string
-          description: Newly created API key. This value is shown only once; store it securely.
-      title: APIKeyResponse
-    APIKeyResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/APIKeyResponse'
-      title: APIKeyResponseEnvelope
-    ListUsersEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/User'
-      title: ListUsersEnvelope
-    UpdateUserRequestSchema:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email address used to sign the user in and receive notifications.
-        role:
-          type: string
-          description: Deprecated legacy role name. Use role_ids instead; setting both role and role_ids in the same request is rejected.
-        role_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: Identifiers of the permissions roles to assign to the user. Must contain at least one entry when provided.
-      required:
-      - email
-      title: UpdateUserRequestSchema
     UserEnvelope:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/User'
       title: UserEnvelope
-    CurrentOrgUpdateUserRequestSchema:
-      type: object
-      properties:
-        role:
-          type: string
-          description: Deprecated legacy role name. Use role_ids instead.
-        role_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: Identifiers of the permissions roles to assign to the user. Must contain at least one entry when provided.
-      title: CurrentOrgUpdateUserRequestSchema
-    CurrentOrgCreateUserRequestSchema:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email address used to sign the user in and receive notifications.
-        role:
-          type: string
-          description: Deprecated legacy role name. Use role_ids instead; setting both role and role_ids in the same request is rejected.
-        role_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: Identifiers of the permissions roles to assign to the user. Must contain at least one entry when provided.
-      required:
-      - email
-      title: CurrentOrgCreateUserRequestSchema
-    CreateUserRequestSchema:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email address used to sign the user in and receive notifications.
-        role:
-          type: string
-          description: Deprecated legacy role name. Use role_ids instead; setting both role and role_ids in the same request is rejected.
-        role_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: Identifiers of the permissions roles to assign to the user. Must contain at least one entry when provided.
-      required:
-      - email
-      title: CreateUserRequestSchema
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
   securitySchemes:
     bearerUserAPIKey:
       type: http

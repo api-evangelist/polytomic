@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference subpackage_bulkSync subpackage_permissions.subpackage_permissions/policies API
+  title: Reference Subpackage Permissions.subpackage…
   version: 1.0.0
 servers:
 - url: https://app.polytomic.com
@@ -21,7 +21,7 @@ paths:
 
         To inspect a specific policy in detail, use
 
-        [`GET /api/permissions/policies/{id}`](../../../api-reference/permissions/policies/get).'
+        `GET /api/permissions/policies/{id}`.'
       tags:
       - subpackage_permissions.subpackage_permissions/policies
       parameters:
@@ -61,7 +61,7 @@ paths:
 
         they are referenced in a policy; create roles using
 
-        [`POST /api/permissions/roles`](../../../api-reference/permissions/roles/create).'
+        `POST /api/permissions/roles`.'
       tags:
       - subpackage_permissions.subpackage_permissions/policies
       parameters:
@@ -173,7 +173,7 @@ paths:
 
         partial change, fetch the current policy with
 
-        [`GET /api/permissions/policies/{id}`](../../../../api-reference/permissions/policies/get), modify the relevant bindings,
+        `GET /api/permissions/policies/{id}`, modify the relevant bindings,
 
         and send the complete object back.'
       tags:
@@ -284,62 +284,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    CreatePolicyRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        organization_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        policy_actions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PolicyAction'
-      required:
-      - name
-      - policy_actions
-      title: CreatePolicyRequest
-    PolicyAction:
-      type: object
-      properties:
-        action:
-          type: string
-        role_ids:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: uuid
-      required:
-      - action
-      - role_ids
-      title: PolicyAction
-    UpdatePolicyRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        organization_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        policy_actions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PolicyAction'
-      required:
-      - name
-      - policy_actions
-      title: UpdatePolicyRequest
     PolicyResponse:
       type: object
       properties:
@@ -358,6 +302,22 @@ components:
         system:
           type: boolean
       title: PolicyResponse
+    PolicyAction:
+      type: object
+      properties:
+        action:
+          type: string
+        role_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+      required:
+      - action
+      - role_ids
+      title: PolicyAction
     ApiError:
       type: object
       properties:
@@ -378,6 +338,26 @@ components:
         data:
           $ref: '#/components/schemas/PolicyResponse'
       title: PolicyResponseEnvelope
+    UpdatePolicyRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        policy_actions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PolicyAction'
+      required:
+      - name
+      - policy_actions
+      title: UpdatePolicyRequest
     ListPoliciesResponseEnvelope:
       type: object
       properties:
@@ -388,6 +368,26 @@ components:
           items:
             $ref: '#/components/schemas/PolicyResponse'
       title: ListPoliciesResponseEnvelope
+    CreatePolicyRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        policy_actions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PolicyAction'
+      required:
+      - name
+      - policy_actions
+      title: CreatePolicyRequest
   securitySchemes:
     bearerUserAPIKey:
       type: http

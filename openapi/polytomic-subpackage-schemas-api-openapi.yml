@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference subpackage_bulkSync subpackage_schemas API
+  title: Reference Subpackage Schemas API
   version: 1.0.0
 servers:
 - url: https://app.polytomic.com
@@ -95,7 +95,7 @@ paths:
 
         Only user-defined fields — those created via
 
-        [`POST /api/connections/{connection_id}/schemas/{schema_id}/fields`](../../../../../../../api-reference/schemas/upsert-field)
+        `POST /api/connections/{connection_id}/schemas/{schema_id}/fields`
 
         — can be removed through this endpoint. Fields detected automatically from
 
@@ -255,7 +255,7 @@ paths:
 
         > 📘 To revert to the source-detected primary keys and remove all overrides,
 
-        > use [`DELETE /api/connections/{connection_id}/schemas/{schema_id}/primary_keys`](../../../../../../api-reference/schemas/reset-primary-keys).'
+        > use `DELETE /api/connections/{connection_id}/schemas/{schema_id}/primary_keys`.'
       tags:
       - subpackage_schemas
       parameters:
@@ -321,7 +321,7 @@ paths:
 
         To replace the overrides with a new set rather than clearing them entirely,
 
-        use [`PUT /api/connections/{connection_id}/schemas/{schema_id}/primary_keys`](../../../../../../api-reference/schemas/set-primary-keys)
+        use `PUT /api/connections/{connection_id}/schemas/{schema_id}/primary_keys`
 
         instead.'
       tags:
@@ -392,7 +392,7 @@ paths:
 
         This endpoint does not return the refreshed schemas directly. Follow the
 
-        `Location` header or poll [`GET /api/connections/{id}/schemas/status`](../../../../../api-reference/schemas/get-status)
+        `Location` header or poll `GET /api/connections/{id}/schemas/status`
 
         until the refresh completes, then fetch the schemas you need.
 
@@ -405,7 +405,7 @@ paths:
 
         > schemas and returns a `Location` header pointing at
 
-        > [`GET /api/connections/{id}/schemas/status`](../../../../../api-reference/schemas/get-status).
+        > `GET /api/connections/{id}/schemas/status`.
 
         > Poll that endpoint until `cache_status` transitions from `refreshing` to
 
@@ -471,7 +471,7 @@ paths:
 
         Poll this endpoint after calling
 
-        [`POST /api/connections/{id}/schemas/refresh`](../../../../../api-reference/schemas/refresh) to track
+        `POST /api/connections/{id}/schemas/refresh` to track
 
         progress. When `status` transitions to `completed`, the refreshed schemas
 
@@ -486,7 +486,7 @@ paths:
 
         > schemas and returns a `Location` header pointing at
 
-        > [`GET /api/connections/{id}/schemas/status`](../../../../../api-reference/schemas/get-status).
+        > `GET /api/connections/{id}/schemas/status`.
 
         > Poll that endpoint until `cache_status` transitions from `refreshing` to
 
@@ -557,7 +557,7 @@ paths:
         stale.
 
 
-        > 📘 Trigger [`POST /api/connections/{id}/schemas/refresh`](../../../../../api-reference/schemas/refresh)
+        > 📘 Trigger `POST /api/connections/{id}/schemas/refresh`
 
         > and wait for it to complete before fetching this endpoint if you need
 
@@ -635,7 +635,7 @@ paths:
 
         > 📘 If the schema''s field definitions are stale, refresh them first with
 
-        > [`POST /api/connections/{id}/schemas/refresh`](../../../../../../api-reference/schemas/refresh) to ensure
+        > `POST /api/connections/{id}/schemas/refresh` to ensure
 
         > the sample aligns with the current schema structure.'
       tags:
@@ -698,173 +698,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    SchemaPrimaryKeyOverrideInput:
-      type: object
-      properties:
-        field_id:
-          type: string
-        is_primary_key:
-          type: boolean
-      required:
-      - field_id
-      - is_primary_key
-      title: SchemaPrimaryKeyOverrideInput
-    schemas_Refresh_Response_202:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: schemas_Refresh_Response_202
-    BulkSyncSourceStatus:
-      type: object
-      properties:
-        cache_status:
-          type: string
-        last_refresh_finished:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        last_refresh_started:
-          type:
-          - string
-          - 'null'
-          format: date-time
-      title: BulkSyncSourceStatus
-    TypesType:
-      description: Any type
-      title: TypesType
-    SchemaRecordsResponseEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            additionalProperties:
-              description: Any type
-      title: SchemaRecordsResponseEnvelope
-    PatchSchemaFieldRequest:
-      type: object
-      properties:
-        definition:
-          $ref: '#/components/schemas/TypesDefinition'
-        example:
-          description: Sample value surfaced in the UI.
-        label:
-          type:
-          - string
-          - 'null'
-          description: Human-readable label for the field.
-        path:
-          type:
-          - string
-          - 'null'
-          description: JSONPath used to extract the field from each source record; only meaningful for document-style backends. Pass an empty string to clear an existing path.
-        type:
-          type:
-          - string
-          - 'null'
-          description: 'One of: string, number, boolean, datetime, array, object, binary. Changing the type without supplying a matching definition clears any prior detailed type metadata.'
-      title: PatchSchemaFieldRequest
-    TypesDefinition:
-      type: object
-      properties: {}
-      title: TypesDefinition
-    SetPrimaryKeysRequest:
-      type: object
-      properties:
-        fields:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SchemaPrimaryKeyOverrideInput'
-          description: Ordered list of source fields that together form the primary key. Replaces any existing override; supply an empty list to clear.
-      title: SetPrimaryKeysRequest
-    schemas_DeleteField_Response_202:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: schemas_DeleteField_Response_202
-    BulkSyncSourceStatusEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/BulkSyncSourceStatus'
-      title: BulkSyncSourceStatusEnvelope
-    schemas_ResetPrimaryKeys_Response_202:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: schemas_ResetPrimaryKeys_Response_202
-    UserFieldRequest:
-      type: object
-      properties:
-        example:
-          description: Example value shown in the UI and used as a hint for downstream consumers.
-        field_id:
-          type: string
-          description: Stable identifier for the user-defined field. Reuse an existing field_id to update a field in place.
-        label:
-          type: string
-          description: Human-readable label shown to users selecting this field in the app.
-        path:
-          type:
-          - string
-          - 'null'
-          description: JSON path expression that extracts the field's value from the source record. Required for nested or computed fields; omit for top-level fields.
-        type:
-          type: string
-          description: Polytomic type of the field (e.g. string, integer, boolean).
-      required:
-      - field_id
-      - label
-      - type
-      title: UserFieldRequest
-    schemas_SetPrimaryKeys_Response_202:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: schemas_SetPrimaryKeys_Response_202
-    UtilFieldType:
-      type: string
-      enum:
-      - unknown
-      - string
-      - number
-      - boolean
-      - datetime
-      - array
-      - object
-      - binary
-      title: UtilFieldType
-    PickValue:
-      type: object
-      properties:
-        label:
-          type: string
-        value:
-          type: string
-      title: PickValue
-    UpsertSchemaFieldRequest:
-      type: object
-      properties:
-        fields:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/UserFieldRequest'
-          description: Fields to create or update on the schema. Existing user-defined fields with the same field_id are replaced.
-      title: UpsertSchemaFieldRequest
-    SchemaFieldResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/SchemaField'
-      title: SchemaFieldResponseEnvelope
     SchemaField:
       type: object
       properties:
@@ -895,43 +728,16 @@ components:
           items:
             $ref: '#/components/schemas/PickValue'
       title: SchemaField
-    Schema:
-      type: object
-      properties:
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/SchemaField'
-        id:
-          type: string
-        name:
-          type: string
-      title: Schema
-    schemas_UpsertField_Response_202:
+    TypesDefinition:
       type: object
       properties: {}
-      description: Empty response body
-      title: schemas_UpsertField_Response_202
-    SchemaAssociation:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        reference_to:
-          type: array
-          items:
-            type: string
-        referenced_field:
-          type: string
-      title: SchemaAssociation
-    BulkSyncSourceSchemaEnvelope:
+      title: TypesDefinition
+    BulkSyncSourceStatusEnvelope:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/Schema'
-      title: BulkSyncSourceSchemaEnvelope
+          $ref: '#/components/schemas/BulkSyncSourceStatus'
+      title: BulkSyncSourceStatusEnvelope
     ApiError:
       type: object
       properties:
@@ -946,6 +752,200 @@ components:
         status:
           type: integer
       title: ApiError
+    Schema:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchemaField'
+        id:
+          type: string
+        name:
+          type: string
+      title: Schema
+    UpsertSchemaFieldRequest:
+      type: object
+      properties:
+        fields:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UserFieldRequest'
+          description: Fields to create or update on the schema. Existing user-defined fields with the same field_id are replaced.
+      title: UpsertSchemaFieldRequest
+    SchemaFieldResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SchemaField'
+      title: SchemaFieldResponseEnvelope
+    schemas_SetPrimaryKeys_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: schemas_SetPrimaryKeys_Response_202
+    BulkSyncSourceSchemaEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Schema'
+      title: BulkSyncSourceSchemaEnvelope
+    PatchSchemaFieldRequest:
+      type: object
+      properties:
+        definition:
+          $ref: '#/components/schemas/TypesDefinition'
+        example:
+          description: Sample value surfaced in the UI.
+        label:
+          type:
+          - string
+          - 'null'
+          description: Human-readable label for the field.
+        path:
+          type:
+          - string
+          - 'null'
+          description: JSONPath used to extract the field from each source record; only meaningful for document-style backends. Pass an empty string to clear an existing path.
+        type:
+          type:
+          - string
+          - 'null'
+          description: 'One of: string, number, boolean, datetime, array, object, binary. Changing the type without supplying a matching definition clears any prior detailed type metadata.'
+      title: PatchSchemaFieldRequest
+    TypesType:
+      description: Any type
+      title: TypesType
+    schemas_UpsertField_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: schemas_UpsertField_Response_202
+    SchemaPrimaryKeyOverrideInput:
+      type: object
+      properties:
+        field_id:
+          type: string
+        is_primary_key:
+          type: boolean
+      required:
+      - field_id
+      - is_primary_key
+      title: SchemaPrimaryKeyOverrideInput
+    UtilFieldType:
+      type: string
+      enum:
+      - unknown
+      - string
+      - number
+      - boolean
+      - datetime
+      - array
+      - object
+      - binary
+      title: UtilFieldType
+    SetPrimaryKeysRequest:
+      type: object
+      properties:
+        fields:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SchemaPrimaryKeyOverrideInput'
+          description: Ordered list of source fields that together form the primary key. Replaces any existing override; supply an empty list to clear.
+      title: SetPrimaryKeysRequest
+    SchemaAssociation:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        reference_to:
+          type: array
+          items:
+            type: string
+        referenced_field:
+          type: string
+      title: SchemaAssociation
+    schemas_Refresh_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: schemas_Refresh_Response_202
+    PickValue:
+      type: object
+      properties:
+        label:
+          type: string
+        value:
+          type: string
+      title: PickValue
+    SchemaRecordsResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            additionalProperties:
+              description: Any type
+      title: SchemaRecordsResponseEnvelope
+    UserFieldRequest:
+      type: object
+      properties:
+        example:
+          description: Example value shown in the UI and used as a hint for downstream consumers.
+        field_id:
+          type: string
+          description: Stable identifier for the user-defined field. Reuse an existing field_id to update a field in place.
+        label:
+          type: string
+          description: Human-readable label shown to users selecting this field in the app.
+        path:
+          type:
+          - string
+          - 'null'
+          description: JSON path expression that extracts the field's value from the source record. Required for nested or computed fields; omit for top-level fields.
+        type:
+          type: string
+          description: Polytomic type of the field (e.g. string, integer, boolean).
+      required:
+      - field_id
+      - label
+      - type
+      title: UserFieldRequest
+    BulkSyncSourceStatus:
+      type: object
+      properties:
+        cache_status:
+          type: string
+        last_refresh_finished:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        last_refresh_started:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      title: BulkSyncSourceStatus
+    schemas_DeleteField_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: schemas_DeleteField_Response_202
+    schemas_ResetPrimaryKeys_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: schemas_ResetPrimaryKeys_Response_202
   securitySchemes:
     bearerUserAPIKey:
       type: http

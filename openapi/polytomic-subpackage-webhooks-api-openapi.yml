@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference subpackage_bulkSync subpackage_webhooks API
+  title: Reference Subpackage Webhooks API
   version: 1.0.0
 servers:
 - url: https://app.polytomic.com
@@ -22,7 +22,7 @@ paths:
 
         > produced in that organization. See the
 
-        > [Events documentation](../../guides/events) for the
+        > Events documentation for the
 
         > list of event types and payload shapes.'
       tags:
@@ -66,7 +66,7 @@ paths:
 
         > produced in that organization. See the
 
-        > [Events documentation](../../guides/events) for the
+        > Events documentation for the
 
         > list of event types and payload shapes.'
       tags:
@@ -128,7 +128,7 @@ paths:
 
         > produced in that organization. See the
 
-        > [Events documentation](../../../guides/events) for the
+        > Events documentation for the
 
         > list of event types and payload shapes.'
       tags:
@@ -178,7 +178,7 @@ paths:
 
         > produced in that organization. See the
 
-        > [Events documentation](../../../guides/events) for the
+        > Events documentation for the
 
         > list of event types and payload shapes.'
       tags:
@@ -245,7 +245,7 @@ paths:
 
         > produced in that organization. See the
 
-        > [Events documentation](../../../guides/events) for the
+        > Events documentation for the
 
         > list of event types and payload shapes.
 
@@ -254,7 +254,7 @@ paths:
 
         configuration, use
 
-        [`POST /api/webhooks/{id}/disable`](../../../api-reference/webhooks/disable) instead.'
+        `POST /api/webhooks/{id}/disable` instead.'
       tags:
       - subpackage_webhooks
       parameters:
@@ -305,7 +305,7 @@ paths:
 
         > produced in that organization. See the
 
-        > [Events documentation](../../../../guides/events) for the
+        > Events documentation for the
 
         > list of event types and payload shapes.
 
@@ -316,7 +316,7 @@ paths:
 
         delivery, re-enable the webhook using
 
-        [`POST /api/webhooks/{id}/enable`](../../../../api-reference/webhooks/enable).'
+        `POST /api/webhooks/{id}/enable`.'
       tags:
       - subpackage_webhooks
       parameters:
@@ -377,7 +377,7 @@ paths:
 
         > produced in that organization. See the
 
-        > [Events documentation](../../../../guides/events) for the
+        > Events documentation for the
 
         > list of event types and payload shapes.
 
@@ -432,6 +432,39 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
+    Webhook:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        disabled:
+          type: boolean
+        endpoint:
+          type: string
+        id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        secret:
+          type: string
+      title: Webhook
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
     WebhookListEnvelope:
       type: object
       properties:
@@ -458,25 +491,6 @@ components:
       - endpoint
       - secret
       title: CreateWebhooksSchema
-    Webhook:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        disabled:
-          type: boolean
-        endpoint:
-          type: string
-        id:
-          type: string
-          format: uuid
-        organization_id:
-          type: string
-          format: uuid
-        secret:
-          type: string
-      title: Webhook
     UpdateWebhooksSchema:
       type: object
       properties:
@@ -493,20 +507,6 @@ components:
       - endpoint
       - secret
       title: UpdateWebhooksSchema
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
     WebhookEnvelope:
       type: object
       properties:

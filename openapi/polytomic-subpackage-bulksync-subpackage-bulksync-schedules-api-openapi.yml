@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference subpackage_bulkSync subpackage_bulkSync.subpackage_bulkSync/schedules API
+  title: Reference Subpackage Bulk Sync.subpackage Bulk…
   version: 1.0.0
 servers:
 - url: https://app.polytomic.com
@@ -78,7 +78,7 @@ paths:
 
         sync immediately, call
 
-        [`POST /api/bulk/syncs/{id}/executions`](../../../../../api-reference/bulk-sync/start).'
+        `POST /api/bulk/syncs/{id}/executions`.'
       tags:
       - subpackage_bulkSync.subpackage_bulkSync/schedules
       parameters:
@@ -148,11 +148,11 @@ paths:
 
         To see all schedules on this sync, use
 
-        [`GET /api/bulk/syncs/{sync_id}/schedules`](../../../../../../api-reference/bulk-sync/schedules/list).
+        `GET /api/bulk/syncs/{sync_id}/schedules`.
 
         To update the schedule, use
 
-        [`PUT /api/bulk/syncs/{sync_id}/schedules/{schedule_id}`](../../../../../../api-reference/bulk-sync/schedules/update).'
+        `PUT /api/bulk/syncs/{sync_id}/schedules/{schedule_id}`.'
       tags:
       - subpackage_bulkSync.subpackage_bulkSync/schedules
       parameters:
@@ -341,44 +341,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
-    CreateScheduleRequest:
-      type: object
-      properties:
-        schedule:
-          $ref: '#/components/schemas/BulkSyncScheduleAPI'
-      required:
-      - schedule
-      title: CreateScheduleRequest
-    ScheduleEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/BulkBulkSyncSchedule'
-      title: ScheduleEnvelope
-    SchedulesEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkBulkSyncSchedule'
-      title: SchedulesEnvelope
     BulkBulkSyncSchedule:
       type: object
       properties:
@@ -430,14 +392,6 @@ components:
       required:
       - frequency
       title: BulkBulkSyncSchedule
-    UpdateScheduleRequest:
-      type: object
-      properties:
-        schedule:
-          $ref: '#/components/schemas/BulkSyncScheduleAPI'
-      required:
-      - schedule
-      title: UpdateScheduleRequest
     ScheduleFrequency:
       type: string
       enum:
@@ -452,6 +406,14 @@ components:
       - multi
       - dbtcloud
       title: ScheduleFrequency
+    CreateScheduleRequest:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/BulkSyncScheduleAPI'
+      required:
+      - schedule
+      title: CreateScheduleRequest
     BulkScheduleSyncMode:
       type: string
       enum:
@@ -460,6 +422,33 @@ components:
       - resync
       - rebuild
       title: BulkScheduleSyncMode
+    ScheduleEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkBulkSyncSchedule'
+      title: ScheduleEnvelope
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    BulkSelectiveMode:
+      type: string
+      enum:
+      - none
+      - incrementalFields
+      - nonincrementalFields
+      title: BulkSelectiveMode
     BulkSyncScheduleAPI:
       type: object
       properties:
@@ -485,13 +474,24 @@ components:
       required:
       - frequency
       title: BulkSyncScheduleAPI
-    BulkSelectiveMode:
-      type: string
-      enum:
-      - none
-      - incrementalFields
-      - nonincrementalFields
-      title: BulkSelectiveMode
+    SchedulesEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkBulkSyncSchedule'
+      title: SchedulesEnvelope
+    UpdateScheduleRequest:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/BulkSyncScheduleAPI'
+      required:
+      - schedule
+      title: UpdateScheduleRequest
   securitySchemes:
     bearerUserAPIKey:
       type: http

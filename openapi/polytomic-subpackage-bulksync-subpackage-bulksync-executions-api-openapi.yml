@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference subpackage_bulkSync subpackage_bulkSync.subpackage_bulkSync/executions API
+  title: Reference Subpackage Bulk Sync.subpackage Bulk…
   version: 1.0.0
 servers:
 - url: https://app.polytomic.com
@@ -35,7 +35,7 @@ paths:
 
         For the full details of a single run — including per-schema execution status —
 
-        use [`GET /api/bulk/syncs/{id}/executions/{exec_id}`](../../../../../api-reference/bulk-sync/executions/get).'
+        use `GET /api/bulk/syncs/{id}/executions/{exec_id}`.'
       tags:
       - subpackage_bulkSync.subpackage_bulkSync/executions
       parameters:
@@ -112,9 +112,9 @@ paths:
 
         doing now?" If you need the full execution history or a single execution''s
 
-        details, use [`GET /api/bulk/syncs/{id}/executions`](../../../../api-reference/bulk-sync/executions/list) or
+        details, use `GET /api/bulk/syncs/{id}/executions` or
 
-        [`GET /api/bulk/syncs/{id}/executions/{exec_id}`](../../../../api-reference/bulk-sync/executions/get) instead.
+        `GET /api/bulk/syncs/{id}/executions/{exec_id}` instead.
 
 
         Setting `all=true` or `active=true` ignores any explicit `sync_id` filters and
@@ -384,7 +384,7 @@ paths:
 
         > 📘 To export logs asynchronously to a destination of your choice, use
 
-        > [`POST /api/bulk/syncs/{sync_id}/executions/{execution_id}/logs/export`](../../../../../../../api-reference/bulk-sync/executions/export-logs)
+        > `POST /api/bulk/syncs/{sync_id}/executions/{execution_id}/logs/export`
 
         > instead.'
       tags:
@@ -445,7 +445,7 @@ paths:
 
         > `job` descriptor instead of a completed result. Poll
 
-        > [`GET /api/jobs/exportlogs/{id}`](../../../../../../../../api-reference/jobs/get)
+        > `GET /api/jobs/exportlogs/{id}`
 
         > with the returned `job_id` until `status` is `done`; the final response
 
@@ -597,292 +597,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    WorkTaskStatus:
-      type: string
-      enum:
-      - created
-      - running
-      - done
-      - failed
-      title: WorkTaskStatus
-    BulkSyncExecutionStatus:
-      type: object
-      properties:
-        nextExecutionTime:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Next scheduled execution time, if the sync has a schedule configured.
-        schemas:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkSyncSchemaExecutionStatus'
-          description: Most recent execution status for each enabled schema in the sync.
-        status:
-          $ref: '#/components/schemas/BulkExecutionStatus'
-        sync_id:
-          type: string
-          format: uuid
-          description: Unique identifier of the bulk sync.
-      title: BulkSyncExecutionStatus
-    JobResponse:
-      type: object
-      properties:
-        error:
-          type:
-          - string
-          - 'null'
-          description: Error message if the job failed.
-        job_id:
-          type: string
-          format: uuid
-          description: Identifier of the job.
-        result:
-          description: Job result. Shape depends on the job type; only populated once status is done.
-        status:
-          $ref: '#/components/schemas/WorkTaskStatus'
-        type:
-          type: string
-          description: Job type. Matches the type used to fetch the job.
-      title: JobResponse
-    BulkSchemaExecutionStatus:
-      type: string
-      enum:
-      - created
-      - scheduled
-      - running
-      - exporting
-      - canceled
-      - completed
-      - failed
-      - interrupted
-      - processing
-      title: BulkSchemaExecutionStatus
-    BulkSyncSchemaExecution:
-      type: object
-      properties:
-        completed_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        created_at:
-          type: string
-          format: date-time
-        error_count:
-          type: integer
-          format: int64
-        output_name:
-          type: string
-        record_count:
-          type: integer
-          format: int64
-        schema:
-          type: string
-        started_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        status:
-          $ref: '#/components/schemas/BulkSchemaExecutionStatus'
-        status_message:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-        warning_count:
-          type: integer
-          format: int64
-      title: BulkSyncSchemaExecution
-    ExecutionConsoleLogsResponse:
-      type: object
-      properties:
-        entries:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ExecutionConsoleLogEntry'
-        next_cursor:
-          type:
-          - string
-          - 'null'
-      title: ExecutionConsoleLogsResponse
-    ExportSyncLogsResponse:
-      type: object
-      properties:
-        url:
-          type: string
-          description: Signed URL to download the exported log archive.
-      title: ExportSyncLogsResponse
-    CancelBulkSyncResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CancelBulkSyncResponse'
-      title: CancelBulkSyncResponseEnvelope
-    BulkOutputDisposition:
-      type: string
-      enum:
-      - retain
-      - truncate
-      - rebuild
-      title: BulkOutputDisposition
-    PaginationDetails:
-      type: object
-      properties:
-        next_page_token:
-          type: string
-      title: PaginationDetails
-    ExecutionConsoleLogEntry:
-      type: object
-      properties:
-        id:
-          type: string
-        level:
-          type: string
-        message:
-          type: string
-        payload:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            description: Any type
-        timestamp:
-          type: string
-          format: date-time
-      title: ExecutionConsoleLogEntry
-    BulkSyncExecutionEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/BulkSyncExecution'
-      title: BulkSyncExecutionEnvelope
-    BulkSyncExecutionLogs:
-      type: object
-      properties:
-        Expires:
-          type: string
-          format: date-time
-          description: Timestamp at which the signed URLs in URLs stop working.
-        URLs:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Signed URLs that download the execution's log files. These URLs expire at the Expires timestamp.
-      title: BulkSyncExecutionLogs
-    BulkFetchMode:
-      type: string
-      enum:
-      - none
-      - incremental
-      - full
-      description: How the data is fetched. 'none' is normal operation for Polytomic. 'incremental' and 'full' apply to syncs from Salesforce. 'incremental' indicates the data is synced incrementally using record modification time. 'full' is necessary to catch up to the latest values for formula fields and rollup fields whose updates don't show up in incremental runs due to limitations in Salesforce.
-      title: BulkFetchMode
-    BulkSyncExecutionLogsEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/BulkSyncExecutionLogs'
-      title: BulkSyncExecutionLogsEnvelope
-    ExportSyncLogsEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ExportSyncLogsResponse'
-        job:
-          $ref: '#/components/schemas/JobResponse'
-      title: ExportSyncLogsEnvelope
-    ListBulkSyncExecutionsEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkSyncExecution'
-        pagination:
-          $ref: '#/components/schemas/PaginationDetails'
-      title: ListBulkSyncExecutionsEnvelope
-    BulkExecutionStatus:
-      type: string
-      enum:
-      - created
-      - scheduled
-      - running
-      - exporting
-      - canceling
-      - canceled
-      - completed
-      - failed
-      - processing
-      - errors
-      - interrupted
-      title: BulkExecutionStatus
-    ListBulkSyncExecutionsStatusEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkSyncExecutionStatus'
-      title: ListBulkSyncExecutionsStatusEnvelope
-    BulkSyncSchemaExecutionStatus:
-      type: object
-      properties:
-        completed_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Timestamp when the most recent execution finished. Null while the execution is still running.
-        error_count:
-          type: integer
-          format: int64
-          description: Number of errors emitted during the most recent execution.
-        execution_id:
-          type: string
-          format: uuid
-          description: ID of the most recent execution for the schema.
-        record_count:
-          type: integer
-          format: int64
-          description: Number of records processed in the most recent execution.
-        schema:
-          type: string
-          description: Schema (table or object) identifier.
-        started_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Timestamp when the most recent execution started.
-        status:
-          $ref: '#/components/schemas/BulkSchemaExecutionStatus'
-        status_message:
-          type: string
-          description: Human-readable detail for the current status (e.g. an error message when status is failed).
-        warning_count:
-          type: integer
-          format: int64
-          description: Number of warnings emitted during the most recent execution.
-      title: BulkSyncSchemaExecutionStatus
-    ExecutionConsoleLogsResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ExecutionConsoleLogsResponse'
-      title: ExecutionConsoleLogsResponseEnvelope
     BulkSyncExecution:
       type: object
       properties:
@@ -937,6 +651,72 @@ components:
           type: integer
           format: int64
       title: BulkSyncExecution
+    BulkSyncSchemaExecutionStatus:
+      type: object
+      properties:
+        completed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the most recent execution finished. Null while the execution is still running.
+        error_count:
+          type: integer
+          format: int64
+          description: Number of errors emitted during the most recent execution.
+        execution_id:
+          type: string
+          format: uuid
+          description: ID of the most recent execution for the schema.
+        record_count:
+          type: integer
+          format: int64
+          description: Number of records processed in the most recent execution.
+        schema:
+          type: string
+          description: Schema (table or object) identifier.
+        started_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the most recent execution started.
+        status:
+          $ref: '#/components/schemas/BulkSchemaExecutionStatus'
+        status_message:
+          type: string
+          description: Human-readable detail for the current status (e.g. an error message when status is failed).
+        warning_count:
+          type: integer
+          format: int64
+          description: Number of warnings emitted during the most recent execution.
+      title: BulkSyncSchemaExecutionStatus
+    JobResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - string
+          - 'null'
+          description: Error message if the job failed.
+        job_id:
+          type: string
+          format: uuid
+          description: Identifier of the job.
+        result:
+          description: Job result. Shape depends on the job type; only populated once status is done.
+        status:
+          $ref: '#/components/schemas/WorkTaskStatus'
+        type:
+          type: string
+          description: Job type. Matches the type used to fetch the job.
+      title: JobResponse
+    CancelBulkSyncResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CancelBulkSyncResponse'
+      title: CancelBulkSyncResponseEnvelope
     ApiError:
       type: object
       properties:
@@ -951,12 +731,232 @@ components:
         status:
           type: integer
       title: ApiError
+    BulkSyncExecutionEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkSyncExecution'
+      title: BulkSyncExecutionEnvelope
+    BulkSyncExecutionLogs:
+      type: object
+      properties:
+        Expires:
+          type: string
+          format: date-time
+          description: Timestamp at which the signed URLs in URLs stop working.
+        URLs:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Signed URLs that download the execution's log files. These URLs expire at the Expires timestamp.
+      title: BulkSyncExecutionLogs
+    PaginationDetails:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+      title: PaginationDetails
+    BulkExecutionStatus:
+      type: string
+      enum:
+      - created
+      - scheduled
+      - running
+      - exporting
+      - canceling
+      - canceled
+      - completed
+      - failed
+      - processing
+      - errors
+      - interrupted
+      title: BulkExecutionStatus
+    ListBulkSyncExecutionsEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSyncExecution'
+        pagination:
+          $ref: '#/components/schemas/PaginationDetails'
+      title: ListBulkSyncExecutionsEnvelope
+    ExportSyncLogsEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ExportSyncLogsResponse'
+        job:
+          $ref: '#/components/schemas/JobResponse'
+      title: ExportSyncLogsEnvelope
+    BulkSchemaExecutionStatus:
+      type: string
+      enum:
+      - created
+      - scheduled
+      - running
+      - exporting
+      - canceled
+      - completed
+      - failed
+      - interrupted
+      - processing
+      title: BulkSchemaExecutionStatus
+    BulkFetchMode:
+      type: string
+      enum:
+      - none
+      - incremental
+      - full
+      description: How the data is fetched. 'none' is normal operation for Polytomic. 'incremental' and 'full' apply to syncs from Salesforce. 'incremental' indicates the data is synced incrementally using record modification time. 'full' is necessary to catch up to the latest values for formula fields and rollup fields whose updates don't show up in incremental runs due to limitations in Salesforce.
+      title: BulkFetchMode
+    BulkSyncExecutionStatus:
+      type: object
+      properties:
+        nextExecutionTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Next scheduled execution time, if the sync has a schedule configured.
+        schemas:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSyncSchemaExecutionStatus'
+          description: Most recent execution status for each enabled schema in the sync.
+        status:
+          $ref: '#/components/schemas/BulkExecutionStatus'
+        sync_id:
+          type: string
+          format: uuid
+          description: Unique identifier of the bulk sync.
+      title: BulkSyncExecutionStatus
+    ExportSyncLogsResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Signed URL to download the exported log archive.
+      title: ExportSyncLogsResponse
+    ListBulkSyncExecutionsStatusEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSyncExecutionStatus'
+      title: ListBulkSyncExecutionsStatusEnvelope
+    ExecutionConsoleLogsResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ExecutionConsoleLogsResponse'
+      title: ExecutionConsoleLogsResponseEnvelope
+    WorkTaskStatus:
+      type: string
+      enum:
+      - created
+      - running
+      - done
+      - failed
+      title: WorkTaskStatus
+    BulkOutputDisposition:
+      type: string
+      enum:
+      - retain
+      - truncate
+      - rebuild
+      title: BulkOutputDisposition
+    BulkSyncExecutionLogsEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkSyncExecutionLogs'
+      title: BulkSyncExecutionLogsEnvelope
+    ExecutionConsoleLogsResponse:
+      type: object
+      properties:
+        entries:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ExecutionConsoleLogEntry'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+      title: ExecutionConsoleLogsResponse
+    ExecutionConsoleLogEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        level:
+          type: string
+        message:
+          type: string
+        payload:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+        timestamp:
+          type: string
+          format: date-time
+      title: ExecutionConsoleLogEntry
     CancelBulkSyncResponse:
       type: object
       properties:
         message:
           type: string
       title: CancelBulkSyncResponse
+    BulkSyncSchemaExecution:
+      type: object
+      properties:
+        completed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        error_count:
+          type: integer
+          format: int64
+        output_name:
+          type: string
+        record_count:
+          type: integer
+          format: int64
+        schema:
+          type: string
+        started_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        status:
+          $ref: '#/components/schemas/BulkSchemaExecutionStatus'
+        status_message:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        warning_count:
+          type: integer
+          format: int64
+      title: BulkSyncSchemaExecution
   securitySchemes:
     bearerUserAPIKey:
       type: http

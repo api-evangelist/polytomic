@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference subpackage_bulkSync subpackage_organization API
+  title: Reference Subpackage Organization API
   version: 1.0.0
 servers:
 - url: https://app.polytomic.com
@@ -25,9 +25,9 @@ paths:
 
         If you need to enumerate or look up organizations across a partner account, use
 
-        [`GET /api/organizations`](../../api-reference/organization/list) or
+        `GET /api/organizations` or
 
-        [`GET /api/organizations/{id}`](../../api-reference/organization/get) instead.'
+        `GET /api/organizations/{id}` instead.'
       tags:
       - subpackage_organization
       parameters:
@@ -88,7 +88,7 @@ paths:
 
         If you need only the organization implied by the current credential, use
 
-        [`GET /api/organization`](../../api-reference/organization/get-current) instead.'
+        `GET /api/organization` instead.'
       tags:
       - subpackage_organization
       parameters:
@@ -126,7 +126,7 @@ paths:
 
         >
 
-        > This endpoint is only accessible using [partner keys](../../guides/obtaining-api-keys#partner-keys).
+        > This endpoint is only accessible using partner keys.
 
 
         SSO and OIDC settings supplied at creation time can be updated later via
@@ -248,7 +248,7 @@ paths:
 
         >
 
-        > This endpoint is only accessible using [partner keys](../../../guides/obtaining-api-keys#partner-keys).
+        > This endpoint is only accessible using partner keys.
 
 
         > 📘 SSO and OIDC configuration is replaced in full on each update. Include all
@@ -362,50 +362,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    UpdateOrganizationRequestSchema:
-      type: object
-      properties:
-        client_id:
-          type: string
-          description: OIDC client ID issued by the identity provider.
-        client_secret:
-          type: string
-          description: OIDC client secret issued by the identity provider. Write-only; never returned in responses.
-        issuer:
-          type: string
-          description: OIDC issuer URL for organizations using OpenID Connect single sign-on.
-        name:
-          type: string
-          description: Human-readable name of the organization. Must be unique across the partner account.
-        sso_domain:
-          type: string
-          description: Email domain used to match users to this organization during SSO sign-in.
-        sso_org_id:
-          type: string
-          description: WorkOS organization identifier linking this organization to its SAML/SSO configuration.
-      required:
-      - name
-      title: UpdateOrganizationRequestSchema
-    Organization:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier of the organization.
-        issuer:
-          type: string
-          description: OIDC issuer URL for organizations using OpenID Connect single sign-on.
-        name:
-          type: string
-          description: Human-readable name of the organization.
-        sso_domain:
-          type: string
-          description: Email domain used to match users to this organization during SSO sign-in.
-        sso_org_id:
-          type: string
-          description: WorkOS organization identifier linking this organization to its SAML/SSO configuration.
-      title: Organization
     CreateOrganizationRequestSchema:
       type: object
       properties:
@@ -430,16 +386,12 @@ components:
       required:
       - name
       title: CreateOrganizationRequestSchema
-    OrganizationsEnvelope:
+    OrganizationEnvelope:
       type: object
       properties:
         data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Organization'
-      title: OrganizationsEnvelope
+          $ref: '#/components/schemas/Organization'
+      title: OrganizationEnvelope
     ApiError:
       type: object
       properties:
@@ -454,12 +406,60 @@ components:
         status:
           type: integer
       title: ApiError
-    OrganizationEnvelope:
+    OrganizationsEnvelope:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/Organization'
-      title: OrganizationEnvelope
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Organization'
+      title: OrganizationsEnvelope
+    Organization:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the organization.
+        issuer:
+          type: string
+          description: OIDC issuer URL for organizations using OpenID Connect single sign-on.
+        name:
+          type: string
+          description: Human-readable name of the organization.
+        sso_domain:
+          type: string
+          description: Email domain used to match users to this organization during SSO sign-in.
+        sso_org_id:
+          type: string
+          description: WorkOS organization identifier linking this organization to its SAML/SSO configuration.
+      title: Organization
+    UpdateOrganizationRequestSchema:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: OIDC client ID issued by the identity provider.
+        client_secret:
+          type: string
+          description: OIDC client secret issued by the identity provider. Write-only; never returned in responses.
+        issuer:
+          type: string
+          description: OIDC issuer URL for organizations using OpenID Connect single sign-on.
+        name:
+          type: string
+          description: Human-readable name of the organization. Must be unique across the partner account.
+        sso_domain:
+          type: string
+          description: Email domain used to match users to this organization during SSO sign-in.
+        sso_org_id:
+          type: string
+          description: WorkOS organization identifier linking this organization to its SAML/SSO configuration.
+      required:
+      - name
+      title: UpdateOrganizationRequestSchema
   securitySchemes:
     bearerUserAPIKey:
       type: http

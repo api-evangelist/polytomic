@@ -432,6 +432,20 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
     Webhook:
       type: object
       properties:
@@ -451,30 +465,6 @@ components:
         secret:
           type: string
       title: Webhook
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
-    WebhookListEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Webhook'
-      title: WebhookListEnvelope
     CreateWebhooksSchema:
       type: object
       properties:
@@ -491,6 +481,22 @@ components:
       - endpoint
       - secret
       title: CreateWebhooksSchema
+    WebhookEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Webhook'
+      title: WebhookEnvelope
+    WebhookListEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Webhook'
+      title: WebhookListEnvelope
     UpdateWebhooksSchema:
       type: object
       properties:
@@ -507,12 +513,6 @@ components:
       - endpoint
       - secret
       title: UpdateWebhooksSchema
-    WebhookEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Webhook'
-      title: WebhookEnvelope
   securitySchemes:
     bearerUserAPIKey:
       type: http

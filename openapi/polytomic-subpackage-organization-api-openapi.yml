@@ -386,56 +386,6 @@ components:
       required:
       - name
       title: CreateOrganizationRequestSchema
-    OrganizationEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Organization'
-      title: OrganizationEnvelope
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
-    OrganizationsEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Organization'
-      title: OrganizationsEnvelope
-    Organization:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier of the organization.
-        issuer:
-          type: string
-          description: OIDC issuer URL for organizations using OpenID Connect single sign-on.
-        name:
-          type: string
-          description: Human-readable name of the organization.
-        sso_domain:
-          type: string
-          description: Email domain used to match users to this organization during SSO sign-in.
-        sso_org_id:
-          type: string
-          description: WorkOS organization identifier linking this organization to its SAML/SSO configuration.
-      title: Organization
     UpdateOrganizationRequestSchema:
       type: object
       properties:
@@ -460,6 +410,56 @@ components:
       required:
       - name
       title: UpdateOrganizationRequestSchema
+    OrganizationsEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Organization'
+      title: OrganizationsEnvelope
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    OrganizationEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Organization'
+      title: OrganizationEnvelope
+    Organization:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the organization.
+        issuer:
+          type: string
+          description: OIDC issuer URL for organizations using OpenID Connect single sign-on.
+        name:
+          type: string
+          description: Human-readable name of the organization.
+        sso_domain:
+          type: string
+          description: Email domain used to match users to this organization during SSO sign-in.
+        sso_org_id:
+          type: string
+          description: WorkOS organization identifier linking this organization to its SAML/SSO configuration.
+      title: Organization
   securitySchemes:
     bearerUserAPIKey:
       type: http

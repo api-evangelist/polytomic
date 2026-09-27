@@ -295,184 +295,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    TargetPropertyValuesEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/TargetPropertyValues'
-      title: TargetPropertyValuesEnvelope
-    UtilEnumValue:
-      type: object
-      properties:
-        label:
-          type:
-          - string
-          - 'null'
-        value:
-          type: string
-      title: UtilEnumValue
-    TargetObject:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The identifier of the target object.
-        modes:
-          type: array
-          items:
-            $ref: '#/components/schemas/SupportedMode'
-          description: The supported sync modes and their properties for the target object.
-        name:
-          type: string
-          description: The name of the target object.
-      title: TargetObject
-    SupportedMode:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ModelsyncSyncTargetMode'
-        requires_identity:
-          type: boolean
-          description: True if the sync mode requires an identity field mapping.
-        supports_per_field_mode:
-          type: boolean
-          description: True if the target supports per-field sync modes.
-        supports_target_filters:
-          type: boolean
-          description: True if the sync mode supports target filters.
-      title: SupportedMode
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
-    IdentityFunction:
-      type: object
-      properties:
-        id:
-          type: string
-        label:
-          type: string
-      title: IdentityFunction
-    TargetField:
-      type: object
-      properties:
-        association:
-          type: boolean
-        createable:
-          type: boolean
-        description:
-          type: string
-        encryptable:
-          type: boolean
-        filterable:
-          type: boolean
-        id:
-          type: string
-        identity_functions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/IdentityFunction'
-        name:
-          type: string
-        required:
-          type: boolean
-        source_type:
-          type: string
-        supports_identity:
-          type: boolean
-        type:
-          type: string
-        updateable:
-          type: boolean
-      title: TargetField
-    TargetPropertyValues:
-      type: object
-      properties:
-        enum:
-          type: boolean
-          description: True if the property is an enum.
-        id:
-          type: string
-          description: The identifier of the target property.
-        title:
-          type: string
-          description: A human readable title for the target property.
-        values:
-          type: array
-          items:
-            $ref: '#/components/schemas/UtilEnumValue'
-          description: Valid values for the target property.
-      title: TargetPropertyValues
-    Mode:
-      type: object
-      properties:
-        description:
-          type: string
-        label:
-          type: string
-        mode:
-          type: string
-        requires_identity:
-          type: boolean
-        supports_field_sync_mode:
-          type: boolean
-        supports_target_filters:
-          type: boolean
-      title: Mode
-    ModelsyncSyncTargetMode:
-      type: string
-      enum:
-      - create
-      - update
-      - updateOrCreate
-      - replace
-      - append
-      - remove
-      - snapshot
-      title: ModelsyncSyncTargetMode
-    TargetResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/TargetResponse'
-      title: TargetResponseEnvelope
-    TargetResponse:
-      type: object
-      properties:
-        fields:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TargetField'
-        id:
-          type: string
-        modes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Mode'
-        name:
-          type: string
-        properties:
-          $ref: '#/components/schemas/SyncDestinationProperties'
-        refreshed_at:
-          type: string
-          format: date-time
-      title: TargetResponse
     TargetCreator:
       type: object
       properties:
@@ -515,6 +337,120 @@ components:
         use_field_names_as_labels:
           type: boolean
       title: SyncDestinationProperties
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    TargetResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TargetResponse'
+      title: TargetResponseEnvelope
+    TargetPropertyValuesEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TargetPropertyValues'
+      title: TargetPropertyValuesEnvelope
+    TargetField:
+      type: object
+      properties:
+        association:
+          type: boolean
+        createable:
+          type: boolean
+        description:
+          type: string
+        encryptable:
+          type: boolean
+        filterable:
+          type: boolean
+        id:
+          type: string
+        identity_functions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IdentityFunction'
+        name:
+          type: string
+        required:
+          type: boolean
+        source_type:
+          type: string
+        supports_identity:
+          type: boolean
+        type:
+          type: string
+        updateable:
+          type: boolean
+      title: TargetField
+    SupportedMode:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ModelsyncSyncTargetMode'
+        requires_identity:
+          type: boolean
+          description: True if the sync mode requires an identity field mapping.
+        supports_per_field_mode:
+          type: boolean
+          description: True if the target supports per-field sync modes.
+        supports_target_filters:
+          type: boolean
+          description: True if the sync mode supports target filters.
+      title: SupportedMode
+    UtilEnumValue:
+      type: object
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+        value:
+          type: string
+      title: UtilEnumValue
+    TargetPropertyValues:
+      type: object
+      properties:
+        enum:
+          type: boolean
+          description: True if the property is an enum.
+        id:
+          type: string
+          description: The identifier of the target property.
+        title:
+          type: string
+          description: A human readable title for the target property.
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/UtilEnumValue'
+          description: Valid values for the target property.
+      title: TargetPropertyValues
+    ModelsyncSyncTargetMode:
+      type: string
+      enum:
+      - create
+      - update
+      - updateOrCreate
+      - replace
+      - append
+      - remove
+      - snapshot
+      title: ModelsyncSyncTargetMode
     TargetObjectsResponseEnvelope:
       type: object
       properties:
@@ -527,6 +463,46 @@ components:
         target_creation:
           $ref: '#/components/schemas/TargetCreator'
       title: TargetObjectsResponseEnvelope
+    TargetObject:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier of the target object.
+        modes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedMode'
+          description: The supported sync modes and their properties for the target object.
+        name:
+          type: string
+          description: The name of the target object.
+      title: TargetObject
+    TargetResponse:
+      type: object
+      properties:
+        fields:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TargetField'
+        id:
+          type: string
+        modes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Mode'
+        name:
+          type: string
+        properties:
+          $ref: '#/components/schemas/SyncDestinationProperties'
+        refreshed_at:
+          type: string
+          format: date-time
+      title: TargetResponse
     TargetCreateInput:
       type: object
       properties:
@@ -540,6 +516,30 @@ components:
           type: string
           description: A human readable title for the target property.
       title: TargetCreateInput
+    Mode:
+      type: object
+      properties:
+        description:
+          type: string
+        label:
+          type: string
+        mode:
+          type: string
+        requires_identity:
+          type: boolean
+        supports_field_sync_mode:
+          type: boolean
+        supports_target_filters:
+          type: boolean
+      title: Mode
+    IdentityFunction:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+      title: IdentityFunction
   securitySchemes:
     bearerUserAPIKey:
       type: http

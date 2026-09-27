@@ -413,45 +413,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    CancelSyncExecutionResponse:
-      type: object
-      properties:
-        message:
-          type: string
-      title: CancelSyncExecutionResponse
-    ExecutionLogResponse:
-      type: object
-      properties:
-        expires:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        urls:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      title: ExecutionLogResponse
-    ListExecutionResponseEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GetExecutionResponseSchema'
-        pagination:
-          $ref: '#/components/schemas/PaginationDetails'
-      title: ListExecutionResponseEnvelope
-    CancelSyncExecutionResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CancelSyncExecutionResponse'
-      title: CancelSyncExecutionResponseEnvelope
     ExecutionConsoleLogsResponse:
       type: object
       properties:
@@ -466,39 +427,28 @@ components:
           - string
           - 'null'
       title: ExecutionConsoleLogsResponse
-    ExecutionConsoleLogEntry:
+    PaginationDetails:
       type: object
       properties:
-        id:
+        next_page_token:
           type: string
-        level:
-          type: string
-        message:
-          type: string
-        payload:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            description: Any type
-        timestamp:
-          type: string
-          format: date-time
-      title: ExecutionConsoleLogEntry
-    ApiError:
+      title: PaginationDetails
+    CancelSyncExecutionResponseEnvelope:
       type: object
       properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
+        data:
+          $ref: '#/components/schemas/CancelSyncExecutionResponse'
+      title: CancelSyncExecutionResponseEnvelope
+    ExecutionLogType:
+      type: string
+      enum:
+      - records
+      - errors
+      - warnings
+      - inserts
+      - updates
+      - deletes
+      title: ExecutionLogType
     ExecutionCounts:
       type: object
       properties:
@@ -524,34 +474,20 @@ components:
           type: integer
           format: int64
       title: ExecutionCounts
-    ExecutionConsoleLogsResponseEnvelope:
+    ApiError:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/ExecutionConsoleLogsResponse'
-      title: ExecutionConsoleLogsResponseEnvelope
-    ExecutionLogsResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ExecutionLogResponse'
-      title: ExecutionLogsResponseEnvelope
-    GetExecutionResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/GetExecutionResponseSchema'
-      title: GetExecutionResponseEnvelope
-    ExecutionLogType:
-      type: string
-      enum:
-      - records
-      - errors
-      - warnings
-      - inserts
-      - updates
-      - deletes
-      title: ExecutionLogType
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
     UtilExecutionStatus:
       type: string
       enum:
@@ -567,6 +503,64 @@ components:
       - failed
       - interrupted
       title: UtilExecutionStatus
+    ExecutionLogResponse:
+      type: object
+      properties:
+        expires:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        urls:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      title: ExecutionLogResponse
+    ExecutionConsoleLogsResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ExecutionConsoleLogsResponse'
+      title: ExecutionConsoleLogsResponseEnvelope
+    ExecutionConsoleLogEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        level:
+          type: string
+        message:
+          type: string
+        payload:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+        timestamp:
+          type: string
+          format: date-time
+      title: ExecutionConsoleLogEntry
+    ListExecutionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GetExecutionResponseSchema'
+        pagination:
+          $ref: '#/components/schemas/PaginationDetails'
+      title: ListExecutionResponseEnvelope
+    CancelSyncExecutionResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      title: CancelSyncExecutionResponse
     GetExecutionResponseSchema:
       type: object
       properties:
@@ -597,12 +591,18 @@ components:
         type:
           type: string
       title: GetExecutionResponseSchema
-    PaginationDetails:
+    GetExecutionResponseEnvelope:
       type: object
       properties:
-        next_page_token:
-          type: string
-      title: PaginationDetails
+        data:
+          $ref: '#/components/schemas/GetExecutionResponseSchema'
+      title: GetExecutionResponseEnvelope
+    ExecutionLogsResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ExecutionLogResponse'
+      title: ExecutionLogsResponseEnvelope
   securitySchemes:
     bearerUserAPIKey:
       type: http

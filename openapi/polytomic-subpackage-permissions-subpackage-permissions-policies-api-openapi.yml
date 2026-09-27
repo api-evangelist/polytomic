@@ -318,6 +318,22 @@ components:
       - action
       - role_ids
       title: PolicyAction
+    PolicyResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/PolicyResponse'
+      title: PolicyResponseEnvelope
+    ListPoliciesResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PolicyResponse'
+      title: ListPoliciesResponseEnvelope
     ApiError:
       type: object
       properties:
@@ -332,42 +348,6 @@ components:
         status:
           type: integer
       title: ApiError
-    PolicyResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/PolicyResponse'
-      title: PolicyResponseEnvelope
-    UpdatePolicyRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        organization_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        policy_actions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PolicyAction'
-      required:
-      - name
-      - policy_actions
-      title: UpdatePolicyRequest
-    ListPoliciesResponseEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PolicyResponse'
-      title: ListPoliciesResponseEnvelope
     CreatePolicyRequest:
       type: object
       properties:
@@ -388,6 +368,26 @@ components:
       - name
       - policy_actions
       title: CreatePolicyRequest
+    UpdatePolicyRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        policy_actions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PolicyAction'
+      required:
+      - name
+      - policy_actions
+      title: UpdatePolicyRequest
   securitySchemes:
     bearerUserAPIKey:
       type: http

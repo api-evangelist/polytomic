@@ -285,20 +285,12 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    RoleResponse:
+    RoleResponseEnvelope:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        organization_id:
-          type: string
-          format: uuid
-        system:
-          type: boolean
-      title: RoleResponse
+        data:
+          $ref: '#/components/schemas/RoleResponse'
+      title: RoleResponseEnvelope
     RoleListResponseEnvelope:
       type: object
       properties:
@@ -323,12 +315,6 @@ components:
         status:
           type: integer
       title: ApiError
-    RoleResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/RoleResponse'
-      title: RoleResponseEnvelope
     UpdateRoleRequest:
       type: object
       properties:
@@ -355,6 +341,20 @@ components:
       required:
       - name
       title: CreateRoleRequest
+    RoleResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        system:
+          type: boolean
+      title: RoleResponse
   securitySchemes:
     bearerUserAPIKey:
       type: http

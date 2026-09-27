@@ -341,6 +341,16 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
+    SchedulesEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkBulkSyncSchedule'
+      title: SchedulesEnvelope
     BulkBulkSyncSchedule:
       type: object
       properties:
@@ -392,20 +402,6 @@ components:
       required:
       - frequency
       title: BulkBulkSyncSchedule
-    ScheduleFrequency:
-      type: string
-      enum:
-      - manual
-      - continuous
-      - hourly
-      - daily
-      - weekly
-      - custom
-      - builder
-      - runafter
-      - multi
-      - dbtcloud
-      title: ScheduleFrequency
     CreateScheduleRequest:
       type: object
       properties:
@@ -414,20 +410,6 @@ components:
       required:
       - schedule
       title: CreateScheduleRequest
-    BulkScheduleSyncMode:
-      type: string
-      enum:
-      - normal
-      - refetch
-      - resync
-      - rebuild
-      title: BulkScheduleSyncMode
-    ScheduleEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/BulkBulkSyncSchedule'
-      title: ScheduleEnvelope
     ApiError:
       type: object
       properties:
@@ -442,6 +424,26 @@ components:
         status:
           type: integer
       title: ApiError
+    ScheduleEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkBulkSyncSchedule'
+      title: ScheduleEnvelope
+    ScheduleFrequency:
+      type: string
+      enum:
+      - manual
+      - continuous
+      - hourly
+      - daily
+      - weekly
+      - custom
+      - builder
+      - runafter
+      - multi
+      - dbtcloud
+      title: ScheduleFrequency
     BulkSelectiveMode:
       type: string
       enum:
@@ -474,16 +476,14 @@ components:
       required:
       - frequency
       title: BulkSyncScheduleAPI
-    SchedulesEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkBulkSyncSchedule'
-      title: SchedulesEnvelope
+    BulkScheduleSyncMode:
+      type: string
+      enum:
+      - normal
+      - refetch
+      - resync
+      - rebuild
+      title: BulkScheduleSyncMode
     UpdateScheduleRequest:
       type: object
       properties:

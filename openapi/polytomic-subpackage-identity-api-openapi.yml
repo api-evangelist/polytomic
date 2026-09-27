@@ -58,6 +58,12 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
+    GetIdentityResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GetIdentityResponseSchema'
+      title: GetIdentityResponseEnvelope
     ApiError:
       type: object
       properties:
@@ -105,12 +111,6 @@ components:
           type: string
           description: Deprecated legacy role name. Populated only for user callers.
       title: GetIdentityResponseSchema
-    GetIdentityResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/GetIdentityResponseSchema'
-      title: GetIdentityResponseEnvelope
   securitySchemes:
     bearerUserAPIKey:
       type: http

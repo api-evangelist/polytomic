@@ -163,6 +163,14 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
+    WorkTaskStatus:
+      type: string
+      enum:
+      - created
+      - running
+      - done
+      - failed
+      title: WorkTaskStatus
     RunQueryResult:
       type: object
       properties:
@@ -195,6 +203,10 @@ components:
         status:
           $ref: '#/components/schemas/WorkTaskStatus'
       title: RunQueryResult
+    RunQueryRequest:
+      type: object
+      properties: {}
+      title: RunQueryRequest
     ApiError:
       type: object
       properties:
@@ -209,14 +221,6 @@ components:
         status:
           type: integer
       title: ApiError
-    QueryResultsEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/RunQueryResult'
-        links:
-          $ref: '#/components/schemas/RunQueryPagination'
-      title: QueryResultsEnvelope
     RunQueryPagination:
       type: object
       properties:
@@ -227,24 +231,20 @@ components:
           type: string
           description: URL to the previous page of results, if available. This may be returned as a host relative path.
       title: RunQueryPagination
+    QueryResultsEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RunQueryResult'
+        links:
+          $ref: '#/components/schemas/RunQueryPagination'
+      title: QueryResultsEnvelope
     RunQueryEnvelope:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/RunQueryResult'
       title: RunQueryEnvelope
-    WorkTaskStatus:
-      type: string
-      enum:
-      - created
-      - running
-      - done
-      - failed
-      title: WorkTaskStatus
-    RunQueryRequest:
-      type: object
-      properties: {}
-      title: RunQueryRequest
   securitySchemes:
     bearerUserAPIKey:
       type: http

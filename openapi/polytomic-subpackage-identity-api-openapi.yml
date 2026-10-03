@@ -64,20 +64,6 @@ components:
         data:
           $ref: '#/components/schemas/GetIdentityResponseSchema'
       title: GetIdentityResponseEnvelope
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
     GetIdentityResponseSchema:
       type: object
       properties:
@@ -111,6 +97,20 @@ components:
           type: string
           description: Deprecated legacy role name. Populated only for user callers.
       title: GetIdentityResponseSchema
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
   securitySchemes:
     bearerUserAPIKey:
       type: http

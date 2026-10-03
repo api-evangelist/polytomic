@@ -417,19 +417,16 @@ components:
         user_output_name:
           type: string
       title: UpdateBulkSchema
-    BulkFilter:
+    UpdateBulkSyncSchemasEnvelope:
       type: object
       properties:
-        field_id:
-          type: string
-          description: Schema field ID to filter on.
-        function:
-          $ref: '#/components/schemas/FilterFunction'
-        value:
-          description: Any type
-      required:
-      - function
-      title: BulkFilter
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSchema'
+      title: UpdateBulkSyncSchemasEnvelope
     BulkSchemaListItem:
       type: object
       properties:
@@ -461,26 +458,6 @@ components:
           type: string
           description: User-specified override for the destination object name. When empty, output_name is used.
       title: BulkSchemaListItem
-    CancelBulkSyncResponse:
-      type: object
-      properties:
-        message:
-          type: string
-      title: CancelBulkSyncResponse
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
     BulkField:
       type: object
       properties:
@@ -495,45 +472,61 @@ components:
         user_output_name:
           type: string
       title: BulkField
-    FilterFunction:
-      type: string
-      enum:
-      - Equality
-      - Inequality
-      - IsNull
-      - IsNotNull
-      - 'True'
-      - 'False'
-      - OnOrAfter
-      - OnOrBefore
-      - GreaterThan
-      - GreaterThanEqual
-      - LessThan
-      - LessThanEqual
-      - StringContains
-      - StringStartsWith
-      - StringEndsWith
-      - StringDoesNotContain
-      - StringDoesNotStartWith
-      - StringDoesNotEndWith
-      - StringOneOf
-      - StringNotOneOf
-      - Between
-      - ArrayContains
-      - ArrayDoesNotContain
-      - InTheLast
-      - RelativeOnOrBefore
-      - RelativeOnOrAfter
-      - StringLike
-      - StringNotLike
-      - StringMatchesTrimmed
-      title: FilterFunction
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    ListBulkSchemaEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSchemaListItem'
+      title: ListBulkSchemaEnvelope
     CancelBulkSyncResponseEnvelope:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/CancelBulkSyncResponse'
       title: CancelBulkSyncResponseEnvelope
+    BulkFilter:
+      type: object
+      properties:
+        field_id:
+          type: string
+          description: Schema field ID to filter on.
+        function:
+          $ref: '#/components/schemas/FilterFunction'
+        value:
+          description: Any type
+      required:
+      - function
+      title: BulkFilter
+    UpdateBulkField:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        id:
+          type: string
+        obfuscated:
+          type: boolean
+        user_output_name:
+          type: string
+      title: UpdateBulkField
     BulkSchema:
       type: object
       properties:
@@ -567,6 +560,45 @@ components:
         user_output_name:
           type: string
       title: BulkSchema
+    FilterFunction:
+      type: string
+      enum:
+      - Equality
+      - Inequality
+      - IsNull
+      - IsNotNull
+      - 'True'
+      - 'False'
+      - OnOrAfter
+      - OnOrBefore
+      - GreaterThan
+      - GreaterThanEqual
+      - LessThan
+      - LessThanEqual
+      - StringContains
+      - StringStartsWith
+      - StringEndsWith
+      - StringDoesNotContain
+      - StringDoesNotStartWith
+      - StringDoesNotEndWith
+      - StringOneOf
+      - StringNotOneOf
+      - Between
+      - ArrayContains
+      - ArrayDoesNotContain
+      - InTheLast
+      - RelativeOnOrBefore
+      - RelativeOnOrAfter
+      - StringLike
+      - StringNotLike
+      - StringMatchesTrimmed
+      title: FilterFunction
+    BulkSchemaEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkSchema'
+      title: BulkSchemaEnvelope
     UpdateBulkSyncSchemasRequest:
       type: object
       properties:
@@ -578,44 +610,12 @@ components:
             $ref: '#/components/schemas/BulkSchema'
           description: Schemas to patch. Schemas are matched by id; only schemas present in this list are updated.
       title: UpdateBulkSyncSchemasRequest
-    UpdateBulkField:
+    CancelBulkSyncResponse:
       type: object
       properties:
-        enabled:
-          type: boolean
-        id:
+        message:
           type: string
-        obfuscated:
-          type: boolean
-        user_output_name:
-          type: string
-      title: UpdateBulkField
-    BulkSchemaEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/BulkSchema'
-      title: BulkSchemaEnvelope
-    ListBulkSchemaEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkSchemaListItem'
-      title: ListBulkSchemaEnvelope
-    UpdateBulkSyncSchemasEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkSchema'
-      title: UpdateBulkSyncSchemasEnvelope
+      title: CancelBulkSyncResponse
   securitySchemes:
     bearerUserAPIKey:
       type: http

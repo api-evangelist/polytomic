@@ -254,6 +254,23 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
+    EntityRelationship:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID of the related resource.
+        path:
+          type: string
+          description: Canonical REST path of the related resource.
+      title: EntityRelationship
+    EntityResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/EntityResponse'
+      title: EntityResponseEnvelope
     EntityResponse:
       type: object
       properties:
@@ -282,12 +299,6 @@ components:
           type: string
           description: 'Resolved entity type. One of: organization, user, connection, model, sync, sync_execution, bulk_sync, bulk_sync_execution.'
       title: EntityResponse
-    EntityResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/EntityResponse'
-      title: EntityResponseEnvelope
     ApiError:
       type: object
       properties:
@@ -302,17 +313,6 @@ components:
         status:
           type: integer
       title: ApiError
-    EntityRelationship:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: UUID of the related resource.
-        path:
-          type: string
-          description: Canonical REST path of the related resource.
-      title: EntityRelationship
   securitySchemes:
     bearerUserAPIKey:
       type: http

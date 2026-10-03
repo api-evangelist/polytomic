@@ -591,22 +591,155 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    Relation:
+    LabelLabel:
+      type: object
+      properties: {}
+      title: LabelLabel
+    SampleRecord:
+      type: object
+      additionalProperties:
+        type: object
+        additionalProperties:
+          description: Any type
+      description: 'A map of `fieldSource` -> `fieldName: fieldValue`. Because there may be field name conflicts between the base model and enrichments, the base model fields are placed in a map under the model ID. Fields from enrichments are placed under the enricher ID.'
+      title: SampleRecord
+    OutputActor:
       type: object
       properties:
-        from:
+        id:
           type: string
-        to:
-          $ref: '#/components/schemas/RelationTo'
-      title: Relation
-    WorkTaskStatus:
-      type: string
-      enum:
-      - created
-      - running
-      - done
-      - failed
-      title: WorkTaskStatus
+          format: uuid
+        name:
+          type: string
+        type:
+          type: string
+      title: OutputActor
+    EnrichmentInputFieldsRequest:
+      type: object
+      properties:
+        configuration:
+          $ref: '#/components/schemas/EnricherConfiguration'
+      title: EnrichmentInputFieldsRequest
+    SyncSourceMetaResponse:
+      type: object
+      properties:
+        configuration:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ConfigurationValue'
+          description: Additional configuration fields available for this source, keyed by field name.
+        items:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SourceMeta'
+          description: Map of configuration item name to its metadata (available values, required-one-of groups).
+        requires_one_of:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Configuration items where exactly one must be selected by the caller.
+      title: SyncSourceMetaResponse
+    ModelResponse:
+      type: object
+      properties:
+        configuration:
+          type: object
+          additionalProperties:
+            description: Any type
+        connection_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          $ref: '#/components/schemas/OutputActor'
+        enricher:
+          $ref: '#/components/schemas/Enrichment'
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelField'
+        id:
+          type: string
+          format: uuid
+        identifier:
+          type: string
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelLabel'
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        policies:
+          type: array
+          items:
+            type: string
+            format: uuid
+        relations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Relation'
+        tracking_columns:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        updated_by:
+          $ref: '#/components/schemas/OutputActor'
+        version:
+          type: integer
+      title: ModelResponse
+    ModelRelationTo:
+      type: object
+      properties:
+        field:
+          type: string
+        model_id:
+          type: string
+          format: uuid
+      title: ModelRelationTo
+    ConfigurationValue:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            description: Any type
+        type:
+          type: string
+      title: ConfigurationValue
+    Enrichment:
+      type: object
+      properties:
+        configuration:
+          $ref: '#/components/schemas/EnricherConfiguration'
+        connection_id:
+          type: string
+          format: uuid
+        enricher_id:
+          type: string
+          format: uuid
+          description: Must be provided to update an existing enrichment
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelField'
+          description: If not provided, all fields will be enabled.
+        mappings:
+          $ref: '#/components/schemas/EnricherMapping'
+      title: Enrichment
     GetSyncSourceMetaEnvelope:
       type: object
       properties:
@@ -677,45 +810,22 @@ components:
       - connection_id
       - name
       title: CreateModelRequest
-    ConfigurationValue:
+    ModelModelFieldRequest:
       type: object
       properties:
-        items:
-          type: array
-          items:
-            description: Any type
-        type:
+        example:
           type: string
-      title: ConfigurationValue
-    OutputActor:
-      type: object
-      properties:
-        id:
+        label:
           type: string
-          format: uuid
         name:
           type: string
         type:
           type: string
-      title: OutputActor
-    GetEnrichmentInputFieldsResponseEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            type: array
-            items:
-              type: string
-      title: GetEnrichmentInputFieldsResponseEnvelope
-    EnrichmentInputFieldsRequest:
-      type: object
-      properties:
-        configuration:
-          $ref: '#/components/schemas/EnricherConfiguration'
-      title: EnrichmentInputFieldsRequest
+      required:
+      - label
+      - name
+      - type
+      title: ModelModelFieldRequest
     ModelSampleResponseEnvelope:
       type: object
       properties:
@@ -724,26 +834,81 @@ components:
         job:
           $ref: '#/components/schemas/JobResponse'
       title: ModelSampleResponseEnvelope
-    Enrichment:
+    Relation:
       type: object
       properties:
-        configuration:
-          $ref: '#/components/schemas/EnricherConfiguration'
-        connection_id:
+        from:
           type: string
-          format: uuid
-        enricher_id:
-          type: string
-          format: uuid
-          description: Must be provided to update an existing enrichment
-        fields:
-          type: array
+        to:
+          $ref: '#/components/schemas/RelationTo'
+      title: Relation
+    ModelListResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
           items:
-            $ref: '#/components/schemas/ModelField'
-          description: If not provided, all fields will be enabled.
-        mappings:
-          $ref: '#/components/schemas/EnricherMapping'
-      title: Enrichment
+            $ref: '#/components/schemas/ModelResponse'
+      title: ModelListResponseEnvelope
+    JobResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - string
+          - 'null'
+          description: Error message if the job failed.
+        job_id:
+          type: string
+          format: uuid
+          description: Identifier of the job.
+        result:
+          description: Job result. Shape depends on the job type; only populated once status is done.
+        status:
+          $ref: '#/components/schemas/WorkTaskStatus'
+        type:
+          type: string
+          description: Job type. Matches the type used to fetch the job.
+      title: JobResponse
+    ModelField:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          $ref: '#/components/schemas/OutputActor'
+        description:
+          type: string
+        example:
+          description: Any type
+        id:
+          type: string
+          format: uuid
+        label:
+          type: string
+        name:
+          type: string
+        remote_type:
+          type: string
+        type:
+          type: string
+        unique:
+          type: boolean
+        updated_at:
+          type: string
+          format: date-time
+        user_added:
+          type: boolean
+      title: ModelField
+    EnricherConfiguration:
+      type: object
+      additionalProperties:
+        description: Any type
+      description: 'Similar to a model configuration, this configures the enricher. For example, if you wanted to use Apollo to enrich people, you would send `{"object": "people"}` as the configuration. Each enricher configuration can be found in the connection configuration docs.'
+      title: EnricherConfiguration
     UpdateModelRequest:
       type: object
       properties:
@@ -810,15 +975,32 @@ components:
       - connection_id
       - name
       title: UpdateModelRequest
-    RelationTo:
+    ApiError:
       type: object
       properties:
-        field:
+        key:
           type: string
-        model_id:
+        message:
           type: string
-          format: uuid
-      title: RelationTo
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    ModelSample:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/SampleRecord'
+        warnings:
+          type: array
+          items:
+            type: string
+      title: ModelSample
     SourceMeta:
       type: object
       properties:
@@ -848,199 +1030,6 @@ components:
         job:
           $ref: '#/components/schemas/JobResponse'
       title: ModelResponseEnvelope
-    LabelLabel:
-      type: object
-      properties: {}
-      title: LabelLabel
-    EnricherConfiguration:
-      type: object
-      additionalProperties:
-        description: Any type
-      description: 'Similar to a model configuration, this configures the enricher. For example, if you wanted to use Apollo to enrich people, you would send `{"object": "people"}` as the configuration. Each enricher configuration can be found in the connection configuration docs.'
-      title: EnricherConfiguration
-    ModelField:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        created_by:
-          $ref: '#/components/schemas/OutputActor'
-        description:
-          type: string
-        example:
-          description: Any type
-        id:
-          type: string
-          format: uuid
-        label:
-          type: string
-        name:
-          type: string
-        remote_type:
-          type: string
-        type:
-          type: string
-        unique:
-          type: boolean
-        updated_at:
-          type: string
-          format: date-time
-        user_added:
-          type: boolean
-      title: ModelField
-    ModelRelationTo:
-      type: object
-      properties:
-        field:
-          type: string
-        model_id:
-          type: string
-          format: uuid
-      title: ModelRelationTo
-    ModelResponse:
-      type: object
-      properties:
-        configuration:
-          type: object
-          additionalProperties:
-            description: Any type
-        connection_id:
-          type: string
-          format: uuid
-        created_at:
-          type: string
-          format: date-time
-        created_by:
-          $ref: '#/components/schemas/OutputActor'
-        enricher:
-          $ref: '#/components/schemas/Enrichment'
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModelField'
-        id:
-          type: string
-          format: uuid
-        identifier:
-          type: string
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/LabelLabel'
-        name:
-          type: string
-        organization_id:
-          type: string
-          format: uuid
-        policies:
-          type: array
-          items:
-            type: string
-            format: uuid
-        relations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Relation'
-        tracking_columns:
-          type: array
-          items:
-            type: string
-        type:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-        updated_by:
-          $ref: '#/components/schemas/OutputActor'
-        version:
-          type: integer
-      title: ModelResponse
-    JobResponse:
-      type: object
-      properties:
-        error:
-          type:
-          - string
-          - 'null'
-          description: Error message if the job failed.
-        job_id:
-          type: string
-          format: uuid
-          description: Identifier of the job.
-        result:
-          description: Job result. Shape depends on the job type; only populated once status is done.
-        status:
-          $ref: '#/components/schemas/WorkTaskStatus'
-        type:
-          type: string
-          description: Job type. Matches the type used to fetch the job.
-      title: JobResponse
-    ModelSample:
-      type: object
-      properties:
-        records:
-          type: array
-          items:
-            $ref: '#/components/schemas/SampleRecord'
-        warnings:
-          type: array
-          items:
-            type: string
-      title: ModelSample
-    ModelListResponseEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ModelResponse'
-      title: ModelListResponseEnvelope
-    SyncSourceMetaResponse:
-      type: object
-      properties:
-        configuration:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ConfigurationValue'
-          description: Additional configuration fields available for this source, keyed by field name.
-        items:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/SourceMeta'
-          description: Map of configuration item name to its metadata (available values, required-one-of groups).
-        requires_one_of:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Configuration items where exactly one must be selected by the caller.
-      title: SyncSourceMetaResponse
-    EnricherMapping:
-      type: object
-      additionalProperties:
-        type: string
-      description: A map of parent model Source Name to child model Source Name. For example, if your model has a field called `work_email` and the enricher accepts a field called `email`, you'd send a map of `{"work_email":"email"}`. The set of required input mappings varies based on the configuration of the enrichment. You can use the `enrichment/{connection_id}/inputfields` API to discover available input field combinations for a given configuration.
-      title: EnricherMapping
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
     ModelRelation:
       type: object
       properties:
@@ -1049,30 +1038,41 @@ components:
         to:
           $ref: '#/components/schemas/ModelRelationTo'
       title: ModelRelation
-    SampleRecord:
-      type: object
-      additionalProperties:
-        type: object
-        additionalProperties:
-          description: Any type
-      description: 'A map of `fieldSource` -> `fieldName: fieldValue`. Because there may be field name conflicts between the base model and enrichments, the base model fields are placed in a map under the model ID. Fields from enrichments are placed under the enricher ID.'
-      title: SampleRecord
-    ModelModelFieldRequest:
+    GetEnrichmentInputFieldsResponseEnvelope:
       type: object
       properties:
-        example:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type: string
+      title: GetEnrichmentInputFieldsResponseEnvelope
+    RelationTo:
+      type: object
+      properties:
+        field:
           type: string
-        label:
+        model_id:
           type: string
-        name:
-          type: string
-        type:
-          type: string
-      required:
-      - label
-      - name
-      - type
-      title: ModelModelFieldRequest
+          format: uuid
+      title: RelationTo
+    EnricherMapping:
+      type: object
+      additionalProperties:
+        type: string
+      description: A map of parent model Source Name to child model Source Name. For example, if your model has a field called `work_email` and the enricher accepts a field called `email`, you'd send a map of `{"work_email":"email"}`. The set of required input mappings varies based on the configuration of the enrichment. You can use the `enrichment/{connection_id}/inputfields` API to discover available input field combinations for a given configuration.
+      title: EnricherMapping
+    WorkTaskStatus:
+      type: string
+      enum:
+      - created
+      - running
+      - done
+      - failed
+      title: WorkTaskStatus
   securitySchemes:
     bearerUserAPIKey:
       type: http

@@ -432,6 +432,32 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
+    WebhookListEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Webhook'
+      title: WebhookListEnvelope
+    UpdateWebhooksSchema:
+      type: object
+      properties:
+        endpoint:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        secret:
+          type: string
+      required:
+      - endpoint
+      - secret
+      title: UpdateWebhooksSchema
     ApiError:
       type: object
       properties:
@@ -446,6 +472,12 @@ components:
         status:
           type: integer
       title: ApiError
+    WebhookEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Webhook'
+      title: WebhookEnvelope
     Webhook:
       type: object
       properties:
@@ -481,38 +513,6 @@ components:
       - endpoint
       - secret
       title: CreateWebhooksSchema
-    WebhookEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Webhook'
-      title: WebhookEnvelope
-    WebhookListEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Webhook'
-      title: WebhookListEnvelope
-    UpdateWebhooksSchema:
-      type: object
-      properties:
-        endpoint:
-          type: string
-        organization_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        secret:
-          type: string
-      required:
-      - endpoint
-      - secret
-      title: UpdateWebhooksSchema
   securitySchemes:
     bearerUserAPIKey:
       type: http

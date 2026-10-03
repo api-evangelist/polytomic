@@ -847,360 +847,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    SchemaConfiguration:
-      type: object
-      properties:
-        data_cutoff_timestamp:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        disable_data_cutoff:
-          type:
-          - boolean
-          - 'null'
-          default: false
-          description: Whether data cutoff is disabled for this schema.
-        enabled:
-          type:
-          - boolean
-          - 'null'
-          default: true
-          description: Whether the schema is enabled for syncing.
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/SchemaConfigurationFieldsItems'
-        filters:
-          type: array
-          items:
-            $ref: '#/components/schemas/BulkFilter'
-        id:
-          type: string
-        partition_key:
-          type:
-          - string
-          - 'null'
-        tracking_field:
-          type:
-          - string
-          - 'null'
-      title: SchemaConfiguration
-    SchemaField:
-      type: object
-      properties:
-        association:
-          $ref: '#/components/schemas/SchemaAssociation'
-        id:
-          type: string
-        is_primary_key:
-          type: boolean
-          description: Whether this field is part of the schema's primary key, including any user override.
-        name:
-          type: string
-        path:
-          type: string
-          description: JSONPath used to extract the field from each source record; only meaningful for document-style backends.
-        remote_type:
-          type: string
-          description: The type of the field from the remote system.
-        type:
-          $ref: '#/components/schemas/UtilFieldType'
-        type_spec:
-          $ref: '#/components/schemas/TypesType'
-        user_managed:
-          type: boolean
-          description: True when the field's effective definition came from a user override.
-        values:
-          type: array
-          items:
-            $ref: '#/components/schemas/PickValue'
-      title: SchemaField
-    BulkSchemaExecutionStatus:
-      type: string
-      enum:
-      - created
-      - scheduled
-      - running
-      - exporting
-      - canceled
-      - completed
-      - failed
-      - interrupted
-      - processing
-      title: BulkSchemaExecutionStatus
-    CancelBulkSyncResponse:
-      type: object
-      properties:
-        message:
-          type: string
-      title: CancelBulkSyncResponse
-    CancelBulkSyncResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CancelBulkSyncResponse'
-      title: CancelBulkSyncResponseEnvelope
-    ActivateSyncEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ActivateSyncOutput'
-      title: ActivateSyncEnvelope
-    BulkExecutionStatus:
-      type: string
-      enum:
-      - created
-      - scheduled
-      - running
-      - exporting
-      - canceling
-      - canceled
-      - completed
-      - failed
-      - processing
-      - errors
-      - interrupted
-      title: BulkExecutionStatus
-    OutputActor:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        type:
-          type: string
-      title: OutputActor
-    ActivateSyncOutput:
-      type: object
-      properties:
-        active:
-          type: boolean
-        id:
-          type: string
-          format: uuid
-      title: ActivateSyncOutput
-    BulkSelectiveMode:
-      type: string
-      enum:
-      - none
-      - incrementalFields
-      - nonincrementalFields
-      title: BulkSelectiveMode
-    BulkSyncListEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkSyncResponse'
-      title: BulkSyncListEnvelope
-    BulkOutputDisposition:
-      type: string
-      enum:
-      - retain
-      - truncate
-      - rebuild
-      title: BulkOutputDisposition
-    BulkSyncTargetMode:
-      type: string
-      enum:
-      - snapshot
-      - replicate
-      title: BulkSyncTargetMode
-    BulkSyncDestEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/BulkSyncDest'
-      title: BulkSyncDestEnvelope
-    BulkSyncExecution:
-      type: object
-      properties:
-        completed_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        created_at:
-          type: string
-          format: date-time
-        error_count:
-          type: integer
-          format: int64
-        fetch_mode:
-          $ref: '#/components/schemas/BulkFetchMode'
-        id:
-          type: string
-          format: uuid
-        is_partial:
-          type: boolean
-        is_resync:
-          type: boolean
-        is_test:
-          type: boolean
-        output_disposition:
-          $ref: '#/components/schemas/BulkOutputDisposition'
-        record_count:
-          type: integer
-          format: int64
-        schemas:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkSyncSchemaExecution'
-        started_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        status:
-          $ref: '#/components/schemas/BulkExecutionStatus'
-        status_message:
-          type: string
-        type:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-        warning_count:
-          type: integer
-          format: int64
-      title: BulkSyncExecution
-    BulkFilter:
-      type: object
-      properties:
-        field_id:
-          type: string
-          description: Schema field ID to filter on.
-        function:
-          $ref: '#/components/schemas/FilterFunction'
-        value:
-          description: Any type
-      required:
-      - function
-      title: BulkFilter
-    IngestionStatusLevel:
-      type: string
-      enum:
-      - ok
-      - warning
-      - error
-      description: The health status of CDC ingestion for a bulk sync. 'ok' means ingestion is operating normally. 'warning' indicates a non-fatal issue. 'error' indicates a potentially fatal ingestion error.
-      title: IngestionStatusLevel
-    BulkSyncDefaultScheduleRequest:
-      type: object
-      properties:
-        day_of_month:
-          type: string
-          description: Day of the month (1-31) to run monthly schedules.
-        day_of_week:
-          type: string
-          description: Day of the week to run weekly schedules.
-        frequency:
-          $ref: '#/components/schemas/ScheduleFrequency'
-        hour:
-          type: string
-          description: Hour of the day (0-23, in UTC) to run hourly, daily, weekly, or monthly schedules.
-        id:
-          type: string
-          format: uuid
-        minute:
-          type: string
-          description: Minute of the hour (0-59) to run the schedule.
-        month:
-          type: string
-          description: Month of the year (1-12) to run yearly schedules.
-      required:
-      - frequency
-      title: BulkSyncDefaultScheduleRequest
-    BulkSyncAdditionalScheduleRequest:
-      type: object
-      properties:
-        day_of_month:
-          type: string
-          description: Day of the month (1-31) to run monthly schedules.
-        day_of_week:
-          type: string
-          description: Day of the week to run weekly schedules.
-        frequency:
-          $ref: '#/components/schemas/ScheduleFrequency'
-        hour:
-          type: string
-          description: Hour of the day (0-23, in UTC) to run hourly, daily, weekly, or monthly schedules.
-        id:
-          type: string
-          format: uuid
-        minute:
-          type: string
-          description: Minute of the hour (0-59) to run the schedule.
-        month:
-          type: string
-          description: Month of the year (1-12) to run yearly schedules.
-        resync_mode:
-          $ref: '#/components/schemas/BulkScheduleSyncMode'
-        schemas:
-          type: array
-          items:
-            type: string
-          description: Optional list of schema IDs this schedule applies to. If empty, the schedule applies to all schemas.
-        selective_mode:
-          $ref: '#/components/schemas/BulkSelectiveMode'
-      required:
-      - frequency
-      title: BulkSyncAdditionalScheduleRequest
-    ScheduleFrequency:
-      type: string
-      enum:
-      - manual
-      - continuous
-      - hourly
-      - daily
-      - weekly
-      - custom
-      - builder
-      - runafter
-      - multi
-      - dbtcloud
-      title: ScheduleFrequency
-    BulkSyncDest:
-      type: object
-      properties:
-        configuration:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            description: Any type
-        modes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SupportedBulkMode'
-        supported_resync_modes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkResyncMode'
-          description: Resync modes supported by this destination (refetch, resync, rebuild).
-      title: BulkSyncDest
-    BulkResyncMode:
-      type: string
-      enum:
-      - refetch
-      - resync
-      - rebuild
-      title: BulkResyncMode
-    TypesType:
-      description: Any type
-      title: TypesType
     BulkScheduleSyncMode:
       type: string
       enum:
@@ -1209,96 +855,6 @@ components:
       - resync
       - rebuild
       title: BulkScheduleSyncMode
-    BulkSyncStatusEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/BulkSyncStatusResponse'
-      title: BulkSyncStatusEnvelope
-    ActivateSyncInput:
-      type: object
-      properties:
-        active:
-          type: boolean
-      required:
-      - active
-      title: ActivateSyncInput
-    UpdateBulkSyncRequestSchemasItems:
-      oneOf:
-      - type: string
-      - $ref: '#/components/schemas/SchemaConfiguration'
-      title: UpdateBulkSyncRequestSchemasItems
-    FieldConfiguration:
-      type: object
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-          default: true
-          description: Whether the field is enabled for syncing.
-        id:
-          type: string
-        obfuscate:
-          type:
-          - boolean
-          - 'null'
-          default: false
-          description: Whether the field should be obfuscated.
-      title: FieldConfiguration
-    SupportedBulkMode:
-      type: object
-      properties:
-        description:
-          type: string
-        id:
-          $ref: '#/components/schemas/BulkSyncTargetMode'
-        label:
-          type: string
-        requires_identity:
-          type: boolean
-        supports_field_sync_mode:
-          type: boolean
-        supports_target_filters:
-          type: boolean
-      title: SupportedBulkMode
-    BulkSyncSchemaExecution:
-      type: object
-      properties:
-        completed_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        created_at:
-          type: string
-          format: date-time
-        error_count:
-          type: integer
-          format: int64
-        output_name:
-          type: string
-        record_count:
-          type: integer
-          format: int64
-        schema:
-          type: string
-        started_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        status:
-          $ref: '#/components/schemas/BulkSchemaExecutionStatus'
-        status_message:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-        warning_count:
-          type: integer
-          format: int64
-      title: BulkSyncSchemaExecution
     UpdateBulkSyncRequest:
       type: object
       properties:
@@ -1398,6 +954,143 @@ components:
       - name
       - source_connection_id
       title: UpdateBulkSyncRequest
+    CreateBulkSyncRequestSchemasItems:
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/SchemaConfiguration'
+      title: CreateBulkSyncRequestSchemasItems
+    BulkSyncAdditionalScheduleRequest:
+      type: object
+      properties:
+        day_of_month:
+          type: string
+          description: Day of the month (1-31) to run monthly schedules.
+        day_of_week:
+          type: string
+          description: Day of the week to run weekly schedules.
+        frequency:
+          $ref: '#/components/schemas/ScheduleFrequency'
+        hour:
+          type: string
+          description: Hour of the day (0-23, in UTC) to run hourly, daily, weekly, or monthly schedules.
+        id:
+          type: string
+          format: uuid
+        minute:
+          type: string
+          description: Minute of the hour (0-59) to run the schedule.
+        month:
+          type: string
+          description: Month of the year (1-12) to run yearly schedules.
+        resync_mode:
+          $ref: '#/components/schemas/BulkScheduleSyncMode'
+        schemas:
+          type: array
+          items:
+            type: string
+          description: Optional list of schema IDs this schedule applies to. If empty, the schedule applies to all schemas.
+        selective_mode:
+          $ref: '#/components/schemas/BulkSelectiveMode'
+      required:
+      - frequency
+      title: BulkSyncAdditionalScheduleRequest
+    BulkSyncDefaultScheduleResponse:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp the schedule was created.
+        created_by:
+          $ref: '#/components/schemas/OutputActor'
+        day_of_month:
+          type: string
+          description: Day of the month (1-31) for monthly schedules.
+        day_of_week:
+          type: string
+          description: Day of the week for weekly schedules.
+        frequency:
+          $ref: '#/components/schemas/ScheduleFrequency'
+        hour:
+          type: string
+          description: Hour of the day (0-23, in UTC) the schedule fires.
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the schedule.
+        minute:
+          type: string
+          description: Minute of the hour (0-59) the schedule fires.
+        month:
+          type: string
+          description: Month of the year (1-12) for yearly schedules.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp the schedule was last updated.
+        updated_by:
+          $ref: '#/components/schemas/OutputActor'
+      required:
+      - frequency
+      title: BulkSyncDefaultScheduleResponse
+    BulkSyncListEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSyncResponse'
+      title: BulkSyncListEnvelope
+    BulkSyncResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkSyncResponse'
+      title: BulkSyncResponseEnvelope
+    StartBulkSyncRequest:
+      type: object
+      properties:
+        fetch_mode:
+          $ref: '#/components/schemas/BulkFetchMode'
+        resync_mode:
+          $ref: '#/components/schemas/BulkResyncMode'
+        schemas:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Optional list of schema IDs to include in this execution. If empty, all enabled schemas are included.
+        test:
+          type: boolean
+          description: When true, runs a test execution that validates the configuration without writing to the destination. Mutually exclusive with resync_mode.
+      title: StartBulkSyncRequest
+    BulkSyncIngestionStatus:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        highwater_mark:
+          type: string
+        is_running:
+          type: boolean
+        position:
+          type: string
+        position_time:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        status:
+          $ref: '#/components/schemas/IngestionStatusLevel'
+        status_message:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+      title: BulkSyncIngestionStatus
     PickValue:
       type: object
       properties:
@@ -1406,6 +1099,203 @@ components:
         value:
           type: string
       title: PickValue
+    BulkExecutionStatus:
+      type: string
+      enum:
+      - created
+      - scheduled
+      - running
+      - exporting
+      - canceling
+      - canceled
+      - completed
+      - failed
+      - processing
+      - errors
+      - interrupted
+      title: BulkExecutionStatus
+    BulkSchemaExecutionStatus:
+      type: string
+      enum:
+      - created
+      - scheduled
+      - running
+      - exporting
+      - canceled
+      - completed
+      - failed
+      - interrupted
+      - processing
+      title: BulkSchemaExecutionStatus
+    ActivateSyncOutput:
+      type: object
+      properties:
+        active:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+      title: ActivateSyncOutput
+    OutputActor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        type:
+          type: string
+      title: OutputActor
+    BulkSyncSourceEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkSyncSource'
+      title: BulkSyncSourceEnvelope
+    BulkSyncSchemaExecution:
+      type: object
+      properties:
+        completed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        error_count:
+          type: integer
+          format: int64
+        output_name:
+          type: string
+        record_count:
+          type: integer
+          format: int64
+        schema:
+          type: string
+        started_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        status:
+          $ref: '#/components/schemas/BulkSchemaExecutionStatus'
+        status_message:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        warning_count:
+          type: integer
+          format: int64
+      title: BulkSyncSchemaExecution
+    BulkNormalizeNames:
+      type: string
+      enum:
+      - enabled
+      - disabled
+      - legacy
+      title: BulkNormalizeNames
+    BulkSyncStatusEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkSyncStatusResponse'
+      title: BulkSyncStatusEnvelope
+    BulkSyncStatusResponse:
+      type: object
+      properties:
+        current_execution:
+          $ref: '#/components/schemas/BulkSyncExecution'
+        ingestion_status:
+          $ref: '#/components/schemas/BulkSyncIngestionStatus'
+        last_execution:
+          $ref: '#/components/schemas/BulkSyncExecution'
+        next_execution_time:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      title: BulkSyncStatusResponse
+    CancelBulkSyncResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CancelBulkSyncResponse'
+      title: CancelBulkSyncResponseEnvelope
+    ScheduleFrequency:
+      type: string
+      enum:
+      - manual
+      - continuous
+      - hourly
+      - daily
+      - weekly
+      - custom
+      - builder
+      - runafter
+      - multi
+      - dbtcloud
+      title: ScheduleFrequency
+    UpdateBulkSyncRequestSchemasItems:
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/SchemaConfiguration'
+      title: UpdateBulkSyncRequestSchemasItems
+    SchemaAssociation:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        reference_to:
+          type: array
+          items:
+            type: string
+        referenced_field:
+          type: string
+      title: SchemaAssociation
+    SchemaConfiguration:
+      type: object
+      properties:
+        data_cutoff_timestamp:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        disable_data_cutoff:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          description: Whether data cutoff is disabled for this schema.
+        enabled:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          description: Whether the schema is enabled for syncing.
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchemaConfigurationFieldsItems'
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/BulkFilter'
+        id:
+          type: string
+        partition_key:
+          type:
+          - string
+          - 'null'
+        tracking_field:
+          type:
+          - string
+          - 'null'
+      title: SchemaConfiguration
     FilterFunction:
       type: string
       enum:
@@ -1439,71 +1329,24 @@ components:
       - StringNotLike
       - StringMatchesTrimmed
       title: FilterFunction
-    SchemaConfigurationFieldsItems:
-      oneOf:
-      - type: string
-      - $ref: '#/components/schemas/FieldConfiguration'
-      title: SchemaConfigurationFieldsItems
-    BulkSyncSourceEnvelope:
+    UtilFieldType:
+      type: string
+      enum:
+      - unknown
+      - string
+      - number
+      - boolean
+      - datetime
+      - array
+      - object
+      - binary
+      title: UtilFieldType
+    BulkSyncExecutionEnvelope:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/BulkSyncSource'
-      title: BulkSyncSourceEnvelope
-    BulkDiscover:
-      type: string
-      enum:
-      - all
-      - onlyIncremental
-      - onlyNonIncremental
-      - none
-      title: BulkDiscover
-    BulkFetchMode:
-      type: string
-      enum:
-      - none
-      - incremental
-      - full
-      description: How the data is fetched. 'none' is normal operation for Polytomic. 'incremental' and 'full' apply to syncs from Salesforce. 'incremental' indicates the data is synced incrementally using record modification time. 'full' is necessary to catch up to the latest values for formula fields and rollup fields whose updates don't show up in incremental runs due to limitations in Salesforce.
-      title: BulkFetchMode
-    SchemaAssociation:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        reference_to:
-          type: array
-          items:
-            type: string
-        referenced_field:
-          type: string
-      title: SchemaAssociation
-    BulkSyncIngestionStatus:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        highwater_mark:
-          type: string
-        is_running:
-          type: boolean
-        position:
-          type: string
-        position_time:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        status:
-          $ref: '#/components/schemas/IngestionStatusLevel'
-        status_message:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-      title: BulkSyncIngestionStatus
+          $ref: '#/components/schemas/BulkSyncExecution'
+      title: BulkSyncExecutionEnvelope
     Schema:
       type: object
       properties:
@@ -1516,34 +1359,242 @@ components:
         name:
           type: string
       title: Schema
-    BulkNormalizeNames:
-      type: string
-      enum:
-      - enabled
-      - disabled
-      - legacy
-      title: BulkNormalizeNames
-    BulkSyncStatusResponse:
+    FieldConfiguration:
       type: object
       properties:
-        current_execution:
-          $ref: '#/components/schemas/BulkSyncExecution'
-        ingestion_status:
-          $ref: '#/components/schemas/BulkSyncIngestionStatus'
-        last_execution:
-          $ref: '#/components/schemas/BulkSyncExecution'
-        next_execution_time:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          description: Whether the field is enabled for syncing.
+        id:
+          type: string
+        obfuscate:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          description: Whether the field should be obfuscated.
+      title: FieldConfiguration
+    SupportedBulkMode:
+      type: object
+      properties:
+        description:
+          type: string
+        id:
+          $ref: '#/components/schemas/BulkSyncTargetMode'
+        label:
+          type: string
+        requires_identity:
+          type: boolean
+        supports_field_sync_mode:
+          type: boolean
+        supports_target_filters:
+          type: boolean
+      title: SupportedBulkMode
+    BulkSyncDestEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkSyncDest'
+      title: BulkSyncDestEnvelope
+    BulkSyncTargetMode:
+      type: string
+      enum:
+      - snapshot
+      - replicate
+      title: BulkSyncTargetMode
+    BulkDiscover:
+      type: string
+      enum:
+      - all
+      - onlyIncremental
+      - onlyNonIncremental
+      - none
+      title: BulkDiscover
+    BulkSyncResponse:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: Whether the sync is active. Inactive syncs do not run on their schedule.
+        additional_schedules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSyncAdditionalScheduleResponse'
+          description: Additional bulk sync schedules. Schedule times are interpreted in UTC.
+        automatically_add_new_fields:
+          $ref: '#/components/schemas/BulkDiscover'
+        automatically_add_new_objects:
+          $ref: '#/components/schemas/BulkDiscover'
+        concurrency_limit:
+          type:
+          - integer
+          - 'null'
+          description: Per-sync concurrency limit override.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp the sync was created.
+        created_by:
+          $ref: '#/components/schemas/OutputActor'
+        data_cutoff_timestamp:
           type:
           - string
           - 'null'
           format: date-time
-      title: BulkSyncStatusResponse
-    BulkSyncSourceCapabilities:
+          description: Global cutoff applied across schemas; source records older than this timestamp are excluded.
+        default_schedule:
+          $ref: '#/components/schemas/BulkSyncDefaultScheduleResponse'
+        destination_configuration:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+          description: Destination-specific bulk sync configuration. e.g. output schema name, s3 file format, etc.
+        destination_connection_id:
+          type: string
+          format: uuid
+          description: Connection rows are written to.
+        disable_record_timestamps:
+          type: boolean
+          default: false
+          description: When true, Polytomic does not add its own timestamp columns to destination rows.
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the bulk sync.
+        mode:
+          $ref: '#/components/schemas/BulkSyncTargetMode'
+        name:
+          type: string
+          description: Human-readable name of the bulk sync.
+        normalize_names:
+          $ref: '#/components/schemas/BulkNormalizeNames'
+        organization_id:
+          type: string
+          format: uuid
+          description: Organization the sync belongs to.
+        policies:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of permissions policies applied to the bulk sync.
+        resync_concurrency_limit:
+          type:
+          - integer
+          - 'null'
+          description: Per-sync resync concurrency limit override.
+        source_configuration:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+          description: Source-specific bulk sync configuration. e.g. replication slot name, sync lookback, etc.
+        source_connection_id:
+          type: string
+          format: uuid
+          description: Connection rows are read from.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp the sync was last updated.
+        updated_by:
+          $ref: '#/components/schemas/OutputActor'
+      title: BulkSyncResponse
+    TypesType:
+      description: Any type
+      title: TypesType
+    ApiError:
       type: object
       properties:
-        supports_tracking_fields:
-          type: boolean
-      title: BulkSyncSourceCapabilities
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    BulkFetchMode:
+      type: string
+      enum:
+      - none
+      - incremental
+      - full
+      description: How the data is fetched. 'none' is normal operation for Polytomic. 'incremental' and 'full' apply to syncs from Salesforce. 'incremental' indicates the data is synced incrementally using record modification time. 'full' is necessary to catch up to the latest values for formula fields and rollup fields whose updates don't show up in incremental runs due to limitations in Salesforce.
+      title: BulkFetchMode
+    BulkSyncDest:
+      type: object
+      properties:
+        configuration:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+        modes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SupportedBulkMode'
+        supported_resync_modes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkResyncMode'
+          description: Resync modes supported by this destination (refetch, resync, rebuild).
+      title: BulkSyncDest
+    BulkFilter:
+      type: object
+      properties:
+        field_id:
+          type: string
+          description: Schema field ID to filter on.
+        function:
+          $ref: '#/components/schemas/FilterFunction'
+        value:
+          description: Any type
+      required:
+      - function
+      title: BulkFilter
+    BulkSyncDefaultScheduleRequest:
+      type: object
+      properties:
+        day_of_month:
+          type: string
+          description: Day of the month (1-31) to run monthly schedules.
+        day_of_week:
+          type: string
+          description: Day of the week to run weekly schedules.
+        frequency:
+          $ref: '#/components/schemas/ScheduleFrequency'
+        hour:
+          type: string
+          description: Hour of the day (0-23, in UTC) to run hourly, daily, weekly, or monthly schedules.
+        id:
+          type: string
+          format: uuid
+        minute:
+          type: string
+          description: Minute of the hour (0-59) to run the schedule.
+        month:
+          type: string
+          description: Month of the year (1-12) to run yearly schedules.
+      required:
+      - frequency
+      title: BulkSyncDefaultScheduleRequest
     CreateBulkSyncRequest:
       type: object
       properties:
@@ -1643,30 +1694,19 @@ components:
       - name
       - source_connection_id
       title: CreateBulkSyncRequest
-    BulkSyncExecutionEnvelope:
+    CancelBulkSyncResponse:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/BulkSyncExecution'
-      title: BulkSyncExecutionEnvelope
-    BulkSyncResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/BulkSyncResponse'
-      title: BulkSyncResponseEnvelope
-    UtilFieldType:
+        message:
+          type: string
+      title: CancelBulkSyncResponse
+    BulkResyncMode:
       type: string
       enum:
-      - unknown
-      - string
-      - number
-      - boolean
-      - datetime
-      - array
-      - object
-      - binary
-      title: UtilFieldType
+      - refetch
+      - resync
+      - rebuild
+      title: BulkResyncMode
     BulkSyncAdditionalScheduleResponse:
       type: object
       properties:
@@ -1715,6 +1755,137 @@ components:
       required:
       - frequency
       title: BulkSyncAdditionalScheduleResponse
+    SchemaField:
+      type: object
+      properties:
+        association:
+          $ref: '#/components/schemas/SchemaAssociation'
+        id:
+          type: string
+        is_primary_key:
+          type: boolean
+          description: Whether this field is part of the schema's primary key, including any user override.
+        name:
+          type: string
+        path:
+          type: string
+          description: JSONPath used to extract the field from each source record; only meaningful for document-style backends.
+        remote_type:
+          type: string
+          description: The type of the field from the remote system.
+        type:
+          $ref: '#/components/schemas/UtilFieldType'
+        type_spec:
+          $ref: '#/components/schemas/TypesType'
+        user_managed:
+          type: boolean
+          description: True when the field's effective definition came from a user override.
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/PickValue'
+      title: SchemaField
+    BulkSelectiveMode:
+      type: string
+      enum:
+      - none
+      - incrementalFields
+      - nonincrementalFields
+      title: BulkSelectiveMode
+    SchemaConfigurationFieldsItems:
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/FieldConfiguration'
+      title: SchemaConfigurationFieldsItems
+    BulkSyncSourceCapabilities:
+      type: object
+      properties:
+        supports_tracking_fields:
+          type: boolean
+      title: BulkSyncSourceCapabilities
+    BulkSyncExecution:
+      type: object
+      properties:
+        completed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        error_count:
+          type: integer
+          format: int64
+        fetch_mode:
+          $ref: '#/components/schemas/BulkFetchMode'
+        id:
+          type: string
+          format: uuid
+        is_partial:
+          type: boolean
+        is_resync:
+          type: boolean
+        is_test:
+          type: boolean
+        output_disposition:
+          $ref: '#/components/schemas/BulkOutputDisposition'
+        record_count:
+          type: integer
+          format: int64
+        schemas:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSyncSchemaExecution'
+        started_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        status:
+          $ref: '#/components/schemas/BulkExecutionStatus'
+        status_message:
+          type: string
+        type:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        warning_count:
+          type: integer
+          format: int64
+      title: BulkSyncExecution
+    BulkOutputDisposition:
+      type: string
+      enum:
+      - retain
+      - truncate
+      - rebuild
+      title: BulkOutputDisposition
+    ActivateSyncInput:
+      type: object
+      properties:
+        active:
+          type: boolean
+      required:
+      - active
+      title: ActivateSyncInput
+    ActivateSyncEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ActivateSyncOutput'
+      title: ActivateSyncEnvelope
+    IngestionStatusLevel:
+      type: string
+      enum:
+      - ok
+      - warning
+      - error
+      description: The health status of CDC ingestion for a bulk sync. 'ok' means ingestion is operating normally. 'warning' indicates a non-fatal issue. 'error' indicates a potentially fatal ingestion error.
+      title: IngestionStatusLevel
     BulkSyncSource:
       type: object
       properties:
@@ -1729,177 +1900,6 @@ components:
           items:
             $ref: '#/components/schemas/Schema'
       title: BulkSyncSource
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
-    CreateBulkSyncRequestSchemasItems:
-      oneOf:
-      - type: string
-      - $ref: '#/components/schemas/SchemaConfiguration'
-      title: CreateBulkSyncRequestSchemasItems
-    BulkSyncResponse:
-      type: object
-      properties:
-        active:
-          type: boolean
-          description: Whether the sync is active. Inactive syncs do not run on their schedule.
-        additional_schedules:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkSyncAdditionalScheduleResponse'
-          description: Additional bulk sync schedules. Schedule times are interpreted in UTC.
-        automatically_add_new_fields:
-          $ref: '#/components/schemas/BulkDiscover'
-        automatically_add_new_objects:
-          $ref: '#/components/schemas/BulkDiscover'
-        concurrency_limit:
-          type:
-          - integer
-          - 'null'
-          description: Per-sync concurrency limit override.
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp the sync was created.
-        created_by:
-          $ref: '#/components/schemas/OutputActor'
-        data_cutoff_timestamp:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Global cutoff applied across schemas; source records older than this timestamp are excluded.
-        default_schedule:
-          $ref: '#/components/schemas/BulkSyncDefaultScheduleResponse'
-        destination_configuration:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            description: Any type
-          description: Destination-specific bulk sync configuration. e.g. output schema name, s3 file format, etc.
-        destination_connection_id:
-          type: string
-          format: uuid
-          description: Connection rows are written to.
-        disable_record_timestamps:
-          type: boolean
-          default: false
-          description: When true, Polytomic does not add its own timestamp columns to destination rows.
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier of the bulk sync.
-        mode:
-          $ref: '#/components/schemas/BulkSyncTargetMode'
-        name:
-          type: string
-          description: Human-readable name of the bulk sync.
-        normalize_names:
-          $ref: '#/components/schemas/BulkNormalizeNames'
-        organization_id:
-          type: string
-          format: uuid
-          description: Organization the sync belongs to.
-        policies:
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: List of permissions policies applied to the bulk sync.
-        resync_concurrency_limit:
-          type:
-          - integer
-          - 'null'
-          description: Per-sync resync concurrency limit override.
-        source_configuration:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            description: Any type
-          description: Source-specific bulk sync configuration. e.g. replication slot name, sync lookback, etc.
-        source_connection_id:
-          type: string
-          format: uuid
-          description: Connection rows are read from.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp the sync was last updated.
-        updated_by:
-          $ref: '#/components/schemas/OutputActor'
-      title: BulkSyncResponse
-    BulkSyncDefaultScheduleResponse:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp the schedule was created.
-        created_by:
-          $ref: '#/components/schemas/OutputActor'
-        day_of_month:
-          type: string
-          description: Day of the month (1-31) for monthly schedules.
-        day_of_week:
-          type: string
-          description: Day of the week for weekly schedules.
-        frequency:
-          $ref: '#/components/schemas/ScheduleFrequency'
-        hour:
-          type: string
-          description: Hour of the day (0-23, in UTC) the schedule fires.
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier of the schedule.
-        minute:
-          type: string
-          description: Minute of the hour (0-59) the schedule fires.
-        month:
-          type: string
-          description: Month of the year (1-12) for yearly schedules.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp the schedule was last updated.
-        updated_by:
-          $ref: '#/components/schemas/OutputActor'
-      required:
-      - frequency
-      title: BulkSyncDefaultScheduleResponse
-    StartBulkSyncRequest:
-      type: object
-      properties:
-        fetch_mode:
-          $ref: '#/components/schemas/BulkFetchMode'
-        resync_mode:
-          $ref: '#/components/schemas/BulkResyncMode'
-        schemas:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Optional list of schema IDs to include in this execution. If empty, all enabled schemas are included.
-        test:
-          type: boolean
-          description: When true, runs a test execution that validates the configuration without writing to the destination. Mutually exclusive with resync_mode.
-      title: StartBulkSyncRequest
   securitySchemes:
     bearerUserAPIKey:
       type: http

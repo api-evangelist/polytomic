@@ -413,154 +413,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    ExecutionConsoleLogsResponse:
-      type: object
-      properties:
-        entries:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ExecutionConsoleLogEntry'
-        next_cursor:
-          type:
-          - string
-          - 'null'
-      title: ExecutionConsoleLogsResponse
-    PaginationDetails:
-      type: object
-      properties:
-        next_page_token:
-          type: string
-      title: PaginationDetails
-    CancelSyncExecutionResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CancelSyncExecutionResponse'
-      title: CancelSyncExecutionResponseEnvelope
-    ExecutionLogType:
-      type: string
-      enum:
-      - records
-      - errors
-      - warnings
-      - inserts
-      - updates
-      - deletes
-      title: ExecutionLogType
-    ExecutionCounts:
-      type: object
-      properties:
-        delete:
-          type: integer
-          format: int64
-        error:
-          type: integer
-          format: int64
-        insert:
-          type: integer
-          format: int64
-        total:
-          type: integer
-          format: int64
-        update:
-          type: integer
-          format: int64
-        upserts:
-          type: integer
-          format: int64
-        warnings:
-          type: integer
-          format: int64
-      title: ExecutionCounts
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
-    UtilExecutionStatus:
-      type: string
-      enum:
-      - created
-      - scheduled
-      - queued
-      - waiting
-      - running
-      - processing
-      - canceling
-      - canceled
-      - completed
-      - failed
-      - interrupted
-      title: UtilExecutionStatus
-    ExecutionLogResponse:
-      type: object
-      properties:
-        expires:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        urls:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      title: ExecutionLogResponse
-    ExecutionConsoleLogsResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ExecutionConsoleLogsResponse'
-      title: ExecutionConsoleLogsResponseEnvelope
-    ExecutionConsoleLogEntry:
-      type: object
-      properties:
-        id:
-          type: string
-        level:
-          type: string
-        message:
-          type: string
-        payload:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            description: Any type
-        timestamp:
-          type: string
-          format: date-time
-      title: ExecutionConsoleLogEntry
-    ListExecutionResponseEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GetExecutionResponseSchema'
-        pagination:
-          $ref: '#/components/schemas/PaginationDetails'
-      title: ListExecutionResponseEnvelope
-    CancelSyncExecutionResponse:
-      type: object
-      properties:
-        message:
-          type: string
-      title: CancelSyncExecutionResponse
     GetExecutionResponseSchema:
       type: object
       properties:
@@ -591,18 +443,166 @@ components:
         type:
           type: string
       title: GetExecutionResponseSchema
-    GetExecutionResponseEnvelope:
+    PaginationDetails:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+      title: PaginationDetails
+    ExecutionLogResponse:
+      type: object
+      properties:
+        expires:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        urls:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      title: ExecutionLogResponse
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    ExecutionConsoleLogsResponseEnvelope:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/GetExecutionResponseSchema'
-      title: GetExecutionResponseEnvelope
+          $ref: '#/components/schemas/ExecutionConsoleLogsResponse'
+      title: ExecutionConsoleLogsResponseEnvelope
+    CancelSyncExecutionResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      title: CancelSyncExecutionResponse
+    ExecutionConsoleLogsResponse:
+      type: object
+      properties:
+        entries:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ExecutionConsoleLogEntry'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+      title: ExecutionConsoleLogsResponse
     ExecutionLogsResponseEnvelope:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/ExecutionLogResponse'
       title: ExecutionLogsResponseEnvelope
+    UtilExecutionStatus:
+      type: string
+      enum:
+      - created
+      - scheduled
+      - queued
+      - waiting
+      - running
+      - processing
+      - canceling
+      - canceled
+      - completed
+      - failed
+      - interrupted
+      title: UtilExecutionStatus
+    ExecutionLogType:
+      type: string
+      enum:
+      - records
+      - errors
+      - warnings
+      - inserts
+      - updates
+      - deletes
+      title: ExecutionLogType
+    ListExecutionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GetExecutionResponseSchema'
+        pagination:
+          $ref: '#/components/schemas/PaginationDetails'
+      title: ListExecutionResponseEnvelope
+    GetExecutionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GetExecutionResponseSchema'
+      title: GetExecutionResponseEnvelope
+    ExecutionConsoleLogEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        level:
+          type: string
+        message:
+          type: string
+        payload:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+        timestamp:
+          type: string
+          format: date-time
+      title: ExecutionConsoleLogEntry
+    CancelSyncExecutionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CancelSyncExecutionResponse'
+      title: CancelSyncExecutionResponseEnvelope
+    ExecutionCounts:
+      type: object
+      properties:
+        delete:
+          type: integer
+          format: int64
+        error:
+          type: integer
+          format: int64
+        insert:
+          type: integer
+          format: int64
+        total:
+          type: integer
+          format: int64
+        update:
+          type: integer
+          format: int64
+        upserts:
+          type: integer
+          format: int64
+        warnings:
+          type: integer
+          format: int64
+      title: ExecutionCounts
   securitySchemes:
     bearerUserAPIKey:
       type: http

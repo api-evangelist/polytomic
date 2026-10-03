@@ -295,6 +295,30 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
+    TargetPropertyValues:
+      type: object
+      properties:
+        enum:
+          type: boolean
+          description: True if the property is an enum.
+        id:
+          type: string
+          description: The identifier of the target property.
+        title:
+          type: string
+          description: A human readable title for the target property.
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/UtilEnumValue'
+          description: Valid values for the target property.
+      title: TargetPropertyValues
+    TargetPropertyValuesEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TargetPropertyValues'
+      title: TargetPropertyValuesEnvelope
     TargetCreator:
       type: object
       properties:
@@ -307,36 +331,32 @@ components:
           type: boolean
           description: True if the connection supports target creation.
       title: TargetCreator
-    SyncDestinationProperties:
+    IdentityFunction:
       type: object
       properties:
-        does_not_report_operation_counts:
-          type: boolean
-        mappings_not_required:
-          type: boolean
-        new_target_label:
+        id:
           type: string
-        optional_target_mappings:
-          type: boolean
-        primary_metadata_object:
+        label:
           type: string
-        requires_configuration:
-          type: boolean
-        supports_field_creation:
-          type: boolean
-        supports_field_encryption:
-          type: boolean
-        supports_field_type_selection:
-          type: boolean
-        supports_identity_field_creation:
-          type: boolean
-        supports_target_filters:
-          type: boolean
-        target_creator:
-          type: boolean
-        use_field_names_as_labels:
-          type: boolean
-      title: SyncDestinationProperties
+      title: IdentityFunction
+    TargetObjectsResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TargetObject'
+        target_creation:
+          $ref: '#/components/schemas/TargetCreator'
+      title: TargetObjectsResponseEnvelope
+    TargetResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TargetResponse'
+      title: TargetResponseEnvelope
     ApiError:
       type: object
       properties:
@@ -351,18 +371,16 @@ components:
         status:
           type: integer
       title: ApiError
-    TargetResponseEnvelope:
+    UtilEnumValue:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/TargetResponse'
-      title: TargetResponseEnvelope
-    TargetPropertyValuesEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/TargetPropertyValues'
-      title: TargetPropertyValuesEnvelope
+        label:
+          type:
+          - string
+          - 'null'
+        value:
+          type: string
+      title: UtilEnumValue
     TargetField:
       type: object
       properties:
@@ -397,32 +415,7 @@ components:
         updateable:
           type: boolean
       title: TargetField
-    SupportedMode:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ModelsyncSyncTargetMode'
-        requires_identity:
-          type: boolean
-          description: True if the sync mode requires an identity field mapping.
-        supports_per_field_mode:
-          type: boolean
-          description: True if the target supports per-field sync modes.
-        supports_target_filters:
-          type: boolean
-          description: True if the sync mode supports target filters.
-      title: SupportedMode
-    UtilEnumValue:
-      type: object
-      properties:
-        label:
-          type:
-          - string
-          - 'null'
-        value:
-          type: string
-      title: UtilEnumValue
-    TargetPropertyValues:
+    TargetCreateInput:
       type: object
       properties:
         enum:
@@ -434,50 +427,7 @@ components:
         title:
           type: string
           description: A human readable title for the target property.
-        values:
-          type: array
-          items:
-            $ref: '#/components/schemas/UtilEnumValue'
-          description: Valid values for the target property.
-      title: TargetPropertyValues
-    ModelsyncSyncTargetMode:
-      type: string
-      enum:
-      - create
-      - update
-      - updateOrCreate
-      - replace
-      - append
-      - remove
-      - snapshot
-      title: ModelsyncSyncTargetMode
-    TargetObjectsResponseEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TargetObject'
-        target_creation:
-          $ref: '#/components/schemas/TargetCreator'
-      title: TargetObjectsResponseEnvelope
-    TargetObject:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The identifier of the target object.
-        modes:
-          type: array
-          items:
-            $ref: '#/components/schemas/SupportedMode'
-          description: The supported sync modes and their properties for the target object.
-        name:
-          type: string
-          description: The name of the target object.
-      title: TargetObject
+      title: TargetCreateInput
     TargetResponse:
       type: object
       properties:
@@ -503,19 +453,77 @@ components:
           type: string
           format: date-time
       title: TargetResponse
-    TargetCreateInput:
+    SupportedMode:
       type: object
       properties:
-        enum:
+        id:
+          $ref: '#/components/schemas/ModelsyncSyncTargetMode'
+        requires_identity:
           type: boolean
-          description: True if the property is an enum.
+          description: True if the sync mode requires an identity field mapping.
+        supports_per_field_mode:
+          type: boolean
+          description: True if the target supports per-field sync modes.
+        supports_target_filters:
+          type: boolean
+          description: True if the sync mode supports target filters.
+      title: SupportedMode
+    ModelsyncSyncTargetMode:
+      type: string
+      enum:
+      - create
+      - update
+      - updateOrCreate
+      - replace
+      - append
+      - remove
+      - snapshot
+      title: ModelsyncSyncTargetMode
+    SyncDestinationProperties:
+      type: object
+      properties:
+        does_not_report_operation_counts:
+          type: boolean
+        mappings_not_required:
+          type: boolean
+        new_target_label:
+          type: string
+        optional_target_mappings:
+          type: boolean
+        primary_metadata_object:
+          type: string
+        requires_configuration:
+          type: boolean
+        supports_field_creation:
+          type: boolean
+        supports_field_encryption:
+          type: boolean
+        supports_field_type_selection:
+          type: boolean
+        supports_identity_field_creation:
+          type: boolean
+        supports_target_filters:
+          type: boolean
+        target_creator:
+          type: boolean
+        use_field_names_as_labels:
+          type: boolean
+      title: SyncDestinationProperties
+    TargetObject:
+      type: object
+      properties:
         id:
           type: string
-          description: The identifier of the target property.
-        title:
+          description: The identifier of the target object.
+        modes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedMode'
+          description: The supported sync modes and their properties for the target object.
+        name:
           type: string
-          description: A human readable title for the target property.
-      title: TargetCreateInput
+          description: The name of the target object.
+      title: TargetObject
     Mode:
       type: object
       properties:
@@ -532,14 +540,6 @@ components:
         supports_target_filters:
           type: boolean
       title: Mode
-    IdentityFunction:
-      type: object
-      properties:
-        id:
-          type: string
-        label:
-          type: string
-      title: IdentityFunction
   securitySchemes:
     bearerUserAPIKey:
       type: http

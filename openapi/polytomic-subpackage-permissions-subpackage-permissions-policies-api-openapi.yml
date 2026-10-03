@@ -284,6 +284,36 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    ListPoliciesResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PolicyResponse'
+      title: ListPoliciesResponseEnvelope
+    PolicyResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/PolicyResponse'
+      title: PolicyResponseEnvelope
     PolicyResponse:
       type: object
       properties:
@@ -302,72 +332,6 @@ components:
         system:
           type: boolean
       title: PolicyResponse
-    PolicyAction:
-      type: object
-      properties:
-        action:
-          type: string
-        role_ids:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: uuid
-      required:
-      - action
-      - role_ids
-      title: PolicyAction
-    PolicyResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/PolicyResponse'
-      title: PolicyResponseEnvelope
-    ListPoliciesResponseEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PolicyResponse'
-      title: ListPoliciesResponseEnvelope
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
-    CreatePolicyRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        organization_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        policy_actions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PolicyAction'
-      required:
-      - name
-      - policy_actions
-      title: CreatePolicyRequest
     UpdatePolicyRequest:
       type: object
       properties:
@@ -388,6 +352,42 @@ components:
       - name
       - policy_actions
       title: UpdatePolicyRequest
+    CreatePolicyRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        policy_actions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PolicyAction'
+      required:
+      - name
+      - policy_actions
+      title: CreatePolicyRequest
+    PolicyAction:
+      type: object
+      properties:
+        action:
+          type: string
+        role_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+      required:
+      - action
+      - role_ids
+      title: PolicyAction
   securitySchemes:
     bearerUserAPIKey:
       type: http

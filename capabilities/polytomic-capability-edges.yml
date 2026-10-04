@@ -1,0 +1,75 @@
+slug: polytomic
+provider: Polytomic
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: subpackage_webhooks
+  spec_file: polytomic-subpackage-webhooks-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.8
+  evidence: POST /api/webhooks  create  Create Webhook; POST /api/webhooks/{id}/disable  disable  Disable
+    Webhook
+  reason: Create/update/enable/disable lifecycle for outbound webhook subscriptions matches Webhook &
+    Event Subscription Management explicitly.
+- tag: subpackage_permissions.subpackage_permissions/policies
+  spec_file: polytomic-subpackage-permissions-subpackage-permissions-policies-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: 'POST /api/permissions/policies  create  Create Policy; schemas: PolicyAction, UpdatePolicyRequest'
+  reason: CRUD over permission policies with a PolicyAction schema is access-control administration, i.e.
+    identity & access management for the platform, not a business policy-lifecycle (BC-130.20) surface.
+- tag: subpackage_permissions.subpackage_permissions/roles
+  spec_file: polytomic-subpackage-permissions-subpackage-permissions-roles-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: GET /api/permissions/roles  list  List Roles; POST /api/permissions/roles  create  Create
+    Role
+  reason: Role definition and lifecycle under /api/permissions is role-based access control administration,
+    mapping to Identity & Access Management.
+- tag: subpackage_bulkSync
+  spec_file: polytomic-subpackage-bulksync-api-openapi.yml
+  capability_id: BC-610
+  capability_id_l1: BC-610
+  capability_name: Information & Data Management
+  confidence: 0.7
+  evidence: '"Create Bulk Sync", "Get Bulk Source", "Get Bulk Destination" — vendor provides "no-code
+    data syncing between databases, data warehouses, and SaaS applications"'
+  reason: The operations configure and run bulk data replication pipelines between sources and destinations,
+    which sits under Information & Data Management. No single L2 cleanly covers pipeline/integration execution,
+    so only the L1 is asserted.
+- tag: subpackage_modelSync
+  spec_file: polytomic-subpackage-modelsync-api-openapi.yml
+  capability_id: BC-610
+  capability_id_l1: BC-610
+  capability_name: Information & Data Management
+  confidence: 0.7
+  evidence: '"Create Sync", "Start Sync", "Get Sync Schedule Options", "Get Sync Status"'
+  reason: Defines, schedules and runs data syncs between source and target systems — the vendor's data
+    integration/movement capability, mapped to Information & Data Management at L1 since no L2 covers
+    integration pipelines specifically.
+- tag: subpackage_users
+  spec_file: polytomic-subpackage-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /api/organization/users  create-current-org-user  Create Current Org User; POST /api/organizations/{org_id}/users/{id}/keys  create-api-key  Create
+    Partner User API Key
+  reason: Lifecycle of platform user accounts within organizations plus API key issuance is account/credential
+    administration, best read as Identity & Access Management rather than HR employee records.

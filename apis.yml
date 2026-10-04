@@ -409,6 +409,9 @@ apis:
   - type: APIReference
     url: https://apidocs.polytomic.com/
 common:
+  - type: CapabilityMap
+    url: capabilities/polytomic-capability-edges.yml
+    name: Polytomic Business Capability Map
   - type: AgenticAccess
     url: agentic-access/polytomic-agentic-access.yml
   - type: TrustCenter

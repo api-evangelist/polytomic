@@ -58,12 +58,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    GetIdentityResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/GetIdentityResponseSchema'
-      title: GetIdentityResponseEnvelope
     GetIdentityResponseSchema:
       type: object
       properties:
@@ -111,6 +105,12 @@ components:
         status:
           type: integer
       title: ApiError
+    GetIdentityResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GetIdentityResponseSchema'
+      title: GetIdentityResponseEnvelope
   securitySchemes:
     bearerUserAPIKey:
       type: http

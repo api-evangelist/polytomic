@@ -341,73 +341,20 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    BulkScheduleSyncMode:
-      type: string
-      enum:
-      - normal
-      - refetch
-      - resync
-      - rebuild
-      title: BulkScheduleSyncMode
-    BulkSelectiveMode:
-      type: string
-      enum:
-      - none
-      - incrementalFields
-      - nonincrementalFields
-      title: BulkSelectiveMode
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
-    CreateScheduleRequest:
-      type: object
-      properties:
-        schedule:
-          $ref: '#/components/schemas/BulkSyncScheduleAPI'
-      required:
-      - schedule
-      title: CreateScheduleRequest
-    SchedulesEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkBulkSyncSchedule'
-      title: SchedulesEnvelope
     ScheduleEnvelope:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/BulkBulkSyncSchedule'
       title: ScheduleEnvelope
-    ScheduleFrequency:
-      type: string
-      enum:
-      - manual
-      - continuous
-      - hourly
-      - daily
-      - weekly
-      - custom
-      - builder
-      - runafter
-      - multi
-      - dbtcloud
-      title: ScheduleFrequency
+    UpdateScheduleRequest:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/BulkSyncScheduleAPI'
+      required:
+      - schedule
+      title: UpdateScheduleRequest
     BulkBulkSyncSchedule:
       type: object
       properties:
@@ -459,14 +406,51 @@ components:
       required:
       - frequency
       title: BulkBulkSyncSchedule
-    UpdateScheduleRequest:
+    ScheduleFrequency:
+      type: string
+      enum:
+      - manual
+      - continuous
+      - hourly
+      - daily
+      - weekly
+      - custom
+      - builder
+      - runafter
+      - multi
+      - dbtcloud
+      title: ScheduleFrequency
+    ApiError:
       type: object
       properties:
-        schedule:
-          $ref: '#/components/schemas/BulkSyncScheduleAPI'
-      required:
-      - schedule
-      title: UpdateScheduleRequest
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    BulkSelectiveMode:
+      type: string
+      enum:
+      - none
+      - incrementalFields
+      - nonincrementalFields
+      title: BulkSelectiveMode
+    SchedulesEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkBulkSyncSchedule'
+      title: SchedulesEnvelope
     BulkSyncScheduleAPI:
       type: object
       properties:
@@ -492,6 +476,22 @@ components:
       required:
       - frequency
       title: BulkSyncScheduleAPI
+    CreateScheduleRequest:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/BulkSyncScheduleAPI'
+      required:
+      - schedule
+      title: CreateScheduleRequest
+    BulkScheduleSyncMode:
+      type: string
+      enum:
+      - normal
+      - refetch
+      - resync
+      - rebuild
+      title: BulkScheduleSyncMode
   securitySchemes:
     bearerUserAPIKey:
       type: http

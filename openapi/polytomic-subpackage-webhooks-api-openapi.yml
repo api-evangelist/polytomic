@@ -458,6 +458,12 @@ components:
       - endpoint
       - secret
       title: UpdateWebhooksSchema
+    WebhookEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Webhook'
+      title: WebhookEnvelope
     ApiError:
       type: object
       properties:
@@ -472,12 +478,6 @@ components:
         status:
           type: integer
       title: ApiError
-    WebhookEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Webhook'
-      title: WebhookEnvelope
     Webhook:
       type: object
       properties:

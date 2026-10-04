@@ -285,56 +285,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
-    UpdateRoleRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        organization_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-      required:
-      - name
-      title: UpdateRoleRequest
-    RoleListResponseEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RoleResponse'
-      title: RoleListResponseEnvelope
-    CreateRoleRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        organization_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-      required:
-      - name
-      title: CreateRoleRequest
     RoleResponseEnvelope:
       type: object
       properties:
@@ -355,6 +305,56 @@ components:
         system:
           type: boolean
       title: RoleResponse
+    CreateRoleRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+      required:
+      - name
+      title: CreateRoleRequest
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    RoleListResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RoleResponse'
+      title: RoleListResponseEnvelope
+    UpdateRoleRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+      required:
+      - name
+      title: UpdateRoleRequest
   securitySchemes:
     bearerUserAPIKey:
       type: http

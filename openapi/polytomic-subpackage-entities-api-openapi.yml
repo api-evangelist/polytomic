@@ -265,12 +265,6 @@ components:
           type: string
           description: Canonical REST path of the related resource.
       title: EntityRelationship
-    EntityResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/EntityResponse'
-      title: EntityResponseEnvelope
     EntityResponse:
       type: object
       properties:
@@ -313,6 +307,12 @@ components:
         status:
           type: integer
       title: ApiError
+    EntityResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/EntityResponse'
+      title: EntityResponseEnvelope
   securitySchemes:
     bearerUserAPIKey:
       type: http

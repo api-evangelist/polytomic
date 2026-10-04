@@ -163,20 +163,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
     RunQueryResult:
       type: object
       properties:
@@ -209,16 +195,46 @@ components:
         status:
           $ref: '#/components/schemas/WorkTaskStatus'
       title: RunQueryResult
+    WorkTaskStatus:
+      type: string
+      enum:
+      - created
+      - running
+      - done
+      - failed
+      title: WorkTaskStatus
     RunQueryRequest:
       type: object
       properties: {}
       title: RunQueryRequest
+    QueryResultsEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RunQueryResult'
+        links:
+          $ref: '#/components/schemas/RunQueryPagination'
+      title: QueryResultsEnvelope
     RunQueryEnvelope:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/RunQueryResult'
       title: RunQueryEnvelope
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
     RunQueryPagination:
       type: object
       properties:
@@ -229,22 +245,6 @@ components:
           type: string
           description: URL to the previous page of results, if available. This may be returned as a host relative path.
       title: RunQueryPagination
-    QueryResultsEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/RunQueryResult'
-        links:
-          $ref: '#/components/schemas/RunQueryPagination'
-      title: QueryResultsEnvelope
-    WorkTaskStatus:
-      type: string
-      enum:
-      - created
-      - running
-      - done
-      - failed
-      title: WorkTaskStatus
   securitySchemes:
     bearerUserAPIKey:
       type: http

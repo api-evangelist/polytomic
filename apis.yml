@@ -409,6 +409,12 @@ apis:
   - type: APIReference
     url: https://apidocs.polytomic.com/
 common:
+  - type: Plans
+    url: plans/polytomic-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/polytomic-rate-limits.yml
+  - type: FinOps
+    url: finops/polytomic-finops.yml
   - type: CapabilityMap
     url: capabilities/polytomic-capability-edges.yml
     name: Polytomic Business Capability Map

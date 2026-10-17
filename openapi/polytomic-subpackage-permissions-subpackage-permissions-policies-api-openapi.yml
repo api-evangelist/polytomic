@@ -284,26 +284,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    CreatePolicyRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        organization_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        policy_actions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PolicyAction'
-      required:
-      - name
-      - policy_actions
-      title: CreatePolicyRequest
     UpdatePolicyRequest:
       type: object
       properties:
@@ -388,6 +368,26 @@ components:
           items:
             $ref: '#/components/schemas/PolicyResponse'
       title: ListPoliciesResponseEnvelope
+    CreatePolicyRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        policy_actions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PolicyAction'
+      required:
+      - name
+      - policy_actions
+      title: CreatePolicyRequest
   securitySchemes:
     bearerUserAPIKey:
       type: http

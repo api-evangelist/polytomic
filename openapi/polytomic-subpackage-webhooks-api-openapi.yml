@@ -432,6 +432,12 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
+    WebhookEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Webhook'
+      title: WebhookEnvelope
     WebhookListEnvelope:
       type: object
       properties:
@@ -458,12 +464,22 @@ components:
       - endpoint
       - secret
       title: UpdateWebhooksSchema
-    WebhookEnvelope:
+    CreateWebhooksSchema:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/Webhook'
-      title: WebhookEnvelope
+        endpoint:
+          type: string
+        organization_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        secret:
+          type: string
+      required:
+      - endpoint
+      - secret
+      title: CreateWebhooksSchema
     ApiError:
       type: object
       properties:
@@ -497,22 +513,6 @@ components:
         secret:
           type: string
       title: Webhook
-    CreateWebhooksSchema:
-      type: object
-      properties:
-        endpoint:
-          type: string
-        organization_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        secret:
-          type: string
-      required:
-      - endpoint
-      - secret
-      title: CreateWebhooksSchema
   securitySchemes:
     bearerUserAPIKey:
       type: http

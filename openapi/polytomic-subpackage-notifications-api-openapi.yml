@@ -99,6 +99,17 @@ paths:
               $ref: '#/components/schemas/GlobalErrorSubscribersRequest'
 components:
   schemas:
+    GlobalErrorSubscribersRequest:
+      type: object
+      properties:
+        emails:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Email addresses to subscribe to global sync error notifications. Replaces the current subscriber list; pass an empty list to unsubscribe everyone.
+      title: GlobalErrorSubscribersRequest
     ApiError:
       type: object
       properties:
@@ -124,17 +135,6 @@ components:
             type: string
           description: Email addresses subscribed to global sync error notifications for the organization.
       title: GlobalErrorSubscribersResponse
-    GlobalErrorSubscribersRequest:
-      type: object
-      properties:
-        emails:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Email addresses to subscribe to global sync error notifications. Replaces the current subscriber list; pass an empty list to unsubscribe everyone.
-      title: GlobalErrorSubscribersRequest
   securitySchemes:
     bearerUserAPIKey:
       type: http

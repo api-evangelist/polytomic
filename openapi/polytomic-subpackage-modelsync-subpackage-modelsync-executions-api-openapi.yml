@@ -413,79 +413,33 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    ListExecutionResponseEnvelope:
+    PaginationDetails:
       type: object
       properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GetExecutionResponseSchema'
-        pagination:
-          $ref: '#/components/schemas/PaginationDetails'
-      title: ListExecutionResponseEnvelope
-    ExecutionLogType:
-      type: string
-      enum:
-      - records
-      - errors
-      - warnings
-      - inserts
-      - updates
-      - deletes
-      title: ExecutionLogType
-    ExecutionCounts:
-      type: object
-      properties:
-        delete:
-          type: integer
-          format: int64
-        error:
-          type: integer
-          format: int64
-        insert:
-          type: integer
-          format: int64
-        total:
-          type: integer
-          format: int64
-        update:
-          type: integer
-          format: int64
-        upserts:
-          type: integer
-          format: int64
-        warnings:
-          type: integer
-          format: int64
-      title: ExecutionCounts
+        next_page_token:
+          type: string
+      title: PaginationDetails
     ExecutionLogsResponseEnvelope:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/ExecutionLogResponse'
       title: ExecutionLogsResponseEnvelope
-    GetExecutionResponseEnvelope:
+    ExecutionLogResponse:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/GetExecutionResponseSchema'
-      title: GetExecutionResponseEnvelope
-    ExecutionConsoleLogsResponse:
-      type: object
-      properties:
-        entries:
+        expires:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        urls:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ExecutionConsoleLogEntry'
-        next_cursor:
-          type:
-          - string
-          - 'null'
-      title: ExecutionConsoleLogsResponse
+            type: string
+      title: ExecutionLogResponse
     UtilExecutionStatus:
       type: string
       enum:
@@ -501,20 +455,6 @@ components:
       - failed
       - interrupted
       title: UtilExecutionStatus
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
     GetExecutionResponseSchema:
       type: object
       properties:
@@ -545,33 +485,81 @@ components:
         type:
           type: string
       title: GetExecutionResponseSchema
-    ExecutionLogResponse:
+    ExecutionConsoleLogsResponse:
       type: object
       properties:
-        expires:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        urls:
+        entries:
           type:
           - array
           - 'null'
           items:
-            type: string
-      title: ExecutionLogResponse
-    PaginationDetails:
-      type: object
-      properties:
-        next_page_token:
-          type: string
-      title: PaginationDetails
+            $ref: '#/components/schemas/ExecutionConsoleLogEntry'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+      title: ExecutionConsoleLogsResponse
+    ExecutionLogType:
+      type: string
+      enum:
+      - records
+      - errors
+      - warnings
+      - inserts
+      - updates
+      - deletes
+      title: ExecutionLogType
     CancelSyncExecutionResponseEnvelope:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/CancelSyncExecutionResponse'
       title: CancelSyncExecutionResponseEnvelope
+    GetExecutionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GetExecutionResponseSchema'
+      title: GetExecutionResponseEnvelope
+    ExecutionCounts:
+      type: object
+      properties:
+        delete:
+          type: integer
+          format: int64
+        error:
+          type: integer
+          format: int64
+        insert:
+          type: integer
+          format: int64
+        total:
+          type: integer
+          format: int64
+        update:
+          type: integer
+          format: int64
+        upserts:
+          type: integer
+          format: int64
+        warnings:
+          type: integer
+          format: int64
+      title: ExecutionCounts
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
     ExecutionConsoleLogEntry:
       type: object
       properties:
@@ -591,6 +579,18 @@ components:
           type: string
           format: date-time
       title: ExecutionConsoleLogEntry
+    ListExecutionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GetExecutionResponseSchema'
+        pagination:
+          $ref: '#/components/schemas/PaginationDetails'
+      title: ListExecutionResponseEnvelope
     ExecutionConsoleLogsResponseEnvelope:
       type: object
       properties:

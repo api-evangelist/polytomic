@@ -83,28 +83,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    WorkTaskStatus:
-      type: string
-      enum:
-      - created
-      - running
-      - done
-      - failed
-      title: WorkTaskStatus
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
     JobResponseEnvelope:
       type: object
       properties:
@@ -131,6 +109,28 @@ components:
           type: string
           description: Job type. Matches the type used to fetch the job.
       title: JobResponse
+    WorkTaskStatus:
+      type: string
+      enum:
+      - created
+      - running
+      - done
+      - failed
+      title: WorkTaskStatus
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
   securitySchemes:
     bearerUserAPIKey:
       type: http

@@ -341,20 +341,84 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    ScheduleEnvelope:
+    SchedulesEnvelope:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/BulkBulkSyncSchedule'
-      title: ScheduleEnvelope
-    UpdateScheduleRequest:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkBulkSyncSchedule'
+      title: SchedulesEnvelope
+    BulkSyncScheduleAPI:
       type: object
       properties:
-        schedule:
-          $ref: '#/components/schemas/BulkSyncScheduleAPI'
+        dayOfMonth:
+          type: string
+          description: Day of the month (1-31) for monthly schedules.
+        dayOfWeek:
+          type: string
+          description: Day of the week for weekly schedules.
+        frequency:
+          $ref: '#/components/schemas/ScheduleFrequency'
+        hour:
+          type: string
+          description: Hour of the day (0-23, in UTC) the schedule fires.
+        minute:
+          type: string
+          description: Minute of the hour (0-59) the schedule fires.
+        month:
+          type: string
+          description: Month of the year (1-12) for yearly schedules.
+        selectiveMode:
+          $ref: '#/components/schemas/BulkSelectiveMode'
       required:
-      - schedule
-      title: UpdateScheduleRequest
+      - frequency
+      title: BulkSyncScheduleAPI
+    BulkSelectiveMode:
+      type: string
+      enum:
+      - none
+      - incrementalFields
+      - nonincrementalFields
+      title: BulkSelectiveMode
+    ScheduleFrequency:
+      type: string
+      enum:
+      - manual
+      - continuous
+      - hourly
+      - daily
+      - weekly
+      - custom
+      - builder
+      - runafter
+      - multi
+      - dbtcloud
+      title: ScheduleFrequency
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    BulkScheduleSyncMode:
+      type: string
+      enum:
+      - normal
+      - refetch
+      - resync
+      - rebuild
+      title: BulkScheduleSyncMode
     BulkBulkSyncSchedule:
       type: object
       properties:
@@ -406,76 +470,20 @@ components:
       required:
       - frequency
       title: BulkBulkSyncSchedule
-    ScheduleFrequency:
-      type: string
-      enum:
-      - manual
-      - continuous
-      - hourly
-      - daily
-      - weekly
-      - custom
-      - builder
-      - runafter
-      - multi
-      - dbtcloud
-      title: ScheduleFrequency
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
-    BulkSelectiveMode:
-      type: string
-      enum:
-      - none
-      - incrementalFields
-      - nonincrementalFields
-      title: BulkSelectiveMode
-    SchedulesEnvelope:
+    ScheduleEnvelope:
       type: object
       properties:
         data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkBulkSyncSchedule'
-      title: SchedulesEnvelope
-    BulkSyncScheduleAPI:
+          $ref: '#/components/schemas/BulkBulkSyncSchedule'
+      title: ScheduleEnvelope
+    UpdateScheduleRequest:
       type: object
       properties:
-        dayOfMonth:
-          type: string
-          description: Day of the month (1-31) for monthly schedules.
-        dayOfWeek:
-          type: string
-          description: Day of the week for weekly schedules.
-        frequency:
-          $ref: '#/components/schemas/ScheduleFrequency'
-        hour:
-          type: string
-          description: Hour of the day (0-23, in UTC) the schedule fires.
-        minute:
-          type: string
-          description: Minute of the hour (0-59) the schedule fires.
-        month:
-          type: string
-          description: Month of the year (1-12) for yearly schedules.
-        selectiveMode:
-          $ref: '#/components/schemas/BulkSelectiveMode'
+        schedule:
+          $ref: '#/components/schemas/BulkSyncScheduleAPI'
       required:
-      - frequency
-      title: BulkSyncScheduleAPI
+      - schedule
+      title: UpdateScheduleRequest
     CreateScheduleRequest:
       type: object
       properties:
@@ -484,14 +492,6 @@ components:
       required:
       - schedule
       title: CreateScheduleRequest
-    BulkScheduleSyncMode:
-      type: string
-      enum:
-      - normal
-      - refetch
-      - resync
-      - rebuild
-      title: BulkScheduleSyncMode
   securitySchemes:
     bearerUserAPIKey:
       type: http

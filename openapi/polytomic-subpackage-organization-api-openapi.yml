@@ -362,16 +362,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    OrganizationsEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Organization'
-      title: OrganizationsEnvelope
     Organization:
       type: object
       properties:
@@ -392,6 +382,36 @@ components:
           type: string
           description: WorkOS organization identifier linking this organization to its SAML/SSO configuration.
       title: Organization
+    CreateOrganizationRequestSchema:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: OIDC client ID issued by the identity provider.
+        client_secret:
+          type: string
+          description: OIDC client secret issued by the identity provider. Write-only; never returned in responses.
+        issuer:
+          type: string
+          description: OIDC issuer URL for organizations using OpenID Connect single sign-on.
+        name:
+          type: string
+          description: Human-readable name of the organization. Must be unique across the partner account.
+        sso_domain:
+          type: string
+          description: Email domain used to match users to this organization during SSO sign-in.
+        sso_org_id:
+          type: string
+          description: WorkOS organization identifier linking this organization to its SAML/SSO configuration.
+      required:
+      - name
+      title: CreateOrganizationRequestSchema
+    OrganizationEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Organization'
+      title: OrganizationEnvelope
     UpdateOrganizationRequestSchema:
       type: object
       properties:
@@ -430,36 +450,16 @@ components:
         status:
           type: integer
       title: ApiError
-    OrganizationEnvelope:
+    OrganizationsEnvelope:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/Organization'
-      title: OrganizationEnvelope
-    CreateOrganizationRequestSchema:
-      type: object
-      properties:
-        client_id:
-          type: string
-          description: OIDC client ID issued by the identity provider.
-        client_secret:
-          type: string
-          description: OIDC client secret issued by the identity provider. Write-only; never returned in responses.
-        issuer:
-          type: string
-          description: OIDC issuer URL for organizations using OpenID Connect single sign-on.
-        name:
-          type: string
-          description: Human-readable name of the organization. Must be unique across the partner account.
-        sso_domain:
-          type: string
-          description: Email domain used to match users to this organization during SSO sign-in.
-        sso_org_id:
-          type: string
-          description: WorkOS organization identifier linking this organization to its SAML/SSO configuration.
-      required:
-      - name
-      title: CreateOrganizationRequestSchema
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Organization'
+      title: OrganizationsEnvelope
   securitySchemes:
     bearerUserAPIKey:
       type: http

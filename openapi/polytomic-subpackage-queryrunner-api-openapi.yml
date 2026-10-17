@@ -163,6 +163,42 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
+    RunQueryRequest:
+      type: object
+      properties: {}
+      title: RunQueryRequest
+    RunQueryEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RunQueryResult'
+      title: RunQueryEnvelope
+    RunQueryPagination:
+      type: object
+      properties:
+        next:
+          type: string
+          description: URL to the next page of results, if available. This may be returned as a host relative path.
+        previous:
+          type: string
+          description: URL to the previous page of results, if available. This may be returned as a host relative path.
+      title: RunQueryPagination
+    WorkTaskStatus:
+      type: string
+      enum:
+      - created
+      - running
+      - done
+      - failed
+      title: WorkTaskStatus
+    QueryResultsEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RunQueryResult'
+        links:
+          $ref: '#/components/schemas/RunQueryPagination'
+      title: QueryResultsEnvelope
     RunQueryResult:
       type: object
       properties:
@@ -195,32 +231,6 @@ components:
         status:
           $ref: '#/components/schemas/WorkTaskStatus'
       title: RunQueryResult
-    WorkTaskStatus:
-      type: string
-      enum:
-      - created
-      - running
-      - done
-      - failed
-      title: WorkTaskStatus
-    RunQueryRequest:
-      type: object
-      properties: {}
-      title: RunQueryRequest
-    QueryResultsEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/RunQueryResult'
-        links:
-          $ref: '#/components/schemas/RunQueryPagination'
-      title: QueryResultsEnvelope
-    RunQueryEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/RunQueryResult'
-      title: RunQueryEnvelope
     ApiError:
       type: object
       properties:
@@ -235,16 +245,6 @@ components:
         status:
           type: integer
       title: ApiError
-    RunQueryPagination:
-      type: object
-      properties:
-        next:
-          type: string
-          description: URL to the next page of results, if available. This may be returned as a host relative path.
-        previous:
-          type: string
-          description: URL to the previous page of results, if available. This may be returned as a host relative path.
-      title: RunQueryPagination
   securitySchemes:
     bearerUserAPIKey:
       type: http

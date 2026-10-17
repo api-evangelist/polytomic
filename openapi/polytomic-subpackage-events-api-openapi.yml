@@ -131,181 +131,6 @@ paths:
                 $ref: '#/components/schemas/EventTypesEnvelope'
 components:
   schemas:
-    EventingBulkSyncCompletedEvent:
-      type: object
-      properties:
-        destination_connection_id:
-          type: string
-          format: uuid
-        execution_id:
-          type: string
-          format: uuid
-        organization_id:
-          type: string
-          format: uuid
-        source_connection_id:
-          type: string
-          format: uuid
-        sync_id:
-          type: string
-          format: uuid
-        sync_name:
-          type: string
-        trigger_source:
-          type: string
-      title: EventingBulkSyncCompletedEvent
-    EventingBulkSyncRunningEvent:
-      type: object
-      properties:
-        destination_connection_id:
-          type: string
-          format: uuid
-        execution_id:
-          type: string
-          format: uuid
-        organization_id:
-          type: string
-          format: uuid
-        source_connection_id:
-          type: string
-          format: uuid
-        sync_id:
-          type: string
-          format: uuid
-        sync_name:
-          type: string
-      title: EventingBulkSyncRunningEvent
-    EventingSyncRunningEvent:
-      type: object
-      properties:
-        execution_id:
-          type: string
-          format: uuid
-        organization_id:
-          type: string
-          format: uuid
-        sync_id:
-          type: string
-          format: uuid
-        sync_name:
-          type: string
-        target_connection_id:
-          type: string
-          format: uuid
-      title: EventingSyncRunningEvent
-    EventingSyncFailedEvent:
-      type: object
-      properties:
-        error:
-          type: string
-        execution_id:
-          type: string
-          format: uuid
-        organization_id:
-          type: string
-          format: uuid
-        sync_id:
-          type: string
-          format: uuid
-        sync_name:
-          type: string
-        target_connection_id:
-          type: string
-          format: uuid
-      title: EventingSyncFailedEvent
-    EventPayload:
-      oneOf:
-      - $ref: '#/components/schemas/EventingSyncRunningEvent'
-      - $ref: '#/components/schemas/EventingSyncCompletedEvent'
-      - $ref: '#/components/schemas/EventingSyncFailedEvent'
-      - $ref: '#/components/schemas/EventingSyncCanceledEvent'
-      - $ref: '#/components/schemas/EventingSyncCompletedWithErrorsEvent'
-      - $ref: '#/components/schemas/EventingBulkSyncRunningEvent'
-      - $ref: '#/components/schemas/EventingBulkSyncCompletedEvent'
-      - $ref: '#/components/schemas/EventingBulkSyncCanceledEvent'
-      - $ref: '#/components/schemas/EventingBulkSyncCompletedWithErrorEvent'
-      - $ref: '#/components/schemas/EventingBulkSyncFailedEvent'
-      title: EventPayload
-    EventTypesEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      title: EventTypesEnvelope
-    EventingBulkSyncFailedEvent:
-      type: object
-      properties:
-        destination_connection_id:
-          type: string
-          format: uuid
-        error:
-          type: string
-        execution_id:
-          type: string
-          format: uuid
-        organization_id:
-          type: string
-          format: uuid
-        source_connection_id:
-          type: string
-          format: uuid
-        sync_id:
-          type: string
-          format: uuid
-        sync_name:
-          type: string
-        trigger_source:
-          type: string
-      title: EventingBulkSyncFailedEvent
-    EventsEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Event'
-      title: EventsEnvelope
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
-    Event:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp the event was emitted.
-        event:
-          $ref: '#/components/schemas/EventPayload'
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier of the event.
-        organization_id:
-          type: string
-          format: uuid
-          description: Organization the event belongs to.
-        type:
-          type: string
-          description: Event type identifier.
-      title: Event
     EventingSyncCompletedWithErrorsEvent:
       type: object
       properties:
@@ -332,17 +157,50 @@ components:
           type: string
           format: uuid
       title: EventingSyncCompletedWithErrorsEvent
-    EventingSyncCanceledEvent:
+    EventingBulkSyncCompletedEvent:
       type: object
       properties:
+        destination_connection_id:
+          type: string
+          format: uuid
         execution_id:
           type: string
           format: uuid
         organization_id:
           type: string
           format: uuid
-        status:
-          $ref: '#/components/schemas/UtilExecutionStatus'
+        source_connection_id:
+          type: string
+          format: uuid
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+        trigger_source:
+          type: string
+      title: EventingBulkSyncCompletedEvent
+    EventTypesEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      title: EventTypesEnvelope
+    EventingSyncFailedEvent:
+      type: object
+      properties:
+        error:
+          type: string
+        execution_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
         sync_id:
           type: string
           format: uuid
@@ -351,7 +209,7 @@ components:
         target_connection_id:
           type: string
           format: uuid
-      title: EventingSyncCanceledEvent
+      title: EventingSyncFailedEvent
     EventingBulkSyncCanceledEvent:
       type: object
       properties:
@@ -373,6 +231,142 @@ components:
         sync_name:
           type: string
       title: EventingBulkSyncCanceledEvent
+    UtilExecutionStatus:
+      type: string
+      enum:
+      - created
+      - scheduled
+      - queued
+      - waiting
+      - running
+      - processing
+      - canceling
+      - canceled
+      - completed
+      - failed
+      - interrupted
+      title: UtilExecutionStatus
+    EventingBulkSyncRunningEvent:
+      type: object
+      properties:
+        destination_connection_id:
+          type: string
+          format: uuid
+        execution_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        source_connection_id:
+          type: string
+          format: uuid
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+      title: EventingBulkSyncRunningEvent
+    EventsEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Event'
+      title: EventsEnvelope
+    EventingSyncCanceledEvent:
+      type: object
+      properties:
+        execution_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/UtilExecutionStatus'
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+        target_connection_id:
+          type: string
+          format: uuid
+      title: EventingSyncCanceledEvent
+    EventPayload:
+      oneOf:
+      - $ref: '#/components/schemas/EventingSyncRunningEvent'
+      - $ref: '#/components/schemas/EventingSyncCompletedEvent'
+      - $ref: '#/components/schemas/EventingSyncFailedEvent'
+      - $ref: '#/components/schemas/EventingSyncCanceledEvent'
+      - $ref: '#/components/schemas/EventingSyncCompletedWithErrorsEvent'
+      - $ref: '#/components/schemas/EventingBulkSyncRunningEvent'
+      - $ref: '#/components/schemas/EventingBulkSyncCompletedEvent'
+      - $ref: '#/components/schemas/EventingBulkSyncCanceledEvent'
+      - $ref: '#/components/schemas/EventingBulkSyncCompletedWithErrorEvent'
+      - $ref: '#/components/schemas/EventingBulkSyncFailedEvent'
+      title: EventPayload
+    EventingSyncRunningEvent:
+      type: object
+      properties:
+        execution_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+        target_connection_id:
+          type: string
+          format: uuid
+      title: EventingSyncRunningEvent
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    EventingBulkSyncFailedEvent:
+      type: object
+      properties:
+        destination_connection_id:
+          type: string
+          format: uuid
+        error:
+          type: string
+        execution_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        source_connection_id:
+          type: string
+          format: uuid
+        sync_id:
+          type: string
+          format: uuid
+        sync_name:
+          type: string
+        trigger_source:
+          type: string
+      title: EventingBulkSyncFailedEvent
     EventingSyncCompletedEvent:
       type: object
       properties:
@@ -449,6 +443,27 @@ components:
           items:
             type: string
       title: EventingSyncCompletedEvent
+    Event:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp the event was emitted.
+        event:
+          $ref: '#/components/schemas/EventPayload'
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the event.
+        organization_id:
+          type: string
+          format: uuid
+          description: Organization the event belongs to.
+        type:
+          type: string
+          description: Event type identifier.
+      title: Event
     EventingBulkSyncCompletedWithErrorEvent:
       type: object
       properties:
@@ -472,21 +487,6 @@ components:
         trigger_source:
           type: string
       title: EventingBulkSyncCompletedWithErrorEvent
-    UtilExecutionStatus:
-      type: string
-      enum:
-      - created
-      - scheduled
-      - queued
-      - waiting
-      - running
-      - processing
-      - canceling
-      - canceled
-      - completed
-      - failed
-      - interrupted
-      title: UtilExecutionStatus
   securitySchemes:
     bearerUserAPIKey:
       type: http

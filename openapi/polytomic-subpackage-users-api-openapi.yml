@@ -672,29 +672,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    ListUsersEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/User'
-      title: ListUsersEnvelope
-    CurrentOrgUpdateUserRequestSchema:
-      type: object
-      properties:
-        role:
-          type: string
-          description: Deprecated legacy role name. Use role_ids instead.
-        role_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: Identifiers of the permissions roles to assign to the user. Must contain at least one entry when provided.
-      title: CurrentOrgUpdateUserRequestSchema
     User:
       type: object
       properties:
@@ -721,39 +698,6 @@ components:
             format: uuid
           description: Identifiers of the permissions roles assigned to the user.
       title: User
-    APIKeyResponse:
-      type: object
-      properties:
-        value:
-          type: string
-          description: Newly created API key. This value is shown only once; store it securely.
-      title: APIKeyResponse
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
-    APIKeyResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/APIKeyResponse'
-      title: APIKeyResponseEnvelope
-    UserEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/User'
-      title: UserEnvelope
     CreateUserRequestSchema:
       type: object
       properties:
@@ -772,6 +716,19 @@ components:
       required:
       - email
       title: CreateUserRequestSchema
+    APIKeyResponse:
+      type: object
+      properties:
+        value:
+          type: string
+          description: Newly created API key. This value is shown only once; store it securely.
+      title: APIKeyResponse
+    UserEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/User'
+      title: UserEnvelope
     CurrentOrgCreateUserRequestSchema:
       type: object
       properties:
@@ -790,6 +747,22 @@ components:
       required:
       - email
       title: CurrentOrgCreateUserRequestSchema
+    ListUsersEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/User'
+      title: ListUsersEnvelope
+    APIKeyResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/APIKeyResponse'
+      title: APIKeyResponseEnvelope
     UpdateUserRequestSchema:
       type: object
       properties:
@@ -808,6 +781,33 @@ components:
       required:
       - email
       title: UpdateUserRequestSchema
+    CurrentOrgUpdateUserRequestSchema:
+      type: object
+      properties:
+        role:
+          type: string
+          description: Deprecated legacy role name. Use role_ids instead.
+        role_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Identifiers of the permissions roles to assign to the user. Must contain at least one entry when provided.
+      title: CurrentOrgUpdateUserRequestSchema
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
   securitySchemes:
     bearerUserAPIKey:
       type: http

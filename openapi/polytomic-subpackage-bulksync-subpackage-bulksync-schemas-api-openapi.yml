@@ -379,121 +379,6 @@ paths:
                 $ref: '#/components/schemas/ApiError'
 components:
   schemas:
-    CancelBulkSyncResponse:
-      type: object
-      properties:
-        message:
-          type: string
-      title: CancelBulkSyncResponse
-    BulkSchema:
-      type: object
-      properties:
-        data_cutoff_timestamp:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        disable_data_cutoff:
-          type: boolean
-        enabled:
-          type: boolean
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/BulkField'
-          description: fields is not populated on the list endpoint and will be removed in a future version; retrieve individual schemas for fields.
-        filters:
-          type: array
-          items:
-            $ref: '#/components/schemas/BulkFilter'
-          description: filters is not populated on the list endpoint and will be removed in a future version; retrieve individual schemas for filters.
-        id:
-          type: string
-        output_name:
-          type: string
-        partition_key:
-          type: string
-        tracking_field:
-          type: string
-        user_output_name:
-          type: string
-      title: BulkSchema
-    UpdateBulkSyncSchemasEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkSchema'
-      title: UpdateBulkSyncSchemasEnvelope
-    BulkSchemaListItem:
-      type: object
-      properties:
-        data_cutoff_timestamp:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Per-schema cutoff. Records older than this timestamp are excluded from sync runs.
-        disable_data_cutoff:
-          type: boolean
-          description: When true, the sync ignores any configured data_cutoff_timestamp and syncs the full history of this schema.
-        enabled:
-          type: boolean
-          description: Whether this schema is included in sync runs.
-        id:
-          type: string
-          description: Source-side schema identifier (e.g. object name for SaaS sources, schema.table for databases).
-        output_name:
-          type: string
-          description: Effective name of the object written to the destination after any configured naming rules are applied.
-        partition_key:
-          type: string
-          description: Source field used to partition rows when writing to the destination. Empty if the destination does not require one.
-        tracking_field:
-          type: string
-          description: Source field used to detect changes between incremental sync runs. Empty if the schema performs full resyncs.
-        user_output_name:
-          type: string
-          description: User-specified override for the destination object name. When empty, output_name is used.
-      title: BulkSchemaListItem
-    BulkSchemaEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/BulkSchema'
-      title: BulkSchemaEnvelope
-    UpdateBulkField:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        id:
-          type: string
-        obfuscated:
-          type: boolean
-        user_output_name:
-          type: string
-      title: UpdateBulkField
-    CancelBulkSyncResponseEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CancelBulkSyncResponse'
-      title: CancelBulkSyncResponseEnvelope
-    UpdateBulkSyncSchemasRequest:
-      type: object
-      properties:
-        schemas:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkSchema'
-          description: Schemas to patch. Schemas are matched by id; only schemas present in this list are updated.
-      title: UpdateBulkSyncSchemasRequest
     FilterFunction:
       type: string
       enum:
@@ -527,6 +412,172 @@ components:
       - StringNotLike
       - StringMatchesTrimmed
       title: FilterFunction
+    UpdateBulkSyncSchemasRequest:
+      type: object
+      properties:
+        schemas:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSchema'
+          description: Schemas to patch. Schemas are matched by id; only schemas present in this list are updated.
+      title: UpdateBulkSyncSchemasRequest
+    BulkSchemaListItem:
+      type: object
+      properties:
+        data_cutoff_timestamp:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Per-schema cutoff. Records older than this timestamp are excluded from sync runs.
+        disable_data_cutoff:
+          type: boolean
+          description: When true, the sync ignores any configured data_cutoff_timestamp and syncs the full history of this schema.
+        enabled:
+          type: boolean
+          description: Whether this schema is included in sync runs.
+        id:
+          type: string
+          description: Source-side schema identifier (e.g. object name for SaaS sources, schema.table for databases).
+        output_name:
+          type: string
+          description: Effective name of the object written to the destination after any configured naming rules are applied.
+        partition_key:
+          type: string
+          description: Source field used to partition rows when writing to the destination. Empty if the destination does not require one.
+        tracking_field:
+          type: string
+          description: Source field used to detect changes between incremental sync runs. Empty if the schema performs full resyncs.
+        user_output_name:
+          type: string
+          description: User-specified override for the destination object name. When empty, output_name is used.
+      title: BulkSchemaListItem
+    CancelBulkSyncResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CancelBulkSyncResponse'
+      title: CancelBulkSyncResponseEnvelope
+    UpdateBulkSyncSchemasEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSchema'
+      title: UpdateBulkSyncSchemasEnvelope
+    BulkField:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        id:
+          type: string
+        obfuscated:
+          type: boolean
+        output_name:
+          type: string
+        user_output_name:
+          type: string
+      title: BulkField
+    BulkFilter:
+      type: object
+      properties:
+        field_id:
+          type: string
+          description: Schema field ID to filter on.
+        function:
+          $ref: '#/components/schemas/FilterFunction'
+        value:
+          description: Any type
+      required:
+      - function
+      title: BulkFilter
+    ListBulkSchemaEnvelope:
+      type: object
+      properties:
+        data:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BulkSchemaListItem'
+      title: ListBulkSchemaEnvelope
+    UpdateBulkField:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        id:
+          type: string
+        obfuscated:
+          type: boolean
+        user_output_name:
+          type: string
+      title: UpdateBulkField
+    ApiError:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+        status:
+          type: integer
+      title: ApiError
+    BulkSchema:
+      type: object
+      properties:
+        data_cutoff_timestamp:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        disable_data_cutoff:
+          type: boolean
+        enabled:
+          type: boolean
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/BulkField'
+          description: fields is not populated on the list endpoint and will be removed in a future version; retrieve individual schemas for fields.
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/BulkFilter'
+          description: filters is not populated on the list endpoint and will be removed in a future version; retrieve individual schemas for filters.
+        id:
+          type: string
+        output_name:
+          type: string
+        partition_key:
+          type: string
+        tracking_field:
+          type: string
+        user_output_name:
+          type: string
+      title: BulkSchema
+    CancelBulkSyncResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      title: CancelBulkSyncResponse
+    BulkSchemaEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkSchema'
+      title: BulkSchemaEnvelope
     UpdateBulkSchema:
       type: object
       properties:
@@ -565,57 +616,6 @@ components:
         user_output_name:
           type: string
       title: UpdateBulkSchema
-    ApiError:
-      type: object
-      properties:
-        key:
-          type: string
-        message:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-        status:
-          type: integer
-      title: ApiError
-    BulkField:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        id:
-          type: string
-        obfuscated:
-          type: boolean
-        output_name:
-          type: string
-        user_output_name:
-          type: string
-      title: BulkField
-    ListBulkSchemaEnvelope:
-      type: object
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BulkSchemaListItem'
-      title: ListBulkSchemaEnvelope
-    BulkFilter:
-      type: object
-      properties:
-        field_id:
-          type: string
-          description: Schema field ID to filter on.
-        function:
-          $ref: '#/components/schemas/FilterFunction'
-        value:
-          description: Any type
-      required:
-      - function
-      title: BulkFilter
   securitySchemes:
     bearerUserAPIKey:
       type: http

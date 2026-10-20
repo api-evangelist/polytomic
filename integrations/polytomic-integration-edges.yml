@@ -1,10 +1,29 @@
 generated: '2026-10-14'
 method: searched
 checked:
+- chargebee/integrations/chargebee-integration-edges.yml
 - okta/integrations/okta-integration-edges.yml
+- zendesk/integrations/zendesk-integration-edges.yml
 source:
 - okta/integrations/okta-integration-edges.yml
 edges:
+- partner_name: Chargebee (own)
+  partner: chargebee
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.chargebee.com/apps/['polytomic']
+  mirror_of: chargebee/integrations/chargebee-integration-edges.yml
+  apps:
+  - Polytomic
+  listing_count: 1
+  detected: '2026-10-19'
+  detected_by: mirror-platform-listings.py
+  category: ETL Tools
 - partner_name: Okta (own)
   partner: okta
   partner_match: mirror
@@ -26,3 +45,20 @@ edges:
   - OKTA_VERIFIED
   features:
   - SAML
+- partner_name: Zendesk (own)
+  partner: zendesk
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.zendesk.com/marketplace/apps/support/236419/polytomic/
+  mirror_of: zendesk/integrations/zendesk-integration-edges.yml
+  apps:
+  - Polytomic
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
+  category: Reporting and Analytics
